@@ -8,7 +8,7 @@ const sendPostRequest = (
             headers: headers,
             body: JSON.stringify(body),
             mode: 'cors',
-            credentials: 'omit',
+            credentials: 'same-origin',
         }
     )
 };

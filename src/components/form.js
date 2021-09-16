@@ -42,14 +42,16 @@ class Form {
         });
         return input;
     }
-    setButtonEvent(handler){
+    setButtonEvent(handler, callback){
         this.#elem.addEventListener("click", () => {
             if (this.#button.isIt(event.target)){
                 event.preventDefault();
                 this.#inputs.forEach((i) => {
                     i.clearErrors()
                 });
-                handler(...this.getValues());
+                handler(...this.getValues())
+                    .then((response) => callback(response))
+                    .catch((e) => this.setError(e));
             }
         })
     }
