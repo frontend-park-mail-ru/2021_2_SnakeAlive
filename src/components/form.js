@@ -46,6 +46,9 @@ class Form {
         this.#elem.addEventListener("click", () => {
             if (this.#button.isIt(event.target)){
                 event.preventDefault();
+                this.#inputs.forEach((i) => {
+                    i.clearErrors()
+                });
                 handler(...this.getValues());
             }
         })
