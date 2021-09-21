@@ -1,5 +1,5 @@
-import Button from "./components/button.js";
-import { showLoginForm } from "./forms/login.js";
+import Button from './components/button.js';
+import { showLoginForm } from './forms/login.js';
 
 const main = () => {
     const header = document.getElementById('header');

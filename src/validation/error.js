@@ -1,5 +1,5 @@
 class ValidationError extends Error {
-    errorField = ''
+    errorField = '';
 
     constructor(message, field) {
         super(message);

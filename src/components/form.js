@@ -19,12 +19,13 @@ class formRequire {
 }
 
 class Form {
-    #div = document.createElement("div");
-    #elem = document.createElement("form");
+    #div = document.createElement('div');
+    #elem = document.createElement('form');
     #button = null;
     #inputs = [];
+
     constructor(given, parent){
-        this.#elem.method = "POST";
+        this.#elem.method = 'POST';
         this.#elem.classList.add(given.cssClass);
 
         given.inputs.forEach((i) => {
@@ -35,33 +36,30 @@ class Form {
         this.#div.appendChild(this.#elem);
         parent.appendChild(this.#div);
     }
+
     getValues(){
-        input = []
-        this.#inputs.forEach((i) => {
-            input.push(i.getValue());
-        });
+        let input = [];
+        this.#inputs.forEach((i) => input.push(i.getValue()));
         return input;
     }
-    setButtonEvent(handler, callback){
-        this.#elem.addEventListener("click", () => {
+
+    setButtonEvent(handler){
+        this.#elem.addEventListener('click', () => {
             if (this.#button.isIt(event.target)){
                 event.preventDefault();
-                this.#inputs.forEach((i) => {
-                    i.clearErrors()
-                });
-                handler(...this.getValues())
-                    .then((response) => callback(response))
-                    .catch((e) => this.setError(e));
+                this.#inputs.forEach((i) => i.clearErrors());
+
+                handler(...this.getValues()).catch((e) => this.setError(e));
             }
-        })
+        });
     }
+
     setError(error){
         this.#inputs.forEach((i) => {
             if (i.getId() === error.errorField) {
                 i.setError(error.message);
             }
-        })
-
+        });
     }
 }
 
