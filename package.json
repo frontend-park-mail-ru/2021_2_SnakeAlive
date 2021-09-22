@@ -1,12 +1,50 @@
 {
   "name": "2021_2_snakealive",
   "version": "1.0.0",
-  "description": "TripAdviser",
+  "description": "Проект TripAdvisor команды \"Змея Живая!\"",
   "main": "index.js",
+  "dependencies": {
+    "absolute-imports": "^1.0.1",
+    "balanced-match": "^1.0.2",
+    "brace-expansion": "^1.1.11",
+    "commander": "^2.20.3",
+    "concat-map": "^0.0.1",
+    "debug": "^4.3.2",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.26.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "fs.realpath": "^1.0.0",
+    "function-bind": "^1.1.1",
+    "glob": "^7.1.7",
+    "has": "^1.0.3",
+    "inflight": "^1.0.6",
+    "inherits": "^2.0.4",
+    "interpret": "^1.4.0",
+    "is-core-module": "^2.6.0",
+    "minimatch": "^3.0.4",
+    "ms": "^2.1.2",
+    "once": "^1.4.0",
+    "path-is-absolute": "^1.0.1",
+    "path-parse": "^1.0.7",
+    "prettier": "^2.4.1",
+    "rechoir": "^0.6.2",
+    "resolve": "^1.20.0",
+    "shelljs": "^0.7.8",
+    "wrappy": "^1.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.5",
+    "@babel/eslint-parser": "^7.15.7",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.24.2"
+  },
   "scripts": {
-    "start": "DEBUG=http node server",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "node absolute-imports --prefix=org --project=app"
+    "pretty": "prettier --write \"**/*.js\" && prettier --write \"**/*.html\" && prettier --write \"**/*.css\"",
+    "ch-pretty": "prettier --check .",
+    "lint": "eslint \"./**\" --fix"
   },
   "repository": {
     "type": "git",
@@ -17,10 +55,5 @@
   "bugs": {
     "url": "https://github.com/frontend-park-mail-ru/2021_2_SnakeAlive/issues"
   },
-  "homepage": "https://github.com/frontend-park-mail-ru/2021_2_SnakeAlive#readme",
-  "dependencies": {
-    "absolute-imports": "^1.0.1",
-    "debug": "^4.1.1"
-  },
-  "paths": {}
+  "homepage": "https://github.com/frontend-park-mail-ru/2021_2_SnakeAlive#readme"
 }
