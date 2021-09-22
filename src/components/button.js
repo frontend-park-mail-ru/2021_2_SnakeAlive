@@ -1,5 +1,4 @@
 export default class Button {
-	// TODO: change "#" to "_"
 	#elem = document.createElement('button');
 
 	constructor(text = 'кнопка', styleClass = '', id = '', parentElement = null) {
