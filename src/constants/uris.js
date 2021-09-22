@@ -1,1 +1,4 @@
-export const loginURI = '/login';
+const loginURI = '/login';
+const registerURI = '/register';
+
+export { loginURI, registerURI };

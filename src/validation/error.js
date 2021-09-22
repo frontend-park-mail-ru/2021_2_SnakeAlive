@@ -1,10 +1,10 @@
 class ValidationError extends Error {
-    errorField = '';
+	errorField;
 
-    constructor(message, field) {
-        super(message);
-        this.errorField = field;
-    };
+	constructor(message, field) {
+		super(message);
+		this.errorField = field;
+	}
 }
 
-export {ValidationError};
+export { ValidationError };
