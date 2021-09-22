@@ -1,54 +1,55 @@
-class Input {
-    #divLine = document.createElement('div');
-    #div = document.createElement('div');
-    #elem = document.createElement('input');
-    #p = null;
+export default class Input {
+	#divLine = document.createElement('div');
 
-    constructor(type, id, name, styleClass, parent){
-        this.#elem.id = id;
-        this.#elem.type = type;
-        this.#elem.name = name;
-        this.#elem.placeholder = name;
-        this.#elem.classList.add(styleClass);
+	#div = document.createElement('div');
 
-        this.#elem.addEventListener('focusin', () => {
-            if (this.#p !== null) {
-                this.#div.removeChild(this.#p);
-                this.#p = null;
-            }
-        });
+	#elem = document.createElement('input');
 
-        this.#divLine.classList.add('line');
-        this.#divLine.appendChild(this.#elem);
-        this.#div.appendChild(this.#divLine);
+	#p = null;
 
-        parent.appendChild(this.#div)
-    }
+	constructor(type, id, name, styleClass, parent) {
+		this.#elem.id = id;
+		this.#elem.type = type;
+		this.#elem.name = name;
+		this.#elem.placeholder = name;
+		this.#elem.classList.add(styleClass);
 
-    setError(str){
-        this.#p = document.createElement('span');
-        this.#p.classList.add('errStr')
-        this.#p.innerHTML = str;
+		this.#elem.addEventListener('focusin', () => {
+			if (this.#p !== null) {
+				this.#div.removeChild(this.#p);
+				this.#p = null;
+			}
+		});
 
-        this.#div.appendChild(this.#p);
-        this.#div.classList.add('err');
-    }
+		this.#divLine.classList.add('line');
+		this.#divLine.appendChild(this.#elem);
+		this.#div.appendChild(this.#divLine);
 
-    clearErrors(){
-        // убрать картинку с восклицательныи знаком!!!!!!
-        if (this.#p !== null) {
-            this.#div.removeChild(this.#p);
-        }
-        this.#div.classList.remove('err');
-    }
+		parent.appendChild(this.#div);
+	}
 
-    getValue(){
-        return this.#elem.value;
-    }
+	setError(str) {
+		this.#p = document.createElement('span');
+		this.#p.classList.add('errStr');
+		this.#p.innerHTML = str;
 
-    getId(){
-        return this.#elem.id;
-    }
+		this.#div.appendChild(this.#p);
+		this.#div.classList.add('err');
+	}
+
+	clearErrors() {
+		// убрать картинку с восклицательныи знаком!!!!!!
+		if (this.#p !== null) {
+			this.#div.removeChild(this.#p);
+		}
+		this.#div.classList.remove('err');
+	}
+
+	getValue() {
+		return this.#elem.value;
+	}
+
+	getId() {
+		return this.#elem.id;
+	}
 }
-
-export default Input;
