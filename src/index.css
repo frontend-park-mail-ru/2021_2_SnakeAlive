@@ -1,14 +1,22 @@
 :root {
-	--text-small: 12px;
-	--text-normal: 16px;
-	--text-large: 20px;
+	--text-small: 14px;
+	--text-normal: 20px;
+	--text-large: 40px;
 
 	--color-white: white;
 	--color-black: black;
-	--color-red: #96031a;
-	--color-yellow: #fcba04;
+	--color-orange: #f28f3bff;
+	--color-red: #c8553dff;
+	--color-yellow: #372248;
+	--color-light-yellow: #4a2e61;
 	--color-light-color: #f1fffe;
 	--color-shadow: #5c6f68;
+
+	--color-substrate: #00000033;
+
+	--px-small: 6px;
+	--px-normal: 12px;
+	--px-big: 20px;
 }
 
 html,
@@ -17,10 +25,17 @@ body {
 	margin: 0;
 	padding: 0;
 
-	font-family: sans-serif;
-	font-size: var(--text-normal);
-
 	background-color: var(--color-light-color);
+
+	font-family: 'Roboto', sans-serif;
+}
+h2 {
+	font-family: 'Spectral', serif;
+	font-size: var(--text-large);
+	color: var(--color-yellow);
+}
+a {
+	text-decoration: none;
 }
 
 .wrapper {
@@ -29,12 +44,26 @@ body {
 	height: 100%;
 }
 
+button {
+	font-size: var(--text-normal);
+	color: var(--color-white);
+
+	margin-left: var(--px-small);
+	padding: var(--px-normal);
+	padding-bottom: (--px-small);
+	background-color: var(--color-yellow);
+	border: none;
+}
+button:hover {
+	background-color: var(--color-light-yellow);
+	margin-left: var(--px-small);
+}
+
 header {
-	padding-top: 25px;
-	padding-left: 10%;
+	padding: var(--px-big);
 	background-color: var(--color-white);
-	color: var(--color-yellow);
-	font-weight: bolder;
+
+	text-align: right;
 }
 header > * {
 	display: inline;
@@ -51,9 +80,11 @@ footer {
 	padding: 15px;
 }
 footer > * {
+	text-decoration: none;
 	display: block;
 	font-size: var(--text-small);
 	text-align: center;
 	color: var(--color-white);
 	margin: 5px;
 }
+

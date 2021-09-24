@@ -1,31 +1,24 @@
 import Input from './input.js';
 import Button from './button.js';
+import { returnToMain } from '../main.js';
 
 export default class Form {
-	#div = document.createElement('div');
-
-	#elem = document.createElement('form');
-
+	#elem = null;
+	#error = null;
 	#button = null;
-
 	#inputs = [];
+	#closeBtn = null;
 
-	constructor(given, parent) {
-		this.#elem.method = 'POST';
-		this.#elem.classList.add(given.cssClass);
-
+	constructor(given) {
+		this.#elem = document.getElementById(given.formId);
+		this.#error = document.getElementById('formErrorBlock');
+		this.#button = new Button(document.getElementById(given.button.id));
 		given.inputs.forEach(i => {
-			this.#inputs.push(new Input(i.type, i.id, i.name, given.inputCssClass, this.#elem));
+			this.#inputs.push(new Input(document.getElementById(i.id)));
 		});
-		this.#button = new Button(
-			given.button.text,
-			given.button.cssClass,
-			given.button.id,
-			this.#elem
-		);
-
-		this.#div.appendChild(this.#elem);
-		parent.appendChild(this.#div);
+		this.#closeBtn = new Button(document.getElementById('btnClose'));
+		this.#closeBtn.addClickListener(returnToMain);
+		this.#closeBtn.setActive();
 	}
 
 	getValues() {
@@ -48,8 +41,10 @@ export default class Form {
 	setError(error) {
 		this.#inputs.forEach(i => {
 			if (i.getId() === error.errorField) {
-				i.setError(error.message);
+				i.setError();
 			}
 		});
+		this.#error.innerHTML = error.message;
+		this.#error.classList.add('err');
 	}
 }

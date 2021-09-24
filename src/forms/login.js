@@ -25,9 +25,13 @@ const loginUser = (email = '', password = '') =>
 		});
 
 const showLoginForm = () => {
-	const inner = document.getElementById('inner');
+	console.log('f');
+	var source = document.getElementById('template-popup-form').innerHTML;
+	var template = Handlebars.compile(source);
 
 	const formProperties = new FormRequire(
+		'loginForm',
+		'Вход',
 		'startForm',
 		{
 			text: 'Войти',
@@ -48,7 +52,10 @@ const showLoginForm = () => {
 			},
 		]
 	);
-	const loginForm = new Form(formProperties, inner);
+	var html = template(formProperties);
+	document.getElementById('popup-place').innerHTML = html;
+
+	const loginForm = new Form(formProperties);
 	loginForm.setButtonEvent(loginUser);
 };
 

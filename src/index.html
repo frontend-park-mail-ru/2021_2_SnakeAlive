@@ -4,23 +4,67 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Spectral:wght@600&display=swap"
+			rel="stylesheet" />
+
+		<link rel="stylesheet" href="drop_default.css" />
 		<link rel="stylesheet" href="index.css" />
 		<link rel="stylesheet" href="start.css" />
 	</head>
-	<body>
+	<body id="body">
 		<div class="wrapper" id="root">
 			<header class="block" id="header">
-				<h1>TripAdvisor</h1>
+				<h2 style="float: left">TripAdvisor</h2>
 			</header>
 			<inner class="block">
 				<div id="inner"></div>
 			</inner>
 			<footer class="block">
 				<a>Copyright SnakeAlive</a>
-				<a>Some more information</a>
+				<p>
+				GitHub <a href="https://github.com/go-park-mail-ru/2021_2_SnakeAlive">backend</a> | <a href="https://github.com/frontend-park-mail-ru/2021_2_SnakeAlive/tree/main">frontend</a>
+				</p>
 			</footer>
 		</div>
+		<div id="popup-place"></div>
 
+		<script id="template-popup-form" type="text/x-handlebars-template">
+			<div id="substrate">
+				<div id="popup">
+					<div id="closeLine">
+						<button class="btnHead" id="btnClose">
+							<img src="image/020-close.png" class="cross">
+						</button>
+					</div>
+					<form method="post" class="{{cssClass}}" id="{{formId}}">
+						<h2>{{formName}}</h2>
+						<ul>
+							<li>
+								<p id="formErrorBlock" class="formErrorBlock">ошибок нет</p>
+							</li>
+						{{#each inputs}}
+							<li>
+								<input type="{{type}}" id="{{id}}" placeholder="{{name}}">
+							</li>
+						{{/each}}
+							<li>
+								<button id="{{button.id}}" class="{{button.cssClass}}">{{button.text}}</button>
+							</li>
+						</ul>
+					</form>
+				<div>
+			<div>
+		</script>
+
+		<script src="handlebars.min.js"></script>
 		<script src="main.js" type="module"></script>
+		<div style="display: none">
+			Icons made by
+			<a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect"
+				>Pixel perfect</a
+			>
+			from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+		</div>
 	</body>
 </html>

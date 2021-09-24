@@ -1,4 +1,4 @@
 import { loginUser, showLoginForm } from './login.js';
-import { registerUser } from './register.js';
+import { registerUser, showRegisterForm } from './register.js';
 
-export { loginUser, showLoginForm, registerUser };
+export { loginUser, showLoginForm, registerUser, showRegisterForm };
