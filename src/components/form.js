@@ -8,6 +8,7 @@ export default class Form {
 	#button = null;
 	#inputs = [];
 	#closeBtn = null;
+	response = null;
 
 	constructor(given) {
 		this.#elem = document.getElementById(given.formId);
@@ -33,7 +34,9 @@ export default class Form {
 				evt.preventDefault();
 				this.#inputs.forEach(i => i.clearErrors());
 
-				handler(...this.getValues()).catch(e => this.setError(e));
+				this.response = handler(...this.getValues())
+					.then(response => returnToMain(response, this.getValues()[0]))
+					.catch(e => this.setError(e));
 			}
 		});
 	}

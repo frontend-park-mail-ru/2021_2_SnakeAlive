@@ -24,7 +24,6 @@ const registerUser = (name = '', surname = '', email = '', password = '') =>
 		});
 
 const showRegisterForm = () => {
-	console.log('f');
 	var source = document.getElementById('template-popup-form').innerHTML;
 	var template = Handlebars.compile(source);
 
@@ -40,6 +39,11 @@ const showRegisterForm = () => {
 		'startInput',
 		[
 			{
+				type: 'email',
+				name: 'Почта',
+				id: 'email',
+			},
+			{
 				type: 'text',
 				name: 'Имя',
 				id: 'name',
@@ -49,11 +53,7 @@ const showRegisterForm = () => {
 				name: 'Фамилия',
 				id: 'surname',
 			},
-			{
-				type: 'email',
-				name: 'Почта',
-				id: 'email',
-			},
+
 			{
 				type: 'password',
 				name: 'Пароль',

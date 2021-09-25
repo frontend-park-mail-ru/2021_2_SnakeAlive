@@ -1,8 +1,10 @@
 export default class Input {
 	#elem = null;
+	name = null;
 
 	constructor(DOMelement) {
 		this.#elem = DOMelement;
+		this.name = DOMelement.name;
 		this.#elem.addEventListener('focusout', () => {
 			this.#elem.classList.remove('err-input');
 		});

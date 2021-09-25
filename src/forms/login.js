@@ -25,7 +25,6 @@ const loginUser = (email = '', password = '') =>
 		});
 
 const showLoginForm = () => {
-	console.log('f');
 	var source = document.getElementById('template-popup-form').innerHTML;
 	var template = Handlebars.compile(source);
 
