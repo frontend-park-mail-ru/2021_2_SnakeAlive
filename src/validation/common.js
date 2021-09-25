@@ -17,6 +17,7 @@ const checkLength = (value = '', length = 0, name = '') => {
 };
 
 const validateEmail = (value = '', name = '') => {
+	console.log(value);
 	const re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 	if (!re.test(String(value).toLowerCase())) {
 		return Promise.reject(new ValidationError('неверная электронная почта', name));

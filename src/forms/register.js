@@ -1,27 +1,34 @@
 import { backendEndpoint, registerURI } from '../constants/bundle.js';
 import { validateRegisterData, ValidationError } from '../validation/bundle.js';
-import { FormRequire, Form } from '../components/bundle.js';
+import { FormRequire, Form, RegisterInputs } from '../components/bundle.js';
 import { sendPostJSONRequest } from '../http/bundle.js';
 
-const registerUser = (name = '', surname = '', email = '', password = '') =>
-	validateRegisterData(name, surname, email, password)
-		.then(() =>
-			sendPostJSONRequest(backendEndpoint + registerURI, {
+const registerUser = (registerInputs) => {
+	
+
+	return validateRegisterData(registerInputs)
+		.then(() => {
+			const email = registerInputs.email;
+			const password = registerInputs.pswd;
+			const name = registerInputs.name;
+			const surname = registerInputs.surname;
+			return sendPostJSONRequest(backendEndpoint + registerURI, {
 				email,
 				password,
 				name,
 				surname,
 			})
-		)
+		})
 		.then(response => {
 			if (response.status === 400) {
 				return Promise.reject(
 					new ValidationError('Пользователь с таким емэйлом уже существует', 'email')
 				);
 			}
-
+			// console.log(email);
 			return response;
 		});
+};
 
 const showRegisterForm = () => {
 	var source = document.getElementById('template-popup-form').innerHTML;
@@ -39,11 +46,6 @@ const showRegisterForm = () => {
 		'startInput',
 		[
 			{
-				type: 'email',
-				name: 'Почта',
-				id: 'email',
-			},
-			{
 				type: 'text',
 				name: 'Имя',
 				id: 'name',
@@ -53,7 +55,11 @@ const showRegisterForm = () => {
 				name: 'Фамилия',
 				id: 'surname',
 			},
-
+			{
+				type: 'email',
+				name: 'Почта',
+				id: 'email',
+			},
 			{
 				type: 'password',
 				name: 'Пароль',

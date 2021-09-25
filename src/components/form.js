@@ -23,8 +23,10 @@ export default class Form {
 	}
 
 	getValues() {
-		const input = [];
-		this.#inputs.forEach(i => input.push(i.getValue()));
+		const input = {};
+		this.#inputs.forEach(i => {
+			input[i.getId()] = i.getValue();
+		});
 		return input;
 	}
 
@@ -33,10 +35,7 @@ export default class Form {
 			if (this.#button.isIt(evt.target)) {
 				evt.preventDefault();
 				this.#inputs.forEach(i => i.clearErrors());
-
-				this.response = handler(...this.getValues())
-					.then(response => returnToMain(response, this.getValues()[0]))
-					.catch(e => this.setError(e));
+				returnToMain(handler(this.getValues()).catch(e => this.setError(e)), 'Будет пользователь');
 			}
 		});
 	}

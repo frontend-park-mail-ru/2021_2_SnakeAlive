@@ -1,8 +1,10 @@
 import { Button } from './components/bundle.js';
 import { showLoginForm, showRegisterForm } from './forms/bundle.js';
-import { getCards } from './getdata/cards.js';
+import { getCards, showErrorPage } from './getdata/bundle.js';
 
 const main = () => {
+	alert(document.cookie);
+
 	const btnLogin = new Button();
 	btnLogin.makeButton('Вход', 'btn-h', 'loginMainPage', document.getElementById('login-place-h'));
 	btnLogin.addClickListener(showLoginForm);
@@ -10,7 +12,7 @@ const main = () => {
 
 	const btnRegister = new Button();
 	btnRegister.makeButton(
-		'Зарегистрироваться',
+		'Регистрация',
 		'btn-h',
 		'signupMainPage',
 		document.getElementById('register-place-h')
@@ -18,12 +20,14 @@ const main = () => {
 	btnRegister.addClickListener(showRegisterForm);
 	btnRegister.setActive();
 
-	// const response = 
-	console.log( getCards('/country/Russia') instanceof Promise);
-	// console.log(response);
-	getCards('/country/Russia').then((response) =>
-		console.log('успех ' + response.status), 
-		(err) => console.log('проблемес ' + err));
+	const cards = null;
+	getCards('/country/Russia').then(
+		response => {
+			console.log('успех ' + response.status);
+			cards = response;
+		},
+		err => showErrorPage(err)
+	);
 };
 
 main();

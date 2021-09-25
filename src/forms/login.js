@@ -3,13 +3,16 @@ import { sendPostJSONRequest } from '../http/bundle.js';
 import { FormRequire, Form } from '../components/bundle.js';
 import { backendEndpoint, loginURI } from '../constants/bundle.js';
 
-const loginUser = (email = '', password = '') =>
-	validateLoginData(email, password)
-		.then(() =>
-			sendPostJSONRequest(backendEndpoint + loginURI, {
+const loginUser = (input) =>
+	validateLoginData(input)
+		.then(() => {
+			const email = input.email;
+			const password = input.pswd;
+			return sendPostJSONRequest(backendEndpoint + loginURI, {
 				email,
 				password,
 			})
+		}
 		)
 		.then(response => {
 			if (response.status === 404) {

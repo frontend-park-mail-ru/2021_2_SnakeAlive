@@ -1,5 +1,5 @@
 import Form from './form.js';
-import FormRequire from './require.js';
+import { FormRequire, RegisterInputs } from './require.js';
 import Button from './button.js';
 
-export { Form, FormRequire, Button };
+export { Form, FormRequire, RegisterInputs, Button };
