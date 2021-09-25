@@ -35,7 +35,7 @@ const showRegisterForm = () => {
 		{
 			text: 'Зарегистрироваться',
 			id: 'signup',
-			cssClass: 'startBtn',
+			cssClass: 'btn-h',
 		},
 		'startInput',
 		[

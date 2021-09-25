@@ -4,28 +4,32 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Spectral:wght@600&display=swap"
-			rel="stylesheet" />
-
 		<link rel="stylesheet" href="drop_default.css" />
-		<link rel="stylesheet" href="index.css" />
-		<link rel="stylesheet" href="start.css" />
+		<link rel="stylesheet" href="index2.css" />
 	</head>
 	<body id="body">
 		<div class="wrapper" id="root">
-			<header class="block" id="header">
-				<h2 style="float: left">TripAdvisor</h2>
-			</header>
-			<inner class="block">
-				<div id="inner"></div>
-			</inner>
-			<footer class="block">
-				<a>Copyright SnakeAlive</a>
+			<div class="header" id="header">
+					<div class="logo-h"><h2>TripAdvisor</h2></div>
+					<div id="register-place-h"></div>
+					<div id="login-place-h"></div>
+			</div>
+			<giv id="inner" class="inner">
+				<div class="inner-line">
+					<div class="inner-left">One</div>
+					<div class="inner-right">One</div>
+				</div>
+				<div class="inner-line">
+					<div class="inner-left">One</div>
+					<div class="inner-right">One</div>
+				</div>
+
+			</div>
+			<div class="footer">
 				<p>
-				GitHub <a href="https://github.com/go-park-mail-ru/2021_2_SnakeAlive">backend</a> | <a href="https://github.com/frontend-park-mail-ru/2021_2_SnakeAlive/tree/main">frontend</a>
+				SnakeAlive on GitHub: <a href="https://github.com/go-park-mail-ru/2021_2_SnakeAlive">backend</a> | <a href="https://github.com/frontend-park-mail-ru/2021_2_SnakeAlive/tree/main">frontend</a>
 				</p>
-			</footer>
+			</div>
 		</div>
 		<div id="popup-place"></div>
 
@@ -38,7 +42,7 @@
 						</button>
 					</div>
 					<form method="post" class="{{cssClass}}" id="{{formId}}">
-						<h2>{{formName}}</h2>
+						<h2 class="logo-h">{{formName}}</h2>
 						<ul>
 							<li>
 								<p id="formErrorBlock" class="formErrorBlock">ошибок нет</p>
@@ -59,12 +63,5 @@
 
 		<script src="handlebars.min.js"></script>
 		<script src="main.js" type="module"></script>
-		<div style="display: none">
-			Icons made by
-			<a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect"
-				>Pixel perfect</a
-			>
-			from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
-		</div>
 	</body>
 </html>

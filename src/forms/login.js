@@ -36,7 +36,7 @@ const showLoginForm = () => {
 		{
 			text: 'Войти',
 			id: 'login',
-			cssClass: 'startBtn',
+			cssClass: 'btn-h',
 		},
 		'startInput',
 		[
