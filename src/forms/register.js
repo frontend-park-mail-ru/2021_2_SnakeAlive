@@ -3,12 +3,13 @@ import { validateRegisterData, ValidationError } from '../validation/bundle.js';
 import { FormRequire, Form, RegisterInputs } from '../components/bundle.js';
 import { sendPostJSONRequest } from '../http/bundle.js';
 
-const registerUser = registerInputs => validateRegisterData(registerInputs)
+const registerUser = registerInputs =>
+	validateRegisterData(registerInputs)
 		.then(() => {
-			const {email} = registerInputs;
+			const { email } = registerInputs;
 			const password = registerInputs.pswd;
-			const {name} = registerInputs;
-			const {surname} = registerInputs;
+			const { name } = registerInputs;
+			const { surname } = registerInputs;
 			return sendPostJSONRequest(backendEndpoint + registerURI, {
 				email,
 				password,

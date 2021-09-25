@@ -6,7 +6,7 @@ import { backendEndpoint, loginURI } from '../constants/bundle.js';
 const loginUser = input =>
 	validateLoginData(input)
 		.then(() => {
-			const {email} = input;
+			const { email } = input;
 			const password = input.pswd;
 			return sendPostJSONRequest(backendEndpoint + loginURI, {
 				email,

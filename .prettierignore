@@ -2,3 +2,4 @@ README.md
 .prettierrc.json
 package-lock.json
 package.json
+handlebars.min.js

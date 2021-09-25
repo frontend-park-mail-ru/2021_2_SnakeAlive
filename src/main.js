@@ -23,7 +23,7 @@ const main = () => {
 	const cards = null;
 	getCards('/country/Russia').then(
 		response => {
-			console.log(`успех ${  response.status}`);
+			console.log(`успех ${response.status}`);
 			cards = response;
 		},
 		err => showErrorPage(err)
