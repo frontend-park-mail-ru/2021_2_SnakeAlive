@@ -3,21 +3,18 @@ import { validateRegisterData, ValidationError } from '../validation/bundle.js';
 import { FormRequire, Form, RegisterInputs } from '../components/bundle.js';
 import { sendPostJSONRequest } from '../http/bundle.js';
 
-const registerUser = (registerInputs) => {
-	
-
-	return validateRegisterData(registerInputs)
+const registerUser = registerInputs => validateRegisterData(registerInputs)
 		.then(() => {
-			const email = registerInputs.email;
+			const {email} = registerInputs;
 			const password = registerInputs.pswd;
-			const name = registerInputs.name;
-			const surname = registerInputs.surname;
+			const {name} = registerInputs;
+			const {surname} = registerInputs;
 			return sendPostJSONRequest(backendEndpoint + registerURI, {
 				email,
 				password,
 				name,
 				surname,
-			})
+			});
 		})
 		.then(response => {
 			if (response.status === 400) {
@@ -28,11 +25,10 @@ const registerUser = (registerInputs) => {
 			// console.log(email);
 			return response;
 		});
-};
 
 const showRegisterForm = () => {
-	var source = document.getElementById('template-popup-form').innerHTML;
-	var template = Handlebars.compile(source);
+	const source = document.getElementById('template-popup-form').innerHTML;
+	const template = Handlebars.compile(source);
 
 	const formProperties = new FormRequire(
 		'signupForm',
@@ -67,7 +63,7 @@ const showRegisterForm = () => {
 			},
 		]
 	);
-	var html = template(formProperties);
+	const html = template(formProperties);
 	document.getElementById('popup-place').innerHTML = html;
 
 	const signupForm = new Form(formProperties);

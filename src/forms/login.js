@@ -3,17 +3,16 @@ import { sendPostJSONRequest } from '../http/bundle.js';
 import { FormRequire, Form } from '../components/bundle.js';
 import { backendEndpoint, loginURI } from '../constants/bundle.js';
 
-const loginUser = (input) =>
+const loginUser = input =>
 	validateLoginData(input)
 		.then(() => {
-			const email = input.email;
+			const {email} = input;
 			const password = input.pswd;
 			return sendPostJSONRequest(backendEndpoint + loginURI, {
 				email,
 				password,
-			})
-		}
-		)
+			});
+		})
 		.then(response => {
 			if (response.status === 404) {
 				return Promise.reject(
@@ -28,8 +27,8 @@ const loginUser = (input) =>
 		});
 
 const showLoginForm = () => {
-	var source = document.getElementById('template-popup-form').innerHTML;
-	var template = Handlebars.compile(source);
+	const source = document.getElementById('template-popup-form').innerHTML;
+	const template = Handlebars.compile(source);
 
 	const formProperties = new FormRequire(
 		'loginForm',
@@ -54,7 +53,7 @@ const showLoginForm = () => {
 			},
 		]
 	);
-	var html = template(formProperties);
+	const html = template(formProperties);
 	document.getElementById('popup-place').innerHTML = html;
 
 	const loginForm = new Form(formProperties);

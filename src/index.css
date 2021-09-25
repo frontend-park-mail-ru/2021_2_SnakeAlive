@@ -1,15 +1,16 @@
-body, html {
-    font-family: 'Roboto', sans-serif;
-    letter-spacing: 0.1em;
-    font-size: var(--text-normal);
+body,
+html {
+	font-family: 'Roboto', sans-serif;
+	letter-spacing: 0.1em;
+	font-size: var(--text-normal);
 
-    --text-larger: 24px;
+	--text-larger: 24px;
 	--text-normal: 18px;
 	--text-small: 12px;
 
-    --color-shadow: rgb(106, 121, 126);
-    --color-substrate: #00000033;
-    --color-white: white;
+	--color-shadow: rgb(106, 121, 126);
+	--color-substrate: #00000033;
+	--color-white: white;
 	--color-black: black;
 
 	--color-orange: #f28f3bff;
@@ -21,114 +22,109 @@ body, html {
 	--color-shadow: #5c6f68;
 
 	position: absolute;
-    width: 100%;
-    min-height: 100%;
-    padding: 0;
-    margin: 0;
+	width: 100%;
+	min-height: 100%;
+	padding: 0;
+	margin: 0;
 }
 .wrapper {
-    position: relative;
-    min-height: 100%;
+	position: relative;
+	min-height: 100%;
 	display: flex;
 	flex-direction: column;
 	height: 100%;
 }
 .header {
-    display: grid;
-    /* делаем 6 основных колонок и 2 поля по бокам */
-    grid-template-columns: 9.2vw repeat(6, 1fr) 9.2vw;
-    grid-template-areas:
-    "a b b b b c d e";
-    /* и строку высотой по 1/10 окна */
-    grid-template-rows: 10vh;
+	display: grid;
+	/* делаем 6 основных колонок и 2 поля по бокам */
+	grid-template-columns: 9.2vw repeat(6, 1fr) 9.2vw;
+	grid-template-areas: 'a b b b b c d e';
+	/* и строку высотой по 1/10 окна */
+	grid-template-rows: 10vh;
 
-    box-shadow: 1px 1px  var(--color-black);
-    margin-bottom: 2vh;
+	box-shadow: 1px 1px var(--color-black);
+	margin-bottom: 2vh;
 }
 .header > * {
-    display: inline;
-    /* vertical-align: middle; */
+	display: inline;
+	/* vertical-align: middle; */
 }
 .logo-h {
-    grid-area: b;
-    font-weight: 700;
-    font-size: var(--text-larger);
-    align-self: center;
+	grid-area: b;
+	font-weight: 700;
+	font-size: var(--text-larger);
+	align-self: center;
 }
 #register-place-h {
-    grid-area: c;
-    align-self: center;
-    justify-self: center;
+	grid-area: c;
+	align-self: center;
+	justify-self: center;
 }
 #login-place-h {
-    grid-area: d;
-    align-self: center;
-    justify-self: center;
-    
+	grid-area: d;
+	align-self: center;
+	justify-self: center;
 }
 .btn-h {
-    font-weight: 500;
-    font-size: var(--text-normal);
+	font-weight: 500;
+	font-size: var(--text-normal);
 }
 .btn-h:hover {
-    font-weight: 600;
-    text-decoration: underline;
+	font-weight: 600;
+	text-decoration: underline;
 }
-#inner::after{
-    line-height: 8vh; /* height of footer */
-    white-space: pre;
-    content: "\A";    
+#inner::after {
+	line-height: 8vh; /* height of footer */
+	white-space: pre;
+	content: '\A';
 }
 .footer {
-    position: absolute;
-    width: 100%;
-    height: 8vh; /* height of footer */
-    bottom: 0px;
-    margin-top: -8vh; /* height of footer */
+	position: absolute;
+	width: 100%;
+	height: 8vh; /* height of footer */
+	bottom: 0px;
+	margin-top: -8vh; /* height of footer */
 
-    display: grid;
-    /* делаем поля по бокам */
-    grid-template-columns: 9.2vw 1fr 9.2vw;
-    grid-template-areas:
-    "a b c";
-    box-shadow: 1px -1px var(--color-shadow);
+	display: grid;
+	/* делаем поля по бокам */
+	grid-template-columns: 9.2vw 1fr 9.2vw;
+	grid-template-areas: 'a b c';
+	box-shadow: 1px -1px var(--color-shadow);
 }
 .footer > * {
-    grid-area: b;
+	grid-area: b;
 	text-decoration: none;
-    color: var(--color-shadow);
+	color: var(--color-shadow);
 	font-size: var(--text-small);
-    display: inline;
-    align-self: center;
+	display: inline;
+	align-self: center;
 }
 .inner-line {
-    display: grid;
-    /* делаем 6 основных колонок и 2 поля по бокам */
-    grid-template-columns: 9.2vw repeat(6, 1fr) 9.2vw;
-    grid-template-areas:
-    "a a b b c c d d";
-    grid-template-rows: 45vh;
-    margin-bottom: 1vh;
+	display: grid;
+	/* делаем 6 основных колонок и 2 поля по бокам */
+	grid-template-columns: 9.2vw repeat(6, 1fr) 9.2vw;
+	grid-template-areas: 'a a b b c c d d';
+	grid-template-rows: 45vh;
+	margin-bottom: 1vh;
 }
 .inner-left {
-    margin: 0.6vw;
-    grid-area: b;
-    background-color: yellowgreen;
+	margin: 0.6vw;
+	grid-area: b;
+	background-color: yellowgreen;
 }
 .inner-right {
-    margin: 0.6vw;
-    grid-area: c;
-    background-color: yellowgreen;
+	margin: 0.6vw;
+	grid-area: c;
+	background-color: yellowgreen;
 }
 
 #substrate {
-    display: grid;
-    /* делаем 3 основных колонок и 2 поля по бокам */
-    grid-template-columns: 9.2vw 1fr 2fr 1fr 9.2vw;
-    grid-template-areas:
-    "a b c d e";
+	display: grid;
+	/* делаем 3 основных колонок и 2 поля по бокам */
+	grid-template-columns: 9.2vw 1fr 2fr 1fr 9.2vw;
+	grid-template-areas: 'a b c d e';
 
-    background-color: var(--color-substrate);
+	background-color: var(--color-substrate);
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -136,15 +132,15 @@ body, html {
 	height: 100%;
 }
 #popup {
-    background-color: var(--color-white);
-    margin: 0.6vw;
-    grid-area: c;
-    margin-top: 35%;
-    height: max-content;
-    padding-left: 12vh;
-    padding-top: 2vh;
-    padding-bottom: 12vh;
-    padding-right: 2vh;
+	background-color: var(--color-white);
+	margin: 0.6vw;
+	grid-area: c;
+	margin-top: 35%;
+	height: max-content;
+	padding-left: 12vh;
+	padding-top: 2vh;
+	padding-bottom: 12vh;
+	padding-right: 2vh;
 }
 #closeLine {
 	text-align: right;
@@ -163,25 +159,25 @@ body, html {
 }
 .startForm > ul > li {
 	padding-bottom: 2vh;
-    text-align: left;
+	text-align: left;
 }
 .startForm > h2 {
-    text-align: left;
+	text-align: left;
 }
 .startForm input {
 	width: 36vh;
 }
 .startForm button {
-    padding-top: 4vh;
+	padding-top: 4vh;
 }
 .formErrorBlock {
-    font-size: var(--text-small);
+	font-size: var(--text-small);
 	width: 36vh;
 	word-wrap: true;
 	margin-top: 3vh;
 	margin-bottom: 1vh;
-    padding-top: 1vh;
-    padding-bottom: 1vh;
+	padding-top: 1vh;
+	padding-bottom: 1vh;
 	visibility: hidden;
 }
 .err {
@@ -192,5 +188,5 @@ body, html {
 	visibility: visible;
 }
 .err-input {
-    background-color: var(--color-light-red);
+	background-color: var(--color-light-red);
 }

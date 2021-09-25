@@ -22,9 +22,13 @@ class FormRequire {
 }
 class RegisterInputs {
 	name = '';
+
 	surname = '';
+
 	email = '';
+
 	pswd = '';
+
 	constructor(_name, _surname, _email, _pswd) {
 		this.name = _name;
 		this.surname = _surname;

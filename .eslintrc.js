@@ -19,6 +19,7 @@ module.exports = {
 		'package.json',
 		'*.html',
 		'*.css',
+		'handlebars.min.js',
 	],
 	rules: {
 		'prefer-const': 'error',

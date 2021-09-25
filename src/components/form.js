@@ -4,10 +4,15 @@ import { returnToMain } from '../main.js';
 
 export default class Form {
 	#elem = null;
+
 	#error = null;
+
 	#button = null;
+
 	#inputs = [];
+
 	#closeBtn = null;
+
 	response = null;
 
 	constructor(given) {
@@ -35,7 +40,10 @@ export default class Form {
 			if (this.#button.isIt(evt.target)) {
 				evt.preventDefault();
 				this.#inputs.forEach(i => i.clearErrors());
-				returnToMain(handler(this.getValues()).catch(e => this.setError(e)), 'Будет пользователь');
+				returnToMain(
+					handler(this.getValues()).catch(e => this.setError(e)),
+					'Будет пользователь'
+				);
 			}
 		});
 	}

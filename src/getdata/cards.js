@@ -11,4 +11,5 @@ const getCards = uri =>
 		}
 		return Promise.resolve(response);
 	});
+
 export { getCards };
