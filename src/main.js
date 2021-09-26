@@ -1,10 +1,7 @@
 import { Button } from './components/bundle.js';
-import { showLoginForm, showRegisterForm } from './forms/bundle.js';
-import { getCards, showErrorPage } from './getdata/bundle.js';
+import { showLoginForm, showRegisterForm, showCountrySights } from './forms/bundle.js';
 
 const main = () => {
-	// alert(document.cookie);
-
 	const btnLogin = new Button();
 	btnLogin.makeButton('Вход', 'btn-h', 'loginMainPage', document.getElementById('login-place-h'));
 	btnLogin.addClickListener(showLoginForm);
@@ -20,14 +17,7 @@ const main = () => {
 	btnRegister.addClickListener(showRegisterForm);
 	btnRegister.setActive();
 
-	// const cards = null;
-	// getCards('/country/Russia').then(
-	// 	response => {
-	// 		console.log(`успех ${response.status}`);
-	// 		cards = response;
-	// 	},
-	// 	err => showErrorPage(err)
-	// );
+	showCountrySights();
 };
 
 main();
@@ -49,7 +39,6 @@ const returnToMain = (response, email) => {
 			document.getElementById('login-place-h').innerHTML = email;
 		}
 	}
-	// console.log(getCards('/country/Russia'));
 };
 
 export { returnToMain };

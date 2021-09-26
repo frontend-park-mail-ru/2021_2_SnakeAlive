@@ -60,4 +60,4 @@ const showLoginForm = () => {
 	loginForm.setButtonEvent(loginUser);
 };
 
-export { showLoginForm, loginUser };
+export { showLoginForm };

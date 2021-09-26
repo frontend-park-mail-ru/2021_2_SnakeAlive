@@ -23,7 +23,6 @@ const registerUser = registerInputs =>
 					new ValidationError('Пользователь с таким емэйлом уже существует', 'email')
 				);
 			}
-			// console.log(email);
 			return response;
 		});
 
@@ -71,4 +70,4 @@ const showRegisterForm = () => {
 	signupForm.setButtonEvent(registerUser);
 };
 
-export { showRegisterForm, registerUser };
+export { showRegisterForm };

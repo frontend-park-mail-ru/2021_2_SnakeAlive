@@ -3,7 +3,7 @@ const sendGetRequest = (uri = '/', headers = {}) =>
 		method: 'GET',
 		headers,
 		mode: 'cors',
-		credentials: 'include',
+		credentials: 'same-origin',
 	});
 
 const sendGetJSONRequest = (uri = '/', headers = {}) =>
