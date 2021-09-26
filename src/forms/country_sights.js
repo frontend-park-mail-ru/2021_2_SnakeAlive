@@ -22,7 +22,7 @@ const showCountrySights = () => {
 	let countryPageTemplate = Handlebars.templates.county_sights;
 	document.querySelector('#inner').innerHTML = countryPageTemplate({ name: defaultCountryName });
 
-	getCards(defaultCountry + '1')
+	getCards(defaultCountry)
 		.then(response => {
 			return response.json();
 		})
