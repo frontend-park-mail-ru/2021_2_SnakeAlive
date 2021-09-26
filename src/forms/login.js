@@ -1,8 +1,8 @@
-import { validateLoginData, ValidationError } from '../validation/bundle.js';
-import { sendPostJSONRequest } from '../http/bundle.js';
-import { FormConfig, Form, showForm } from '../components/bundle.js';
-import { backendEndpoint, loginURI } from '../constants/bundle.js';
-// import { createHtml } from '../http/readTemplate.js';
+import { validateLoginData, ValidationError } from '../validation';
+import { sendPostJSONRequest } from '../http';
+import { FormConfig, Form, showForm } from '../components';
+import { backendEndpoint, loginURI } from '../constants';
+import {flushPopup} from "./flush_popup.js";
 
 const loginUser = input =>
 	validateLoginData(input)
@@ -49,12 +49,13 @@ const showLoginForm = () => {
 				name: 'Пароль',
 				id: 'pswd',
 			},
-		]
+		],
+		flushPopup,
 	);
 
 	showForm(formInfo, document.getElementById('popup-place'));
 	const loginForm = new Form(formInfo);
-	loginForm.setButtonEvent(loginUser);
+	loginForm.setButtonEvent(loginUser, [flushPopup]);
 };
 
 export { showLoginForm };

@@ -23,7 +23,7 @@ class Form {
 			this.#inputs.push(new Input(document.getElementById(i.id)));
 		});
 		this.#closeBtn = new Button(document.getElementById('btnClose'));
-		this.#closeBtn.addClickListener(returnToMain);
+		this.#closeBtn.addClickListener(config.closeCallback);
 		this.#closeBtn.setActive();
 	}
 
@@ -35,16 +35,15 @@ class Form {
 		return input;
 	}
 
-	setButtonEvent(handler) {
+	setButtonEvent(handler, callbacks) {
 		this.#elem.addEventListener('click', evt => {
 			if (this.#button.isIt(evt.target)) {
 				evt.preventDefault();
 				this.#inputs.forEach(i => i.clearErrors());
 				handler(this.getValues())
 				.then(response => {
-					console.log(document.cookie);
-					returnToMain(response);
-				}, e => this.setError(e),);
+					callbacks.forEach(callback => callback(response));
+				}).catch(e => this.setError(e));
 			}
 		});
 	}

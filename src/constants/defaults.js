@@ -1,1 +1,5 @@
-export const defaultCountryName = 'России';
+const defaultCountryName = 'России';
+const defaultTokenName = 'token';
+
+export {defaultCountryName, defaultTokenName};
+

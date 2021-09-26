@@ -1,4 +1,4 @@
-import { sendGetMultipartRequest } from './bundle.js'
+import { sendGetMultipartRequest } from './index.js'
 
 const createHtml = (templateName, data) => 
     fetch('http://localhost/templates/popup.mst', {

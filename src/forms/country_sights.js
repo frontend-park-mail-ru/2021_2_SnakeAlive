@@ -1,11 +1,11 @@
-import { sendGetJSONRequest } from '../http/bundle.js';
+import { sendGetJSONRequest } from '../http';
 import {
 	backendEndpoint,
 	defaultCountryName,
 	countrySights,
 	defaultCountry,
-} from '../constants/bundle.js';
-import { adaptGetCards } from '../adapters/bundle.js';
+} from '../constants';
+import { adaptGetCards } from '../adapters';
 
 const getCards = country =>
 	sendGetJSONRequest(backendEndpoint + countrySights + country).then(response => {
@@ -19,7 +19,7 @@ const getCards = country =>
 	});
 
 const showCountrySights = () => {
-	let countryPageTemplate = Handlebars.templates.county_sights;
+	let countryPageTemplate = Handlebars.templates.country_sights;
 	document.querySelector('#inner').innerHTML = countryPageTemplate({ name: defaultCountryName });
 
 	getCards(defaultCountry)
@@ -27,7 +27,6 @@ const showCountrySights = () => {
 			return response.json();
 		})
 		.then(cards => {
-			console.log(cards);
 			let sights = Handlebars.templates.sights;
 			document.querySelector('.card__grid').innerHTML = sights(adaptGetCards(cards));
 		})

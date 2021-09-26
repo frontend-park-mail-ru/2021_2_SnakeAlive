@@ -1,13 +1,9 @@
 const sendGetRequest = (uri = '/', headers = {}) => {
-	console.log(document.cookie);
 	return fetch(uri, {
 		method: 'GET',
 		headers,
 		mode: 'cors',
 		credentials: 'include',
-		xhrFields: {
-			withCredentials: true,
-		},
 	});
 }
 	
