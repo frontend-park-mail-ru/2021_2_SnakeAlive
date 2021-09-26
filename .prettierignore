@@ -3,3 +3,6 @@ README.md
 package-lock.json
 package.json
 handlebars.min.js
+/src/templates/*
+/src/precompiled/*
+.eslintrc.js

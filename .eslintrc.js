@@ -20,6 +20,8 @@ module.exports = {
 		'*.html',
 		'*.css',
 		'handlebars.min.js',
+		'./src/precompiled/*',
+		'./src/templates/*',
 	],
 	rules: {
 		'prefer-const': 'error',
