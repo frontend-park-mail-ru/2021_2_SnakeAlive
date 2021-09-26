@@ -41,9 +41,10 @@ class Form {
 				evt.preventDefault();
 				this.#inputs.forEach(i => i.clearErrors());
 				handler(this.getValues())
-				.then(response => {
-					callbacks.forEach(callback => callback(response));
-				}).catch(e => this.setError(e));
+					.then(response => {
+						callbacks.forEach(callback => callback(response));
+					})
+					.catch(e => this.setError(e));
 			}
 		});
 	}
@@ -56,7 +57,7 @@ class Form {
 		this.#error.innerHTML = error.message;
 		this.#error.classList.add('err');
 	}
-};
+}
 
 const showForm = (config, parentElement) => {
 	var template = Handlebars.templates.popup;
@@ -64,4 +65,4 @@ const showForm = (config, parentElement) => {
 	parentElement.innerHTML = html;
 };
 
-export {Form, showForm}
+export { Form, showForm };
