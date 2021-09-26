@@ -1,6 +1,6 @@
 import { ValidationError } from './error.js';
 
-const checkEmpty = (value = '', name = '') => {
+const checkIsEmpty = (value = '', name = '') => {
 	if (!value) {
 		return Promise.reject(new ValidationError('заполните все поля', name));
 	}
@@ -17,7 +17,7 @@ const checkLength = (value = '', length = 0, name = '') => {
 };
 
 const validateEmail = (value = '', name = '') => {
-	const re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+	const re = /^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/;
 	if (!re.test(String(value).toLowerCase())) {
 		return Promise.reject(new ValidationError('неверная электронная почта', name));
 	}
@@ -25,4 +25,4 @@ const validateEmail = (value = '', name = '') => {
 	return Promise.resolve();
 };
 
-export { validateEmail, checkEmpty, checkLength };
+export { validateEmail, checkIsEmpty, checkLength };
