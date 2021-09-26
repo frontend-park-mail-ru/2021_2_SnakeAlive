@@ -1,10 +1,5 @@
 import { sendGetJSONRequest } from '../http';
-import {
-	backendEndpoint,
-	defaultCountryName,
-	countrySights,
-	defaultCountry,
-} from '../constants';
+import { backendEndpoint, defaultCountryName, countrySights, defaultCountry } from '../constants';
 import { adaptGetCards } from '../adapters';
 
 const getCards = country =>

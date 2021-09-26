@@ -13,10 +13,10 @@ html {
 	--text-normal: 18px;
 	--text-small: 12px;
 
-    --color-substrate: #00000066;
-    --color-white: white;
+	--color-substrate: #00000066;
+	--color-white: white;
 	--color-black: black;
-    --color-grey: #252525;
+	--color-grey: #252525;
 	--color-green: green;
 
 	--color-orange: #f28f3bff;
@@ -90,10 +90,10 @@ html {
 	text-decoration: underline;
 }
 
-#inner::after{
-    line-height: 8vh; /* height of footer */
-    white-space: pre;
-    content: "\A";    
+#inner::after {
+	line-height: 8vh; /* height of footer */
+	white-space: pre;
+	content: '\A';
 }
 
 .footer {
@@ -134,22 +134,22 @@ html {
 }
 
 #popup {
-    background-color: var(--color-white);
-    margin: 0.6vw;
-    grid-area: c;
-    margin-top: 35%;
-    height: max-content;
-    padding-left: 2vh;
-    padding-top: 2vh;
-    padding-bottom: 2vh;
-    padding-right: 2vh;
+	background-color: var(--color-white);
+	margin: 0.6vw;
+	grid-area: c;
+	margin-top: 35%;
+	height: max-content;
+	padding-left: 2vh;
+	padding-top: 2vh;
+	padding-bottom: 2vh;
+	padding-right: 2vh;
 
-    text-align: center;
+	text-align: center;
 }
 #popup > form {
-    width: 36vh;
-    display: inline-block;
-    text-align: center;
+	width: 36vh;
+	display: inline-block;
+	text-align: center;
 }
 
 #closeLine {
@@ -174,43 +174,43 @@ html {
 	text-align: left;
 }
 .startForm input {
-    padding: 2vh 2vw;
-    border-width: 1px;
-    border-style: solid;
-    border-color: var(--color-grey);
+	padding: 2vh 2vw;
+	border-width: 1px;
+	border-style: solid;
+	border-color: var(--color-grey);
 }
 
 .formErrorBlock {
-    width: 36vh;
-    padding-top: 2vh;
-    font-size: var(--text-small);
-    word-wrap: true;
-    color: var(--color-red);
+	width: 36vh;
+	padding-top: 2vh;
+	font-size: var(--text-small);
+	word-wrap: true;
+	color: var(--color-red);
 	visibility: hidden;
 }
- .err {
+.err {
 	visibility: visible;
 }
 .startForm .err-input {
-    border-color: var(--color-red);
+	border-color: var(--color-red);
 	border-width: 2px;
 	border-style: solid;
 }
 
 .btn-black {
-    font-weight: 700;
-    color: var(--color-white);
-    font-size: var(--text-normal);
+	font-weight: 700;
+	color: var(--color-white);
+	font-size: var(--text-normal);
 
-    display: inline-block;
-    vertical-align: middle;
-    text-align: center;
+	display: inline-block;
+	vertical-align: middle;
+	text-align: center;
 
-    padding: 2vh 2vw;
-    background-color: var(--color-black);
+	padding: 2vh 2vw;
+	background-color: var(--color-black);
 }
 .btn-black:hover {
-    background-color: var(--color-grey);
+	background-color: var(--color-grey);
 }
 
 .err-input {
@@ -369,4 +369,3 @@ html {
 	line-height: inherit;
 	font-weight: var(--font-header-weight);
 }
-
