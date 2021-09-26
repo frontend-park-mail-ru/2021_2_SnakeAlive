@@ -3,7 +3,7 @@ import { showLoginForm, showRegisterForm } from './forms/bundle.js';
 import { getCards, showErrorPage } from './getdata/bundle.js';
 
 const main = () => {
-	alert(document.cookie);
+	// alert(document.cookie);
 
 	const btnLogin = new Button();
 	btnLogin.makeButton('Вход', 'btn-h', 'loginMainPage', document.getElementById('login-place-h'));
@@ -20,14 +20,14 @@ const main = () => {
 	btnRegister.addClickListener(showRegisterForm);
 	btnRegister.setActive();
 
-	const cards = null;
-	getCards('/country/Russia').then(
-		response => {
-			console.log(`успех ${response.status}`);
-			cards = response;
-		},
-		err => showErrorPage(err)
-	);
+	// const cards = null;
+	// getCards('/country/Russia').then(
+	// 	response => {
+	// 		console.log(`успех ${response.status}`);
+	// 		cards = response;
+	// 	},
+	// 	err => showErrorPage(err)
+	// );
 };
 
 main();
