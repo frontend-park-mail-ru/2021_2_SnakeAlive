@@ -1,5 +1,6 @@
 export default class Button {
 	#elem = null;
+
 	#listen = [];
 
 	makeButton(text = 'кнопка', styleClass = '', id = '', parentElement = null) {
@@ -10,6 +11,7 @@ export default class Button {
 		parentElement.appendChild(this.#elem);
 		this.#elem.classList.add(styleClass);
 	}
+
 	constructor(DOMelement) {
 		this.#elem = DOMelement;
 	}
@@ -21,11 +23,13 @@ export default class Button {
 	addClickListener(handler) {
 		this.#listen.push(handler);
 	}
+
 	setActive() {
 		this.#listen.forEach(handler => {
 			this.#elem.addEventListener('click', handler);
 		});
 	}
+
 	setPassive() {
 		this.#listen.forEach(handler => {
 			this.#elem.removeEventListener('click', handler);

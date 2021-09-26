@@ -1,5 +1,6 @@
 export default class Input {
 	#elem = null;
+
 	name = null;
 
 	constructor(DOMelement) {

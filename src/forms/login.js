@@ -4,17 +4,16 @@ import { FormConfig, Form, showForm } from '../components/bundle.js';
 import { backendEndpoint, loginURI } from '../constants/bundle.js';
 // import { createHtml } from '../http/readTemplate.js';
 
-const loginUser = (input) =>
+const loginUser = input =>
 	validateLoginData(input)
 		.then(() => {
-			const email = input.email;
+			const { email } = input;
 			const password = input.pswd;
 			return sendPostJSONRequest(backendEndpoint + loginURI, {
 				email,
 				password,
-			})
-		}
-		)
+			});
+		})
 		.then(response => {
 			if (response.status === 404) {
 				return Promise.reject(
@@ -58,4 +57,4 @@ const showLoginForm = () => {
 	loginForm.setButtonEvent(loginUser);
 };
 
-export { showLoginForm, loginUser };
+export { showLoginForm };

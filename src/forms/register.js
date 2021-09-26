@@ -6,16 +6,16 @@ import { sendPostJSONRequest } from '../http/bundle.js';
 const registerUser = (registerInputs) => {
 	return validateRegisterData(registerInputs)
 		.then(() => {
-			const email = registerInputs.email;
+			const { email } = registerInputs;
 			const password = registerInputs.pswd;
-			const name = registerInputs.name;
-			const surname = registerInputs.surname;
+			const { name } = registerInputs;
+			const { surname } = registerInputs;
 			return sendPostJSONRequest(backendEndpoint + registerURI, {
 				email,
 				password,
 				name,
 				surname,
-			})
+			});
 		})
 		.then(response => {
 			if (response.status === 400) {
@@ -25,8 +25,8 @@ const registerUser = (registerInputs) => {
 			}
 			return response;
 		});
-};
-
+	}
+	
 const showRegisterForm = () => {
 	const formInfo = new FormConfig(
 		'signupForm',
@@ -67,4 +67,4 @@ const showRegisterForm = () => {
 	signupForm.setButtonEvent(registerUser);
 };
 
-export { showRegisterForm, registerUser };
+export { showRegisterForm }

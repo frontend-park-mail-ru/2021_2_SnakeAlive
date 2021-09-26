@@ -43,9 +43,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "pretty": "prettier --write \"**/*.js\" && prettier --write \"**/*.html\" && prettier --write \"**/*.css\"",
-    "ch-pretty": "prettier --check .",
-    "lint": "eslint \"./**\" --fix",
-    "generate-templates": "handlebars src/templates/*.handlebars -f src/precompiled/templates.js"
+    "check-pretty": "prettier --check .",
+    "generate-templates": "handlebars src/templates/*.handlebars -f src/precompiled/templates.js",
+    "lint": "eslint \"./**\" --fix"
   },
   "repository": {
     "type": "git",

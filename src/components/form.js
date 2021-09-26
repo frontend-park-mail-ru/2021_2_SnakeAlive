@@ -4,10 +4,15 @@ import { returnToMain } from '../main.js';
 
 class Form {
 	#elem = null;
+
 	#error = null;
+
 	#button = null;
+
 	#inputs = [];
+
 	#closeBtn = null;
+
 	response = null;
 
 	constructor(config) {
@@ -37,8 +42,9 @@ class Form {
 				this.#inputs.forEach(i => i.clearErrors());
 				handler(this.getValues())
 				.then(response => {
-					returnToMain(response, this.getValues()['email']);
-				}, e => this.setError(e),)
+					console.log(document.cookie);
+					returnToMain(response);
+				}, e => this.setError(e),);
 			}
 		});
 	}
