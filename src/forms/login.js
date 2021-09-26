@@ -1,6 +1,6 @@
 import { validateLoginData, ValidationError } from '../validation/bundle.js';
 import { sendPostJSONRequest } from '../http/bundle.js';
-import { FormConfig, Form } from '../components/bundle.js';
+import { FormConfig, Form, showForm } from '../components/bundle.js';
 import { backendEndpoint, loginURI } from '../constants/bundle.js';
 // import { createHtml } from '../http/readTemplate.js';
 
@@ -29,9 +29,6 @@ const loginUser = (input) =>
 		});
 
 const showLoginForm = () => {
-	var source = document.getElementById('template-popup-form').innerHTML;
-	var template = Handlebars.compile(source);
-
 	const formInfo = new FormConfig(
 		'loginForm',
 		'Вход',
@@ -56,12 +53,9 @@ const showLoginForm = () => {
 		]
 	);
 
-	var html = template(formInfo);
-	document.getElementById('popup-place').innerHTML = html;
-
+	showForm(formInfo, document.getElementById('popup-place'));
 	const loginForm = new Form(formInfo);
 	loginForm.setButtonEvent(loginUser);
-
 };
 
 export { showLoginForm, loginUser };

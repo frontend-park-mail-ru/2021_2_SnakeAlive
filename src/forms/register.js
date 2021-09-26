@@ -1,6 +1,6 @@
 import { backendEndpoint, registerURI } from '../constants/bundle.js';
 import { validateRegisterData, ValidationError } from '../validation/bundle.js';
-import { FormConfig, Form } from '../components/bundle.js';
+import { FormConfig, Form, showForm } from '../components/bundle.js';
 import { sendPostJSONRequest } from '../http/bundle.js';
 
 const registerUser = (registerInputs) => {
@@ -28,9 +28,6 @@ const registerUser = (registerInputs) => {
 };
 
 const showRegisterForm = () => {
-	var source = document.getElementById('template-popup-form').innerHTML;
-	var template = Handlebars.compile(source);
-
 	const formInfo = new FormConfig(
 		'signupForm',
 		'Регистрация',
@@ -64,8 +61,7 @@ const showRegisterForm = () => {
 			},
 		]
 	);
-	var html = template(formInfo);
-	document.getElementById('popup-place').innerHTML = html;
+	showForm(formInfo, document.getElementById('popup-place'));
 
 	const signupForm = new Form(formInfo);
 	signupForm.setButtonEvent(registerUser);
