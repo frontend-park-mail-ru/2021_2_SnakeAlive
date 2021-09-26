@@ -1,48 +1,22 @@
 export default class Input {
-	#divLine = document.createElement('div');
+	#elem = null;
 
-	#div = document.createElement('div');
+	name = null;
 
-	#elem = document.createElement('input');
-
-	#p = null;
-
-	constructor(type, id, name, styleClass, parent) {
-		this.#elem.id = id;
-		this.#elem.type = type;
-		this.#elem.name = name;
-		this.#elem.placeholder = name;
-		this.#elem.classList.add(styleClass);
-
-		this.#elem.addEventListener('focusin', () => {
-			if (this.#p !== null) {
-				this.#div.removeChild(this.#p);
-				this.#p = null;
-			}
+	constructor(DOMelement) {
+		this.#elem = DOMelement;
+		this.name = DOMelement.name;
+		this.#elem.addEventListener('focusout', () => {
+			this.#elem.classList.remove('err-input');
 		});
-
-		this.#divLine.classList.add('line');
-		this.#divLine.appendChild(this.#elem);
-		this.#div.appendChild(this.#divLine);
-
-		parent.appendChild(this.#div);
 	}
 
-	setError(str) {
-		this.#p = document.createElement('span');
-		this.#p.classList.add('errStr');
-		this.#p.innerHTML = str;
-
-		this.#div.appendChild(this.#p);
-		this.#div.classList.add('err');
+	setError() {
+		this.#elem.classList.add('err-input');
 	}
 
 	clearErrors() {
-		// убрать картинку с восклицательныи знаком!!!!!!
-		if (this.#p !== null) {
-			this.#div.removeChild(this.#p);
-		}
-		this.#div.classList.remove('err');
+		this.#elem.classList.remove('err-input');
 	}
 
 	getValue() {

@@ -1,12 +1,25 @@
-import { Button } from './components/bundle.js';
-import { showLoginForm } from './forms/bundle.js';
+import {Button} from './components';
+import {showLoginForm, showRegisterForm, showCountrySights} from './forms';
 
-const main = () => {
-	const header = document.getElementById('header');
+const returnToMain = () => {
+    const btnLogin = new Button();
+    btnLogin.makeButton('Вход', 'btn-h', 'loginMainPage', document.getElementById('login-place-h'));
+    btnLogin.addClickListener(showLoginForm);
+    btnLogin.setActive();
 
-	const btnLogin = new Button('Войти', 'startBtn', 'login', header);
-	btnLogin.addClickListener(showLoginForm);
-	// const btnSignup = new Button('Зарегистрироваться', 'startBtn', 'signup', header);
-};
+    const btnRegister = new Button();
+    btnRegister.makeButton(
+        'Регистрация',
+        'btn-h',
+        'signupMainPage',
+        document.getElementById('register-place-h')
+    );
+    btnRegister.addClickListener(showRegisterForm);
+    btnRegister.setActive();
 
-main();
+    showCountrySights();
+}
+
+returnToMain();
+
+export {returnToMain}

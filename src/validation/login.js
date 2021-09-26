@@ -1,8 +1,8 @@
-import { validateEmail, checkEmpty, checkLength } from './common.js';
+import { validateEmail, checkIsEmpty, checkLength } from './common.js';
 
-export function validateLoginData(email = '', password = '') {
-	return checkEmpty(email, 'email')
-		.then(() => checkEmpty(password, 'pswd'))
-		.then(() => checkLength(password, 8, 'pswd'))
-		.then(() => validateEmail(email, 'email'));
+export function validateLoginData(input) {
+	return checkIsEmpty(input.email, 'email')
+		.then(() => checkIsEmpty(input.pswd, 'pswd'))
+		.then(() => checkLength(input.pswd, 4, 'pswd'))
+		.then(() => validateEmail(input.email, 'email'));
 }

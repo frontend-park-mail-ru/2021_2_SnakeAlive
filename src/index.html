@@ -4,23 +4,32 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="drop_default.css" />
 		<link rel="stylesheet" href="index.css" />
-		<link rel="stylesheet" href="start.css" />
+		<link rel="shortcut icon" href="../image/favicon.ico" type="image/x-icon">
 	</head>
-	<body>
+	<body id="body">
 		<div class="wrapper" id="root">
-			<header class="block" id="header">
-				<h1>TripAdvisor</h1>
-			</header>
-			<inner class="block">
-				<div id="inner"></div>
-			</inner>
-			<footer class="block">
-				<a>Copyright SnakeAlive</a>
-				<a>Some more information</a>
-			</footer>
-		</div>
+			<div class="header" id="header">
+				<div class="logo-h"><h2>TripAdvisor</h2></div>
+				<div id="register-place-h"></div>
+				<div id="login-place-h"></div>
+			</div>
 
+			<div id="inner" class="inner"></div>
+
+			<div class="footer">
+				<p>
+					SnakeAlive on GitHub:
+					<a href="https://github.com/go-park-mail-ru/2021_2_SnakeAlive">backend</a> |
+					<a href="https://github.com/frontend-park-mail-ru/2021_2_SnakeAlive/tree/main">frontend</a>
+				</p>
+			</div>
+		</div>
+		<div id="popup-place"></div>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+		<script src="precompiled/templates.js"></script>
 		<script src="main.js" type="module"></script>
 	</body>
 </html>

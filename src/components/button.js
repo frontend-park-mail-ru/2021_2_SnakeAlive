@@ -1,7 +1,10 @@
 export default class Button {
-	#elem = document.createElement('button');
+	#elem = null;
 
-	constructor(text = 'кнопка', styleClass = '', id = '', parentElement = null) {
+	#listen = [];
+
+	makeButton(text = 'кнопка', styleClass = '', id = '', parentElement = null) {
+		this.#elem = document.createElement('button');
 		this.#elem.id = id;
 		this.#elem.innerHTML = text;
 
@@ -9,11 +12,27 @@ export default class Button {
 		this.#elem.classList.add(styleClass);
 	}
 
+	constructor(DOMelement) {
+		this.#elem = DOMelement;
+	}
+
 	isIt(obj) {
 		return obj === this.#elem;
 	}
 
 	addClickListener(handler) {
-		this.#elem.addEventListener('click', handler);
+		this.#listen.push(handler);
+	}
+
+	setActive() {
+		this.#listen.forEach(handler => {
+			this.#elem.addEventListener('click', handler);
+		});
+	}
+
+	setPassive() {
+		this.#listen.forEach(handler => {
+			this.#elem.removeEventListener('click', handler);
+		});
 	}
 }

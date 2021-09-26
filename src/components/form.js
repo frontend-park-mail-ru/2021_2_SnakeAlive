@@ -1,55 +1,67 @@
 import Input from './input.js';
 import Button from './button.js';
+import { returnToMain } from '../main.js';
 
-export default class Form {
-	#div = document.createElement('div');
+class Form {
+	#elem = null;
 
-	#elem = document.createElement('form');
+	#error = null;
 
 	#button = null;
 
 	#inputs = [];
 
-	constructor(given, parent) {
-		this.#elem.method = 'POST';
-		this.#elem.classList.add(given.cssClass);
+	#closeBtn = null;
 
-		given.inputs.forEach(i => {
-			this.#inputs.push(new Input(i.type, i.id, i.name, given.inputCssClass, this.#elem));
+	response = null;
+
+	constructor(config) {
+		this.#elem = document.getElementById(config.formId);
+		this.#error = document.getElementById('formErrorBlock');
+		this.#button = new Button(document.getElementById(config.button.id));
+		config.inputs.forEach(i => {
+			this.#inputs.push(new Input(document.getElementById(i.id)));
 		});
-		this.#button = new Button(
-			given.button.text,
-			given.button.cssClass,
-			given.button.id,
-			this.#elem
-		);
-
-		this.#div.appendChild(this.#elem);
-		parent.appendChild(this.#div);
+		this.#closeBtn = new Button(document.getElementById('btnClose'));
+		this.#closeBtn.addClickListener(config.closeCallback);
+		this.#closeBtn.setActive();
 	}
 
 	getValues() {
-		const input = [];
-		this.#inputs.forEach(i => input.push(i.getValue()));
+		const input = {};
+		this.#inputs.forEach(i => {
+			input[i.getId()] = i.getValue();
+		});
 		return input;
 	}
 
-	setButtonEvent(handler) {
+	setButtonEvent(handler, callbacks) {
 		this.#elem.addEventListener('click', evt => {
 			if (this.#button.isIt(evt.target)) {
 				evt.preventDefault();
 				this.#inputs.forEach(i => i.clearErrors());
-
-				handler(...this.getValues()).catch(e => this.setError(e));
+				handler(this.getValues())
+				.then(response => {
+					callbacks.forEach(callback => callback(response));
+				}).catch(e => this.setError(e));
 			}
 		});
 	}
-
 	setError(error) {
 		this.#inputs.forEach(i => {
 			if (i.getId() === error.errorField) {
-				i.setError(error.message);
+				i.setError();
 			}
 		});
+		this.#error.innerHTML = error.message;
+		this.#error.classList.add('err');
 	}
-}
+};
+
+const showForm = (config, parentElement) => {
+	var template = Handlebars.templates.popup;
+	var html = template(config);
+	parentElement.innerHTML = html;
+};
+
+export {Form, showForm}

@@ -1,0 +1,43 @@
+{{#each cards}}
+<div class="card">
+    <div class="carousel">
+        {{#each imgs}}
+            {{#if main}}
+              <div class ="card__carousel__item card__carousel__item_main">
+            {{else}}
+              <div class ="card__carousel__item">
+            {{/if}}
+                  <img src="{{source}}" alt="">
+              </div>
+        {{/each}}
+    </div>
+
+    <div class="card__data__holder">
+        <div class="card__name__holder">
+            {{name}}
+        </div>
+
+        <div class="tag__holder">
+            {{#each tags}}
+                <div class="tag card__tag card__tag__font">
+                    {{name}}
+                    {{#if @last}}
+                    {{else}}
+                        <span class="span__font__large">•</span>
+                    {{/if}}
+                </div>
+            {{/each}}
+        </div>
+
+        <div class="card__comment__holder">
+										<span class="card__comment__author font__default">
+											Автор:
+											<a href="/profile/{{author}}" class="font__link">{{author}}</a>
+										</span>
+            <div class="card__comment__data font__default">
+                {{comment}}
+            </div>
+        </div>
+    </div>
+</div>
+{{/each}}

@@ -1,20 +1,23 @@
-import { validateLoginData, ValidationError } from '../validation/bundle.js';
-import { sendPostJSONRequest } from '../http/bundle.js';
-import { FormRequire, Form } from '../components/bundle.js';
-import { backendEndpoint, loginURI } from '../constants/bundle.js';
+import { validateLoginData, ValidationError } from '../validation';
+import { sendPostJSONRequest } from '../http';
+import { FormConfig, Form, showForm } from '../components';
+import { backendEndpoint, loginURI } from '../constants';
+import {flushPopup} from "./flush_popup.js";
 
-const loginUser = (email = '', password = '') =>
-	validateLoginData(email, password)
-		.then(() =>
-			sendPostJSONRequest(backendEndpoint + loginURI, {
+const loginUser = input =>
+	validateLoginData(input)
+		.then(() => {
+			const { email } = input;
+			const password = input.pswd;
+			return sendPostJSONRequest(backendEndpoint + loginURI, {
 				email,
 				password,
-			})
-		)
+			});
+		})
 		.then(response => {
 			if (response.status === 404) {
 				return Promise.reject(
-					new ValidationError('Не зарегистрирован такой адрес электронной почты', 'email')
+					new ValidationError('Не зарегистрирован такой пользователь', 'email')
 				);
 			}
 			if (response.status === 400) {
@@ -25,14 +28,14 @@ const loginUser = (email = '', password = '') =>
 		});
 
 const showLoginForm = () => {
-	const inner = document.getElementById('inner');
-
-	const formProperties = new FormRequire(
+	const formInfo = new FormConfig(
+		'loginForm',
+		'Вход',
 		'startForm',
 		{
 			text: 'Войти',
 			id: 'login',
-			cssClass: 'startBtn',
+			cssClass: 'btn-black',
 		},
 		'startInput',
 		[
@@ -46,10 +49,13 @@ const showLoginForm = () => {
 				name: 'Пароль',
 				id: 'pswd',
 			},
-		]
+		],
+		flushPopup,
 	);
-	const loginForm = new Form(formProperties, inner);
-	loginForm.setButtonEvent(loginUser);
+
+	showForm(formInfo, document.getElementById('popup-place'));
+	const loginForm = new Form(formInfo);
+	loginForm.setButtonEvent(loginUser, [flushPopup]);
 };
 
-export { showLoginForm, loginUser };
+export { showLoginForm };

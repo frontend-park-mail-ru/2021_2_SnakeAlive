@@ -1,0 +1,29 @@
+<div id="substrate">
+        <div id="popup">
+            <div id="closeLine">
+                <button class="btnHead" id="btnClose">
+                    <img src="image/020-close.png" class="cross">
+                </button>
+            </div>
+            <form method="post" class="{{cssClass}}" id="{{formId}}">
+                <ul>
+                    <li>
+                        <h2 class="logo-h">{{formName}}</h2>
+                    </li>
+                    <li>
+                        <p id="formErrorBlock" class="formErrorBlock">ошибок нет</p>
+                    </li>
+                {{#each inputs}}
+                    <li>
+                        <input type="{{type}}" id="{{id}}" placeholder="{{name}}">
+                    </li>
+                {{/each}}
+                    <li>
+                        <div id="btn-left-align">
+                            <button id="{{button.id}}" class="{{button.cssClass}}">{{button.text}}</button>
+                        </div>
+                    </li>
+                </ul>
+            </form>
+        </div>
+</div>
