@@ -245,6 +245,14 @@ html {
 	min-height: 520px;
 }
 
+/*spans*/
+
+.span__font__large {
+	font-family: var(--font-default);
+	font-weight: var(--font-header-weight);
+	font-size: 18px;
+}
+
 /*headers*/
 
 .header__default {
@@ -284,7 +292,7 @@ html {
 	margin-top: 10px;
 }
 
-.card__comment_holder {
+.card__comment__holder {
 	margin-top: 10px;
 }
 
@@ -328,18 +336,16 @@ html {
 .tag__holder {
 	margin-top: 10px;
 	width: 100%;
-	float: left;
-	display: inline-block;
+	text-align: left;
 }
 
 .tag {
 	font-style: normal;
+	display: inline-block;
 }
 
 .card__tag {
 	margin-right: 0;
-	min-width: 10px;
-	max-width: 110px;
 }
 
 .card__tag__font {
