@@ -1,9 +1,9 @@
 import { Button } from './components/bundle.js';
 import { showLoginForm, showRegisterForm } from './forms/bundle.js';
-import { getCards, showErrorPage } from './getdata/bundle.js';
+import { getCards, showErrorPage } from './validation/getdata/bundle.js';
+
 
 const main = () => {
-	alert(document.cookie);
 
 	const btnLogin = new Button();
 	btnLogin.makeButton('Вход', 'btn-h', 'loginMainPage', document.getElementById('login-place-h'));
@@ -20,19 +20,16 @@ const main = () => {
 	btnRegister.addClickListener(showRegisterForm);
 	btnRegister.setActive();
 
-	const cards = null;
-	getCards('/country/Russia').then(
-		response => {
-			console.log('успех ' + response.status);
-			cards = response;
-		},
-		err => showErrorPage(err)
-	);
+	// let cards = null;
+	getCards('/country/Russia')
+	.then(response => response.json())
+	.then(cards => Promise.resolve(console.log(cards)))
+	.catch(err => showErrorPage(err));
 };
 
 main();
 
-const returnToMain = (response, email) => {
+const returnToMain = (response) => {
 	document.getElementById('popup-place').innerHTML = '';
 
 	if (response != null) {
@@ -46,10 +43,17 @@ const returnToMain = (response, email) => {
 				document.getElementById('register-place-h')
 			);
 
-			document.getElementById('login-place-h').innerHTML = email;
-		}
+			
+			let cards = null;
+			getCards('/country/Russia')
+			.then(response => response.json())
+			.then(cards => Promise.resolve(console.log(cards.Name)))
+			.catch(err => showErrorPage(err));
+			document.getElementById('login-place-h').innerHTML = '';
+			document.getElementById('login-place-h').innerHTML = cards.Name;
 	}
-	// console.log(getCards('/country/Russia'));
+	
+}
 };
 
 export { returnToMain };

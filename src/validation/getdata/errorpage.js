@@ -1,4 +1,4 @@
 const showErrorPage = err => {
-	alert(err);
+	console.log(err);
 };
 export { showErrorPage };

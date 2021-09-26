@@ -7,10 +7,10 @@ body, html {
 	--text-normal: 18px;
 	--text-small: 12px;
 
-    --color-shadow: rgb(106, 121, 126);
-    --color-substrate: #00000033;
+    --color-substrate: #00000066;
     --color-white: white;
 	--color-black: black;
+    --color-grey: #252525;
 
 	--color-orange: #f28f3bff;
 	--color-red: #c8553dff;
@@ -74,11 +74,13 @@ body, html {
     font-weight: 600;
     text-decoration: underline;
 }
+
 #inner::after{
     line-height: 8vh; /* height of footer */
     white-space: pre;
     content: "\A";    
 }
+
 .footer {
     position: absolute;
     width: 100%;
@@ -141,56 +143,71 @@ body, html {
     grid-area: c;
     margin-top: 35%;
     height: max-content;
-    padding-left: 12vh;
+    padding-left: 2vh;
     padding-top: 2vh;
-    padding-bottom: 12vh;
+    padding-bottom: 2vh;
     padding-right: 2vh;
+
+    text-align: center;
 }
+#popup > form {
+    width: 36vh;
+    display: inline-block;
+    text-align: center;
+}
+
 #closeLine {
 	text-align: right;
 	margin-right: var(--px-small);
 }
-#btnClose {
-	background-color: transparent;
-}
 #btnClose > img {
-	color: var(--color-yellow);
 	width: 24px;
 }
+
 .startForm {
-	text-align: left;
 	background-color: var(--color-white);
 }
 .startForm > ul > li {
 	padding-bottom: 2vh;
     text-align: left;
 }
-.startForm > h2 {
-    text-align: left;
-}
 .startForm input {
-	width: 36vh;
+    padding: 2vh 2vw;
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--color-grey);
 }
-.startForm button {
-    padding-top: 4vh;
-}
+
 .formErrorBlock {
+    width: 36vh;
+    padding-top: 2vh;
     font-size: var(--text-small);
-	width: 36vh;
-	word-wrap: true;
-	margin-top: 3vh;
-	margin-bottom: 1vh;
-    padding-top: 1vh;
-    padding-bottom: 1vh;
+    word-wrap: true;
+    color: var(--color-red);
 	visibility: hidden;
 }
-.err {
-	border-color: var(--color-red);
-	border-width: 2px;
-	border-style: solid;
-	color: var(--color-red);
+ .err {
 	visibility: visible;
 }
-.err-input {
-    background-color: var(--color-light-red);
+.startForm .err-input {
+    border-color: var(--color-red);
+	border-width: 2px;
+	border-style: solid;
+}
+
+
+.btn-black {
+    font-weight: 700;
+    color: var(--color-white);
+    font-size: var(--text-normal);
+
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+
+    padding: 2vh 2vw;
+    background-color: var(--color-black);
+}
+.btn-black:hover {
+    background-color: var(--color-grey);
 }

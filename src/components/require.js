@@ -1,4 +1,4 @@
-class FormRequire {
+class FormConfig {
 	formId = '';
 
 	formName = '';
@@ -32,4 +32,4 @@ class RegisterInputs {
 		this.pswd = _pswd;
 	}
 }
-export { FormRequire, RegisterInputs };
+export { FormConfig, RegisterInputs };

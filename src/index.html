@@ -6,6 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="drop_default.css" />
 		<link rel="stylesheet" href="index.css" />
+		<link rel="shortcut icon" href="../image/favicon.ico" type="image/x-icon">
 	</head>
 	<body id="body">
 		<div class="wrapper" id="root">
@@ -27,14 +28,13 @@
 			</div>
 			<div class="footer">
 				<p>
-				SnakeAlive on GitHub: <a href="https://github.com/go-park-mail-ru/2021_2_SnakeAlive">backend</a> | <a href="https://github.com/frontend-park-mail-ru/2021_2_SnakeAlive/tree/main">frontend</a>
+				SnakeAlive on GitHub: <a href="https://github.com/go-park-mail-ru/2021_2_SnakeAlive">backend</a> | <a href="https://github.com/frontend-park-mail-ru/2021_2_SnakeAlive">frontend</a>
 				</p>
 			</div>
 		</div>
 		<div id="popup-place"></div>
-
 		<script id="template-popup-form" type="text/x-handlebars-template">
-			<div id="substrate">
+		<div id="substrate">
 				<div id="popup">
 					<div id="closeLine">
 						<button class="btnHead" id="btnClose">
@@ -42,8 +42,10 @@
 						</button>
 					</div>
 					<form method="post" class="{{cssClass}}" id="{{formId}}">
-						<h2 class="logo-h">{{formName}}</h2>
 						<ul>
+							<li>
+								<h2 class="logo-h">{{formName}}</h2>
+							</li>
 							<li>
 								<p id="formErrorBlock" class="formErrorBlock">ошибок нет</p>
 							</li>
@@ -53,14 +55,15 @@
 							</li>
 						{{/each}}
 							<li>
-								<button id="{{button.id}}" class="{{button.cssClass}}">{{button.text}}</button>
+								<div id="btn-left-align">
+									<button id="{{button.id}}" class="{{button.cssClass}}">{{button.text}}</button>
+								</div>
 							</li>
 						</ul>
 					</form>
 				<div>
 			<div>
 		</script>
-
 		<script src="handlebars.min.js"></script>
 		<script src="main.js" type="module"></script>
 	</body>

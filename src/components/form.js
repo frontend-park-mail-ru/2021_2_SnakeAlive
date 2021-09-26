@@ -35,11 +35,13 @@ export default class Form {
 			if (this.#button.isIt(evt.target)) {
 				evt.preventDefault();
 				this.#inputs.forEach(i => i.clearErrors());
-				returnToMain(handler(this.getValues()).catch(e => this.setError(e)), 'Будет пользователь');
+				handler(this.getValues())
+				.then(response => {
+					returnToMain(response, this.getValues()['email']);
+				}, e => this.setError(e),)
 			}
 		});
 	}
-
 	setError(error) {
 		this.#inputs.forEach(i => {
 			if (i.getId() === error.errorField) {

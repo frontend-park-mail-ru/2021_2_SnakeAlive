@@ -1,5 +1,5 @@
-import { sendGetJSONRequest } from '../http/bundle.js';
-import { backendEndpoint } from '../constants/bundle.js';
+import { sendGetJSONRequest } from '../../http/bundle.js';
+import { backendEndpoint } from '../../constants/bundle.js';
 
 const getCards = uri =>
 	sendGetJSONRequest(backendEndpoint + uri).then(response => {

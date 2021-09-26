@@ -1,7 +1,8 @@
 import { validateLoginData, ValidationError } from '../validation/bundle.js';
 import { sendPostJSONRequest } from '../http/bundle.js';
-import { FormRequire, Form } from '../components/bundle.js';
+import { FormConfig, Form } from '../components/bundle.js';
 import { backendEndpoint, loginURI } from '../constants/bundle.js';
+// import { createHtml } from '../http/readTemplate.js';
 
 const loginUser = (input) =>
 	validateLoginData(input)
@@ -17,7 +18,7 @@ const loginUser = (input) =>
 		.then(response => {
 			if (response.status === 404) {
 				return Promise.reject(
-					new ValidationError('Не зарегистрирован такой адрес электронной почты', 'email')
+					new ValidationError('Не зарегистрирован такой пользователь', 'email')
 				);
 			}
 			if (response.status === 400) {
@@ -31,14 +32,14 @@ const showLoginForm = () => {
 	var source = document.getElementById('template-popup-form').innerHTML;
 	var template = Handlebars.compile(source);
 
-	const formProperties = new FormRequire(
+	const formInfo = new FormConfig(
 		'loginForm',
 		'Вход',
 		'startForm',
 		{
 			text: 'Войти',
 			id: 'login',
-			cssClass: 'btn-h',
+			cssClass: 'btn-black',
 		},
 		'startInput',
 		[
@@ -54,11 +55,13 @@ const showLoginForm = () => {
 			},
 		]
 	);
-	var html = template(formProperties);
+
+	var html = template(formInfo);
 	document.getElementById('popup-place').innerHTML = html;
 
-	const loginForm = new Form(formProperties);
+	const loginForm = new Form(formInfo);
 	loginForm.setButtonEvent(loginUser);
+
 };
 
 export { showLoginForm, loginUser };

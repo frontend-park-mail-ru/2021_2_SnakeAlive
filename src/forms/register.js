@@ -1,11 +1,9 @@
 import { backendEndpoint, registerURI } from '../constants/bundle.js';
 import { validateRegisterData, ValidationError } from '../validation/bundle.js';
-import { FormRequire, Form, RegisterInputs } from '../components/bundle.js';
+import { FormConfig, Form } from '../components/bundle.js';
 import { sendPostJSONRequest } from '../http/bundle.js';
 
 const registerUser = (registerInputs) => {
-	
-
 	return validateRegisterData(registerInputs)
 		.then(() => {
 			const email = registerInputs.email;
@@ -22,10 +20,9 @@ const registerUser = (registerInputs) => {
 		.then(response => {
 			if (response.status === 400) {
 				return Promise.reject(
-					new ValidationError('Пользователь с таким емэйлом уже существует', 'email')
+					new ValidationError('Пользователь с такой почтой уже существует', 'email')
 				);
 			}
-			// console.log(email);
 			return response;
 		});
 };
@@ -34,14 +31,14 @@ const showRegisterForm = () => {
 	var source = document.getElementById('template-popup-form').innerHTML;
 	var template = Handlebars.compile(source);
 
-	const formProperties = new FormRequire(
+	const formInfo = new FormConfig(
 		'signupForm',
 		'Регистрация',
 		'startForm',
 		{
-			text: 'Зарегистрироваться',
+			text: 'Ок',
 			id: 'signup',
-			cssClass: 'btn-h',
+			cssClass: 'btn-black',
 		},
 		'startInput',
 		[
@@ -67,10 +64,10 @@ const showRegisterForm = () => {
 			},
 		]
 	);
-	var html = template(formProperties);
+	var html = template(formInfo);
 	document.getElementById('popup-place').innerHTML = html;
 
-	const signupForm = new Form(formProperties);
+	const signupForm = new Form(formInfo);
 	signupForm.setButtonEvent(registerUser);
 };
 
