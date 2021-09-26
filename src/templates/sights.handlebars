@@ -19,11 +19,17 @@
 
         <div class="tag__holder">
             {{#each tags}}
-                <div class="tag card__tag card__tag__font">{{name}}</div>
+                <div class="tag card__tag card__tag__font">
+                    {{name}}
+                    {{#if @last}}
+                    {{else}}
+                        <span class="span__font__large">•</span>
+                    {{/if}}
+                </div>
             {{/each}}
         </div>
 
-        <div class="card__comment_holder">
+        <div class="card__comment__holder">
 										<span class="card__comment__author font__default">
 											Автор:
 											<a href="/profile/{{author}}" class="font__link">{{author}}</a>
