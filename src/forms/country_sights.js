@@ -32,7 +32,7 @@ const showCountrySights = () => {
 			document.querySelector('.card__grid').innerHTML = sights(adaptGetCards(cards));
 		})
 		.catch(error => {
-			console.log(error)
+			console.log(error);
 		});
 };
 

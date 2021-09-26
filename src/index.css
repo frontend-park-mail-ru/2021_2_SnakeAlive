@@ -235,7 +235,7 @@ html {
 
 /*spans*/
 
-.span__font__large{
+.span__font__large {
 	font-family: var(--font-default);
 	font-weight: var(--font-header-weight);
 	font-size: 18px;
@@ -329,7 +329,7 @@ html {
 
 .tag {
 	font-style: normal;
-	display:inline-block;
+	display: inline-block;
 }
 
 .card__tag {
