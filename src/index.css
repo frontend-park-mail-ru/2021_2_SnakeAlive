@@ -184,7 +184,7 @@ html {
 	width: 36vh;
 	padding-top: 2vh;
 	font-size: var(--text-small);
-	word-wrap: true;
+	word-wrap: normal;
 	color: var(--color-red);
 	visibility: hidden;
 }
