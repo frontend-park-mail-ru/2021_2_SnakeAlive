@@ -1,10 +1,16 @@
-const sendGetRequest = (uri = '/', headers = {}) =>
-	fetch(uri, {
+const sendGetRequest = (uri = '/', headers = {}) => {
+	console.log(document.cookie);
+	return fetch(uri, {
 		method: 'GET',
 		headers,
 		mode: 'cors',
-		credentials: 'same-origin',
+		credentials: 'include',
+		xhrFields: {
+			withCredentials: true,
+		},
 	});
+}
+	
 
 const sendGetJSONRequest = (uri = '/', headers = {}) =>
 	sendGetRequest(uri, {

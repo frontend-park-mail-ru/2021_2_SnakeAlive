@@ -13,11 +13,10 @@ html {
 	--text-normal: 18px;
 	--text-small: 12px;
 
-	--color-shadow: rgb(106, 121, 126);
-	--color-substrate: #00000033;
-	--color-white: white;
+    --color-substrate: #00000066;
+    --color-white: white;
 	--color-black: black;
-	--color-green: green;
+    --color-grey: #252525;
 
 	--color-orange: #f28f3bff;
 	--color-red: #c8553dff;
@@ -90,10 +89,10 @@ html {
 	text-decoration: underline;
 }
 
-#inner::after {
-	line-height: 8vh; /* height of footer */
-	white-space: pre;
-	content: '\A';
+#inner::after{
+    line-height: 8vh; /* height of footer */
+    white-space: pre;
+    content: "\A";    
 }
 
 .footer {
@@ -134,15 +133,22 @@ html {
 }
 
 #popup {
-	background-color: var(--color-white);
-	margin: 0.6vw;
-	grid-area: c;
-	margin-top: 35%;
-	height: max-content;
-	padding-left: 12vh;
-	padding-top: 2vh;
-	padding-bottom: 12vh;
-	padding-right: 2vh;
+    background-color: var(--color-white);
+    margin: 0.6vw;
+    grid-area: c;
+    margin-top: 35%;
+    height: max-content;
+    padding-left: 2vh;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    padding-right: 2vh;
+
+    text-align: center;
+}
+#popup > form {
+    width: 36vh;
+    display: inline-block;
+    text-align: center;
 }
 
 #closeLine {
@@ -155,12 +161,10 @@ html {
 }
 
 #btnClose > img {
-	color: var(--color-yellow);
 	width: 24px;
 }
 
 .startForm {
-	text-align: left;
 	background-color: var(--color-white);
 }
 
@@ -168,36 +172,44 @@ html {
 	padding-bottom: 2vh;
 	text-align: left;
 }
-
-.startForm > h2 {
-	text-align: left;
-}
-
 .startForm input {
-	width: 36vh;
-}
-
-.startForm button {
-	padding-top: 4vh;
+    padding: 2vh 2vw;
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--color-grey);
 }
 
 .formErrorBlock {
-	font-size: var(--text-small);
-	width: 36vh;
-	word-wrap: normal;
-	margin-top: 3vh;
-	margin-bottom: 1vh;
-	padding-top: 1vh;
-	padding-bottom: 1vh;
+    width: 36vh;
+    padding-top: 2vh;
+    font-size: var(--text-small);
+    word-wrap: true;
+    color: var(--color-red);
 	visibility: hidden;
 }
-
-.err {
-	border-color: var(--color-red);
+ .err {
+	visibility: visible;
+}
+.startForm .err-input {
+    border-color: var(--color-red);
 	border-width: 2px;
 	border-style: solid;
-	color: var(--color-red);
-	visibility: visible;
+}
+
+.btn-black {
+    font-weight: 700;
+    color: var(--color-white);
+    font-size: var(--text-normal);
+
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+
+    padding: 2vh 2vw;
+    background-color: var(--color-black);
+}
+.btn-black:hover {
+    background-color: var(--color-grey);
 }
 
 .err-input {
@@ -356,3 +368,4 @@ html {
 	line-height: inherit;
 	font-weight: var(--font-header-weight);
 }
+

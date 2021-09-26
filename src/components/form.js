@@ -2,7 +2,7 @@ import Input from './input.js';
 import Button from './button.js';
 import { returnToMain } from '../main.js';
 
-export default class Form {
+class Form {
 	#elem = null;
 
 	#error = null;
@@ -15,11 +15,11 @@ export default class Form {
 
 	response = null;
 
-	constructor(given) {
-		this.#elem = document.getElementById(given.formId);
+	constructor(config) {
+		this.#elem = document.getElementById(config.formId);
 		this.#error = document.getElementById('formErrorBlock');
-		this.#button = new Button(document.getElementById(given.button.id));
-		given.inputs.forEach(i => {
+		this.#button = new Button(document.getElementById(config.button.id));
+		config.inputs.forEach(i => {
 			this.#inputs.push(new Input(document.getElementById(i.id)));
 		});
 		this.#closeBtn = new Button(document.getElementById('btnClose'));
@@ -40,14 +40,14 @@ export default class Form {
 			if (this.#button.isIt(evt.target)) {
 				evt.preventDefault();
 				this.#inputs.forEach(i => i.clearErrors());
-				returnToMain(
-					handler(this.getValues()).catch(e => this.setError(e)),
-					'Будет пользователь'
-				);
+				handler(this.getValues())
+				.then(response => {
+					console.log(document.cookie);
+					returnToMain(response);
+				}, e => this.setError(e),);
 			}
 		});
 	}
-
 	setError(error) {
 		this.#inputs.forEach(i => {
 			if (i.getId() === error.errorField) {
@@ -57,4 +57,12 @@ export default class Form {
 		this.#error.innerHTML = error.message;
 		this.#error.classList.add('err');
 	}
-}
+};
+
+const showForm = (config, parentElement) => {
+	var template = Handlebars.templates.popup;
+	var html = template(config);
+	parentElement.innerHTML = html;
+};
+
+export {Form, showForm}

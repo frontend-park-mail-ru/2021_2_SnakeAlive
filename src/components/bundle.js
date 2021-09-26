@@ -1,6 +1,7 @@
-import Form from './form.js';
-import { FormRequire } from './require.js';
+
+import { Form, showForm } from './form.js';
+import { FormConfig } from './require.js';
 import { RegisterInputs } from './register_inputs.js';
 import Button from './button.js';
 
-export { Form, FormRequire, RegisterInputs, Button };
+export { Form, showForm, FormConfig, RegisterInputs, Button };

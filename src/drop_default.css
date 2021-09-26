@@ -84,7 +84,8 @@ time,
 mark,
 audio,
 video,
-button {
+button,
+input {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -93,6 +94,7 @@ button {
 	vertical-align: baseline;
 	background-color: transparent;
 	letter-spacing: inherit;
+	border-radius: 0px;
 }
 /* HTML5 display-role reset for older browsers */
 article,

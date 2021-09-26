@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="drop_default.css" />
 		<link rel="stylesheet" href="index.css" />
-		<title>Tripadvisor</title>
+		<link rel="shortcut icon" href="../image/favicon.ico" type="image/x-icon">
 	</head>
 	<body id="body">
 		<div class="wrapper" id="root">
@@ -20,45 +20,18 @@
 
 			<div class="footer">
 				<p>
+
 					SnakeAlive on GitHub:
 					<a href="https://github.com/go-park-mail-ru/2021_2_SnakeAlive">backend</a> |
-					<a href="https://github.com/frontend-park-mail-ru/2021_2_SnakeAlive/tree/main"
-						>frontend</a
-					>
+					<a href="https://github.com/frontend-park-mail-ru/2021_2_SnakeAlive/tree/main">frontend</a>
 				</p>
 			</div>
 		</div>
 		<div id="popup-place"></div>
 
-		<script id="template-popup-form" type="text/x-handlebars-template">
-			<div id="substrate">
-				<div id="popup">
-					<div id="closeLine">
-						<button class="btnHead" id="btnClose">
-							<img src="image/020-close.png" class="cross">
-						</button>
-					</div>
-					<form method="post" class="{{cssClass}}" id="{{formId}}">
-						<h2 class="logo-h">{{formName}}</h2>
-						<ul>
-							<li>
-								<p id="formErrorBlock" class="formErrorBlock">ошибок нет</p>
-							</li>
-						{{#each inputs}}
-							<li>
-								<input type="{{type}}" id="{{id}}" placeholder="{{name}}">
-							</li>
-						{{/each}}
-							<li>
-								<button id="{{button.id}}" class="{{button.cssClass}}">{{button.text}}</button>
-							</li>
-						</ul>
-					</form>
-				<div>
-			<div>
-		</script>
-
 		<script src="handlebars.min.js"></script>
+		<script src="handlebars.runtime-v4.7.7.js"></script>
+		<script src="precompiled/templates.js"></script>
 		<script src="main.js" type="module"></script>
 		<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.runtime.js"></script>
 		<script src="precompiled/templates.js"></script>
