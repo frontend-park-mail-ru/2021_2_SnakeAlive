@@ -57,7 +57,7 @@ class Form {
 	}
 }
 
-const formHTML = (config) => {
+const formHTML = config => {
 	const template = Handlebars.templates.popup;
 	return template(config);
 };

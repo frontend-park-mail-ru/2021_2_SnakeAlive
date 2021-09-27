@@ -2,6 +2,15 @@ import { sendGetJSONRequest } from '../http';
 import { backendEndpoint, defaultCountryName, countrySights, defaultCountry } from '../constants';
 import { adaptGetCards } from '../adapters';
 
+/**
+ * Функция принимает страну, возвращает Promise с http-ответом
+ *
+ * @param {String} country Страна, для которой хоти получить достопримечательности
+ * @promise fPromise
+ * @fulfill {Response} http response из fetch()
+ * @reject {Error}
+ * @returns fPromise
+ */
 const getCards = country =>
 	sendGetJSONRequest(backendEndpoint + countrySights + country).then(response => {
 		if (response.status === 404) {
@@ -13,6 +22,9 @@ const getCards = country =>
 		return Promise.resolve(response);
 	});
 
+/**
+ * Функция создает html страницы со списком достопримечательностей страны defaultCountryName
+ */
 const showCountrySights = () => {
 	const countryPageTemplate = Handlebars.templates.country_sights;
 	const inner = document.querySelector('#inner');
@@ -21,12 +33,12 @@ const showCountrySights = () => {
 		.then(response => response.json())
 		.then(cards => {
 			inner.innerHTML = countryPageTemplate({ name: defaultCountryName });
-			const {sights} = Handlebars.templates;
+			const { sights } = Handlebars.templates;
 			document.querySelector('.card__grid').innerHTML = sights(adaptGetCards(cards));
 		})
 		.catch(error => {
-			inner.innerHTML = countryPageTemplate({ name: ": Ошибка" });
-			document.querySelector('.card__grid').innerHTML = `<p>${  error  }</p>`;
+			inner.innerHTML = countryPageTemplate({ name: ': Ошибка' });
+			document.querySelector('.card__grid').innerHTML = `<p>${error}</p>`;
 		});
 };
 

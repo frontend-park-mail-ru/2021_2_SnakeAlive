@@ -4,7 +4,21 @@ import { FormConfig, Form, formHTML } from '../components';
 import { sendPostJSONRequest } from '../http';
 import { flushPopup } from './flush_popup.js';
 
-const registerUser = registerInputs => validateRegisterData(registerInputs)
+/**
+ * Функция принимает объект, содержащий данные, введенные пользователем в форму. Возвращает promise
+ *
+ * @param {Object} registerInputs Объект, содержащий данные, введенные пользователем в форму
+ * @param {String} registerInputs.name Имя пользователя
+ * @param {String} registerInputs.surname Фамилия пользователя
+ * @param {String} registerInputs.email Электронная почта пользователя
+ * @param {String} registerInputs.pswd Пароль пользователя
+ * @promise fPromise
+ * @fulfill {Response} http response из fetch()
+ * @reject {Error}
+ * @returns fPromise
+ */
+const registerUser = registerInputs =>
+	validateRegisterData(registerInputs)
 		.then(() => {
 			const { email } = registerInputs;
 			const password = registerInputs.pswd;
@@ -25,14 +39,16 @@ const registerUser = registerInputs => validateRegisterData(registerInputs)
 			}
 			return response;
 		});
-
+/**
+ * Функция конструирует и добавляет в index.html форму регистрации
+ */
 const showRegisterForm = () => {
 	const formInfo = new FormConfig(
 		'signupForm',
 		'Регистрация',
 		'startForm',
 		{
-			text: 'Ок',
+			text: 'Поехали!',
 			id: 'signup',
 			cssClass: 'btn-black',
 		},

@@ -3,6 +3,12 @@ export default class Input {
 
 	name = null;
 
+	/**
+	 * Represents a book.
+	 * @constructor
+	 * @param {string} title - The title of the book.
+	 * @param {string} author - The author of the book.
+	 */
 	constructor(DOMelement) {
 		this.#elem = DOMelement;
 		this.name = DOMelement.name;

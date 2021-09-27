@@ -1,3 +1,6 @@
+/**
+ * Функция создает html div#footer по шаблону, вставляя в него ссылки на гитхаб команды
+ */
 export function footerHTML() {
 	const template = Handlebars.templates.footer;
 	return template({

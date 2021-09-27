@@ -54,6 +54,7 @@ html {
 	font-weight: 700;
 	font-size: var(--text-larger);
 	align-self: center;
+	justify-self: left;
 }
 
 #register-place-h {
@@ -61,7 +62,6 @@ html {
 	align-self: center;
 	justify-self: center;
 }
-
 #login-place-h {
 	grid-area: d;
 	align-self: center;
@@ -72,7 +72,6 @@ html {
 	font-weight: 500;
 	font-size: var(--text-normal);
 }
-
 .btn-h:hover {
 	font-weight: 600;
 	text-decoration: underline;
@@ -91,7 +90,6 @@ html {
 	grid-template-areas: 'a b c';
 	box-shadow: 1px -1px var(--color-grey);
 }
-
 .footer_content {
 	grid-area: b;
 	text-decoration: none;
@@ -137,6 +135,12 @@ html {
 }
 .cross {
 	width: 24px;
+}
+
+.formName {
+	font-weight: 700;
+	font-size: var(--text-larger);
+	text-align: center;
 }
 
 .startInput {
