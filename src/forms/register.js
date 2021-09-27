@@ -1,7 +1,7 @@
-import { backendEndpoint, registerURI } from '../constants';
-import { validateRegisterData, ValidationError } from '../validation';
-import { FormConfig, Form, formHTML } from '../components';
-import { sendPostJSONRequest } from '../http';
+import { backendEndpoint, registerURI } from '../constants/index.js';
+import { validateRegisterData, ValidationError } from '../validation/index.js';
+import { FormConfig, Form, formHTML } from '../components/index.js';
+import { sendPostJSONRequest } from '../http/index.js';
 import { flushPopup } from './flush_popup.js';
 import { showCountrySights } from './country_sights.js';
 
