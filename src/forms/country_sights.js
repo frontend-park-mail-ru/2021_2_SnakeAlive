@@ -14,19 +14,19 @@ const getCards = country =>
 	});
 
 const showCountrySights = () => {
-	let countryPageTemplate = Handlebars.templates.country_sights;
-	document.querySelector('#inner').innerHTML = countryPageTemplate({ name: defaultCountryName });
+	const countryPageTemplate = Handlebars.templates.country_sights;
+	const inner = document.querySelector('#inner');
 
 	getCards(defaultCountry)
-		.then(response => {
-			return response.json();
-		})
+		.then(response => response.json())
 		.then(cards => {
-			let sights = Handlebars.templates.sights;
+			inner.innerHTML = countryPageTemplate({ name: defaultCountryName });
+			const {sights} = Handlebars.templates;
 			document.querySelector('.card__grid').innerHTML = sights(adaptGetCards(cards));
 		})
 		.catch(error => {
-			console.log(error);
+			inner.innerHTML = countryPageTemplate({ name: ": Ошибка" });
+			document.querySelector('.card__grid').innerHTML = `<p>${  error  }</p>`;
 		});
 };
 

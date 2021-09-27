@@ -22,6 +22,7 @@ module.exports = {
 		'handlebars.min.js',
 		'./src/precompiled/*',
 		'./src/templates/*',
+		'handlebars.min-v4.7.7.js'
 	],
 	rules: {
 		'prefer-const': 'error',

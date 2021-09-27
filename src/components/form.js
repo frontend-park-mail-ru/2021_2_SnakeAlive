@@ -1,6 +1,5 @@
 import Input from './input.js';
 import Button from './button.js';
-import { returnToMain } from '../main.js';
 
 class Form {
 	#elem = null;
@@ -12,8 +11,6 @@ class Form {
 	#inputs = [];
 
 	#closeBtn = null;
-
-	response = null;
 
 	constructor(config) {
 		this.#elem = document.getElementById(config.formId);
@@ -35,12 +32,12 @@ class Form {
 		return input;
 	}
 
-	setButtonEvent(handler, callbacks) {
+	setButtonEvent(action, callbacks) {
 		this.#elem.addEventListener('click', evt => {
 			if (this.#button.isIt(evt.target)) {
 				evt.preventDefault();
 				this.#inputs.forEach(i => i.clearErrors());
-				handler(this.getValues())
+				action(this.getValues())
 					.then(response => {
 						callbacks.forEach(callback => callback(response));
 					})
@@ -48,6 +45,7 @@ class Form {
 			}
 		});
 	}
+
 	setError(error) {
 		this.#inputs.forEach(i => {
 			if (i.getId() === error.errorField) {
@@ -59,10 +57,9 @@ class Form {
 	}
 }
 
-const showForm = (config, parentElement) => {
-	var template = Handlebars.templates.popup;
-	var html = template(config);
-	parentElement.innerHTML = html;
+const formHTML = (config) => {
+	const template = Handlebars.templates.popup;
+	return template(config);
 };
 
-export { Form, showForm };
+export { Form, formHTML };

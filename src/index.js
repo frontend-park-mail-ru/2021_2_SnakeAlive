@@ -1,7 +1,19 @@
 import { Button } from './components';
-import { showLoginForm, showRegisterForm, showCountrySights } from './forms';
+import {
+	showLoginForm,
+	showRegisterForm,
+	showCountrySights,
+	headerHTML,
+	footerHTML,
+	innerHTML,
+} from './forms/index.js';
 
-const returnToMain = () => {
+const generateMainPage = () => {
+	const root = document.getElementById('root');
+	root.innerHTML += headerHTML();
+	root.innerHTML += innerHTML();
+	root.innerHTML += footerHTML();
+
 	const btnLogin = new Button();
 	btnLogin.makeButton('Вход', 'btn-h', 'loginMainPage', document.getElementById('login-place-h'));
 	btnLogin.addClickListener(showLoginForm);
@@ -20,6 +32,4 @@ const returnToMain = () => {
 	showCountrySights();
 };
 
-returnToMain();
-
-export { returnToMain };
+generateMainPage();

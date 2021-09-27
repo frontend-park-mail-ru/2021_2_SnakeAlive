@@ -6,24 +6,12 @@
                 </button>
             </div>
             <form method="post" class="{{cssClass}}" id="{{formId}}">
-                <ul>
-                    <li>
-                        <h2 class="logo-h">{{formName}}</h2>
-                    </li>
-                    <li>
-                        <p id="formErrorBlock" class="formErrorBlock">ошибок нет</p>
-                    </li>
-                {{#each inputs}}
-                    <li>
-                        <input type="{{type}}" id="{{id}}" placeholder="{{name}}">
-                    </li>
-                {{/each}}
-                    <li>
-                        <div id="btn-left-align">
-                            <button id="{{button.id}}" class="{{button.cssClass}}">{{button.text}}</button>
-                        </div>
-                    </li>
-                </ul>
+							<h2 class="logo-h">{{formName}}</h2>
+							<p id="formErrorBlock" class="formErrorBlock">ошибок нет</p>
+							{{#each inputs}}
+								<input type="{{type}}" id="{{id}}" placeholder="{{name}}" class="startInput">
+							{{/each}}
+							<button id="{{button.id}}" class="{{button.cssClass}}">{{button.text}}</button>
             </form>
         </div>
 </div>

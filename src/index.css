@@ -13,21 +13,14 @@ html {
 	--text-normal: 18px;
 	--text-small: 12px;
 
+	--px-small: 10px;
+
 	--color-substrate: #00000066;
 	--color-white: white;
 	--color-black: black;
 	--color-grey: #252525;
 	--color-green: green;
-
-	--color-orange: #f28f3bff;
-	--color-red: #c8553dff;
-	--color-light-red: rgb(255, 219, 212);
-	--color-yellow: #372248;
-	--color-light-yellow: #4a2e61;
-	--color-light-color: #f1fffe;
-	--color-shadow: #5c6f68;
-
-	--px-small: 10px;
+	--color-red: #e55934;
 
 	position: absolute;
 	width: 100%;
@@ -54,11 +47,6 @@ html {
 
 	box-shadow: 1px 1px var(--color-black);
 	margin-bottom: 2vh;
-}
-
-.header > * {
-	display: inline;
-	/* vertical-align: middle; */
 }
 
 .logo-h {
@@ -90,12 +78,6 @@ html {
 	text-decoration: underline;
 }
 
-#inner::after {
-	line-height: 8vh; /* height of footer */
-	white-space: pre;
-	content: '\A';
-}
-
 .footer {
 	position: absolute;
 	width: 100%;
@@ -107,21 +89,22 @@ html {
 	/* делаем поля по бокам */
 	grid-template-columns: 9.2vw 1fr 9.2vw;
 	grid-template-areas: 'a b c';
-	box-shadow: 1px -1px var(--color-shadow);
+	box-shadow: 1px -1px var(--color-grey);
 }
 
-.footer > * {
+.footer_content {
 	grid-area: b;
 	text-decoration: none;
-	color: var(--color-shadow);
+	color: var(--color-grey);
 	font-size: var(--text-small);
 	display: inline;
 	align-self: center;
 }
 
+/* popup */
 #substrate {
 	display: grid;
-	/* делаем 3 основных колонок и 2 поля по бокам */
+	/* делаем 3 основных колонки и 2 поля по бокам */
 	grid-template-columns: 9.2vw 1fr 2fr 1fr 9.2vw;
 	grid-template-areas: 'a b c d e';
 
@@ -132,71 +115,59 @@ html {
 	width: 100%;
 	height: 100%;
 }
-
 #popup {
 	background-color: var(--color-white);
-	margin: 0.6vw;
 	grid-area: c;
-	margin-top: 35%;
 	height: max-content;
-	padding-left: 2vh;
-	padding-top: 2vh;
-	padding-bottom: 2vh;
-	padding-right: 2vh;
-
+	padding: 4vh 2vw;
+	align-self: center;
 	text-align: center;
 }
-#popup > form {
+.startForm {
 	width: 36vh;
 	display: inline-block;
-	text-align: center;
+	text-align: left;
+	background-color: var(--color-white);
 }
 
+/* button close popup */
 #closeLine {
 	text-align: right;
 	margin-right: var(--px-small);
 }
-
-#btnClose {
-	background-color: transparent;
-}
-
-#btnClose > img {
+.cross {
 	width: 24px;
 }
 
-.startForm {
-	background-color: var(--color-white);
-}
-
-.startForm > ul > li {
-	padding-bottom: 2vh;
-	text-align: left;
-}
-.startForm input {
+.startInput {
 	padding: 2vh 2vw;
+	margin-bottom: 2vh;
 	border-width: 1px;
 	border-style: solid;
 	border-color: var(--color-grey);
 }
 
+/* show errors in form */
 .formErrorBlock {
 	width: 36vh;
 	padding-top: 2vh;
+	margin: 2vh 0;
 	font-size: var(--text-small);
 	word-wrap: normal;
 	color: var(--color-red);
 	visibility: hidden;
+	text-align: left;
 }
 .err {
 	visibility: visible;
 }
-.startForm .err-input {
+.err-input {
 	border-color: var(--color-red);
 	border-width: 2px;
 	border-style: solid;
 }
 
+/* submit form button */
 .btn-black {
 	font-weight: 700;
 	color: var(--color-white);
@@ -211,10 +182,6 @@ html {
 }
 .btn-black:hover {
 	background-color: var(--color-grey);
-}
-
-.err-input {
-	background-color: var(--color-light-red);
 }
 
 /*card*/
@@ -359,7 +326,7 @@ html {
 .font__default {
 	font-size: 14px;
 	line-height: 17px;
-	color: var(--color-shadow);
+	color: var(--color-grey);
 }
 
 .font__link {

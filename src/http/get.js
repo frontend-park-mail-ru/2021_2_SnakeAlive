@@ -1,11 +1,9 @@
-const sendGetRequest = (uri = '/', headers = {}) => {
-	return fetch(uri, {
+const sendGetRequest = (uri = '/', headers = {}) => fetch(uri, {
 		method: 'GET',
 		headers,
 		mode: 'cors',
 		credentials: 'include',
 	});
-};
 
 const sendGetJSONRequest = (uri = '/', headers = {}) =>
 	sendGetRequest(uri, {

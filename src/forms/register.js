@@ -1,11 +1,10 @@
 import { backendEndpoint, registerURI } from '../constants';
 import { validateRegisterData, ValidationError } from '../validation';
-import { FormConfig, Form, showForm } from '../components';
+import { FormConfig, Form, formHTML } from '../components';
 import { sendPostJSONRequest } from '../http';
 import { flushPopup } from './flush_popup.js';
 
-const registerUser = registerInputs => {
-	return validateRegisterData(registerInputs)
+const registerUser = registerInputs => validateRegisterData(registerInputs)
 		.then(() => {
 			const { email } = registerInputs;
 			const password = registerInputs.pswd;
@@ -26,7 +25,6 @@ const registerUser = registerInputs => {
 			}
 			return response;
 		});
-};
 
 const showRegisterForm = () => {
 	const formInfo = new FormConfig(
@@ -63,7 +61,7 @@ const showRegisterForm = () => {
 		],
 		flushPopup
 	);
-	showForm(formInfo, document.getElementById('popup-place'));
+	document.getElementById('popup-place').innerHTML = formHTML(formInfo);
 
 	const signupForm = new Form(formInfo);
 	signupForm.setButtonEvent(registerUser, [flushPopup]);

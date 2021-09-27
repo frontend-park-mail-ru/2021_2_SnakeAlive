@@ -16,10 +16,11 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "pretty": "prettier --write \"**/*.js\" && prettier --write \"**/*.html\" && prettier --write \"**/*.css\"",
+    "pretty": "prettier --write \"**/*.js\" && prettier --write \"**/*.html\" && prettier --write \"**/*.css\" && prettier --write \"**/*.handlebars\"",
     "check-pretty": "prettier --check .",
     "generate-templates": "handlebars src/templates/*.handlebars -f src/precompiled/templates.js",
-    "lint": "eslint \"./**\" --fix"
+
+    "lint": "eslint  \"./src/*/*.js\" --fix\n eslint  \"src/index.js\" --fix\n"
   },
   "repository": {
     "type": "git",

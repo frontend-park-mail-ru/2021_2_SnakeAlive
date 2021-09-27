@@ -1,6 +1,6 @@
 import { validateLoginData, ValidationError } from '../validation';
 import { sendPostJSONRequest } from '../http';
-import { FormConfig, Form, showForm } from '../components';
+import { FormConfig, Form, formHTML } from '../components';
 import { backendEndpoint, loginURI } from '../constants';
 import { flushPopup } from './flush_popup.js';
 
@@ -53,7 +53,7 @@ const showLoginForm = () => {
 		flushPopup
 	);
 
-	showForm(formInfo, document.getElementById('popup-place'));
+	document.getElementById('popup-place').innerHTML = formHTML(formInfo);
 	const loginForm = new Form(formInfo);
 	loginForm.setButtonEvent(loginUser, [flushPopup]);
 };
