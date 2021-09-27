@@ -3,6 +3,7 @@ import { sendPostJSONRequest } from '../http';
 import { FormConfig, Form, formHTML } from '../components';
 import { backendEndpoint, loginURI } from '../constants';
 import { flushPopup } from './flush_popup.js';
+import { showCountrySights } from './country_sights.js';
 
 const loginUser = input =>
 	validateLoginData(input)
@@ -55,7 +56,7 @@ const showLoginForm = () => {
 
 	document.getElementById('popup-place').innerHTML = formHTML(formInfo);
 	const loginForm = new Form(formInfo);
-	loginForm.setButtonEvent(loginUser, [flushPopup]);
+	loginForm.setButtonEvent(loginUser, [flushPopup, showCountrySights]);
 };
 
 export { showLoginForm };

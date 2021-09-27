@@ -3,8 +3,10 @@ import { validateRegisterData, ValidationError } from '../validation';
 import { FormConfig, Form, formHTML } from '../components';
 import { sendPostJSONRequest } from '../http';
 import { flushPopup } from './flush_popup.js';
+import { showCountrySights } from './country_sights.js';
 
-const registerUser = registerInputs => validateRegisterData(registerInputs)
+const registerUser = registerInputs =>
+	validateRegisterData(registerInputs)
 		.then(() => {
 			const { email } = registerInputs;
 			const password = registerInputs.pswd;
@@ -64,7 +66,7 @@ const showRegisterForm = () => {
 	document.getElementById('popup-place').innerHTML = formHTML(formInfo);
 
 	const signupForm = new Form(formInfo);
-	signupForm.setButtonEvent(registerUser, [flushPopup]);
+	signupForm.setButtonEvent(registerUser, [flushPopup, showCountrySights]);
 };
 
 export { showRegisterForm };

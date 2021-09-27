@@ -1,5 +1,8 @@
 module.exports = {
 	parser: '@babel/eslint-parser',
+	globals: {
+		"Handlebars": "readonly"
+	},
 	env: {
 		es6: true,
 		browser: true,
@@ -20,8 +23,8 @@ module.exports = {
 		'*.html',
 		'*.css',
 		'handlebars.min.js',
-		'./src/precompiled/*',
-		'./src/templates/*',
+		'src/precompiled/*',
+		'src/templates/*',
 		'handlebars.min-v4.7.7.js'
 	],
 	rules: {

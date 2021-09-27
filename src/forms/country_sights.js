@@ -21,12 +21,12 @@ const showCountrySights = () => {
 		.then(response => response.json())
 		.then(cards => {
 			inner.innerHTML = countryPageTemplate({ name: defaultCountryName });
-			const {sights} = Handlebars.templates;
+			const { sights } = Handlebars.templates;
 			document.querySelector('.card__grid').innerHTML = sights(adaptGetCards(cards));
 		})
 		.catch(error => {
-			inner.innerHTML = countryPageTemplate({ name: ": Ошибка" });
-			document.querySelector('.card__grid').innerHTML = `<p>${  error  }</p>`;
+			inner.innerHTML = countryPageTemplate({ name: ': Ошибка' });
+			document.querySelector('.card__grid').innerHTML = `<p>${error}</p>`;
 		});
 };
 
