@@ -2,7 +2,7 @@ import { validateLoginData, ValidationError } from '../validation';
 import { sendPostJSONRequest } from '../http';
 import { FormConfig, Form, showForm } from '../components';
 import { backendEndpoint, loginURI } from '../constants';
-import {flushPopup} from "./flush_popup.js";
+import { flushPopup } from './flush_popup.js';
 
 const loginUser = input =>
 	validateLoginData(input)
@@ -50,7 +50,7 @@ const showLoginForm = () => {
 				id: 'pswd',
 			},
 		],
-		flushPopup,
+		flushPopup
 	);
 
 	showForm(formInfo, document.getElementById('popup-place'));

@@ -1,3 +1,3 @@
 export function flushPopup() {
-    document.getElementById('popup-place').innerHTML = '';
+	document.getElementById('popup-place').innerHTML = '';
 }
