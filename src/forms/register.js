@@ -1,6 +1,6 @@
-import { backendEndpoint, registerURI } from '../constants';
-import { validateRegisterData, FormValidationError } from '../validation';
-import { sendPostJSONRequest } from '../http';
+import { backendEndpoint, registerURI } from '../constants/index.js';
+import { validateRegisterData, FormValidationError } from '../validation/index.js';
+import { sendPostJSONRequest } from '../http/index.js';
 
 /**
  * Функция принимает объект, содержащий данные, введенные пользователем в форму. Возвращает promise

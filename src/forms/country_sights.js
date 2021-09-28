@@ -1,4 +1,4 @@
-import { sendGetJSONRequest } from '../http';
+import { sendGetJSONRequest } from '../http/index.js';
 import {
 	backendEndpoint,
 	russiaFormName,
@@ -6,9 +6,9 @@ import {
 	russiaUriName,
 	nicaraguaUriName,
 	nicaraguaFormName,
-} from '../constants';
-import { adaptGetCards } from '../adapters';
-import { Button } from '../components';
+} from '../constants/index.js';
+import { adaptGetCards } from '../adapters/index.js';
+import { Button } from '../components/index.js';
 
 /**
  * Функция принимает страну, возвращает Promise с http-ответом
