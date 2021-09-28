@@ -17,7 +17,7 @@ const checkLength = (value = '', length = 0, name = '') => {
 };
 
 const validateEmail = (value = '', name = '') => {
-	const re = /^([\w]+)@([\w]+)((\.(\w){2,3})+)$/;
+	const re = /^\w+[.\w]+@\w+[.\w]+$/;
 	if (!re.test(String(value))) {
 		return Promise.reject(new ValidationError('неверная электронная почта', name));
 	}
@@ -25,4 +25,11 @@ const validateEmail = (value = '', name = '') => {
 	return Promise.resolve();
 };
 
-export { validateEmail, checkIsEmpty, checkLength };
+const checkIfEqual = (pswdFirst = '', pswdSecond = '', name = 'pswdRepeated') => {
+	if (pswdFirst === pswdSecond) {
+		return Promise.resolve();
+	}
+	return Promise.reject(new ValidationError('Пароли не совпадают', name));
+};
+
+export { validateEmail, checkIsEmpty, checkLength, checkIfEqual };

@@ -1,12 +1,4 @@
-import { Button } from './components/index.js';
-import {
-	showLoginForm,
-	showRegisterForm,
-	showCountrySights,
-	headerHTML,
-	footerHTML,
-	innerHTML,
-} from './forms/index.js';
+import { showCountrySights, headerHTML, setAuthToHeader, footerHTML, innerHTML } from './forms';
 
 /**
  * Функция отображает в html "главную страницу" со списком достопримечательностей и двумя кнопками
@@ -17,20 +9,7 @@ const generateMainPage = () => {
 	root.innerHTML += innerHTML();
 	root.innerHTML += footerHTML();
 
-	const btnLogin = new Button();
-	btnLogin.makeButton('Вход', 'btn-h', 'loginMainPage', document.getElementById('login-place-h'));
-	btnLogin.addClickListener(showLoginForm);
-	btnLogin.setActive();
-
-	const btnRegister = new Button();
-	btnRegister.makeButton(
-		'Регистрация',
-		'btn-h',
-		'signupMainPage',
-		document.getElementById('register-place-h')
-	);
-	btnRegister.addClickListener(showRegisterForm);
-	btnRegister.setActive();
+	setAuthToHeader();
 
 	showCountrySights();
 };

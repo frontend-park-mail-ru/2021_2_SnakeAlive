@@ -1,6 +1,6 @@
-import { sendGetJSONRequest } from '../http/index.js';
-import { backendEndpoint, defaultCountryName, countrySights, defaultCountry } from '../constants/index.js';
-import { adaptGetCards } from '../adapters/index.js';
+import { sendGetJSONRequest } from '../http';
+import { backendEndpoint, defaultCountryName, countrySights, defaultCountry } from '../constants';
+import { adaptGetCards } from '../adapters';
 
 /**
  * Функция принимает страну, возвращает Promise с http-ответом

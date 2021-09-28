@@ -1,5 +1,5 @@
 import { backendEndpoint } from './endpoints.js';
-import { loginURI, registerURI, countrySights, defaultCountry } from './uris.js';
+import { loginURI, registerURI, countrySights, defaultCountry, profile } from './uris.js';
 import { defaultCountryName, defaultTokenName } from './defaults.js';
 
 export {
@@ -10,4 +10,5 @@ export {
 	countrySights,
 	defaultCountry,
 	defaultTokenName,
+	profile,
 };

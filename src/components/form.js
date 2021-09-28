@@ -3,7 +3,6 @@ import Button from './button.js';
 
 /** Класс соответствует html-форме */
 class Form {
-
 	#elem = null;
 
 	#error = null;

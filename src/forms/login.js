@@ -1,9 +1,10 @@
-import { validateLoginData, ValidationError } from '../validation/index.js';
-import { sendPostJSONRequest } from '../http/index.js';
-import { FormConfig, Form, formHTML } from '../components/index.js';
-import { backendEndpoint, loginURI } from '../constants/index.js';
+import { validateLoginData, ValidationError } from '../validation';
+import { sendPostJSONRequest } from '../http';
+import { FormConfig, Form, formHTML } from '../components';
+import { backendEndpoint, loginURI } from '../constants';
 import { flushPopup } from './flush_popup.js';
 import { showCountrySights } from './country_sights.js';
+import { setAuthToHeader } from './header.js';
 
 /**
  * Функция принимает объект, содержащий данные, введенные пользователем в форму.
@@ -71,7 +72,7 @@ const showLoginForm = () => {
 
 	document.getElementById('popup-place').innerHTML = formHTML(formInfo);
 	const loginForm = new Form(formInfo);
-	loginForm.setButtonEvent(loginUser, [flushPopup, showCountrySights]);
+	loginForm.setButtonEvent(loginUser, [flushPopup, showCountrySights, setAuthToHeader]);
 };
 
 export { showLoginForm };
