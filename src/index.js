@@ -16,13 +16,22 @@ const generateMainPage = () => {
 
 generateMainPage();
 
-// window.onresize = ( event ) => {
-// 	const width = window.screen.availWidth;
-// 	if ( width < 500 ) {
-//
-// 	}
-// 	if ( width > 1000 )
-// };
-
-// <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.runtime.js"></script>
-// <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+window.onresize = () => {
+	const grid = document.getElementById('card-grid-wrapper');
+	const width = document.documentElement.clientWidth;
+	if (width < 900) {
+		grid.classList.remove('card__grid__3');
+		grid.classList.remove('card__grid__2');
+		grid.classList.add('card__grid__1');
+		return;
+	}
+	if (width > 1350) {
+		grid.classList.remove('card__grid__1');
+		grid.classList.remove('card__grid__2');
+		grid.classList.add('card__grid__3');
+		return;
+	}
+	grid.classList.remove('card__grid__3');
+	grid.classList.remove('card__grid__1');
+	grid.classList.add('card__grid__2');
+};

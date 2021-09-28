@@ -1,4 +1,3 @@
-
 import { sendGetJSONRequest, HttpError } from '../http/index.js';
 import { backendEndpoint, logout, profile } from '../constants/index.js';
 import { Button, Form, FormConfig, formHTML } from '../components/index.js';
@@ -124,7 +123,7 @@ const setUserHeader = user => {
 	const btnExit = new Button();
 	btnExit.makeButton('Выход', 'btn-h', 'exitMainPage', document.getElementById('register-place-h'));
 	btnExit.addClickListener(() => {
-		sendGetJSONRequest(logout)
+		sendGetJSONRequest(backendEndpoint + logout)
 			.then(setGuestHeader)
 			.catch(error => console.log(error));
 	});
