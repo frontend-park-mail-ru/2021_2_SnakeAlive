@@ -1,5 +1,5 @@
 import { sendGetJSONRequest, HttpError, sendDeleteJSONRequest } from '../http/index.js';
-import { backendEndpoint, logout, profile } from '../constants';
+import { backendEndpoint, logout, profile } from '../constants/index.js';
 import { Button, Form, FormConfig, formHTML } from '../components/index.js';
 import { showCountrySights } from './country_sights.js';
 import { flushPopup } from './flush_popup.js';

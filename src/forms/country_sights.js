@@ -1,4 +1,4 @@
-import { sendGetJSONRequest } from '../http';
+import { sendGetJSONRequest } from '../http/index.js';
 import {
 	backendEndpoint,
 	russiaFormName,
@@ -7,7 +7,7 @@ import {
 	nicaraguaUriName,
 	nicaraguaFormName,
 } from '../constants';
-import { adaptGetCards } from '../adapters';
+import { adaptGetCards } from '../adapters/index.js';
 import { Button } from '../components/index.js';
 import { setColumnsAmount } from './set_columns_amount_cards.js';
 
