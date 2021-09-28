@@ -1,4 +1,4 @@
-import { sendGetJSONRequest, HttpError } from '../http/index.js';
+import { sendGetJSONRequest, HttpError, sendDeleteJSONRequest } from '../http/index.js';
 import { backendEndpoint, logout, profile } from '../constants/index.js';
 import { Button, Form, FormConfig, formHTML } from '../components/index.js';
 import { showCountrySights } from './country_sights.js';
@@ -116,15 +116,16 @@ const setGuestHeader = (callbacks = []) => {
  * @param {String} user.name Имя пользователя
  * @param {String} user.surname Фамилия пользователя
  */
-const setUserHeader = user => {
+const setUserHeader = (user, callbacks = []) => {
 	const template = Handlebars.templates.header_user;
 	document.getElementById('login-place-h').innerHTML = template(user);
 
+	document.getElementById('register-place-h').innerHTML = '';
 	const btnExit = new Button();
 	btnExit.makeButton('Выход', 'btn-h', 'exitMainPage', document.getElementById('register-place-h'));
 	btnExit.addClickListener(() => {
-		sendGetJSONRequest(logout)
-			.then(setGuestHeader)
+		sendDeleteJSONRequest(backendEndpoint + logout)
+			.then(() => setGuestHeader(callbacks))
 			.catch(error => console.log(error));
 	});
 	btnExit.setActive();
@@ -143,7 +144,7 @@ function chooseHeaderType() {
 
 			return response.json();
 		})
-		.then(data => setUserHeader(data))
+		.then(data => setUserHeader(data, [flushPopup, showCountrySights, chooseHeaderType]))
 		.catch(() => setGuestHeader([flushPopup, showCountrySights, chooseHeaderType]));
 }
 

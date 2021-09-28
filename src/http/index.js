@@ -8,6 +8,8 @@ import {
 
 import HttpError from './http_error.js';
 
+import { sendDeleteJSONRequest } from './delete.js';
+
 export {
 	sendGetJSONRequest,
 	sendGetMultipartRequest,
@@ -15,5 +17,6 @@ export {
 	sendPostMultipartRequest,
 	sendPostFileRequest,
 	sendPostRequest,
+	sendDeleteJSONRequest,
 	HttpError,
 };

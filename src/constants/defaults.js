@@ -1,4 +1,7 @@
-const defaultCountryName = 'России';
-const defaultTokenName = 'token';
+const russiaFormName = 'России';
+const russiaUriName = 'Russia';
 
-export { defaultCountryName, defaultTokenName };
+const nicaraguaFormName = 'Nicaragua';
+const nicaraguaUriName = 'Nicaragua';
+
+export { russiaFormName, russiaUriName, nicaraguaFormName, nicaraguaUriName };

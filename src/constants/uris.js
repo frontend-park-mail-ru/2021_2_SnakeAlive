@@ -1,8 +1,7 @@
 const loginURI = '/login';
 const registerURI = '/register';
 const countrySights = '/country/';
-const defaultCountry = 'Russia';
 const profile = '/profile';
-const logout = '/logout'; // поменять
+const logout = '/logout';
 
-export { loginURI, registerURI, countrySights, defaultCountry, profile, logout };
+export { loginURI, registerURI, countrySights, profile, logout };
