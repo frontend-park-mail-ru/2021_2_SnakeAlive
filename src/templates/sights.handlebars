@@ -2,7 +2,7 @@
 <div class="card">
     <div class="carousel">
         {{#each imgs}}
-            {{#if main}}
+            {{#if @first}}
               <div class ="card__carousel__item card__carousel__item_main">
             {{else}}
               <div class ="card__carousel__item">

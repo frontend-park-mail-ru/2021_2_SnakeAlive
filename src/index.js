@@ -1,4 +1,10 @@
-import { showCountrySights, headerHTML, chooseHeaderType, footerHTML, innerHTML } from './forms/index.js';
+import {
+	showCountrySights,
+	headerHTML,
+	chooseHeaderType,
+	footerHTML,
+	innerHTML,
+} from './forms/index.js';
 
 /**
  * Функция отображает в html "главную страницу" со списком достопримечательностей и двумя кнопками

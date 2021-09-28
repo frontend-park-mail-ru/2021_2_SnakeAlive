@@ -1,4 +1,4 @@
-import { sendGetJSONRequest } from '../http';
+import { sendGetJSONRequest } from '../http/index.js';
 import {
 	backendEndpoint,
 	russiaFormName,
@@ -6,8 +6,8 @@ import {
 	russiaUriName,
 	nicaraguaUriName,
 	nicaraguaFormName,
-} from '../constants';
-import { adaptGetCards } from '../adapters';
+} from '../constants/index.js';
+import { adaptGetCards } from '../adapters/index.js';
 import { Button } from '../components/index.js';
 import { setColumnsAmount } from './set_columns_amount_cards.js';
 
@@ -74,10 +74,12 @@ const showSights = () => {
 };
 const shower = showSights();
 
-
-
 export const showCountrySights = () => {
 	shower();
+
+	if (document.getElementById('btn-next-country') !== null) {
+		return;
+	}
 
 	const btnExit = new Button();
 	btnExit.makeButton(
