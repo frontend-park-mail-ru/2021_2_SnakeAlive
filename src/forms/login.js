@@ -1,6 +1,6 @@
-import { validateLoginData, FormValidationError } from '../validation';
-import { sendPostJSONRequest } from '../http';
-import { backendEndpoint, loginURI } from '../constants';
+import { validateLoginData, FormValidationError } from '../validation/index.js';
+import { sendPostJSONRequest } from '../http/index.js';
+import { backendEndpoint, loginURI } from '../constants/index.js';
 
 /**
  * Функция принимает объект, содержащий данные, введенные пользователем в форму.

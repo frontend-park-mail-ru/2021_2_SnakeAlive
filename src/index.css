@@ -76,6 +76,7 @@ html {
 	font-size: var(--text-normal);
 }
 .btn-h:hover {
+	cursor: pointer;
 	font-weight: 600;
 	text-decoration: underline;
 }
@@ -348,4 +349,19 @@ html {
 	font-size: inherit;
 	line-height: inherit;
 	font-weight: var(--font-header-weight);
+}
+
+.left-side-btn {
+	font-weight: 500;
+	font-size: var(--text-normal);
+
+	position: fixed;
+	transform: rotate(90deg);
+	left: -80px;
+	top: 240px;
+}
+.left-side-btn {
+	cursor: pointer;
+	font-weight: 600;
+	text-decoration: underline;
 }

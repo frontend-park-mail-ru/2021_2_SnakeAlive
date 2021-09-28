@@ -1,6 +1,15 @@
 import { sendGetJSONRequest } from '../http';
-import { backendEndpoint, defaultCountryName, countrySights, defaultCountry } from '../constants';
+import {
+	backendEndpoint,
+	russiaFormName,
+	countrySights,
+	russiaUriName,
+	nicaraguaUriName,
+	nicaraguaFormName,
+} from '../constants';
 import { adaptGetCards } from '../adapters';
+import { Button } from '../components/index.js';
+import { setColumnsAmount } from './set_columns_amount_cards.js';
 
 /**
  * Функция принимает страну, возвращает Promise с http-ответом
@@ -25,14 +34,17 @@ const getCards = country =>
 /**
  * Функция создает html страницу со списком достопримечательностей страны defaultCountryName
  */
-const showCountrySights = () => {
+const getSights = (uriName = '', formName = '') => {
 	const countryPageTemplate = Handlebars.templates.country_sights;
 	const inner = document.querySelector('#inner');
+	inner.innerHTML = countryPageTemplate({ name: formName });
 
-	getCards(defaultCountry)
+	setColumnsAmount(document.documentElement.clientWidth);
+	window.onresize = () => setColumnsAmount(document.documentElement.clientWidth);
+
+	getCards(uriName)
 		.then(response => response.json())
 		.then(cards => {
-			inner.innerHTML = countryPageTemplate({ name: defaultCountryName });
 			const { sights } = Handlebars.templates;
 			document.querySelector('.card__grid').innerHTML = sights(adaptGetCards(cards));
 		})
@@ -42,4 +54,38 @@ const showCountrySights = () => {
 		});
 };
 
-export { showCountrySights };
+const showSights = () => {
+	const map = [
+		{
+			name: russiaFormName,
+			uri: russiaUriName,
+		},
+		{
+			name: nicaraguaFormName,
+			uri: nicaraguaUriName,
+		},
+	];
+	let it = 0;
+
+	return function () {
+		it = (it + 1) % map.length;
+		getSights(map[it].uri, map[it].name);
+	};
+};
+const shower = showSights();
+
+
+
+export const showCountrySights = () => {
+	shower();
+
+	const btnExit = new Button();
+	btnExit.makeButton(
+		'Следующая страна',
+		'left-side-btn',
+		'btn-next-country',
+		document.getElementById('root')
+	);
+	btnExit.addClickListener(() => showCountrySights());
+	btnExit.setActive();
+};

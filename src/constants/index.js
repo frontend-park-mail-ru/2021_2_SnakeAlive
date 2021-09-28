@@ -1,15 +1,16 @@
 import { backendEndpoint } from './endpoints.js';
-import { loginURI, registerURI, countrySights, defaultCountry, profile, logout } from './uris.js';
-import { defaultCountryName, defaultTokenName } from './defaults.js';
+import { loginURI, registerURI, countrySights, profile, logout } from './uris.js';
+import { russiaFormName, russiaUriName, nicaraguaFormName, nicaraguaUriName } from './defaults.js';
 
 export {
 	backendEndpoint,
 	loginURI,
 	registerURI,
-	defaultCountryName,
+	russiaFormName,
 	countrySights,
-	defaultCountry,
-	defaultTokenName,
+	russiaUriName,
 	profile,
 	logout,
+	nicaraguaFormName,
+	nicaraguaUriName,
 };
