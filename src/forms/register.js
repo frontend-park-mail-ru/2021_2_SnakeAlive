@@ -1,10 +1,6 @@
 import { backendEndpoint, registerURI } from '../constants';
-import { validateRegisterData, ValidationError } from '../validation';
-import { FormConfig, Form, formHTML } from '../components';
+import { validateRegisterData, FormValidationError } from '../validation';
 import { sendPostJSONRequest } from '../http';
-import { flushPopup } from './flush_popup.js';
-import { showCountrySights } from './country_sights.js';
-import { setAuthToHeader } from './header.js';
 
 /**
  * Функция принимает объект, содержащий данные, введенные пользователем в форму. Возвращает promise
@@ -20,7 +16,7 @@ import { setAuthToHeader } from './header.js';
  * @reject {Error}
  * @returns fPromise
  */
-const registerUser = registerInputs =>
+export const registerUser = registerInputs =>
 	validateRegisterData(registerInputs)
 		.then(() => {
 			const { email } = registerInputs;
@@ -37,59 +33,8 @@ const registerUser = registerInputs =>
 		.then(response => {
 			if (response.status === 400) {
 				return Promise.reject(
-					new ValidationError('Пользователь с такой почтой уже существует', 'email')
+					new FormValidationError('Пользователь с такой почтой уже существует', 'email')
 				);
 			}
 			return response;
 		});
-
-/**
- * Функция конструирует и добавляет в index.html форму регистрации
- */
-const showRegisterForm = () => {
-	const formInfo = new FormConfig(
-		'signupForm',
-		'Регистрация',
-		'startForm',
-		{
-			text: 'Поехали!',
-			id: 'signup',
-			cssClass: 'btn-black',
-		},
-		'startInput',
-		[
-			{
-				type: 'text',
-				name: 'Имя',
-				id: 'name',
-			},
-			{
-				type: 'text',
-				name: 'Фамилия',
-				id: 'surname',
-			},
-			{
-				type: 'email',
-				name: 'Почта',
-				id: 'email',
-			},
-			{
-				type: 'password',
-				name: 'Пароль',
-				id: 'pswd',
-			},
-			{
-				type: 'password',
-				name: 'Повторите пароль',
-				id: 'pswdRepeated',
-			},
-		],
-		flushPopup
-	);
-	document.getElementById('popup-place').innerHTML = formHTML(formInfo);
-
-	const signupForm = new Form(formInfo);
-	signupForm.setButtonEvent(registerUser, [flushPopup, showCountrySights, setAuthToHeader]);
-};
-
-export { showRegisterForm };

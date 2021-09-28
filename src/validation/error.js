@@ -1,4 +1,4 @@
-class ValidationError extends Error {
+class FormValidationError extends Error {
 	errorField;
 
 	constructor(message, field) {
@@ -7,4 +7,4 @@ class ValidationError extends Error {
 	}
 }
 
-export { ValidationError };
+export { FormValidationError };

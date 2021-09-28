@@ -3,6 +3,6 @@ const registerURI = '/register';
 const countrySights = '/country/';
 const defaultCountry = 'Russia';
 const profile = '/profile';
-const forgetAuth = '/profile'; // поменять
+const logout = '/logout'; // поменять
 
-export { loginURI, registerURI, countrySights, defaultCountry, profile, forgetAuth };
+export { loginURI, registerURI, countrySights, defaultCountry, profile, logout };

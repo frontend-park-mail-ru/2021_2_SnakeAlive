@@ -1,4 +1,4 @@
-import { showCountrySights, headerHTML, setAuthToHeader, footerHTML, innerHTML } from './forms';
+import { showCountrySights, headerHTML, chooseHeaderType, footerHTML, innerHTML } from './forms';
 
 /**
  * Функция отображает в html "главную страницу" со списком достопримечательностей и двумя кнопками
@@ -9,7 +9,7 @@ const generateMainPage = () => {
 	root.innerHTML += innerHTML();
 	root.innerHTML += footerHTML();
 
-	setAuthToHeader();
+	chooseHeaderType();
 
 	showCountrySights();
 };
