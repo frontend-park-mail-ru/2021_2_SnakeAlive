@@ -1,3 +1,4 @@
+
 export function adaptGetCards(cards = []) {
 	return {
 		cards: cards.map((card, cardIndex) => ({

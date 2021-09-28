@@ -1,13 +1,13 @@
+/** Класс соответствует одному полю ввода формы */
 export default class Input {
 	#elem = null;
 
 	name = null;
 
 	/**
-	 * Represents a book.
+	 * Конструктор класса Input
 	 * @constructor
-	 * @param {string} title - The title of the book.
-	 * @param {string} author - The author of the book.
+	 * @param {Object} DOMelement Существующий html-элемент input
 	 */
 	constructor(DOMelement) {
 		this.#elem = DOMelement;
@@ -17,18 +17,28 @@ export default class Input {
 		});
 	}
 
+	/** Выделяет input как содержащий ошибку */
 	setError() {
 		this.#elem.classList.add('err-input');
 	}
 
+	/** Убирает отображение ошибки на input, если оно было */
 	clearErrors() {
 		this.#elem.classList.remove('err-input');
 	}
 
+	/**
+	 * Получает из html значение, введенное пользователем в input
+	 * @return {String} Строка, введенная пользователем
+	 */
 	getValue() {
 		return this.#elem.value;
 	}
 
+	/**
+	 * Получает из html значение id input-а
+	 * @return {String} id input-а
+	 */
 	getId() {
 		return this.#elem.id;
 	}

@@ -1,6 +1,6 @@
-import { sendGetJSONRequest } from '../http';
-import { backendEndpoint, defaultCountryName, countrySights, defaultCountry } from '../constants';
-import { adaptGetCards } from '../adapters';
+import { sendGetJSONRequest } from '../http/index.js';
+import { backendEndpoint, defaultCountryName, countrySights, defaultCountry } from '../constants/index.js';
+import { adaptGetCards } from '../adapters/index.js';
 
 /**
  * Функция принимает страну, возвращает Promise с http-ответом
@@ -23,7 +23,7 @@ const getCards = country =>
 	});
 
 /**
- * Функция создает html страницы со списком достопримечательностей страны defaultCountryName
+ * Функция создает html страницу со списком достопримечательностей страны defaultCountryName
  */
 const showCountrySights = () => {
 	const countryPageTemplate = Handlebars.templates.country_sights;

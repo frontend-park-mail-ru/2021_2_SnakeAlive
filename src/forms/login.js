@@ -1,8 +1,9 @@
-import { validateLoginData, ValidationError } from '../validation';
-import { sendPostJSONRequest } from '../http';
-import { FormConfig, Form, formHTML } from '../components';
-import { backendEndpoint, loginURI } from '../constants';
+import { validateLoginData, ValidationError } from '../validation/index.js';
+import { sendPostJSONRequest } from '../http/index.js';
+import { FormConfig, Form, formHTML } from '../components/index.js';
+import { backendEndpoint, loginURI } from '../constants/index.js';
 import { flushPopup } from './flush_popup.js';
+import { showCountrySights } from './country_sights.js';
 
 /**
  * Функция принимает объект, содержащий данные, введенные пользователем в форму.
@@ -38,6 +39,7 @@ const loginUser = input =>
 
 			return response;
 		});
+
 /**
  * Функция создает форму регистрации как объект и как код в html
  */
@@ -69,7 +71,7 @@ const showLoginForm = () => {
 
 	document.getElementById('popup-place').innerHTML = formHTML(formInfo);
 	const loginForm = new Form(formInfo);
-	loginForm.setButtonEvent(loginUser, [flushPopup]);
+	loginForm.setButtonEvent(loginUser, [flushPopup, showCountrySights]);
 };
 
 export { showLoginForm };

@@ -1,7 +1,9 @@
 import Input from './input.js';
 import Button from './button.js';
 
+/** Класс соответствует html-форме */
 class Form {
+
 	#elem = null;
 
 	#error = null;
@@ -12,6 +14,11 @@ class Form {
 
 	#closeBtn = null;
 
+	/**
+	 * Конструктор класса Form
+	 * @constructor
+	 * @param {FormConfig} config Объект класса FormConfig, содержащий необходимую информацию
+	 */
 	constructor(config) {
 		this.#elem = document.getElementById(config.formId);
 		this.#error = document.getElementById('formErrorBlock');
@@ -24,6 +31,10 @@ class Form {
 		this.#closeBtn.setActive();
 	}
 
+	/**
+	 * Получает из html значения всех полей ввода с их id
+	 * @return {Object.<String, String>} Объект где ключ - id поля ввода, значение - введенная пользователем строка
+	 */
 	getValues() {
 		const input = {};
 		this.#inputs.forEach(i => {
@@ -32,6 +43,13 @@ class Form {
 		return input;
 	}
 
+	/**
+	 * Получает из html значения всех полей ввода с их id
+	 * @param {function} action Функция, которая вызывается по нажатию submit кнопки формы
+	 * @param {Object.<String, String>} values Объект со значениями полей ввода, генерируемый методом getValues()
+	 * @return {Promise} response При успешном выполнении внутри содерится http ответ
+	 * @param {function[]} callbacks Массив функций, обрабатывающих результат работы action
+	 */
 	setButtonEvent(action, callbacks) {
 		this.#elem.addEventListener('click', evt => {
 			if (this.#button.isIt(evt.target)) {
@@ -46,6 +64,10 @@ class Form {
 		});
 	}
 
+	/**
+	 * Функция показывает в форме ошибку: показывает ее текст и указывает поле, в котором содержится ошибка
+	 * @param {Error} error Принимается ошибка.
+	 */
 	setError(error) {
 		this.#inputs.forEach(i => {
 			if (i.getId() === error.errorField) {
@@ -57,6 +79,11 @@ class Form {
 	}
 }
 
+/**
+ * Функция возвращает html верстку формы по FormConfig
+ * @param {FormConfig} config Объект класса FormConfig, содержащий необходимую информацию
+ * @return {String} html разметка формы
+ */
 const formHTML = config => {
 	const template = Handlebars.templates.popup;
 	return template(config);
