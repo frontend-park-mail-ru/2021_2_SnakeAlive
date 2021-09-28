@@ -6,7 +6,7 @@ import {
 	russiaUriName,
 	nicaraguaUriName,
 	nicaraguaFormName,
-} from '../constants';
+} from '../constants/index.js';
 import { adaptGetCards } from '../adapters/index.js';
 import { Button } from '../components/index.js';
 import { setColumnsAmount } from './set_columns_amount_cards.js';
