@@ -1,6 +1,6 @@
 import { sendGetJSONRequest } from '../http';
 import { setUserHeader, setGuestHeader } from './different_headers.js';
-import { profile } from '../constants';
+import { backendEndpoint, profile } from '../constants';
 
 /**
  * Функция создает html div#header по шаблону, вставляя в него заголовок сайта (в перспективе лого)
@@ -15,11 +15,10 @@ const headerHTML = () => {
  * и исходя из этого вызывает нужную функцию конструирования header
  */
 const setAuthToHeader = () => {
-	sendGetJSONRequest(profile)
+	sendGetJSONRequest(backendEndpoint + profile)
 		.then(response => {
 			if (response.status === 200) {
-				const user = response.json();
-				setUserHeader(user);
+				setUserHeader(response.json());
 			}
 		})
 		.catch(error => console.log(error));

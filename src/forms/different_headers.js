@@ -31,8 +31,13 @@ const setGuestHeader = () => {
  */
 const setUserHeader = user => {
 	const template = Handlebars.templates.header_user;
-	document.getElementById('login-place-h').innerHTML = template(user);
+	const loginPlace = document.getElementById('login-place-h');
+	loginPlace.innerHTML = '';
+	loginPlace.innerHTML = template();
+	console.log(user);
 
+	const registerPlace = document.getElementById('register-place-h');
+	registerPlace.innerHTML = '';
 	const btnExit = new Button();
 	btnExit.makeButton('Выход', 'btn-h', 'exitMainPage', document.getElementById('register-place-h'));
 	btnExit.addClickListener(() => {
