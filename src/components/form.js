@@ -45,9 +45,8 @@ class Form {
 	/**
 	 * Получает из html значения всех полей ввода с их id
 	 * @param {function} action Функция, которая вызывается по нажатию submit кнопки формы
-	 * @param {Object.<String, String>} values Объект со значениями полей ввода, генерируемый методом getValues()
-	 * @return {Promise} response При успешном выполнении внутри содерится http ответ
 	 * @param {function[]} callbacks Массив функций, обрабатывающих результат работы action
+	 * @return {null}
 	 */
 	setButtonEvent(action, callbacks) {
 		this.#elem.addEventListener('click', evt => {

@@ -1,10 +1,6 @@
-import { validateLoginData, ValidationError } from '../validation';
+import { validateLoginData, FormValidationError } from '../validation';
 import { sendPostJSONRequest } from '../http';
-import { FormConfig, Form, formHTML } from '../components';
 import { backendEndpoint, loginURI } from '../constants';
-import { flushPopup } from './flush_popup.js';
-import { showCountrySights } from './country_sights.js';
-import { setAuthToHeader } from './header.js';
 
 /**
  * Функция принимает объект, содержащий данные, введенные пользователем в форму.
@@ -18,7 +14,7 @@ import { setAuthToHeader } from './header.js';
  * @reject {Error}
  * @returns fPromise
  */
-const loginUser = input =>
+export const loginUser = input =>
 	validateLoginData(input)
 		.then(() => {
 			const { email } = input;
@@ -31,48 +27,12 @@ const loginUser = input =>
 		.then(response => {
 			if (response.status === 404) {
 				return Promise.reject(
-					new ValidationError('Не зарегистрирован такой пользователь', 'email')
+					new FormValidationError('Не зарегистрирован такой пользователь', 'email')
 				);
 			}
 			if (response.status === 400) {
-				return Promise.reject(new ValidationError('Неверный пароль', 'pswd'));
+				return Promise.reject(new FormValidationError('Неверный пароль', 'pswd'));
 			}
 
 			return response;
 		});
-
-/**
- * Функция создает форму регистрации как объект и как код в html
- */
-const showLoginForm = () => {
-	const formInfo = new FormConfig(
-		'loginForm',
-		'Вход',
-		'startForm',
-		{
-			text: 'Готово',
-			id: 'login',
-			cssClass: 'btn-black',
-		},
-		'startInput',
-		[
-			{
-				type: 'email',
-				name: 'Почта',
-				id: 'email',
-			},
-			{
-				type: 'password',
-				name: 'Пароль',
-				id: 'pswd',
-			},
-		],
-		flushPopup
-	);
-
-	document.getElementById('popup-place').innerHTML = formHTML(formInfo);
-	const loginForm = new Form(formInfo);
-	loginForm.setButtonEvent(loginUser, [flushPopup, showCountrySights, setAuthToHeader]);
-};
-
-export { showLoginForm };

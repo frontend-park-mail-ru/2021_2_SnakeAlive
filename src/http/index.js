@@ -6,6 +6,8 @@ import {
 	sendPostRequest,
 } from './post.js';
 
+import HttpError from './http_error.js';
+
 export {
 	sendGetJSONRequest,
 	sendGetMultipartRequest,
@@ -13,4 +15,5 @@ export {
 	sendPostMultipartRequest,
 	sendPostFileRequest,
 	sendPostRequest,
+	HttpError,
 };
