@@ -10,7 +10,6 @@ export function adaptGetCards(cards = []) {
 			})),
 
 			imgs: card.photos.map((photo, photoIndex) => ({
-				main: photoIndex === 0,
 				source: photo,
 			})),
 		})),
