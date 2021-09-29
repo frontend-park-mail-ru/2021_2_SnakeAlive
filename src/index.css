@@ -13,7 +13,8 @@ html {
 	--text-normal: 18px;
 	--text-small: 12px;
 
-	--px-small: 10px;
+	--px-small: 12px;
+	--px-large: 48px;
 
 	--color-substrate: #00000066;
 	--color-white: white;
@@ -85,7 +86,7 @@ html {
 	position: relative;
 	width: 100%;
 	height: 8vh; /* height of footer */
-	bottom: 0px;
+	bottom: 0;
 	margin-top: 1vh; /* height of footer */
 
 	display: grid;
@@ -105,66 +106,81 @@ html {
 
 /* popup */
 #substrate {
-	display: grid;
-	/* делаем 3 основных колонки и 2 поля по бокам */
-	grid-template-columns: 9.2vw 1fr 2fr 1fr 9.2vw;
-	grid-template-areas: 'a b c d e';
-
 	background-color: var(--color-substrate);
 	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100%;
 	height: 100%;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 #popup {
 	background-color: var(--color-white);
-	grid-area: c;
-	height: max-content;
-	padding: 4vh 2vw;
-	align-self: center;
+	width: 40vw;
+	min-width: max-content;
 	text-align: center;
-}
-.startForm {
-	width: 36vh;
-	display: inline-block;
-	text-align: left;
-	background-color: var(--color-white);
 }
 
 /* button close popup */
 #closeLine {
 	text-align: right;
-	margin-right: var(--px-small);
+	margin: var(--px-small);
 }
 .cross {
 	width: 24px;
 }
+.cross:hover {
+	cursor: pointer;
+}
 
+#formWrapper {
+	margin-bottom: var(--px-large);
+	width: 40vw;
+	min-width: 400px;
+
+	display: block;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+.startForm {
+	width: 30vw;
+	min-width: 400px;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: var(--color-white);
+	text-align: center;
+}
 .formName {
 	font-weight: 700;
 	font-size: var(--text-larger);
-	text-align: center;
 }
-
 .startInput {
-	padding: 2vh 2vw;
+	width: 30vw;
+	min-width: 250px;
+	padding: 2vh 1vw;
 	margin-bottom: 2vh;
 	border-width: 1px;
 	border-style: solid;
 	border-color: var(--color-grey);
+	text-align: center;
 }
 
-/* show errors in form */
+/*show errors in form*/
 .formErrorBlock {
-	width: 36vh;
 	padding-top: 2vh;
 	margin: 2vh 0;
 	font-size: var(--text-small);
 	word-wrap: normal;
 	color: var(--color-red);
+	display: block;
+	text-align: center;
+}
+.formErrorBlock {
 	visibility: hidden;
-	text-align: left;
 }
 .err {
 	visibility: visible;
@@ -181,15 +197,14 @@ html {
 	color: var(--color-white);
 	font-size: var(--text-normal);
 
-	display: inline-block;
-	vertical-align: middle;
-	text-align: center;
-
 	padding: 2vh 2vw;
 	background-color: var(--color-black);
+
+	margin-bottom: 2vh;
 }
 .btn-black:hover {
 	background-color: var(--color-grey);
+	cursor: pointer;
 }
 
 /*card*/
@@ -360,7 +375,7 @@ html {
 	left: -80px;
 	top: 240px;
 }
-.left-side-btn {
+.left-side-btn:hover {
 	cursor: pointer;
 	font-weight: 600;
 	text-decoration: underline;
