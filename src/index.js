@@ -5,7 +5,7 @@ import {
 	footerHTML,
 	innerHTML,
 } from './forms/index.js';
-import { Button } from './components';
+import { Button } from './components/index.js';
 
 /**
  * Функция отображает в html "главную страницу" со списком достопримечательностей и двумя кнопками

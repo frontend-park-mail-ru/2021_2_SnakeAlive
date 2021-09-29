@@ -17,7 +17,7 @@ const checkLength = (value = '', length = 0, name = '') => {
 };
 
 const validateEmail = (value = '', name = '') => {
-	const re = /^\w+[.\w]+@\w+[.\w]+$/;
+	const re = /^\w+(?:\.\w*)*@\w+(?:\.\w*)+$/;
 	if (!re.test(String(value))) {
 		return Promise.reject(new FormValidationError('неверная электронная почта', name));
 	}
