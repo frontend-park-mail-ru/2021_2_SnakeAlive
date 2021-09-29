@@ -152,7 +152,8 @@ html {
 	margin-left: auto;
 	margin-right: auto;
 	background-color: var(--color-white);
-	text-align: center;
+	display: block;
+	justify-content: center;
 }
 .formName {
 	font-weight: 700;
@@ -199,6 +200,7 @@ html {
 
 	padding: 2vh 2vw;
 	background-color: var(--color-black);
+	/*width: max-content;*/
 
 	margin-bottom: 2vh;
 }
