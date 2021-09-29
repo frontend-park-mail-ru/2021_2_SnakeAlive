@@ -1,4 +1,11 @@
-import { showCountrySights, headerHTML, chooseHeaderType, footerHTML, innerHTML } from './forms/index.js';
+import {
+	showCountrySights,
+	headerHTML,
+	chooseHeaderType,
+	footerHTML,
+	innerHTML,
+} from './forms/index.js';
+import { Button } from './components';
 
 /**
  * Функция отображает в html "главную страницу" со списком достопримечательностей и двумя кнопками
@@ -12,6 +19,15 @@ const generateMainPage = () => {
 	chooseHeaderType();
 
 	showCountrySights();
+	const btnExit = new Button();
+	btnExit.makeButton(
+		'Следующая страна',
+		'left-side-btn',
+		'btn-next-country',
+		document.getElementById('root')
+	);
+	btnExit.addClickListener(() => showCountrySights());
+	btnExit.setActive();
 };
 
 generateMainPage();

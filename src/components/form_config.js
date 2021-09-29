@@ -33,7 +33,7 @@ class FormConfig {
 	 * @param {String} inputs[].type Тип ввода в html. Например, если передать password - текст отображается точками
 	 * @param {String} inputs[].name Отображаемый в поле до начала ввода текст
 	 * @param {String} inputs[].id id поля ввода для html
-	 * @param {function} closeCallback [= null] Функция, которая вызывается по нажатию на кнопку закрытия формы (в случае с popup крестик в углу)
+	 * @param {Object|null} closeCallback Функция, которая вызывается по нажатию на кнопку закрытия формы (в случае с popup крестик в углу)
 	 */
 	constructor(formId, formName, cssClass, button, inputCssClass, inputs, closeCallback = null) {
 		this.formId = formId;

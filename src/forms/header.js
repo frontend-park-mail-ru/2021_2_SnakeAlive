@@ -1,7 +1,6 @@
 import { sendGetJSONRequest, HttpError, sendDeleteJSONRequest } from '../http/index.js';
 import { backendEndpoint, logout, profile } from '../constants/index.js';
 import { Button, Form, FormConfig, formHTML } from '../components/index.js';
-import { showCountrySights } from './country_sights.js';
 import { flushPopup } from './flush_popup.js';
 import { loginUser } from './login.js';
 import { registerUser } from './register.js';
@@ -93,6 +92,9 @@ const showLoginForm = (callbacks = []) => {
  * Функция выставляет в существующий html div#header содержание для не залогиненного пользователя
  */
 const setGuestHeader = (callbacks = []) => {
+	const header = document.getElementById('header');
+	header.innerHTML = Handlebars.templates.header_content();
+
 	const login = () => showLoginForm(callbacks);
 	const loginPlace = document.getElementById('login-place-h');
 	loginPlace.innerHTML = '';
@@ -115,12 +117,13 @@ const setGuestHeader = (callbacks = []) => {
  * @param {Object} user Пользователь из http ответа сервера
  * @param {String} user.name Имя пользователя
  * @param {String} user.surname Фамилия пользователя
+ * @param {function[]} callbacks Функции прокидываются в открывающиеся формы логина и регистрации,
+ * если пользователь нажмет на кнопку выйти
  */
 const setUserHeader = (user, callbacks = []) => {
-	const template = Handlebars.templates.header_user;
-	document.getElementById('login-place-h').innerHTML = template(user);
+	const header = document.getElementById('header');
+	header.innerHTML = Handlebars.templates.header_content(user);
 
-	document.getElementById('register-place-h').innerHTML = '';
 	const btnExit = new Button();
 	btnExit.makeButton('Выход', 'btn-h', 'exitMainPage', document.getElementById('register-place-h'));
 	btnExit.addClickListener(() => {
@@ -144,8 +147,8 @@ function chooseHeaderType() {
 
 			return response.json();
 		})
-		.then(data => setUserHeader(data, [flushPopup, showCountrySights, chooseHeaderType]))
-		.catch(() => setGuestHeader([flushPopup, showCountrySights, chooseHeaderType]));
+		.then(data => setUserHeader(data, [flushPopup, chooseHeaderType]))
+		.catch(() => setGuestHeader([flushPopup, chooseHeaderType]));
 }
 
 /**

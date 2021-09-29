@@ -166,7 +166,7 @@ html {
 	border-width: 1px;
 	border-style: solid;
 	border-color: var(--color-grey);
-	text-align: center;
+	text-align: left;
 }
 
 /*show errors in form*/

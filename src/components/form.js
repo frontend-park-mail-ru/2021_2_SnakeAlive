@@ -22,8 +22,8 @@ class Form {
 		this.#elem = document.getElementById(config.formId);
 		this.#error = document.getElementById('formErrorBlock');
 		this.#button = new Button(document.getElementById(config.button.id));
-		config.inputs.forEach(i => {
-			this.#inputs.push(new Input(document.getElementById(i.id)));
+		config.inputs.forEach(input => {
+			this.#inputs.push(new Input(document.getElementById(input.id)));
 		});
 		this.#closeBtn = new Button(document.getElementById('btnClose'));
 		this.#closeBtn.addClickListener(config.closeCallback);
@@ -35,11 +35,11 @@ class Form {
 	 * @return {Object.<String, String>} Объект где ключ - id поля ввода, значение - введенная пользователем строка
 	 */
 	getValues() {
-		const input = {};
-		this.#inputs.forEach(i => {
-			input[i.getId()] = i.getValue();
+		const result = {};
+		this.#inputs.forEach(input => {
+			result[input.getId()] = input.getValue();
 		});
-		return input;
+		return result;
 	}
 
 	/**
@@ -52,12 +52,12 @@ class Form {
 		this.#elem.addEventListener('click', evt => {
 			if (this.#button.isIt(evt.target)) {
 				evt.preventDefault();
-				this.#inputs.forEach(i => i.clearErrors());
+				this.#inputs.forEach(input => input.clearErrors());
 				action(this.getValues())
 					.then(response => {
 						callbacks.forEach(callback => callback(response));
 					})
-					.catch(e => this.setError(e));
+					.catch(err => this.setError(err));
 			}
 		});
 	}
@@ -67,9 +67,9 @@ class Form {
 	 * @param {Error} error Принимается ошибка.
 	 */
 	setError(error) {
-		this.#inputs.forEach(i => {
-			if (i.getId() === error.errorField) {
-				i.setError();
+		this.#inputs.forEach(input => {
+			if (input.getId() === error.errorField) {
+				input.setError();
 			}
 		});
 		this.#error.innerHTML = error.message;

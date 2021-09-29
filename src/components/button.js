@@ -24,14 +24,14 @@ export default class Button {
 	/**
 	 * Конструктор класса Button
 	 * @constructor
-	 * @param {Object} DOMelement [= null] Существующий html-элемент.
+	 * @param {Object|null} DOMelement Существующий html-элемент.
 	 */
 	constructor(DOMelement = null) {
 		this.#elem = DOMelement;
 	}
 
 	/**
-	 * Эта восхитительный метод проверяет, передали в него тот же объект или нет
+	 * Метод проверяет, передали в него тот же объект или нет
 	 * @param {Object} obj Обычно объект типа Button, но это не обязательно
 	 * @return {Boolean} True, если передан тот же объект класса Button. Иначе false
 	 */

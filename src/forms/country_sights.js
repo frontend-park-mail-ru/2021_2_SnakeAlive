@@ -8,7 +8,6 @@ import {
 	nicaraguaFormName,
 } from '../constants/index.js';
 import { adaptGetCards } from '../adapters/index.js';
-import { Button } from '../components/index.js';
 import { setColumnsAmount } from './set_columns_amount_cards.js';
 
 /**
@@ -74,18 +73,6 @@ const showSights = () => {
 };
 const shower = showSights();
 
-
-
 export const showCountrySights = () => {
 	shower();
-
-	const btnExit = new Button();
-	btnExit.makeButton(
-		'Следующая страна',
-		'left-side-btn',
-		'btn-next-country',
-		document.getElementById('root')
-	);
-	btnExit.addClickListener(() => showCountrySights());
-	btnExit.setActive();
 };
