@@ -1,0 +1,33 @@
+{
+  "name": "2021_2_snakealive",
+  "version": "1.0.0",
+  "description": "Проект TripAdvisor команды \"Змея Живая!\"",
+  "main": "index.js",
+  "devDependencies": {
+    "@babel/core": "^7.15.5",
+    "@babel/eslint-parser": "^7.15.7",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.24.2",
+    "prettier": "^2.4.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pretty": "prettier --write \"**/*.js\" && prettier --write \"**/*.html\" && prettier --write \"**/*.css\" && prettier --write \"**/*.handlebars\"",
+    "check-pretty": "prettier --check .",
+    "generate-templates": "handlebars src/templates/*.handlebars -f src/precompiled/templates.js",
+
+    "lint": "eslint  \"./src/*/*.js\" --fix\n eslint  \"src/index.js\" --fix\n"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frontend-park-mail-ru/2021_2_SnakeAlive.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/frontend-park-mail-ru/2021_2_SnakeAlive/issues"
+  },
+  "homepage": "https://github.com/frontend-park-mail-ru/2021_2_SnakeAlive#readme"
+}
