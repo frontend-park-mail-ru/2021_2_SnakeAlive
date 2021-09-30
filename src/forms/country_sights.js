@@ -53,7 +53,7 @@ const getSights = (uriName = '', formName = '') => {
 		});
 };
 
-const showSights = () => {
+const showSights = (yesRussia) => {
 	const map = [
 		{
 			name: russiaFormName,
@@ -66,9 +66,14 @@ const showSights = () => {
 	];
 	let it = 0;
 
-	return function () {
-		it = (it + 1) % map.length;
+	return function (yesRussia) {
+		if (yesRussia === true) {
+			getSights(russiaUriName, russiaFormName);
+			it = 1;
+			return;
+		}
 		getSights(map[it].uri, map[it].name);
+		it = (it + 1) % map.length;
 	};
 };
 const shower = showSights();
@@ -78,7 +83,7 @@ const showCountrySights = () => {
 };
 
 const showRussia = () => {
-	getSights(russiaUriName, russiaFormName);
+	shower(true);
 };
 
 export { showCountrySights, showRussia };
