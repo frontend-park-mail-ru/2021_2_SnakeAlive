@@ -73,6 +73,12 @@ const showSights = () => {
 };
 const shower = showSights();
 
-export const showCountrySights = () => {
+const showCountrySights = () => {
 	shower();
 };
+
+const showRussia = () => {
+	getSights(russiaFormName, russiaUriName);
+};
+
+export { showCountrySights, showRussia };

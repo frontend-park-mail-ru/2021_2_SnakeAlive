@@ -51,6 +51,9 @@ html {
 	box-shadow: 0 1px var(--color-black);
 	margin-bottom: 2vh;
 }
+#click-logo:hover {
+	cursor: pointer;
+}
 
 .logo-h {
 	grid-area: b;
