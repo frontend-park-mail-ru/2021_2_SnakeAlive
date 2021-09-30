@@ -78,7 +78,7 @@ const showCountrySights = () => {
 };
 
 const showRussia = () => {
-	getSights(russiaFormName, russiaUriName);
+	getSights(russiaUriName, russiaFormName);
 };
 
 export { showCountrySights, showRussia };
