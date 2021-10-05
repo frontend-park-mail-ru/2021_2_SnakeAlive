@@ -2,6 +2,8 @@
 export default class Input {
 	#elem = null;
 
+	#err = null;
+
 	name = null;
 
 	/**
@@ -11,20 +13,32 @@ export default class Input {
 	 */
 	constructor(DOMelement) {
 		this.#elem = DOMelement;
-		this.name = DOMelement.name;
-		this.#elem.addEventListener('focusout', () => {
+		this.name = DOMelement.id;
+
+		this.#err = document.getElementById(`err-${this.name}`);
+
+		this.#elem.addEventListener('focusin', () => {
 			this.#elem.classList.remove('err-input');
+			// this.#err.style.visibility = 'hidden';
+			this.#err.classList.remove('err');
 		});
 	}
 
-	/** Выделяет input как содержащий ошибку */
-	setError() {
+	/** Выделяет input как содержащий ошибку
+	 * @param {Error} error Ошибка, которую нужно показать в input
+	 */
+	setError(error) {
 		this.#elem.classList.add('err-input');
+		this.#err.innerHTML = error.message;
+		// this.#err.style.visibility = 'visible';
+		this.#err.classList.add('err');
 	}
 
 	/** Убирает отображение ошибки на input, если оно было */
 	clearErrors() {
 		this.#elem.classList.remove('err-input');
+		// this.#err.style.visibility = 'hidden';
+		this.#err.classList.remove('err');
 	}
 
 	/**

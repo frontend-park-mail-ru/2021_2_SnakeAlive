@@ -4,6 +4,7 @@ import { Button, Form, FormConfig, formHTML } from '../components/index.js';
 import { flushPopup } from './flush_popup.js';
 import { loginUser } from './login.js';
 import { registerUser } from './register.js';
+import { header, headerContent } from '../precompiled/index.js';
 
 /**
  * Функция конструирует и добавляет в index.html форму регистрации
@@ -92,8 +93,8 @@ const showLoginForm = (callbacks = []) => {
  * Функция выставляет в существующий html div#header содержание для не залогиненного пользователя
  */
 const setGuestHeader = (callbacks = []) => {
-	const header = document.getElementById('header');
-	header.innerHTML = Handlebars.templates.header_content();
+	const headerDOM = document.getElementById('header');
+	headerDOM.innerHTML = headerContent();
 
 	const login = () => showLoginForm(callbacks);
 	const loginPlace = document.getElementById('login-place-h');
@@ -121,8 +122,8 @@ const setGuestHeader = (callbacks = []) => {
  * если пользователь нажмет на кнопку выйти
  */
 const setUserHeader = (user, callbacks = []) => {
-	const header = document.getElementById('header');
-	header.innerHTML = Handlebars.templates.header_content(user);
+	const headerDOM = document.getElementById('header');
+	headerDOM.innerHTML = headerContent(user);
 
 	const btnExit = new Button();
 	btnExit.makeButton('Выход', 'btn-h', 'exitMainPage', document.getElementById('register-place-h'));
@@ -154,9 +155,6 @@ function chooseHeaderType() {
 /**
  * Функция создает html div#header по шаблону, вставляя в него заголовок сайта (в перспективе лого)
  */
-const headerHTML = () => {
-	const template = Handlebars.templates.header;
-	return template();
-};
+const headerHTML = () => header();
 
 export { headerHTML, chooseHeaderType };

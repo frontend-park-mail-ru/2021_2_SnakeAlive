@@ -20,6 +20,7 @@ html {
 	--color-white: white;
 	--color-black: black;
 	--color-grey: #252525;
+	--color-light-grey: #a2a2a2;
 	--color-green: green;
 	--color-red: #e55934;
 
@@ -150,7 +151,7 @@ html {
 	text-align: center;
 }
 .startForm {
-	width: 30vw;
+	/*width: 30vw;*/
 	min-width: 400px;
 	margin-left: auto;
 	margin-right: auto;
@@ -161,29 +162,27 @@ html {
 .formName {
 	font-weight: 700;
 	font-size: var(--text-larger);
+	margin-bottom: 3vh;
 }
 .startInput {
 	width: 30vw;
 	min-width: 250px;
-	padding: 2vh 1vw;
-	margin-bottom: 2vh;
-	border-width: 1px;
+	padding: 1vh 1vw;
+	margin-bottom: 1vh;
+	border-width: 2px;
 	border-style: solid;
-	border-color: var(--color-grey);
+	border-color: var(--color-light-grey);
 	text-align: left;
 }
 
 /*show errors in form*/
 .formErrorBlock {
-	padding-top: 2vh;
-	margin: 2vh 0;
+	margin: 1vh 0;
 	font-size: var(--text-small);
 	word-wrap: normal;
 	color: var(--color-red);
 	display: block;
 	text-align: center;
-}
-.formErrorBlock {
 	visibility: hidden;
 }
 .err {
@@ -203,9 +202,8 @@ html {
 
 	padding: 2vh 2vw;
 	background-color: var(--color-black);
-	/*width: max-content;*/
 
-	margin-bottom: 2vh;
+	margin: 2vh 0;
 }
 .btn-black:hover {
 	background-color: var(--color-grey);

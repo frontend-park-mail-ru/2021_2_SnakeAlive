@@ -9,6 +9,7 @@ import {
 } from '../constants/index.js';
 import { adaptGetCards } from '../adapters/index.js';
 import { setColumnsAmount } from './set_columns_amount_cards.js';
+import { countrySightsTemplate, sights } from '../precompiled/index.js';
 
 /**
  * Функция принимает страну, возвращает Promise с http-ответом
@@ -34,9 +35,8 @@ const getCards = country =>
  * Функция создает html страницу со списком достопримечательностей страны defaultCountryName
  */
 const getSights = (uriName = '', formName = '') => {
-	const countryPageTemplate = Handlebars.templates.country_sights;
 	const inner = document.querySelector('#inner');
-	inner.innerHTML = countryPageTemplate({ name: formName });
+	inner.innerHTML = countrySightsTemplate({ name: formName });
 
 	setColumnsAmount(document.documentElement.clientWidth);
 	window.onresize = () => setColumnsAmount(document.documentElement.clientWidth);
@@ -44,16 +44,16 @@ const getSights = (uriName = '', formName = '') => {
 	getCards(uriName)
 		.then(response => response.json())
 		.then(cards => {
-			const { sights } = Handlebars.templates;
+			// const { sights } = Handlebars.templates;
 			document.querySelector('.card__grid').innerHTML = sights(adaptGetCards(cards));
 		})
 		.catch(error => {
-			inner.innerHTML = countryPageTemplate({ name: ': Ошибка' });
+			inner.innerHTML = countrySightsTemplate({ name: ': Ошибка' });
 			document.querySelector('.card__grid').innerHTML = `<p>${error}</p>`;
 		});
 };
 
-const showSights = (yesRussia) => {
+const showSights = () => {
 	const map = [
 		{
 			name: russiaFormName,
@@ -66,7 +66,7 @@ const showSights = (yesRussia) => {
 	];
 	let it = 0;
 
-	return function (yesRussia) {
+	return yesRussia => {
 		if (yesRussia === true) {
 			getSights(russiaUriName, russiaFormName);
 			it = 1;

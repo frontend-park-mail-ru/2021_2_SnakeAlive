@@ -1,5 +1,6 @@
 import Input from './input.js';
 import Button from './button.js';
+import { popup } from '../precompiled/index.js';
 
 /** Класс соответствует html-форме */
 class Form {
@@ -69,11 +70,9 @@ class Form {
 	setError(error) {
 		this.#inputs.forEach(input => {
 			if (input.getId() === error.errorField) {
-				input.setError();
+				input.setError(error);
 			}
 		});
-		this.#error.innerHTML = error.message;
-		this.#error.classList.add('err');
 	}
 }
 
@@ -82,9 +81,6 @@ class Form {
  * @param {FormConfig} config Объект класса FormConfig, содержащий необходимую информацию
  * @return {String} html разметка формы
  */
-const formHTML = config => {
-	const template = Handlebars.templates.popup;
-	return template(config);
-};
+const formHTML = config => popup(config);
 
 export { Form, formHTML };

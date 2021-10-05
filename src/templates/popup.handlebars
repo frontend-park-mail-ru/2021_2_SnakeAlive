@@ -9,11 +9,9 @@
 							<div>
 							<h2 class="formName">{{formName}}</h2>
 							</div>
-							<div>
-							<p id="formErrorBlock" class="formErrorBlock">ошибок нет</p>
-							</div>
 							{{#each inputs}}
 							<div>
+								<p id='err-{{id}}' class="formErrorBlock">ошибок нет</p>
 								<input type="{{type}}" id="{{id}}" placeholder="{{name}}" class="startInput">
 							</div>
 							{{/each}}

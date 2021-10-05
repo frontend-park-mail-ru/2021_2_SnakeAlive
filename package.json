@@ -17,9 +17,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "pretty": "prettier --write \"**/*.js\" && prettier --write \"**/*.html\" && prettier --write \"**/*.css\" && prettier --write \"**/*.handlebars\"",
     "check-pretty": "prettier --check .",
-    "generate-templates": "handlebars src/templates/*.handlebars -f src/precompiled/templates.js",
-    "lint": "eslint  \"./src/*/*.js\" --fix\n eslint  \"src/index.js\" --fix\n",
-    "build": "mkdir src/precompiled && handlebars src/templates/*.handlebars -f src/precompiled/templates.js"
+    "generate-module-templates": "cd src/precompiled && rm -f * && cd ../templates && for file in *\ndo\n  handlebars ./${file} -o | sed -e '1d;2d;$d' | sed -e \"1s/templates\\['/export const /;1s/']//;1s/template/Handlebars.template/\" > ../precompiled/$file.js\ndone\n cd ../precompiled && all=\"export { \" && for file in *\ndo\n all=\"${all} ${file%.handlebars.js},\" \n echo \"import { ${file%.handlebars.js} } from './${file}';\" >> index.js\ndone\n echo \"\n${all} };\" >> index.js",
+    "lint": "eslint  \"./src/*/*.js\" --fix\"./src/precompiled\"\n eslint  \"src/index.js\" --fix\n",
+    "build": "mkdir src/precompiled && npm run generate-module-templates"
   },
   "repository": {
     "type": "git",
