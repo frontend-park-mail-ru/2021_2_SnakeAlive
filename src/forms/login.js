@@ -22,13 +22,11 @@ export const loginUser = input => {
 		password,
 	}).then(response => {
 		if (response.status === 404) {
-			console.log(response);
 			return Promise.reject(
 				new FormValidationError('Не зарегистрирован такой пользователь', 'email')
 			);
 		}
 		if (response.status === 400) {
-			console.log(response);
 			return Promise.reject(new FormValidationError('Неверный пароль', 'pswd'));
 		}
 
