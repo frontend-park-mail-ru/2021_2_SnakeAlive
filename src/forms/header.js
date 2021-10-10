@@ -5,6 +5,7 @@ import { flushPopup } from './flush_popup.js';
 import { loginUser } from './login.js';
 import { registerUser } from './register.js';
 import { header, headerContent } from '../precompiled/index.js';
+import { validateLoginData, validateRegisterData } from '../validation/index.js';
 
 /**
  * Функция конструирует и добавляет в index.html форму регистрации
@@ -52,7 +53,7 @@ const showRegisterForm = (callbacks = []) => {
 	document.getElementById('popup-place').innerHTML = formHTML(formInfo);
 
 	const signupForm = new Form(formInfo);
-	signupForm.setButtonEvent(registerUser, callbacks);
+	signupForm.setButtonEvent(validateRegisterData, registerUser, callbacks);
 };
 
 /**
@@ -86,7 +87,7 @@ const showLoginForm = (callbacks = []) => {
 
 	document.getElementById('popup-place').innerHTML = formHTML(formInfo);
 	const loginForm = new Form(formInfo);
-	loginForm.setButtonEvent(loginUser, callbacks);
+	loginForm.setButtonEvent(validateLoginData, loginUser, callbacks);
 };
 
 /**

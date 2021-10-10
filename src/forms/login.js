@@ -1,4 +1,4 @@
-import { validateLoginData, FormValidationError } from '../validation/index.js';
+import { FormValidationError } from '../validation/index.js';
 import { sendPostJSONRequest } from '../http/index.js';
 import { backendEndpoint, loginURI } from '../constants/index.js';
 
@@ -14,25 +14,24 @@ import { backendEndpoint, loginURI } from '../constants/index.js';
  * @reject {Error}
  * @returns fPromise
  */
-export const loginUser = input =>
-	validateLoginData(input)
-		.then(() => {
-			const { email } = input;
-			const password = input.pswd;
-			return sendPostJSONRequest(backendEndpoint + loginURI, {
-				email,
-				password,
-			});
-		})
-		.then(response => {
-			if (response.status === 404) {
-				return Promise.reject(
-					new FormValidationError('Не зарегистрирован такой пользователь', 'email')
-				);
-			}
-			if (response.status === 400) {
-				return Promise.reject(new FormValidationError('Неверный пароль', 'pswd'));
-			}
+export const loginUser = input => {
+	const { email } = input;
+	const password = input.pswd;
+	return sendPostJSONRequest(backendEndpoint + loginURI, {
+		email,
+		password,
+	}).then(response => {
+		if (response.status === 404) {
+			console.log(response);
+			return Promise.reject(
+				new FormValidationError('Не зарегистрирован такой пользователь', 'email')
+			);
+		}
+		if (response.status === 400) {
+			console.log(response);
+			return Promise.reject(new FormValidationError('Неверный пароль', 'pswd'));
+		}
 
-			return response;
-		});
+		return response;
+	});
+};

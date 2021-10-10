@@ -45,20 +45,29 @@ class Form {
 
 	/**
 	 * Получает из html значения всех полей ввода с их id
-	 * @param {function} action Функция, которая вызывается по нажатию submit кнопки формы
+	 * @param {function} preAction Функция, которая вызывается по нажатию submit кнопки формы и
+	 * выполняется на клиенте. Возвращает boolean
+	 * @param {function} action Функция, которая вызывается по нажатию submit кнопки формы и
+	 * содержит поход к серверу. Возращает Promise
 	 * @param {function[]} callbacks Массив функций, обрабатывающих результат работы action
 	 * @return {null}
 	 */
-	setButtonEvent(action, callbacks) {
+	setButtonEvent(preAction, action, callbacks) {
 		this.#elem.addEventListener('click', evt => {
 			if (this.#button.isIt(evt.target)) {
 				evt.preventDefault();
 				this.#inputs.forEach(input => input.clearErrors());
-				action(this.getValues())
-					.then(response => {
-						callbacks.forEach(callback => callback(response));
-					})
-					.catch(err => this.setError(err));
+				const values = this.getValues();
+				const preActionResult = preAction(values);
+				if (preActionResult.length > 0) {
+					preActionResult.forEach(err => this.setError(err));
+				} else {
+					action(values)
+						.then(response => {
+							callbacks.forEach(callback => callback(response));
+						})
+						.catch(err => this.setError(err));
+				}
 			}
 		});
 	}

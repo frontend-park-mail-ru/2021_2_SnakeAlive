@@ -2,34 +2,35 @@ import { FormValidationError } from './error.js';
 
 const checkIsEmpty = (value = '', name = '') => {
 	if (!value) {
-		return Promise.reject(new FormValidationError('заполните все поля', name));
+		return new FormValidationError('заполните все поля', name);
 	}
-
-	return Promise.resolve();
+	const MaxLength = 100;
+	if (value.length > MaxLength) {
+		return new FormValidationError('слишком длинное значение', name);
+	}
+	return null;
 };
 
 const checkLength = (value = '', length = 0, name = '') => {
 	if (value.length < length) {
-		return Promise.reject(new FormValidationError('пароль слишком короткий', name));
+		return new FormValidationError('пароль слишком короткий', name);
 	}
-
-	return Promise.resolve();
+	return null;
 };
 
 const validateEmail = (value = '', name = '') => {
 	const re = /^\w+(?:\.\w+)*@\w+(?:\.\w+)+$/;
 	if (!re.test(String(value))) {
-		return Promise.reject(new FormValidationError('неверная электронная почта', name));
+		return new FormValidationError('неверная электронная почта', name);
 	}
-
-	return Promise.resolve();
+	return null;
 };
 
 const checkIfEqual = (pswdFirst = '', pswdSecond = '', name = 'pswdRepeated') => {
 	if (pswdFirst === pswdSecond) {
-		return Promise.resolve();
+		return null;
 	}
-	return Promise.reject(new FormValidationError('Пароли не совпадают', name));
+	return new FormValidationError('Пароли не совпадают', name);
 };
 
 export { validateEmail, checkIsEmpty, checkLength, checkIfEqual };
