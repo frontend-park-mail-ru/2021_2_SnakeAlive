@@ -1,9 +1,9 @@
 /** Класс соответствует кнопке. Создаается либо конструктором из существующего html элемента,
  * либо функцией makeButton по параметрам */
 export default class Button {
-	#elem = null;
+	#elem: HTMLElement | undefined;
 
-	#listen = [];
+	#listen: Array< () => void > = [];
 
 	/**
 	 * Создает кнопку по параметрам. Если объект класса уже содержал html элемент, он затирается
@@ -12,7 +12,7 @@ export default class Button {
 	 * @param {String} id id кнопки для html
 	 * @param {Object} parentElement html элемент, внутрь которого нужно добавить кнопку
 	 */
-	makeButton(text = 'кнопка', styleClass = '', id = '', parentElement) {
+	makeButton(text = 'кнопка', styleClass = '', id = '', parentElement: HTMLElement) {
 		this.#elem = document.createElement('button');
 		this.#elem.id = id;
 		this.#elem.innerHTML = text;
@@ -26,7 +26,7 @@ export default class Button {
 	 * @constructor
 	 * @param {Object|null} DOMelement Существующий html-элемент.
 	 */
-	constructor(DOMelement = null) {
+	constructor(DOMelement?: HTMLElement) {
 		this.#elem = DOMelement;
 	}
 
@@ -35,15 +35,13 @@ export default class Button {
 	 * @param {Object} obj Обычно объект типа Button, но это не обязательно
 	 * @return {Boolean} True, если передан тот же объект класса Button. Иначе false
 	 */
-	isIt(obj) {
-		return obj === this.#elem;
-	}
+	isIt = (obj: HTMLElement): boolean => obj === this.#elem;
 
 	/**
 	 * Метод принимает функцию и добавляет ее к массиву - полю класса listen
 	 * @param {function} handler
 	 */
-	addClickListener(handler) {
+	addClickListener = (handler: () => void): void => {
 		this.#listen.push(handler);
 	}
 
@@ -53,7 +51,9 @@ export default class Button {
 	 */
 	setActive() {
 		this.#listen.forEach(handler => {
-			this.#elem.addEventListener('click', handler);
+			if (this.#elem !== undefined) {
+				this.#elem.addEventListener('click', handler);
+			}
 		});
 	}
 
@@ -63,7 +63,9 @@ export default class Button {
 	 */
 	setPassive() {
 		this.#listen.forEach(handler => {
-			this.#elem.removeEventListener('click', handler);
+			if (this.#elem !== undefined) {
+				this.#elem.removeEventListener('click', handler);
+			}
 		});
 	}
 }

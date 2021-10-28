@@ -1,5 +1,5 @@
 module.exports = {
-	parser: '@babel/eslint-parser',
+	parser: '@typescript-eslint/parser',
 	globals: {
 		"Handlebars": "readonly"
 	},
@@ -8,7 +8,7 @@ module.exports = {
 		browser: true,
 		es2021: true,
 	},
-	extends: ['airbnb-base', 'prettier'],
+	extends: ['airbnb-base', 'prettier',  'plugin:@typescript-eslint/recommended' ],
 	parserOptions: {
 		ecmaVersion: 12,
 		sourceType: 'module',
@@ -25,7 +25,9 @@ module.exports = {
 		'handlebars.min.js',
 		'src/precompiled/*',
 		'src/templates/*',
-		'handlebars.min-v4.7.7.js'
+		'handlebars.min-v4.7.7.js',
+		'webpack.config.js',
+		'dist/'
 	],
 	rules: {
 		'prefer-const': 'error',

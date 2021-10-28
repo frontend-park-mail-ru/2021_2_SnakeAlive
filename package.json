@@ -6,19 +6,41 @@
   "devDependencies": {
     "@babel/core": "^7.15.5",
     "@babel/eslint-parser": "^7.15.7",
+    "@typescript-eslint/eslint-plugin": "^5.2.0",
+    "@typescript-eslint/parser": "^5.2.0",
+    "acorn": "^8.5.0",
+    "acorn-import-assertions": "^1.8.0",
+    "clean-webpack-plugin": "^4.0.0",
+    "cross-env": "^7.0.3",
+    "css-loader": "^6.5.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.24.2",
-    "prettier": "^2.4.1"
+    "handlebars": "^4.7.7",
+    "handlebars-loader": "^1.7.1",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.4.3",
+    "node-sass": "^6.0.1",
+    "prettier": "^2.4.1",
+    "ruby": "^0.6.1",
+    "sass": "^1.43.3",
+    "sass-loader": "^12.2.0",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.4.4",
+    "webpack": "^5.60.0",
+    "webpack-cli": "^4.9.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "pretty": "prettier --write \"**/*.js\" && prettier --write \"**/*.html\" && prettier --write \"**/*.css\" && prettier --write \"**/*.handlebars\"",
+    "pretty": "prettier --write \"**/*.js\" && prettier --write \"**/*.htm\" && prettier --write \"**/*.css\" && prettier --write \"**/*.handlebars\"",
     "check-pretty": "prettier --check .",
-    "generate-templates": "handlebars src/templates/*.handlebars -f src/precompiled/templates.js",
-
-    "lint": "eslint  \"./src/*/*.js\" --fix\n eslint  \"src/index.js\" --fix\n"
+    "generate-module-templates": "cd src/precompiled && rm -f * && cd ../templates && for file in *\ndo\n  handlebars ./${file} -o | sed -e '1d;2d;$d' | sed -e \"1s/templates\\['/export const /;1s/']//;1s/template/Handlebars.template/\" > ../precompiled/$file.js\ndone\n cd ../precompiled && all=\"export { \" && for file in *\ndo\n all=\"${all} ${file%.handlebars.js},\" \n echo \"import { ${file%.handlebars.js} } from './${file}';\" >> index.js\ndone\n echo \"\n${all} };\" >> index.js",
+    "lint": "eslint  \"./src/*/*.js\" --fix\"./src/precompiled\"\n eslint  \"src/index.js\" --fix\n",
+    "build": "mkdir src/precompiled && npm run generate-module-templates",
+    "wp-dev": "cross-env NODE_ENV=development webpack --mode development",
+    "wp-watch": "cross-env NODE_ENV=development webpack --mode development --watch",
+    "wp-build": "cross-env NODE_ENV=production webpack --mode production"
   },
   "repository": {
     "type": "git",
