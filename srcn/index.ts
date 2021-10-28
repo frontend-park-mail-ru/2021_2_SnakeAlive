@@ -1,3 +1,4 @@
+
 // import {
 //     Shower,
 //     headerHTML,
@@ -11,6 +12,9 @@ import {Storage} from "./storage/index";
 import {Dispatcher} from "./dispatcher/index";
 import {PageReducer} from './reducers/index'
 import {newInitPageRequest} from "./actions/index";
+
+import './index.css';
+import './drop_default.css';
 
 /**
  * Функция отображает в html "главную страницу" со списком достопримечательностей и двумя кнопками
@@ -48,3 +52,15 @@ const generateMainPage = (): void => {
 };
 
 generateMainPage();
+
+// import { router } from "./router/index"
+//
+
+//
+//
+//
+// router.start(window.location.pathname);
+//
+// window.addEventListener('popstate', () => {
+// 	router.popstate();
+// });
