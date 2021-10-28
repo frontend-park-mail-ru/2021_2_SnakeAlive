@@ -1,15 +1,9 @@
 import { resolve } from "./resolver";
-import {
-    Login,
-    // Register,
-    // List
-
-} from '../view/login'
 
 class Router {
     start = (_path: string, _data?: object) => {
-        if (resolve(_path)) {
-            const view = resolve(_path);
+        const view = resolve(_path);
+        if (view !== undefined) {
             Router.#changeToView(view);
         }
     }
@@ -34,12 +28,13 @@ class Router {
         window.history.pushState(_data, _path, _path)
     }
 
-    static #changeToView = (View: Login): void => {
+    static #changeToView = (view: object): void => {
         const page = document.getElementById("page");
         if(page !== null && page.parentNode !== null){
             page.parentNode.removeChild(page);
         }
-        const v = new View();
+        // @ts-ignore
+        const v = new view();
     }
 };
 

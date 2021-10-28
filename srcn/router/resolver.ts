@@ -8,14 +8,16 @@ import {
 class Path {
     url = '';
 
-    view: Login; // тут нужен интерфейс вероятно!!!!
+    view: object; // тут нужен интерфейс вероятно!!!!
+
+    constructor(_url: string, _view: object){
+        this.url = _url;
+        this.view = _view;
+    }
 }
 
 const paths: Array<Path> = [
-    {
-        url: '/login',
-        view: Login
-    },
+    new Path('/login', Login)
     // {
     //     url: '/register',
     //     view: Register
@@ -26,7 +28,7 @@ const paths: Array<Path> = [
     // },
 ]
 
-const resolve = (_path: string): Login | undefined => {
+const resolve = (_path: string): object | undefined => {
     const path = paths.find(elem => elem.url === _path);
     if (path !== undefined) {
         return path.view;

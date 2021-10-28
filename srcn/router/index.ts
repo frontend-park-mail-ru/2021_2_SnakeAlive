@@ -1,3 +1,3 @@
-import { router } from './router.js';
+import { router } from './router';
 
 export { router };
