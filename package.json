@@ -17,7 +17,7 @@
     "pretty": "prettier --write \"**/*.js\" && prettier --write \"**/*.html\" && prettier --write \"**/*.css\" && prettier --write \"**/*.handlebars\"",
     "check-pretty": "prettier --check .",
     "generate-templates": "handlebars src/templates/*.handlebars -f src/precompiled/templates.js",
-
+    "generate-ts-templates": "handlebars srcn/templates/*.handlebars -f srcn/precompiled/templates.js -c handlebars/runtime",
     "lint": "eslint  \"./src/*/*.js\" --fix\n eslint  \"src/index.js\" --fix\n"
   },
   "repository": {

@@ -15,7 +15,7 @@ import {newInitPageRequest} from "./actions/index";
 /**
  * Функция отображает в html "главную страницу" со списком достопримечательностей и двумя кнопками
  */
-const generateMainPage = () => {
+const generateMainPage = (): void => {
     const root: HTMLElement | null = document.getElementById('root');
     if (root === null) {
         console.log("root null")
@@ -28,7 +28,7 @@ const generateMainPage = () => {
     // chooseHeaderType();
     let storage: Storage = new Storage();
     let dispatcher: Dispatcher = new Dispatcher();
-    let pageReducer: PageReducer = new PageReducer(storage,dispatcher);
+    let pageReducer: PageReducer = new PageReducer(storage, dispatcher);
     pageReducer.init();
 
     dispatcher.notify(newInitPageRequest());

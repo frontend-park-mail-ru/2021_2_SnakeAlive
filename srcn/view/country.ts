@@ -93,6 +93,4 @@ class CountryHolderView extends BasicView {
     }
 }
 
-//TODO: add to compiler automate
-//handlebars srcn/templates/*.handlebars -f srcn/precompiled/templates.js -c handlebars/runtime
 export {CountryHolderView, CountryCardsHolderView};
