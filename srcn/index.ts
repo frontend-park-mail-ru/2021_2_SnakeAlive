@@ -1,0 +1,1 @@
+let val: number = 4;

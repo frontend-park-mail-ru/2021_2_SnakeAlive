@@ -1,78 +1,33 @@
-import { sendGetJSONRequest } from '../http/index.js';
 import {
-	backendEndpoint,
-	russiaFormName,
-	countrySights,
-	russiaUriName,
-	nicaraguaUriName,
-	nicaraguaFormName,
+    russiaFormName,
+    russiaUriName,
+    nicaraguaUriName,
+    nicaraguaFormName,
 } from '../constants/index.js';
-import { adaptGetCards } from '../adapters/index.js';
-import { setColumnsAmount } from './set_columns_amount_cards.js';
+import {newInitCountryRequest} from "../actions/index.js";
 
-/**
- * Функция принимает страну, возвращает Promise с http-ответом
- *
- * @param {String} country Страна, для которой хоти получить достопримечательности
- * @promise fPromise
- * @fulfill {Response} http response из fetch()
- * @reject {Error}
- * @returns fPromise
- */
-const getCards = country =>
-	sendGetJSONRequest(backendEndpoint + countrySights + country).then(response => {
-		if (response.status === 404) {
-			return Promise.reject(new Error('На сайте нет такой страницы'));
-		}
-		if (response.status === 401) {
-			return Promise.reject(new Error('Нужно войти в систему'));
-		}
-		return Promise.resolve(response);
-	});
-
-/**
- * Функция создает html страницу со списком достопримечательностей страны defaultCountryName
- */
-const getSights = (uriName = '', formName = '') => {
-	const countryPageTemplate = Handlebars.templates.country_sights;
-	const inner = document.querySelector('#inner');
-	inner.innerHTML = countryPageTemplate({ name: formName });
-
-	setColumnsAmount(document.documentElement.clientWidth);
-	window.onresize = () => setColumnsAmount(document.documentElement.clientWidth);
-
-	getCards(uriName)
-		.then(response => response.json())
-		.then(cards => {
-			const { sights } = Handlebars.templates;
-			document.querySelector('.card__grid').innerHTML = sights(adaptGetCards(cards));
-		})
-		.catch(error => {
-			inner.innerHTML = countryPageTemplate({ name: ': Ошибка' });
-			document.querySelector('.card__grid').innerHTML = `<p>${error}</p>`;
-		});
-};
-
-const showSights = () => {
-	const map = [
+export default class Shower {
+	#map = [
 		{
 			name: russiaFormName,
-			uri: russiaUriName,
+			ID: russiaUriName,
 		},
 		{
 			name: nicaraguaFormName,
-			uri: nicaraguaUriName,
+			ID: nicaraguaUriName,
 		},
 	];
-	let it = 0;
+	#it = 0;
+	#dispatcher;
 
-	return function () {
-		it = (it + 1) % map.length;
-		getSights(map[it].uri, map[it].name);
+	constructor(dispatcher) {
+		this.#dispatcher = dispatcher;
+	}
+
+	showNext() {
+		this.#it = (this.#it + 1) % this.#map.length;
+		const country = this.#map[this.#it];
+		this.#dispatcher.notify(newInitCountryRequest(country.name, country.ID));
 	};
-};
-const shower = showSights();
 
-export const showCountrySights = () => {
-	shower();
-};
+}
