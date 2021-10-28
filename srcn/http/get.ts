@@ -1,4 +1,4 @@
-const sendGetRequest = (uri: string, headers: any): Promise<Response> => {
+const sendGetRequest = (uri: string, headers?: any): Promise<Response> => {
     return fetch(
         uri, {
             method: 'GET',
@@ -9,7 +9,7 @@ const sendGetRequest = (uri: string, headers: any): Promise<Response> => {
     );
 }
 
-const sendGetJSONRequest = (uri: string, headers: any): Promise<Response> => {
+const sendGetJSONRequest = (uri: string, headers?: any): Promise<Response> => {
     return sendGetRequest(uri, {
         Accept: 'application/json; charset=utf-8',
         ...headers,

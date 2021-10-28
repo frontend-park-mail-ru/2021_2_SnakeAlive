@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.nicaraguaUriName = exports.nicaraguaFormName = exports.russiaUriName = exports.russiaFormName = void 0;
+const russiaFormName = 'России';
+exports.russiaFormName = russiaFormName;
+const russiaUriName = 'Russia';
+exports.russiaUriName = russiaUriName;
+const nicaraguaFormName = 'Никарагуа';
+exports.nicaraguaFormName = nicaraguaFormName;
+const nicaraguaUriName = 'Nicaragua';
+exports.nicaraguaUriName = nicaraguaUriName;

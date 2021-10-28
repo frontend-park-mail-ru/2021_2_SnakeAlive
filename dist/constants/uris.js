@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.logout = exports.profile = exports.countrySights = exports.registerURI = exports.loginURI = void 0;
+const loginURI = '/login';
+exports.loginURI = loginURI;
+const registerURI = '/register';
+exports.registerURI = registerURI;
+const countrySights = '/country/';
+exports.countrySights = countrySights;
+const profile = '/profile';
+exports.profile = profile;
+const logout = '/logout';
+exports.logout = logout;

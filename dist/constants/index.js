@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.nicaraguaUriName = exports.nicaraguaFormName = exports.logout = exports.profile = exports.russiaUriName = exports.countrySights = exports.russiaFormName = exports.registerURI = exports.loginURI = exports.backendEndpoint = void 0;
+const endpoints_1 = require("./endpoints");
+Object.defineProperty(exports, "backendEndpoint", { enumerable: true, get: function () { return endpoints_1.backendEndpoint; } });
+const uris_1 = require("./uris");
+Object.defineProperty(exports, "loginURI", { enumerable: true, get: function () { return uris_1.loginURI; } });
+Object.defineProperty(exports, "registerURI", { enumerable: true, get: function () { return uris_1.registerURI; } });
+Object.defineProperty(exports, "countrySights", { enumerable: true, get: function () { return uris_1.countrySights; } });
+Object.defineProperty(exports, "profile", { enumerable: true, get: function () { return uris_1.profile; } });
+Object.defineProperty(exports, "logout", { enumerable: true, get: function () { return uris_1.logout; } });
+const defaults_1 = require("./defaults");
+Object.defineProperty(exports, "russiaFormName", { enumerable: true, get: function () { return defaults_1.russiaFormName; } });
+Object.defineProperty(exports, "russiaUriName", { enumerable: true, get: function () { return defaults_1.russiaUriName; } });
+Object.defineProperty(exports, "nicaraguaFormName", { enumerable: true, get: function () { return defaults_1.nicaraguaFormName; } });
+Object.defineProperty(exports, "nicaraguaUriName", { enumerable: true, get: function () { return defaults_1.nicaraguaUriName; } });

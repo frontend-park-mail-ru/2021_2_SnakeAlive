@@ -7,7 +7,11 @@ export interface ID {
 
 export interface NamedID {
     ID: any;
-    Name: string;
+    name: string;
 }
 
-export type EventType = Empty | ID | NamedID;
+export interface ErrorMessage {
+    error: Error,
+}
+
+export type EventType = Empty | ID | NamedID | ErrorMessage;
