@@ -1,5 +1,7 @@
 /** Класс соответствует кнопке. Создаается либо конструктором из существующего html элемента,
  * либо функцией makeButton по параметрам */
+import { EventType } from '../dispatcher';
+
 export default class Button {
 	#elem: HTMLElement | undefined;
 
@@ -12,7 +14,7 @@ export default class Button {
 	 * @param {String} id id кнопки для html
 	 * @param {Object} parentElement html элемент, внутрь которого нужно добавить кнопку
 	 */
-	makeButton(text = 'кнопка', styleClass = '', id = '', parentElement: HTMLElement) {
+	makeButton = (text: string, styleClass: string, id: string, parentElement: HTMLElement) => {
 		this.#elem = document.createElement('button');
 		this.#elem.id = id;
 		this.#elem.innerHTML = text;
@@ -35,7 +37,7 @@ export default class Button {
 	 * @param {Object} obj Обычно объект типа Button, но это не обязательно
 	 * @return {Boolean} True, если передан тот же объект класса Button. Иначе false
 	 */
-	isIt = (obj: HTMLElement): boolean => obj === this.#elem;
+	isIt = (obj: EventTarget | null): boolean => obj === this.#elem;
 
 	/**
 	 * Метод принимает функцию и добавляет ее к массиву - полю класса listen
