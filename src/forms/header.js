@@ -84,7 +84,7 @@ const showLoginForm = (callbacks = []) => {
 	);
 
 	document.getElementById('popup-place').innerHTML = formHTML(formInfo);
-	const loginForm = new Form(formInfo);
+	const loginForm = new Form(formInfo, document.getElementById('popup'));
 	loginForm.setButtonEvent(loginUser, callbacks);
 };
 

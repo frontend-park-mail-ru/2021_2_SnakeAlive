@@ -9,26 +9,23 @@ import {
     newInitCountryResponse
 } from "../actions/index";
 import {adaptGetCards} from "../adapters/index";
-import {Storage} from "../storage/index";
-import {Dispatcher, EventType, NamedID, ID, Token} from "../dispatcher/index";
+import {storage} from "../storage/index";
+import {dispatcher, EventType, NamedID, ID, Token} from "../dispatcher/index";
 import {Country, CountryCard, CountryCardResponse} from "../models/index";
 
 export default class CountryReducer {
-    #storage: Storage;
-    #dispatcher: Dispatcher;
+
     #tokens: Token[];
 
-    constructor(storage: Storage, dispatcher: Dispatcher) {
-        this.#storage = storage;
-        this.#dispatcher = dispatcher;
+    constructor() {
         this.#tokens = [];
     }
 
     init = () => {
         this.#tokens = [
-            this.#dispatcher.register(initCountryRequest, this.initCountryPage),
-            this.#dispatcher.register(getCountryCardRequest, this.getCountryCards),
-            this.#dispatcher.register(destroyCountryPage, this.destroy),
+            dispatcher.register(initCountryRequest, this.initCountryPage),
+            dispatcher.register(getCountryCardRequest, this.getCountryCards),
+            dispatcher.register(destroyCountryPage, this.destroy),
         ];
     }
 
@@ -40,24 +37,24 @@ export default class CountryReducer {
     }
 
     initCountryPage = (metadata: EventType): void => {
-        let country = <NamedID>metadata;
-        this.#storage.storeCountry(<Country>{
+        const country = <NamedID>metadata;
+        storage.storeCountry(<Country>{
             name: country.name,
             ID: <string>country.ID,
         })
 
-        this.#dispatcher.notify(newInitCountryResponse(country.name, <string>country.ID));
+        dispatcher.notify(newInitCountryResponse(country.name, <string>country.ID));
     }
 
     getCountryCards = (metadata: EventType): void => {
         const data = <ID>metadata;
         this.#getCards(<string>data.ID)
             .then((cards: CountryCardResponse[]) => {
-                this.#storage.storeCountryCards(adaptGetCards(cards));
-                this.#dispatcher.notify(newGetCountryCardsResult());
+                storage.storeCountryCards(adaptGetCards(cards));
+                dispatcher.notify(newGetCountryCardsResult());
             })
             .catch((error: Error) => {
-                this.#dispatcher.notify(newGetCountryCardsError(error));
+                dispatcher.notify(newGetCountryCardsError(error));
             })
     }
 

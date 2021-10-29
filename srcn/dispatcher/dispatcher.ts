@@ -10,7 +10,7 @@ export interface Token {
     name: string;
 }
 
-export default class Dispatcher {
+class Dispatcher {
     #subscribers: Map<string, Callback[]>;
 
     constructor() {
@@ -33,7 +33,7 @@ export default class Dispatcher {
     }
 
     unregister = (token: Token): void => {
-        let subs = this.#subscribers.get(token.name);
+        const subs = this.#subscribers.get(token.name);
         if (subs === undefined) {
             return;
         }
@@ -45,7 +45,7 @@ export default class Dispatcher {
     }
 
     notify = (event: Event): void => {
-        let subs = this.#subscribers.get(event.key);
+        const subs = this.#subscribers.get(event.key);
         if (subs === undefined) {
             return;
         }
@@ -53,6 +53,7 @@ export default class Dispatcher {
         subs.forEach((sub) => {
             sub(event.metadata)
         });
-        return;
     }
 }
+
+export const dispatcher = new Dispatcher();

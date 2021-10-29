@@ -12,6 +12,10 @@ import {Dispatcher} from "./dispatcher/index.js";
 import {PageReducer} from './reducers/index.js'
 import {newInitPageRequest} from "./actions/index.js";
 
+// с появлением webpack
+import './drop_default.css';
+import './index.css';
+
 /**
  * Функция отображает в html "главную страницу" со списком достопримечательностей и двумя кнопками
  */

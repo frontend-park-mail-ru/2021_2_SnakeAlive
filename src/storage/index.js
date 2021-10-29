@@ -1,3 +1,3 @@
-import Storage from './storage.js'
+import { storage } from './storage';
 
-export {Storage};
+export {storage};
