@@ -1,12 +1,14 @@
-import {Country, CountryCard, TemplateCards} from "../models/index";
+import {Country, CountryCard, TemplateCards, UserMetadata} from "../models/index";
 
 export default class Storage {
     #countryCards: TemplateCards;
     #country: Country;
+    #userMetadata: UserMetadata;
 
     constructor() {
         this.#countryCards = <TemplateCards>{};
         this.#country = <Country>{};
+        this.#userMetadata = <UserMetadata>{};
     }
 
     storeCountryCards = (cards: TemplateCards): void => {
@@ -23,5 +25,13 @@ export default class Storage {
 
     getCountry = (): Country => {
         return this.#country;
+    }
+
+    setUserMetadata = (user: UserMetadata): void => {
+        this.#userMetadata = user;
+    }
+
+    getUserMetadata(): UserMetadata {
+        return this.#userMetadata;
     }
 }

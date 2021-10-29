@@ -15,6 +15,11 @@ import {
     newInitPageRequest,
 } from './page'
 
+import {
+    setMainHeaderRequest, setMainHeaderBasicResponse, setMainHeaderLoggedResponse, removeHeaderRequest,
+    newSetMainHeaderRequest, newSetMainHeaderLoggedResponse, newSetMainHeaderBasicResponse, newRemoveHeaderRequest,
+} from './header'
+
 export {
     getCountryCardRequest, getCountryCardsResult, getCountryCardsError, initCountryRequest,
     initCountryResponse,
@@ -26,4 +31,7 @@ export {
 
     initPageRequest,
     newInitPageRequest,
+
+    setMainHeaderRequest, setMainHeaderBasicResponse, setMainHeaderLoggedResponse, removeHeaderRequest,
+    newSetMainHeaderRequest, newSetMainHeaderLoggedResponse, newSetMainHeaderBasicResponse, newRemoveHeaderRequest,
 }

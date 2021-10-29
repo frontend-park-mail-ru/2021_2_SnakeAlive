@@ -1,5 +1,5 @@
 import {sendGetJSONRequest} from "../http/index";
-import {backendEndpoint, countrySights} from "../constants";
+import {backendEndpoint, countrySights} from "../constants/index";
 import {
     destroyCountryPage,
     getCountryCardRequest,
@@ -33,8 +33,9 @@ export default class CountryReducer {
     }
 
     destroy = (metadata: EventType): void => {
-        this.#tokens.forEach(tkn => {
-            this.#dispatcher.unregister(tkn);
+        let that: CountryReducer = this;
+        this.#tokens.forEach(element => {
+            that.#dispatcher.unregister(element);
         })
     }
 
