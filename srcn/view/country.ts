@@ -32,8 +32,9 @@ class CountryCardsHolderView extends BasicView {
     };
 
     destroy = (metadata: EventType = {}): void => {
+        let that: CountryCardsHolderView = this;
         this.#tokens.forEach(element => {
-            dispatcher.unregister(element);
+        dispatcher.unregister(element);
         })
 
         this.setEmpty();
@@ -66,8 +67,9 @@ class CountryHolderView extends BasicView {
     }
 
     destroy = (metadata: EventType = {}): void => {
+        let that: CountryHolderView = this;
         this.#tokens.forEach(element => {
-            dispatcher.unregister(element);
+        dispatcher.unregister(element);
         })
 
         dispatcher.notify(newDestroyCountryPage());
