@@ -2,7 +2,7 @@ export default class BasicView {
     #component: string;
 
     constructor(component: string) {
-        this.#component = component
+        this.#component = component;
     }
 
     setEmpty = (): void => {
@@ -10,9 +10,9 @@ export default class BasicView {
     }
 
     setView = (data: string): void => {
-        let element: Element | null = document.querySelector(this.#component);
+        const element: Element | null = document.querySelector(this.#component);
         if (element === null) {
-            throw new Error('empty element ' + this.#component)
+            throw new Error(`empty element ${this.#component}`)
         }
 
         element.innerHTML = data;

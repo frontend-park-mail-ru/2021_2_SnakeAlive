@@ -27,10 +27,12 @@ module.exports = {
 			template: './index.html',
 			minify: {
 				collapseWhitespace: isProd
-			}
+			},
 		}),
 		new CleanWebpackPlugin(),
-		new MiniCssExtractPlugin(),
+		new MiniCssExtractPlugin({
+			filename: filename('css')
+		}),
 	],
 	module: {
 		rules: [

@@ -1,7 +1,8 @@
 import {Country, CountryCard, TemplateCards} from "../models/index";
 
-export default class Storage {
+class Storage {
     #countryCards: TemplateCards;
+
     #country: Country;
 
     constructor() {
@@ -21,7 +22,7 @@ export default class Storage {
         this.#country = country;
     }
 
-    getCountry = (): Country => {
-        return this.#country;
-    }
+    getCountry = (): Country => this.#country;
 }
+
+export const storage = new Storage();

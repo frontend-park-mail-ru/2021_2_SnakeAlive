@@ -1,5 +1,6 @@
-export default class Storage {
+class Storage {
     #countryCards = [];
+
     #country = {}
 
     constructor() {
@@ -23,3 +24,5 @@ export default class Storage {
         return this.#country;
     }
 }
+
+export const storage = new Storage(); //
