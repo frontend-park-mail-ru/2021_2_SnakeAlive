@@ -11,7 +11,7 @@ const filename = ext => isDev ? `[name].${ext}` : `[name].[hash].${ext}`;
 module.exports = {
 	mode: 'development',
 	devtool: 'eval-source-map',
-	context: path.resolve(__dirname, 'srcn'),
+	context: path.resolve(__dirname, 'src'),
 	resolve: {
 		extensions: [".ts", ".js"]
 	},
