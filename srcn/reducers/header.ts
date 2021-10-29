@@ -1,5 +1,5 @@
-import {Storage} from "../storage/index";
-import {Dispatcher, EventType, Token} from "../dispatcher/index";
+import {storage} from "../storage/index";
+import {dispatcher, EventType, Token} from "../dispatcher/index";
 import {
     destroyCountryPage,
     getCountryCardRequest,
@@ -13,27 +13,23 @@ import {UserMetadata} from "../models/index";
 
 
 export default class HeaderReducer {
-    #storage: Storage;
-    #dispatcher: Dispatcher;
     #tokens: Token[];
 
-    constructor(storage: Storage, dispatcher: Dispatcher) {
-        this.#storage = storage;
-        this.#dispatcher = dispatcher;
+    constructor() {
         this.#tokens = [];
     }
 
     init = () => {
         this.#tokens = [
-            this.#dispatcher.register(setMainHeaderRequest, this.setHeader),
-            this.#dispatcher.register(removeHeaderRequest, this.destroy),
+            dispatcher.register(setMainHeaderRequest, this.setHeader),
+            dispatcher.register(removeHeaderRequest, this.destroy),
         ];
     }
 
     destroy = (metadata: EventType): void => {
         let that: HeaderReducer = this;
         this.#tokens.forEach(element => {
-            that.#dispatcher.unregister(element);
+            dispatcher.unregister(element);
         })
     }
 
@@ -49,9 +45,9 @@ export default class HeaderReducer {
                 return response.json();
             })
             .then((data: UserMetadata) => {
-                this.#storage.setUserMetadata(data);
-                this.#dispatcher.notify(newSetMainHeaderLoggedResponse());
+                storage.setUserMetadata(data);
+                dispatcher.notify(newSetMainHeaderLoggedResponse());
             })
-            .catch(() => this.#dispatcher.notify(newSetMainHeaderBasicResponse()));
+            .catch(() => dispatcher.notify(newSetMainHeaderBasicResponse()));
     }
 }

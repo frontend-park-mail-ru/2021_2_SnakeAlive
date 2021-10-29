@@ -25,6 +25,14 @@ class Storage {
     }
 
     getCountry = (): Country => this.#country;
+
+    setUserMetadata = (user: UserMetadata): void => {
+        this.#userMetadata = user;
+    }
+
+    getUserMetadata(): UserMetadata {
+        return this.#userMetadata;
+    }
 }
 
 export const storage = new Storage();

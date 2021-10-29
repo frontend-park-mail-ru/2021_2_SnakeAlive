@@ -32,7 +32,7 @@ export default class CountryReducer {
     destroy = (metadata: EventType): void => {
         let that: CountryReducer = this;
         this.#tokens.forEach(element => {
-            that.#dispatcher.unregister(element);
+            dispatcher.unregister(element);
         })
     }
 
