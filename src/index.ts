@@ -16,7 +16,7 @@ import { router } from './router';
 import './index.css';
 import './drop_default.css';
 
-import './global.d';
+declare module '*handlebars';
 
 const pageReducer: PageReducer = new PageReducer();
 pageReducer.init();
