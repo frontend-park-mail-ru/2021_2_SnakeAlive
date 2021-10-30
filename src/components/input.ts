@@ -15,12 +15,12 @@ export default class Input {
 	/** Выделяет input как содержащий ошибку */
 	setError = (): void => {
 		this.#elem.classList.add('err-input');
-	}
+	};
 
 	/** Убирает отображение ошибки на input, если оно было */
 	clearErrors = (): void => {
 		this.#elem.classList.remove('err-input');
-	}
+	};
 
 	/** Получает из html значение, введенное пользователем в input */
 	getValue = (): string => this.#elem.value;

@@ -1,7 +1,7 @@
-const loginURI: string = '/login';
-const registerURI: string = '/register';
-const countrySights: string = '/country/';
-const profile: string = '/profile';
-const logout: string = '/logout';
+const loginURI = '/login';
+const registerURI = '/register';
+const countrySights = '/country/';
+const profile = '/profile';
+const logout = '/logout';
 
-export {loginURI, registerURI, countrySights, profile, logout};
+export { loginURI, registerURI, countrySights, profile, logout };

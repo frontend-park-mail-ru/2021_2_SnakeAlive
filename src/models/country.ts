@@ -1,35 +1,41 @@
 interface Country {
-    name: string;
-    ID: string;
+	name: string;
+	ID: string;
 }
 
-
 interface CountryCardResponse {
-    name: string;
-    author: string;
-    review: string;
-    tags: string[];
-    photos: string[];
+	name: string;
+	author: string;
+	review: string;
+	tags: string[];
+	photos: string[];
 }
 
 interface CountryCardTag {
-    name: string
+	name: string;
 }
 
 interface CountryCardPhoto {
-    source: string;
+	source: string;
 }
 
 interface CountryCard {
-    name: string;
-    author: string;
-    comment: string;
-    tags: CountryCardTag[];
-    imgs: CountryCardPhoto[];
+	name: string;
+	author: string;
+	comment: string;
+	tags: CountryCardTag[];
+	imgs: CountryCardPhoto[];
 }
 
 interface TemplateCards {
-    cards: CountryCard[];
+	cards: CountryCard[];
 }
 
-export {Country, CountryCard, CountryCardResponse, TemplateCards, CountryCardPhoto, CountryCardTag};
+export {
+	Country,
+	CountryCard,
+	CountryCardResponse,
+	TemplateCards,
+	CountryCardPhoto,
+	CountryCardTag,
+};

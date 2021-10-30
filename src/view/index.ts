@@ -1,3 +1,4 @@
-import {CountryCardsHolderView, CountryHolderView} from "./country";
+import { CountryCardsHolderView, CountryHolderView } from './country';
+import HeaderView from './header';
 
-export {CountryCardsHolderView, CountryHolderView};
+export { CountryCardsHolderView, CountryHolderView, HeaderView };

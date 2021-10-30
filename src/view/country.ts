@@ -1,86 +1,86 @@
-import BasicView from "./view";
+import BasicView from './view';
 import {
-    getCountryCardsError, getCountryCardsResult,
-    newGetCountryCardsRequest,
+	getCountryCardsError,
+	getCountryCardsResult,
+	newGetCountryCardsRequest,
+	destroyInnerRequest,
+	destroyCountryPage,
+	newDestroyCountryPage,
+} from '../actions';
+import { storage } from '../storage';
+import { dispatcher, ErrorMessage, EventType, Token } from '../dispatcher';
 
-    destroyInnerRequest, destroyCountryPage,
-    newDestroyCountryPage,
-} from "../actions/index";
-import {storage} from "../storage/index";
-import {dispatcher, ErrorMessage, EventType, Token} from "../dispatcher/index";
-
-// @ts-ignore
 import * as sights from '../templates/sights.handlebars';
-// @ts-ignore
+
 import * as countryPageTemplate from '../templates/country_sights.handlebars';
 
 class CountryCardsHolderView extends BasicView {
-    #tokens: Token[];
+	#tokens: Token[];
 
-    constructor() {
-        super('.card__grid');
+	constructor() {
+		super('.card__grid');
 
-        this.#tokens = [];
-    }
+		this.#tokens = [];
+	}
 
-    init = () => {
-        this.#tokens = [
-            dispatcher.register(getCountryCardsResult, this.renderCountryCards),
-            dispatcher.register(getCountryCardsError, this.renderErrorMessage),
-            dispatcher.register(destroyCountryPage, this.destroy)
-        ];
-    };
+	init = () => {
+		this.#tokens = [
+			dispatcher.register(getCountryCardsResult, this.renderCountryCards),
+			dispatcher.register(getCountryCardsError, this.renderErrorMessage),
+			dispatcher.register(destroyCountryPage, this.destroy),
+		];
+	};
 
-    destroy = (metadata: EventType = {}): void => {
-        this.#tokens.forEach(element => {
-            dispatcher.unregister(element);
-        })
+	destroy = (metadata: EventType = {}): void => {
+		this.#tokens.forEach(element => {
+			dispatcher.unregister(element);
+		});
 
-        this.setEmpty();
-    };
+		this.setEmpty();
+	};
 
-    renderCountryCards = (metadata: EventType = {}): void => {
-        this.setView(sights(storage.getCountryCards()))
-    };
+	renderCountryCards = (metadata: EventType = {}): void => {
+		this.setView(sights(storage.getCountryCards()));
+	};
 
-    renderErrorMessage = (metadata: EventType = {}): void => {
-        const event = <ErrorMessage>metadata
-        this.setView(`<p>${event.error}</p>`);
-    };
+	renderErrorMessage = (metadata: EventType = {}): void => {
+		const event = <ErrorMessage>metadata;
+		this.setView(`<p>${event.error}</p>`);
+	};
 }
 
 class CountryHolderView extends BasicView {
-    #tokens: Token[];
+	#tokens: Token[];
 
-    constructor() {
-        super('#inner');
+	constructor() {
+		super('#inner');
 
-        this.#tokens = [];
-    }
+		this.#tokens = [];
+	}
 
-    init() {
-        this.#tokens = [
-            dispatcher.register(getCountryCardsResult, this.renderCountry),
-            dispatcher.register(destroyInnerRequest, this.destroy),
-        ];
-    }
+	init() {
+		this.#tokens = [
+			dispatcher.register(getCountryCardsResult, this.renderCountry),
+			dispatcher.register(destroyInnerRequest, this.destroy),
+		];
+	}
 
-    destroy = (metadata: EventType = {}): void => {
-        this.#tokens.forEach(element => {
-            dispatcher.unregister(element);
-        })
+	destroy = (metadata: EventType = {}): void => {
+		this.#tokens.forEach(element => {
+			dispatcher.unregister(element);
+		});
 
-        dispatcher.notify(newDestroyCountryPage());
+		dispatcher.notify(newDestroyCountryPage());
 
-        this.setEmpty();
-    }
+		this.setEmpty();
+	};
 
-    renderCountry = (metadata: EventType = {}): void => {
-        const {name, ID} = storage.getCountry();
-        this.setView(countryPageTemplate({name}))
+	renderCountry = (metadata: EventType = {}): void => {
+		const { name, ID } = storage.getCountry();
+		this.setView(countryPageTemplate({ name }));
 
-        dispatcher.notify(newGetCountryCardsRequest(ID));
-    }
+		dispatcher.notify(newGetCountryCardsRequest(ID));
+	};
 }
 
-export {CountryHolderView, CountryCardsHolderView};
+export { CountryHolderView, CountryCardsHolderView };

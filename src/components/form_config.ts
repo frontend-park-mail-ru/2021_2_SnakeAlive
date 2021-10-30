@@ -8,7 +8,7 @@ class InputConfig {
 
 	name = '';
 
-	id ='';
+	id = '';
 
 	constructor(type: string, name: string, id: string) {
 		this.type = type;
@@ -46,8 +46,15 @@ class FormConfig {
 
 	closeCallback: () => void;
 
-	constructor(formId: string, formName: string, cssClass: string, button: ButtonConfig,
-							inputCssClass: string, inputs: Array<InputConfig>, closeCallback: () => void) {
+	constructor(
+		formId: string,
+		formName: string,
+		cssClass: string,
+		button: ButtonConfig,
+		inputCssClass: string,
+		inputs: Array<InputConfig>,
+		closeCallback: () => void
+	) {
 		this.formId = formId;
 		this.formName = formName;
 		this.cssClass = cssClass;

@@ -1,5 +1,5 @@
 .idea/
 node_modules/
-src/precompiled/templates.js
-src/handlebars.runtime-v4.7.7.js
+src-old/precompiled/templates.js
+src-old/handlebars.runtime-v4.7.7.js
 dist/

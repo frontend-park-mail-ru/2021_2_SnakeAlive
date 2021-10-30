@@ -1,3 +1,3 @@
-import {adaptGetCards} from './get_country_cards';
+import { adaptGetCards } from './get_country_cards';
 
-export {adaptGetCards};
+export { adaptGetCards };

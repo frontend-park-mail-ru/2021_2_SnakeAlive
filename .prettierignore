@@ -5,4 +5,7 @@ package.json
 handlebars.min.js
 /src/templates/*
 /src/precompiled/*
+src-old/
+dist/
 .eslintrc.js
+tsconfig.json

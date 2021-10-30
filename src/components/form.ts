@@ -1,12 +1,6 @@
-import {
-	Input,
-	Button,
-	FormConfig
-} from './index';
+import { Input, Button, FormConfig } from './index';
 
-// @ts-ignore
 import * as popup from '../templates/popup.handlebars';
-
 
 /** Класс соответствует html-форме */
 class Form {
@@ -22,19 +16,19 @@ class Form {
 
 	constructor(config: FormConfig, parent: HTMLElement) {
 		const formHTML = new HTMLFormElement();
-		formHTML.method = "POST";
+		formHTML.method = 'POST';
 		formHTML.id = config.formId;
 		formHTML.classList.add(config.cssClass);
 		this.#elem = formHTML;
 
 		const name = new HTMLHeadingElement();
-		name.classList.add("formName");
+		name.classList.add('formName');
 		formHTML.appendChild(name);
 
-		const errHTML	= new HTMLDivElement();
-		errHTML.id = "formErrorBlock";
-		errHTML.classList.add("formErrorBlock");
-		errHTML.textContent = "ощибок нет";
+		const errHTML = new HTMLDivElement();
+		errHTML.id = 'formErrorBlock';
+		errHTML.classList.add('formErrorBlock');
+		errHTML.textContent = 'ошибок нет';
 		formHTML.appendChild(errHTML);
 		this.#error = errHTML;
 
@@ -43,7 +37,7 @@ class Form {
 			inputHTML.id = input.id;
 			inputHTML.type = input.type;
 			inputHTML.placeholder = input.name;
-			inputHTML.classList.add("startInput");
+			inputHTML.classList.add('startInput');
 			formHTML.appendChild(inputHTML);
 			this.#inputs.push(new Input(inputHTML));
 		});
@@ -75,7 +69,7 @@ class Form {
 			result.set(input.getId(), input.getValue());
 		});
 		return result;
-	}
+	};
 
 	/**
 	 * Получает из html значения всех полей ввода с их id
@@ -88,20 +82,21 @@ class Form {
 		callbacks: Array<(response: Response) => void>
 	) {
 		this.#elem.addEventListener('click', evt => {
-				if (this.#button.isIt(evt.target)) {
-					evt.preventDefault();
-					this.#inputs.forEach(input => input.clearErrors());
-					action(this.getValues())
-						.then(response => {
-							callbacks.forEach(callback => callback(response));
-						})
-						.catch(err => this.setError(err));
-				}
+			if (this.#button.isIt(evt.target)) {
+				evt.preventDefault();
+				this.#inputs.forEach(input => input.clearErrors());
+				action(this.getValues())
+					.then(response => {
+						callbacks.forEach(callback => callback(response));
+					})
+					.catch(err => this.setError(err));
+			}
 		});
 	}
 
 	/** Функция показывает в форме ошибку: показывает ее текст и указывает поле, в котором содержится ошибка */
-	setError(error: Error) { // FormValidationError
+	setError(error: Error) {
+		// FormValidationError
 		this.#inputs.forEach(input => {
 			// if (input.getId() === error.errorField) {
 			// 	input.setError();
@@ -113,8 +108,6 @@ class Form {
 }
 
 /** Функция возвращает html верстку формы по FormConfig */
-const formHTML = (config: FormConfig) => {
-	return popup(config);
-};
+const formHTML = (config: FormConfig) => popup(config);
 
 export { Form, formHTML };

@@ -1,7 +1,7 @@
-const russiaFormName: string = 'России';
-const russiaUriName: string = 'Russia';
+const russiaFormName = 'России';
+const russiaUriName = 'Russia';
 
-const nicaraguaFormName: string = 'Никарагуа';
-const nicaraguaUriName: string = 'Nicaragua';
+const nicaraguaFormName = 'Никарагуа';
+const nicaraguaUriName = 'Nicaragua';
 
-export {russiaFormName, russiaUriName, nicaraguaFormName, nicaraguaUriName};
+export { russiaFormName, russiaUriName, nicaraguaFormName, nicaraguaUriName };

@@ -1,4 +1,4 @@
-import PageReducer from './page'
-import CountryReducer from './country'
+import PageReducer from './page';
+import CountryReducer from './country';
 
-export {PageReducer, CountryReducer};
+export { PageReducer, CountryReducer };

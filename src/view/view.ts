@@ -1,20 +1,20 @@
 export default class BasicView {
-    #component: string;
+	#component: string;
 
-    constructor(component: string) {
-        this.#component = component;
-    }
+	constructor(component: string) {
+		this.#component = component;
+	}
 
-    setEmpty = (): void => {
-        this.setView('');
-    }
+	setEmpty = (): void => {
+		this.setView('');
+	};
 
-    setView = (data: string): void => {
-        const element: Element | null = document.querySelector(this.#component);
-        if (element === null) {
-            throw new Error(`empty element ${this.#component}`)
-        }
+	setView = (data: string): void => {
+		const element: Element | null = document.querySelector(this.#component);
+		if (element === null) {
+			throw new Error(`empty element ${this.#component}`);
+		}
 
-        element.innerHTML = data;
-    }
+		element.innerHTML = data;
+	};
 }

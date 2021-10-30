@@ -1,17 +1,16 @@
-export interface Empty {
-}
+export interface Empty {}
 
 export interface ID {
-    ID: any;
+	ID: any;
 }
 
 export interface NamedID {
-    ID: any;
-    name: string;
+	ID: any;
+	name: string;
 }
 
 export interface ErrorMessage {
-    error: Error,
+	error: Error;
 }
 
 export type EventType = Empty | ID | NamedID | ErrorMessage;

@@ -1,27 +1,26 @@
-import CountryReducer from "./country";
-import {initPageRequest, newInitCountryRequest} from "../actions/index";
-import {CountryCardsHolderView, CountryHolderView} from "../view/index";
+import CountryReducer from './country';
+import { initPageRequest, newInitCountryRequest } from '../actions/index';
+import { CountryCardsHolderView, CountryHolderView } from '../view/index';
 
-import {storage} from "../storage";
-import {dispatcher} from "../dispatcher";
+import { storage } from '../storage';
+import { dispatcher } from '../dispatcher';
 
 export default class PageReducer {
+	// constructor() {}
 
-    // constructor() {}
+	init = () => {
+		dispatcher.register(initPageRequest, this.createInitPage);
+	};
 
-    init = () => {
-        dispatcher.register(initPageRequest, this.createInitPage)
-    }
+	createInitPage = (): void => {
+		console.log(this);
+		const countryReducer: CountryReducer = new CountryReducer();
+		countryReducer.init();
 
-    createInitPage = (): void => {
-        console.log(this)
-        const countryReducer: CountryReducer = new CountryReducer();
-        countryReducer.init();
+		const countryHolderView: CountryHolderView = new CountryHolderView();
+		countryHolderView.init();
 
-        const countryHolderView: CountryHolderView = new CountryHolderView();
-        countryHolderView.init();
-
-        const countryCardsHolderView: CountryCardsHolderView = new CountryCardsHolderView();
-        countryCardsHolderView.init();
-    };
+		const countryCardsHolderView: CountryCardsHolderView = new CountryCardsHolderView();
+		countryCardsHolderView.init();
+	};
 }

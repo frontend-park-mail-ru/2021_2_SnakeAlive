@@ -1,4 +1,3 @@
-
 // import {
 //     Shower,
 //     headerHTML,
@@ -10,12 +9,14 @@
 
 // import {storage} from "./storage/index";
 // import {dispatcher} from "./dispatcher/index";
-import {PageReducer} from './reducers/index'
+import { PageReducer } from './reducers';
 // import {newInitPageRequest} from "./actions/index";
 import { router } from './router';
 
 import './index.css';
 import './drop_default.css';
+
+declare module '*handlebars';
 
 const pageReducer: PageReducer = new PageReducer();
 pageReducer.init();
@@ -58,15 +59,3 @@ router.start();
 // };
 //
 // generateMainPage();
-
-// import { router } from "./router/index"
-//
-
-//
-//
-//
-// router.start(window.location.pathname);
-//
-// window.addEventListener('popstate', () => {
-// 	router.popstate();
-// });

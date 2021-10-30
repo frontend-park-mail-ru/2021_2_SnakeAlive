@@ -1,11 +1,10 @@
 /** Класс соответствует кнопке. Создаается либо конструктором из существующего html элемента,
  * либо функцией makeButton по параметрам */
-import { EventType } from '../dispatcher';
 
 export default class Button {
 	#elem: HTMLElement | undefined;
 
-	#listen: Array< () => void > = [];
+	#listen: Array<() => void> = [];
 
 	/**
 	 * Создает кнопку по параметрам. Если объект класса уже содержал html элемент, он затирается
@@ -21,7 +20,7 @@ export default class Button {
 
 		parentElement.appendChild(this.#elem);
 		this.#elem.classList.add(styleClass);
-	}
+	};
 
 	/**
 	 * Конструктор класса Button
@@ -45,7 +44,7 @@ export default class Button {
 	 */
 	addClickListener = (handler: () => void): void => {
 		this.#listen.push(handler);
-	}
+	};
 
 	/**
 	 * Метод проходит по массиву - полю класса listen и
