@@ -21,6 +21,7 @@
     "handlebars": "^4.7.7",
     "handlebars-loader": "^1.7.1",
     "html-webpack-plugin": "^5.5.0",
+    "husky": "^7.0.4",
     "mini-css-extract-plugin": "^2.4.3",
     "node-sass": "^6.0.1",
     "prettier": "^2.4.1",
@@ -34,15 +35,15 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "pretty": "prettier --write \"**/*.js\" && prettier --write \"**/*.htm\" && prettier --write \"**/*.css\" && prettier --write \"**/*.handlebars\"",
+    "prepare": "husky install",
+    "pretty": "prettier --write \"**/*.ts\" && prettier --write \"**/*.html\" && prettier --write \"**/*.css\"",
     "check-pretty": "prettier --check .",
-    "generate-ts-templates": "handlebars srcn/templates/*.handlebars -f srcn/precompiled/templates.js -c handlebars/runtime",
-    "generate-module-templates": "cd src/precompiled && rm -f * && cd ../templates && for file in *\ndo\n  handlebars ./${file} -o | sed -e '1d;2d;$d' | sed -e \"1s/templates\\['/export const /;1s/']//;1s/template/Handlebars.template/\" > ../precompiled/$file.js\ndone\n cd ../precompiled && all=\"export { \" && for file in *\ndo\n all=\"${all} ${file%.handlebars.js},\" \n echo \"import { ${file%.handlebars.js} } from './${file}';\" >> index.js\ndone\n echo \"\n${all} };\" >> index.js",
-    "lint": "eslint  \"./src/*/*.js\" --fix\"./src/precompiled\"\n eslint  \"src/index.js\" --fix\n",
-    "build": "mkdir src/precompiled && npm run generate-module-templates",
+    "lint": "eslint  src/*/*.ts --fix \n eslint  src/index.ts --fix\n",
     "wp-dev": "cross-env NODE_ENV=development webpack --mode development",
     "wp-watch": "cross-env NODE_ENV=development webpack --mode development --watch",
-    "wp-build": "cross-env NODE_ENV=production webpack --mode production"
+    "wp-build": "cross-env NODE_ENV=production webpack --mode production",
+    "prepush": "npm run pretty && eslint src/index.ts src/*/*.ts",
+    "push": "git commit -m \"test commit\""
   },
   "repository": {
     "type": "git",

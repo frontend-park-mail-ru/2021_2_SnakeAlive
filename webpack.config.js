@@ -6,14 +6,14 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = !isDev;
 
-const filename = ext => isDev ? `[name].${ext}` : `[name].[hash].${ext}`;
+const filename = ext => (isDev ? `[name].${ext}` : `[name].[hash].${ext}`);
 
 module.exports = {
 	mode: 'development',
 	devtool: 'eval-source-map',
-	context: path.resolve(__dirname, 'srcn'),
+	context: path.resolve(__dirname, 'src'),
 	resolve: {
-		extensions: [".ts", ".js"]
+		extensions: ['.ts', '.js'],
 	},
 	entry: {
 		main: './index.ts',
@@ -26,33 +26,29 @@ module.exports = {
 		new HTMLWebpackPlugin({
 			template: './index.html',
 			minify: {
-				collapseWhitespace: isProd
+				collapseWhitespace: isProd,
 			},
 		}),
 		new CleanWebpackPlugin(),
 		new MiniCssExtractPlugin({
-			filename: filename('css')
+			filename: filename('css'),
 		}),
 	],
 	module: {
 		rules: [
 			{
 				test: /\.s?css$/,
-				use: [
-					MiniCssExtractPlugin.loader,
-					'css-loader',
-					'sass-loader'
-				]
+				use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
 			},
 			{
 				test: /\.handlebars$/,
-				loader: 'handlebars-loader'
+				loader: 'handlebars-loader',
 			},
 			{
 				test: /\.ts$/,
 				use: 'ts-loader',
 				exclude: /node_modules/,
 			},
-		]
-	}
-}
+		],
+	},
+};
