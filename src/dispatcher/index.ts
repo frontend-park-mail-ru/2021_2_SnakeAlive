@@ -9,7 +9,7 @@ import {
 	UserLoginData,
 	UserRegisterData,
 	UserCommonData,
-	ValidationErrors
+	ValidationErrors,
 } from './metadata_types';
 
 export {
@@ -24,5 +24,5 @@ export {
 	UserLoginData,
 	UserRegisterData,
 	UserCommonData,
-	ValidationErrors
+	ValidationErrors,
 };

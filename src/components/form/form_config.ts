@@ -21,4 +21,3 @@ export interface FormConfig {
 	inputs: Array<InputConfig>;
 	closeCallback: () => void;
 }
-

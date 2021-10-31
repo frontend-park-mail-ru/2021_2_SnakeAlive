@@ -18,7 +18,7 @@ export default class PageReducer {
 	}
 
 	init = () => {
-		dispatcher.register(initPageRequest, this.createInitPage)
+		dispatcher.register(initPageRequest, this.createInitPage);
 		dispatcher.register(INIT_LOGIN_PAGE_REQUEST, this.createLoginPage);
 		dispatcher.register(INIT_REGISTER_PAGE_REQUEST, this.createRegisterPage);
 	};
@@ -29,7 +29,7 @@ export default class PageReducer {
 		const countryReducer: CountryReducer = new CountryReducer();
 		countryReducer.init();
 
-		const countryHolderView: CountryHolderView = new CountryHolderView();
+		const countryHolderView: CountryHolderView = new CountryHolderView(this.#viewPlace);
 		countryHolderView.init();
 
 		const countryCardsHolderView: CountryCardsHolderView = new CountryCardsHolderView();

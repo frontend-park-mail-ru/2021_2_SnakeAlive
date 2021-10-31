@@ -29,7 +29,7 @@ export interface UserRegisterData {
 }
 
 export interface ValidationErrors {
-	data:  Map<string, string>
+	data: Map<string, string>;
 }
 
 export interface UserCommonData {

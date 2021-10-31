@@ -14,15 +14,15 @@ const loginHTML = (parent: HTMLDivElement): HTMLDivElement => {
 	textPlace.innerHTML = loginTemplate();
 
 	const btn = new Button();
-	btn.makeButton(
-		'Перейти к регистрации', 'btn-css-ept', 'to_register', textPlace
-	);
-	btn.addClickListener(() => {router.go('/register')});
+	btn.makeButton('Перейти к регистрации', 'btn-css-ept', 'to_register', textPlace);
+	btn.addClickListener(() => {
+		router.go('/register');
+	});
 
 	parent.appendChild(formPlace);
 	parent.appendChild(textPlace);
 
 	return formPlace;
-}
+};
 
 export { loginHTML };

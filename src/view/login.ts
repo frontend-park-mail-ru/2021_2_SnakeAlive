@@ -30,12 +30,12 @@ export default class LoginView extends BasicView {
 		// 	["email", "test"],
 		// 	["password", "test"],
 		// ]);
-		dispatcher.notify(submitLoginData("test", "test"));
-	}
+		dispatcher.notify(submitLoginData('test', 'test'));
+	};
 
 	#setErrors = (metadata: EventType) => {
 		alert(metadata);
-	}
+	};
 
 	#destroy = (metadata: EventType): void => {
 		this.#tokens.forEach(element => {

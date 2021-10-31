@@ -7,7 +7,8 @@ import {
 	newSetMainHeaderRequest,
 	removeHeaderRequest,
 	setMainHeaderBasicResponse,
-	setMainHeaderLoggedResponse, setMainHeaderRequest,
+	setMainHeaderLoggedResponse,
+	setMainHeaderRequest,
 } from '../actions';
 
 import headerContentTemplate from '../templates/header_content.handlebars';
@@ -26,7 +27,7 @@ export default class HeaderView extends BasicView {
 			dispatcher.register(setMainHeaderLoggedResponse, this.setMainHeaderLogged),
 			dispatcher.register(setMainHeaderBasicResponse, this.setMainHeaderBasic),
 		];
-		dispatcher.notify(newSetMainHeaderRequest())
+		dispatcher.notify(newSetMainHeaderRequest());
 	};
 
 	destroy = (metadata: EventType): void => {

@@ -5,14 +5,15 @@ import {
 	newGetCountryCardsRequest,
 	destroyInnerRequest,
 	destroyCountryPage,
-	newDestroyCountryPage, DESTROY_CURRENT_PAGE,
+	newDestroyCountryPage,
+	DESTROY_CURRENT_PAGE,
 } from '@/actions';
 import { storage } from '@/storage';
 import { dispatcher, ErrorMessage, EventType, Token } from '../dispatcher';
 
-import * as sights from '@/templates/sights.handlebars';
+import sights from '@/templates/sights.handlebars';
 
-import * as countryPageTemplate from '@/templates/country_sights.handlebars';
+import countryPageTemplate from '@/templates/country_sights.handlebars';
 
 class CountryCardsHolderView extends BasicView {
 	#tokens: Token[];
@@ -54,9 +55,9 @@ class CountryCardsHolderView extends BasicView {
 class CountryHolderView extends BasicView {
 	#tokens: Token[];
 
-	constructor() {
+	constructor(parent: HTMLElement) {
 		// super('#inner');
-		super(new HTMLElement());
+		super(parent);
 
 		this.#tokens = [];
 	}

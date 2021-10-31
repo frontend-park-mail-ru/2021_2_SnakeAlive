@@ -24,7 +24,7 @@ const initLoginPageRequest = (): Event =>
 		metadata: <Empty>{},
 	};
 
-const DESTROY_CURRENT_PAGE = "DESTROY_CURRENT_PAGE";
+const DESTROY_CURRENT_PAGE = 'DESTROY_CURRENT_PAGE';
 
 const destroyCurrentPage = (): Event =>
 	<Event>{

@@ -8,5 +8,5 @@ export default class LoginReducer {
 
 	login = (metadata: EventType) => {
 		console.log(metadata);
-	}
+	};
 }

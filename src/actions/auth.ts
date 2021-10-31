@@ -1,8 +1,4 @@
-import {
-	Event,
-	UserLoginData,
-	ValidationErrors,
-} from '../dispatcher';
+import { Event, UserLoginData, ValidationErrors } from '../dispatcher';
 
 const SUBMIT_LOGIN_DATA = 'SUBMIT_LOGIN_DATA';
 
@@ -21,13 +17,8 @@ const setValidationErrorLogin = (data: Map<string, string>): Event =>
 	<Event>{
 		key: SET_VALIDATION_ERROR_LOGIN,
 		metadata: <ValidationErrors>{
-			data
-		}
-	}
+			data,
+		},
+	};
 
-export {
-	SUBMIT_LOGIN_DATA,
-	submitLoginData,
-	SET_VALIDATION_ERROR_LOGIN,
-	setValidationErrorLogin
-};
+export { SUBMIT_LOGIN_DATA, submitLoginData, SET_VALIDATION_ERROR_LOGIN, setValidationErrorLogin };
