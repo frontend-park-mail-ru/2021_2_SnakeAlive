@@ -5,20 +5,21 @@ import {
 	newGetCountryCardsRequest,
 	destroyInnerRequest,
 	destroyCountryPage,
-	newDestroyCountryPage,
-} from '../actions';
-import { storage } from '../storage';
+	newDestroyCountryPage, DESTROY_CURRENT_PAGE,
+} from '@/actions';
+import { storage } from '@/storage';
 import { dispatcher, ErrorMessage, EventType, Token } from '../dispatcher';
 
-import * as sights from '../templates/sights.handlebars';
+import * as sights from '@/templates/sights.handlebars';
 
-import * as countryPageTemplate from '../templates/country_sights.handlebars';
+import * as countryPageTemplate from '@/templates/country_sights.handlebars';
 
 class CountryCardsHolderView extends BasicView {
 	#tokens: Token[];
 
 	constructor() {
-		super('.card__grid');
+		// super('.card__grid');
+		super(new HTMLElement());
 
 		this.#tokens = [];
 	}
@@ -28,6 +29,7 @@ class CountryCardsHolderView extends BasicView {
 			dispatcher.register(getCountryCardsResult, this.renderCountryCards),
 			dispatcher.register(getCountryCardsError, this.renderErrorMessage),
 			dispatcher.register(destroyCountryPage, this.destroy),
+			dispatcher.register(DESTROY_CURRENT_PAGE, this.destroy),
 		];
 	};
 
@@ -53,7 +55,8 @@ class CountryHolderView extends BasicView {
 	#tokens: Token[];
 
 	constructor() {
-		super('#inner');
+		// super('#inner');
+		super(new HTMLElement());
 
 		this.#tokens = [];
 	}

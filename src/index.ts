@@ -1,27 +1,37 @@
-// import {
-//     Shower,
-//     headerHTML,
-//     chooseHeaderType,
-//     footerHTML,
-//     innerHTML,
-// } from './forms/index';
-// import {Button} from './components/index';
-
-// import {storage} from "./storage/index";
-// import {dispatcher} from "./dispatcher/index";
-import { PageReducer } from './reducers';
-// import {newInitPageRequest} from "./actions/index";
+import { PageReducer, HeaderReducer } from './reducers';
+import HeaderView from './view/header';
 import { router } from './router';
 
 import './index.css';
 import './drop_default.css';
 
-declare module '*handlebars';
+const main = () => {
+	console.log(window.location.pathname);
 
-const pageReducer: PageReducer = new PageReducer();
-pageReducer.init();
+	const contentPlace: HTMLDivElement = document.createElement('div');
+	contentPlace.id = 'content';
+	const pageReducer: PageReducer = new PageReducer(contentPlace);
+	pageReducer.init();
 
-router.start();
+	const headerPlace: HTMLDivElement = document.createElement('div');
+	headerPlace.id = 'header';
+	const headerReducer: HeaderReducer = new HeaderReducer();
+	headerReducer.init();
+
+	const headerView: HeaderView = new HeaderView(headerPlace);
+	headerView.init();
+
+	const root = document.getElementById('root');
+
+	if (root !== null) {
+		root.appendChild(headerPlace);
+		root.appendChild(contentPlace);
+	}
+
+	router.start();
+};
+
+main();
 
 /**
  * Функция отображает в html "главную страницу" со списком достопримечательностей и двумя кнопками

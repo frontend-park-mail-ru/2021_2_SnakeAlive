@@ -1,19 +1,31 @@
 import CountryReducer from './country';
-import { initPageRequest, newInitCountryRequest } from '../actions/index';
-import { CountryCardsHolderView, CountryHolderView } from '../view/index';
+import AuthReducer from './login';
+import {
+	initPageRequest,
+	INIT_LOGIN_PAGE_REQUEST,
+	INIT_REGISTER_PAGE_REQUEST,
+	destroyCurrentPage,
+} from '@/actions';
+import { CountryCardsHolderView, CountryHolderView, LoginView } from '@/view';
 
-import { storage } from '../storage';
-import { dispatcher } from '../dispatcher';
+import { dispatcher } from '@/dispatcher';
 
 export default class PageReducer {
-	// constructor() {}
+	#viewPlace: HTMLDivElement;
+
+	constructor(place: HTMLDivElement) {
+		this.#viewPlace = place;
+	}
 
 	init = () => {
-		dispatcher.register(initPageRequest, this.createInitPage);
+		dispatcher.register(initPageRequest, this.createInitPage)
+		dispatcher.register(INIT_LOGIN_PAGE_REQUEST, this.createLoginPage);
+		dispatcher.register(INIT_REGISTER_PAGE_REQUEST, this.createRegisterPage);
 	};
 
 	createInitPage = (): void => {
-		console.log(this);
+		dispatcher.notify(destroyCurrentPage());
+
 		const countryReducer: CountryReducer = new CountryReducer();
 		countryReducer.init();
 
@@ -22,5 +34,21 @@ export default class PageReducer {
 
 		const countryCardsHolderView: CountryCardsHolderView = new CountryCardsHolderView();
 		countryCardsHolderView.init();
+	};
+
+	createLoginPage = (): void => {
+		dispatcher.notify(destroyCurrentPage());
+
+		const authReducer: AuthReducer = new AuthReducer();
+		authReducer.init();
+
+		const loginView: LoginView = new LoginView(this.#viewPlace);
+		loginView.init();
+	};
+
+	createRegisterPage = (): void => {
+		dispatcher.notify(destroyCurrentPage());
+
+		//
 	};
 }

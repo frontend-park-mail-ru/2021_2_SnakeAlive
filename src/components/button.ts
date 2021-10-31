@@ -13,13 +13,17 @@ export default class Button {
 	 * @param {String} id id кнопки для html
 	 * @param {Object} parentElement html элемент, внутрь которого нужно добавить кнопку
 	 */
-	makeButton = (text: string, styleClass: string, id: string, parentElement: HTMLElement) => {
+	makeButton = (
+		text: string, styleClass: string, id: string, parentElement: HTMLElement, href?: string
+	): HTMLElement => {
 		this.#elem = document.createElement('button');
 		this.#elem.id = id;
 		this.#elem.innerHTML = text;
 
 		parentElement.appendChild(this.#elem);
 		this.#elem.classList.add(styleClass);
+
+		return this.#elem;
 	};
 
 	/**

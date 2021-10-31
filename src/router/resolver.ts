@@ -1,13 +1,11 @@
-// import {
-//     Login,
-//     // Register,
-//     // List
-//
-// } from '../view/login'
-import { Event } from '../dispatcher/index';
-import { newInitPageRequest } from '../actions/index';
+import { Event } from '@/dispatcher';
+import { newInitPageRequest, initLoginPageRequest, initRegisterPageRequest } from '@/actions';
 
-const paths: Map<string, Event> = new Map([['/', newInitPageRequest()]]);
+const paths: Map<string, Event> = new Map([
+	['/', newInitPageRequest()],
+	['/login', initLoginPageRequest()],
+	['/signup', initRegisterPageRequest()],
+]);
 
 const resolve = (_path: string): Event | undefined => paths.get(_path);
 

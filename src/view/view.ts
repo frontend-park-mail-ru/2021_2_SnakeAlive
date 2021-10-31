@@ -1,7 +1,11 @@
 export default class BasicView {
-	#component: string;
+	// #component: string;
+	readonly #component: HTMLElement;
 
-	constructor(component: string) {
+	// constructor(component: string) {
+	// 	this.#component = component;
+	// }
+	constructor(component: HTMLElement) {
 		this.#component = component;
 	}
 
@@ -10,11 +14,11 @@ export default class BasicView {
 	};
 
 	setView = (data: string): void => {
-		const element: Element | null = document.querySelector(this.#component);
-		if (element === null) {
-			throw new Error(`empty element ${this.#component}`);
-		}
+		// const element: Element | null = document.querySelector(this.#component);
+		// if (element === null) {
+		// 	throw new Error(`empty element ${this.#component}`);
+		// }
 
-		element.innerHTML = data;
+		this.#component.innerHTML = data;
 	};
 }

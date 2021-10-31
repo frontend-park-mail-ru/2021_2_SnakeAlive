@@ -11,9 +11,17 @@ const filename = ext => (isDev ? `[name].${ext}` : `[name].[hash].${ext}`);
 module.exports = {
 	mode: 'development',
 	devtool: 'eval-source-map',
+	devServer: {
+		static: './dist',
+		port: 3000,
+		historyApiFallback: true,
+	},
 	context: path.resolve(__dirname, 'src'),
 	resolve: {
 		extensions: ['.ts', '.js'],
+		alias: {
+			"@": path.resolve(__dirname, 'src')
+		}
 	},
 	entry: {
 		main: './index.ts',

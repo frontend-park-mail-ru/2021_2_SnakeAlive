@@ -1,4 +1,4 @@
-import { Country, CountryCard, TemplateCards, UserMetadata } from '../models';
+import { Country, CountryCard, TemplateCards, UserMetadata } from '@/models';
 
 class Storage {
 	#countryCards: TemplateCards;

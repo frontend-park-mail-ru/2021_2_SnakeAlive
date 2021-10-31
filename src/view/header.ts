@@ -1,23 +1,22 @@
 import BasicView from './view';
-import { storage } from '../storage';
-import { dispatcher, EventType, Token } from '../dispatcher';
-import { UserMetadata } from '../models';
+import { storage } from '@/storage';
+import { dispatcher, EventType, Token } from '@/dispatcher';
+import { UserMetadata } from '@/models';
 
 import {
+	newSetMainHeaderRequest,
 	removeHeaderRequest,
 	setMainHeaderBasicResponse,
-	setMainHeaderLoggedResponse,
+	setMainHeaderLoggedResponse, setMainHeaderRequest,
 } from '../actions';
 
-import * as headerTemplate from '../templates/header.handlebars';
-import * as headerContentTemplate from '../templates/header_content.handlebars';
+import headerContentTemplate from '../templates/header_content.handlebars';
 
 export default class HeaderView extends BasicView {
 	#tokens: Token[];
 
-	constructor() {
-		super(headerTemplate());
-
+	constructor(place: HTMLDivElement) {
+		super(place);
 		this.#tokens = [];
 	}
 
@@ -27,6 +26,7 @@ export default class HeaderView extends BasicView {
 			dispatcher.register(setMainHeaderLoggedResponse, this.setMainHeaderLogged),
 			dispatcher.register(setMainHeaderBasicResponse, this.setMainHeaderBasic),
 		];
+		dispatcher.notify(newSetMainHeaderRequest())
 	};
 
 	destroy = (metadata: EventType): void => {
@@ -39,7 +39,6 @@ export default class HeaderView extends BasicView {
 
 	setMainHeaderLogged = (metadata: EventType): void => {
 		const user: UserMetadata = storage.getUserMetadata();
-
 		this.setView(headerContentTemplate(user));
 		// TODO: add buttons!
 	};

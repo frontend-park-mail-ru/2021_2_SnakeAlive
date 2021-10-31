@@ -1,5 +1,5 @@
 import { resolve } from './resolver';
-import { dispatcher } from '../dispatcher';
+import { dispatcher } from '@/dispatcher';
 
 class Router {
 	start = (_data?: object) => {
@@ -9,7 +9,7 @@ class Router {
 		}
 	};
 
-	go = (_path: string, _data: object) => {
+	go = (_path: string, _data?: object) => {
 		if (window.location.pathname === _path) return;
 		const event = resolve(_path);
 		if (event !== undefined) {
@@ -25,7 +25,7 @@ class Router {
 		}
 	};
 
-	#pushHistoryState = (_path: string, _data: object): void => {
+	#pushHistoryState = (_path: string, _data?: object): void => {
 		window.history.pushState(_data, _path, _path);
 	};
 }

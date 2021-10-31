@@ -1,4 +1,4 @@
-import { Event, NamedID, ID, Empty, ErrorMessage } from '../dispatcher/index';
+import { Event, NamedID, ID, Empty, ErrorMessage } from '../dispatcher';
 
 const initCountryRequest = 'INIT_COUNTRY_REQUEST';
 
@@ -16,10 +16,7 @@ const initCountryResponse = 'INIT_COUNTRY_RESPONSE';
 const newInitCountryResponse = (name: string, id: string): Event =>
 	<Event>{
 		key: initCountryResponse,
-		metadata: <NamedID>{
-			name,
-			ID: id,
-		},
+		metadata: <NamedID>{},
 	};
 
 const getCountryCardRequest = 'GET_COUNTRY_CARDS_REQUEST';

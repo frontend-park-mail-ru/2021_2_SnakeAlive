@@ -1,6 +1,6 @@
-import { Input, Button, FormConfig } from './index';
+import { Input, Button, FormConfig } from '@/components';
 
-import * as popup from '../templates/popup.handlebars';
+import popup from '@/templates/popup.handlebars';
 
 /** Класс соответствует html-форме */
 class Form {
@@ -33,7 +33,7 @@ class Form {
 		this.#error = errHTML;
 
 		config.inputs.forEach(input => {
-			const inputHTML = new HTMLInputElement();
+			const inputHTML: HTMLInputElement = document.createElement('input');
 			inputHTML.id = input.id;
 			inputHTML.type = input.type;
 			inputHTML.placeholder = input.name;

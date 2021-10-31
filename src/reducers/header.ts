@@ -8,10 +8,10 @@ import {
 	newSetMainHeaderLoggedResponse,
 	removeHeaderRequest,
 	setMainHeaderRequest,
-} from '../actions/index';
-import { sendGetJSONRequest, HttpError } from '../http/index';
-import { backendEndpoint, profile } from '../constants/index';
-import { UserMetadata } from '../models/index';
+} from '@/actions/index';
+import { sendGetJSONRequest, HttpError } from '@/http/index';
+import { backendEndpoint, profile } from '@/constants/index';
+import { UserMetadata } from '@/models/index';
 
 export default class HeaderReducer {
 	#tokens: Token[];

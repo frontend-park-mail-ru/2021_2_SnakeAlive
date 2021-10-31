@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 module.exports = {
 	parser: '@typescript-eslint/parser',
 	globals: {
@@ -8,7 +9,7 @@ module.exports = {
 		browser: true,
 		es2021: true,
 	},
-	extends: ['airbnb-base', 'prettier',  'plugin:@typescript-eslint/recommended' ],
+	extends: ['airbnb-base', 'prettier',  'plugin:@typescript-eslint/recommended', "plugin:import/recommended" ],
 	parserOptions: {
 		ecmaVersion: 12,
 		sourceType: 'module',
@@ -53,9 +54,10 @@ module.exports = {
 	},
 	"settings": {
 		"import/resolver": {
-			"webpack": {
-				"config": "webpack.config.js"
+			"alias": {
+				map: [ ["@", "./src"] ],
+				extensions: [".ts", ".js"],
 			}
-		}
-	},
+		},
+	}
 };

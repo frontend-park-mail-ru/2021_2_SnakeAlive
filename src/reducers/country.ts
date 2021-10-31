@@ -1,5 +1,5 @@
-import { sendGetJSONRequest } from '../http';
-import { backendEndpoint, countrySights } from '../constants';
+import { sendGetJSONRequest } from '@/http';
+import { backendEndpoint, countrySights } from '@/constants';
 import {
 	destroyCountryPage,
 	getCountryCardRequest,
@@ -7,11 +7,11 @@ import {
 	newGetCountryCardsError,
 	newGetCountryCardsResult,
 	newInitCountryResponse,
-} from '../actions';
-import { adaptGetCards } from '../adapters/index';
-import { storage } from '../storage/index';
-import { dispatcher, EventType, NamedID, ID, Token } from '../dispatcher/index';
-import { Country, CountryCard, CountryCardResponse } from '../models/index';
+} from '@/actions';
+import { adaptGetCards } from '@/adapters';
+import { storage } from '@/storage';
+import { dispatcher, EventType, NamedID, ID, Token } from '@/dispatcher';
+import { Country, CountryCard, CountryCardResponse } from '@/models';
 
 export default class CountryReducer {
 	#tokens: Token[];
