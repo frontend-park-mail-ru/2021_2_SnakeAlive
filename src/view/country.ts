@@ -7,6 +7,8 @@ import {
 	destroyCountryPage,
 	newDestroyCountryPage,
 	DESTROY_CURRENT_PAGE,
+	newSetEmptyHeaderResponse,
+	newSetMainHeaderRequest,
 } from '@/actions';
 import { storage } from '@/storage';
 import { dispatcher, ErrorMessage, EventType, Token } from '../dispatcher';
@@ -63,6 +65,7 @@ class CountryHolderView extends BasicView {
 	}
 
 	init() {
+		dispatcher.notify(newSetEmptyHeaderResponse());
 		this.#tokens = [
 			dispatcher.register(getCountryCardsResult, this.renderCountry),
 			dispatcher.register(destroyInnerRequest, this.destroy),

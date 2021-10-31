@@ -34,6 +34,7 @@ export default class HeaderReducer {
 	};
 
 	setHeader = (metadata: EventType): void => {
+		console.log('setHeader');
 		sendGetJSONRequest(backendEndpoint + profile)
 			.then(response => {
 				if (response.status === 401) {

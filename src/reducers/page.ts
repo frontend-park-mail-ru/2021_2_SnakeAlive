@@ -1,12 +1,14 @@
 import CountryReducer from './country';
-import AuthReducer from './login';
+import LoginReducer from './login';
+import RegisterReducer from './register';
+
 import {
 	initPageRequest,
 	INIT_LOGIN_PAGE_REQUEST,
 	INIT_REGISTER_PAGE_REQUEST,
 	destroyCurrentPage,
 } from '@/actions';
-import { CountryCardsHolderView, CountryHolderView, LoginView } from '@/view';
+import { CountryCardsHolderView, CountryHolderView, LoginView, RegisterView } from '@/view';
 
 import { dispatcher } from '@/dispatcher';
 
@@ -24,6 +26,7 @@ export default class PageReducer {
 	};
 
 	createInitPage = (): void => {
+		console.log('create init page');
 		dispatcher.notify(destroyCurrentPage());
 
 		const countryReducer: CountryReducer = new CountryReducer();
@@ -39,8 +42,8 @@ export default class PageReducer {
 	createLoginPage = (): void => {
 		dispatcher.notify(destroyCurrentPage());
 
-		const authReducer: AuthReducer = new AuthReducer();
-		authReducer.init();
+		const loginReducer: LoginReducer = new LoginReducer();
+		loginReducer.init();
 
 		const loginView: LoginView = new LoginView(this.#viewPlace);
 		loginView.init();
@@ -49,6 +52,10 @@ export default class PageReducer {
 	createRegisterPage = (): void => {
 		dispatcher.notify(destroyCurrentPage());
 
-		//
+		const registerReducer: RegisterReducer = new RegisterReducer();
+		registerReducer.init();
+
+		const registerView: RegisterView = new RegisterView(this.#viewPlace);
+		registerView.init();
 	};
 }

@@ -1,7 +1,9 @@
+import { router } from '@/router';
+
 /** Класс соответствует кнопке. Создаается либо конструктором из существующего html элемента,
  * либо функцией makeButton по параметрам */
 
-export default class Button {
+export class Button {
 	#elem: HTMLElement | undefined;
 
 	#listen: Array<() => void> = [];
@@ -78,3 +80,14 @@ export default class Button {
 		});
 	}
 }
+
+export const makeSimpleButton = (elementId: string, pathToGo: string) => {
+	const btn = document.getElementById(elementId);
+	if (btn !== null) {
+		const profileBtn = new Button(btn);
+		profileBtn.addClickListener(() => {
+			router.go(pathToGo);
+		});
+		profileBtn.setActive();
+	}
+};

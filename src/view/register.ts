@@ -1,15 +1,15 @@
 import BasicView from './view';
-import { dispatcher, EventType, Token } from '@/dispatcher';
-import { loginHTML } from '@/components';
+import { dispatcher, EventType, Token } from '@/dispatcher/';
+import { registerHTML } from '@/components';
 
 import {
 	DESTROY_CURRENT_PAGE,
-	SET_VALIDATION_ERROR_LOGIN,
 	newSetEmptyHeaderResponse,
-	submitLoginData,
+	SET_VALIDATION_ERROR_REGISTER,
+	submitRegisterData,
 } from '../actions';
 
-export default class LoginView extends BasicView {
+export default class RegisterView extends BasicView {
 	#tokens: Token[];
 
 	#formElement: HTMLElement;
@@ -17,14 +17,14 @@ export default class LoginView extends BasicView {
 	constructor(place: HTMLDivElement) {
 		super(place);
 
-		this.#formElement = loginHTML(place);
+		this.#formElement = registerHTML(place);
 
 		this.#tokens = [];
 	}
 
 	init = (): void => {
 		this.#tokens = [
-			dispatcher.register(SET_VALIDATION_ERROR_LOGIN, this.#setErrors),
+			dispatcher.register(SET_VALIDATION_ERROR_REGISTER, this.#setErrors),
 			dispatcher.register(DESTROY_CURRENT_PAGE, this.#destroy),
 		];
 	};
@@ -34,7 +34,7 @@ export default class LoginView extends BasicView {
 		// 	["email", "test"],
 		// 	["password", "test"],
 		// ]);
-		dispatcher.notify(submitLoginData('test', 'test'));
+		dispatcher.notify(submitRegisterData('test', 'test', '', '', ''));
 	};
 
 	#setErrors = (metadata: EventType) => {

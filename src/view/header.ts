@@ -8,10 +8,11 @@ import {
 	removeHeaderRequest,
 	setMainHeaderBasicResponse,
 	setMainHeaderLoggedResponse,
-	setMainHeaderRequest,
+	SET_EMPTY_HEADER_RESPONSE,
 } from '../actions';
 
-import headerContentTemplate from '../templates/header_content.handlebars';
+import headerContentTemplate from '@/components/header/headerContent.handlebars';
+import { makeSimpleButton } from '@/components';
 
 export default class HeaderView extends BasicView {
 	#tokens: Token[];
@@ -26,8 +27,8 @@ export default class HeaderView extends BasicView {
 			dispatcher.register(removeHeaderRequest, this.destroy),
 			dispatcher.register(setMainHeaderLoggedResponse, this.setMainHeaderLogged),
 			dispatcher.register(setMainHeaderBasicResponse, this.setMainHeaderBasic),
+			dispatcher.register(SET_EMPTY_HEADER_RESPONSE, this.setMainHeaderEmpty),
 		];
-		dispatcher.notify(newSetMainHeaderRequest());
 	};
 
 	destroy = (metadata: EventType): void => {
@@ -40,13 +41,34 @@ export default class HeaderView extends BasicView {
 
 	setMainHeaderLogged = (metadata: EventType): void => {
 		const user: UserMetadata = storage.getUserMetadata();
-		this.setView(headerContentTemplate(user));
-		// TODO: add buttons!
+		const dataTemplate = {
+			isUser: true,
+			name: user.name,
+			avatarPath: user.avatarPath,
+		};
+		this.setView(headerContentTemplate(dataTemplate));
+
+		makeSimpleButton('logo-h', '/');
+		makeSimpleButton('user-block', '/profile');
 	};
 
 	setMainHeaderBasic = (metadata: EventType): void => {
-		// this.setView(Handlebars.templates.header_content(''));
-		this.setView(headerContentTemplate(''));
-		// TODO: add buttons!
+		const dataTemplate = {
+			isUser: false,
+			btnText: 'Войти',
+		};
+		this.setView(headerContentTemplate(dataTemplate));
+
+		makeSimpleButton('logo-h', '/');
+		makeSimpleButton('user-block', '/login');
+	};
+
+	setMainHeaderEmpty = (metadata: EventType): void => {
+		const dataTemplate = {
+			isUser: false,
+		};
+		this.setView(headerContentTemplate(dataTemplate));
+
+		makeSimpleButton('logo-h', '/');
 	};
 }

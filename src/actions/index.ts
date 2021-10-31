@@ -38,6 +38,8 @@ import {
 	newSetMainHeaderLoggedResponse,
 	newSetMainHeaderBasicResponse,
 	newRemoveHeaderRequest,
+	SET_EMPTY_HEADER_RESPONSE,
+	newSetEmptyHeaderResponse,
 } from './header';
 
 import {
@@ -45,6 +47,10 @@ import {
 	submitLoginData,
 	SET_VALIDATION_ERROR_LOGIN,
 	setValidationErrorLogin,
+	SUBMIT_REGISTER_DATA,
+	submitRegisterData,
+	SET_VALIDATION_ERROR_REGISTER,
+	setValidationErrorRegister,
 } from './auth';
 
 export {
@@ -80,6 +86,12 @@ export {
 	submitLoginData,
 	SET_VALIDATION_ERROR_LOGIN,
 	setValidationErrorLogin,
+	SUBMIT_REGISTER_DATA,
+	submitRegisterData,
+	SET_VALIDATION_ERROR_REGISTER,
+	setValidationErrorRegister,
 	DESTROY_CURRENT_PAGE,
 	destroyCurrentPage,
+	SET_EMPTY_HEADER_RESPONSE,
+	newSetEmptyHeaderResponse,
 };

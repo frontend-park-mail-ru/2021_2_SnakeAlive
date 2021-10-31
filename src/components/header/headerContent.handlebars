@@ -1,0 +1,14 @@
+	<div class='logo-h' id='logo-h'>
+		<img src="image/logo"/>
+		<h2>TripAdvisor</h2>
+	</div>
+	<div class='user-block' id='user-block'>
+		{{#if isUser}}
+			<div class="circle-img">
+				<img src="{{avatarPath}}"/>
+			</div>
+			<p>{{name}}</p>
+		{{else}}
+			<p>{{btnText}}</p>
+		{{/if}}
+	</div>

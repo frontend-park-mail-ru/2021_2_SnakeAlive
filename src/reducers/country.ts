@@ -7,6 +7,7 @@ import {
 	newGetCountryCardsError,
 	newGetCountryCardsResult,
 	newInitCountryResponse,
+	newSetMainHeaderRequest,
 } from '@/actions';
 import { adaptGetCards } from '@/adapters';
 import { storage } from '@/storage';
@@ -21,6 +22,8 @@ export default class CountryReducer {
 	}
 
 	init = () => {
+		dispatcher.notify(newSetMainHeaderRequest());
+
 		this.#tokens = [
 			dispatcher.register(initCountryRequest, this.initCountryPage),
 			dispatcher.register(getCountryCardRequest, this.getCountryCards),

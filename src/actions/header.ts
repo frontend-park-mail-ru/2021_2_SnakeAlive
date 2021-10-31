@@ -32,6 +32,14 @@ const newSetMainHeaderBasicResponse = (): Event =>
 		metadata: <Empty>{},
 	};
 
+const SET_EMPTY_HEADER_RESPONSE = 'SET_MAIN_HEADER_EMPTY_RESPONSE';
+
+const newSetEmptyHeaderResponse = (): Event =>
+	<Event>{
+		key: SET_EMPTY_HEADER_RESPONSE,
+		metadata: <Empty>{},
+	};
+
 export {
 	setMainHeaderRequest,
 	setMainHeaderBasicResponse,
@@ -41,4 +49,6 @@ export {
 	newSetMainHeaderLoggedResponse,
 	newSetMainHeaderBasicResponse,
 	newRemoveHeaderRequest,
+	SET_EMPTY_HEADER_RESPONSE,
+	newSetEmptyHeaderResponse,
 };
