@@ -1,23 +1,24 @@
-import { EventType } from './metadata_types';
-import { Event } from './event';
+import { DataType } from './metadata_types';
+import { IEvent } from './event';
+import { EventType } from '@/dispatcher/event_types';
 
 interface Callback {
-	(metadata: EventType): void;
+	(metadata: any): void;
 }
 
 export interface Token {
 	place: number;
-	name: string;
+	name: EventType;
 }
 
 class Dispatcher {
-	#subscribers: Map<string, Callback[]>;
+	#subscribers: Map<EventType, Callback[]>;
 
 	constructor() {
-		this.#subscribers = new Map<string, Callback[]>();
+		this.#subscribers = new Map<EventType, Callback[]>();
 	}
 
-	register = (eventName: string, callback: Callback): Token => {
+	register = (eventName: EventType, callback: Callback): Token => {
 		let subs = this.#subscribers.get(eventName);
 		if (subs === undefined) {
 			subs = [];
@@ -44,7 +45,7 @@ class Dispatcher {
 		this.#subscribers.set(token.name, subs.splice(token.place, 1));
 	};
 
-	notify = (event: Event): void => {
+	notify = (event: IEvent): void => {
 		console.log('dispatcher event: ', event);
 		const subs = this.#subscribers.get(event.key);
 		if (subs === undefined) {

@@ -7,6 +7,8 @@ import {
 	CountryCardTag,
 } from './country';
 import { UserMetadata } from './user';
+import { Sight } from './sight';
+import { Trip } from './trip';
 
 export {
 	Country,
@@ -16,4 +18,6 @@ export {
 	CountryCardPhoto,
 	CountryCardTag,
 	UserMetadata,
+	Sight,
+	Trip
 };

@@ -1,47 +1,52 @@
 import BasicView from './view';
-import { dispatcher, EventType, Token } from '@/dispatcher';
-import { loginHTML } from '@/components';
+import { DataType, dispatcher, EventType, Token } from '@/dispatcher';
+import { Form, loginHTML, makeSimpleButton } from '@/components';
 
 import {
-	DESTROY_CURRENT_PAGE,
-	SET_VALIDATION_ERROR_LOGIN,
-	newSetEmptyHeaderResponse,
 	submitLoginData,
-} from '../actions';
+} from '@/actions';
+import { formLoginConfig } from '@/components/simple_form/login_conf';
+import { pathsURLfrontend } from '@/constants';
 
 export default class LoginView extends BasicView {
 	#tokens: Token[];
 
-	#formElement: HTMLElement;
+	#form: Form | undefined;
 
-	constructor(place: HTMLDivElement) {
-		super(place);
-
-		this.#formElement = loginHTML(place);
+	constructor() {
+		super('#content');
 
 		this.#tokens = [];
 	}
 
 	init = (): void => {
 		this.#tokens = [
-			dispatcher.register(SET_VALIDATION_ERROR_LOGIN, this.#setErrors),
-			dispatcher.register(DESTROY_CURRENT_PAGE, this.#destroy),
+			dispatcher.register(EventType.SET_VALIDATION_ERROR_LOGIN, this.#setErrors),
+			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.#destroy),
 		];
+		this.setView(loginHTML());
+		makeSimpleButton('go-reg', pathsURLfrontend.register);
+		const formPlaceElement = document.querySelector('#form_place');
+		if (formPlaceElement !== null) {
+			this.#form = new Form(formLoginConfig, formPlaceElement);
+			this.#form.setButtonEvent(this.#submit);
+		}
 	};
 
-	#submit = () => {
+	#submit = (values: {[key: string]: string}) => {
 		// const data: Map<string, string> = new Map([
 		// 	["email", "test"],
 		// 	["password", "test"],
 		// ]);
-		dispatcher.notify(submitLoginData('test', 'test'));
+		const { email, password } = values;
+		dispatcher.notify(submitLoginData(email, password));
 	};
 
-	#setErrors = (metadata: EventType) => {
+	#setErrors = (metadata: DataType) => {
 		alert(metadata);
 	};
 
-	#destroy = (metadata: EventType): void => {
+	#destroy = (metadata: DataType): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});

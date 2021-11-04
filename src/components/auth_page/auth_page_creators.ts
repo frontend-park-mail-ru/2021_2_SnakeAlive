@@ -4,27 +4,31 @@ import { Button } from '@/components';
 import { router } from '@/router';
 import { texts } from '../texts';
 
-const loginHTML = (parent: HTMLDivElement): HTMLDivElement => {
+import './auth.scss';
+
+// const loginHTML = (): { view: string, form: Form } => {
+const loginHTML = (): string => {
+	const parent = document.createElement('div');
+
 	const formPlace: HTMLDivElement = document.createElement('div');
 	formPlace.id = 'form_place';
 	formPlace.classList.add('frame');
+	formPlace.classList.add('form_place');
 
 	const textPlace: HTMLDivElement = document.createElement('div');
 	textPlace.id = 'text_place';
 	textPlace.classList.add('frame');
+	textPlace.classList.add('text_place');
 	textPlace.innerHTML = loginTemplate();
-
-	const btn = new Button();
-	btn.makeButton(texts.BTN_GO_FROM_LOGIN_RO_REG, 'btn-css-ept', 'to_register', textPlace);
-	btn.addClickListener(() => {
-		router.go('/signup');
-	});
-	btn.setActive();
 
 	parent.appendChild(formPlace);
 	parent.appendChild(textPlace);
 
-	return formPlace;
+	parent.classList.add("auth_page");
+	const grandparent = document.createElement('div');
+	grandparent.appendChild(parent);
+	console.log(grandparent.innerHTML);
+	return grandparent.innerHTML;
 };
 
 const registerHTML = (parent: HTMLDivElement): HTMLDivElement => {
@@ -47,7 +51,7 @@ const registerHTML = (parent: HTMLDivElement): HTMLDivElement => {
 	parent.appendChild(formPlace);
 	parent.appendChild(textPlace);
 
-	return formPlace;
+	return parent;
 };
 
 export { loginHTML, registerHTML };

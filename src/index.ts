@@ -2,28 +2,30 @@ import { PageReducer, HeaderReducer } from './reducers';
 import HeaderView from './view/header';
 import { router } from './router';
 
-import './index.css';
+import './index.scss';
 import './drop_default.css';
+import './index_new.scss';
 
 const main = () => {
-	console.log(window.location.pathname);
-
 	const contentPlace: HTMLDivElement = document.createElement('div');
 	contentPlace.id = 'content';
-	const pageReducer: PageReducer = new PageReducer(contentPlace);
+	contentPlace.classList.add('content');
+	const pageReducer: PageReducer = new PageReducer();
 	pageReducer.init();
 
 	const headerPlace: HTMLDivElement = document.createElement('div');
 	headerPlace.id = 'header';
+	headerPlace.classList.add('header');
 	const headerReducer: HeaderReducer = new HeaderReducer();
 	headerReducer.init();
 
-	const headerView: HeaderView = new HeaderView(headerPlace);
+	const headerView: HeaderView = new HeaderView();
 	headerView.init();
 
 	const root = document.getElementById('root');
 
 	if (root !== null) {
+		console.log(root);
 		root.appendChild(headerPlace);
 		root.appendChild(contentPlace);
 	}

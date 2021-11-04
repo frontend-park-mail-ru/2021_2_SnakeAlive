@@ -19,5 +19,5 @@ export interface FormConfig {
 	button: ButtonConfig;
 	inputCssClass: string;
 	inputs: Array<InputConfig>;
-	closeCallback: () => void;
+	// closeCallback: () => void;
 }

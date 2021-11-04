@@ -1,31 +1,29 @@
 import BasicView from './view';
-import { dispatcher, EventType, Token } from '@/dispatcher/';
+import { DataType, dispatcher, EventType, Token } from '@/dispatcher/';
 import { registerHTML } from '@/components';
 
 import {
-	DESTROY_CURRENT_PAGE,
 	newSetEmptyHeaderResponse,
-	SET_VALIDATION_ERROR_REGISTER,
 	submitRegisterData,
 } from '../actions';
 
 export default class RegisterView extends BasicView {
 	#tokens: Token[];
 
-	#formElement: HTMLElement;
+	// #formElement: HTMLElement;
 
-	constructor(place: HTMLDivElement) {
-		super(place);
+	constructor() {
+		super('#content');
 
-		this.#formElement = registerHTML(place);
+		// this.#formElement = registerHTML(place);
 
 		this.#tokens = [];
 	}
 
 	init = (): void => {
 		this.#tokens = [
-			dispatcher.register(SET_VALIDATION_ERROR_REGISTER, this.#setErrors),
-			dispatcher.register(DESTROY_CURRENT_PAGE, this.#destroy),
+			dispatcher.register(EventType.SET_VALIDATION_ERROR_REGISTER, this.#setErrors),
+			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.#destroy),
 		];
 	};
 
@@ -37,11 +35,11 @@ export default class RegisterView extends BasicView {
 		dispatcher.notify(submitRegisterData('test', 'test', '', '', ''));
 	};
 
-	#setErrors = (metadata: EventType) => {
+	#setErrors = (metadata: DataType) => {
 		alert(metadata);
 	};
 
-	#destroy = (metadata: EventType): void => {
+	#destroy = (metadata: DataType): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});

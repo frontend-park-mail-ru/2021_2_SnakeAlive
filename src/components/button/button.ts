@@ -1,4 +1,5 @@
 import { router } from '@/router';
+import { pathsURLfrontend } from '@/constants';
 
 /** Класс соответствует кнопке. Создаается либо конструктором из существующего html элемента,
  * либо функцией makeButton по параметрам */
@@ -81,7 +82,7 @@ export class Button {
 	}
 }
 
-export const makeSimpleButton = (elementId: string, pathToGo: string) => {
+export const makeSimpleButton = (elementId: string, pathToGo: pathsURLfrontend) => {
 	const btn = document.getElementById(elementId);
 	if (btn !== null) {
 		const profileBtn = new Button(btn);
@@ -89,5 +90,7 @@ export const makeSimpleButton = (elementId: string, pathToGo: string) => {
 			router.go(pathToGo);
 		});
 		profileBtn.setActive();
+	} else {
+		console.log(`not found ${elementId} while creating simple button`);
 	}
 };

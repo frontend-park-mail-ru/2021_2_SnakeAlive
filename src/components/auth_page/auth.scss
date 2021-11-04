@@ -1,0 +1,20 @@
+.auth_page {
+  width: 100%;
+  display: grid;
+  //grid-template-columns: repeat(6, 1fr);
+  grid-template: "ml ml ml f f f f f f f f t t t t mr mr mr"  / 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+  padding: 10px 0;
+  align-items: flex-start;
+}
+
+.form_place {
+  grid-area: f;
+}
+
+.text_place {
+  grid-area: t;
+}
+
+

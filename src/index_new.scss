@@ -1,0 +1,30 @@
+$header_height: 60px;
+
+html,body{
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  background: cadetblue;
+}
+
+#root {
+  //display: block;
+}
+
+.content {
+
+}
+
+.frame {
+  background: white;
+  border: lightgrey;
+  border-radius: 4px;
+
+  display: block;
+}
+
+.full-page { // временное, убрать потом
+  grid-column-start: 1;
+  grid-column-end: 19;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}

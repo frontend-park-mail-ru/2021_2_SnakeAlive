@@ -1,44 +1,69 @@
-import { Empty, Event } from '../dispatcher';
+import { Empty, ErrorMsgData, IdData, IEvent } from '../dispatcher';
+import { EventType } from '@/dispatcher/event_types';
 
-const initPageRequest = 'INITIAL_PAGE_REQUEST';
-
-const newInitPageRequest = (): Event =>
-	<Event>{
-		key: initPageRequest,
+const newInitPageRequest = (): IEvent =>
+	<IEvent>{
+		key: EventType.INIT_PAGE_REQUEST,
 		metadata: <Empty>{},
 	};
 
-const INIT_REGISTER_PAGE_REQUEST = 'INIT_REGISTER_PAGE_REQUEST';
+const initCountryPageRequest = (ID: string): IEvent =>
+	<IEvent>{
+		key: EventType.INIT_COUNTRY_PAGE_REQUEST,
+		metadata: <IdData>{
+			ID
+		},
+	};
 
-const initRegisterPageRequest = (): Event =>
-	<Event>{
-		key: INIT_REGISTER_PAGE_REQUEST,
+const initRegisterPageRequest = (): IEvent =>
+	<IEvent>{
+		key: EventType.INIT_REGISTER_PAGE_REQUEST,
 		metadata: <Empty>{},
 	};
 
-const INIT_LOGIN_PAGE_REQUEST = 'INIT_LOGIN_PAGE_REQUEST';
-
-const initLoginPageRequest = (): Event =>
-	<Event>{
-		key: INIT_LOGIN_PAGE_REQUEST,
+const initLoginPageRequest = (): IEvent =>
+	<IEvent>{
+		key: EventType.INIT_LOGIN_PAGE_REQUEST,
 		metadata: <Empty>{},
 	};
 
-const DESTROY_CURRENT_PAGE = 'DESTROY_CURRENT_PAGE';
+const initSightPageRequest = (ID: string): IEvent =>
+	<IEvent>{
+		key: EventType.INIT_SIGHT_PAGE_REQUEST,
+		metadata: <IdData>{
+			ID
+		},
+	};
 
-const destroyCurrentPage = (): Event =>
-	<Event>{
-		key: DESTROY_CURRENT_PAGE,
+const initTripPageRequest = (ID: string): IEvent =>
+	<IEvent>{
+		key: EventType.INIT_TRIP_PAGE_REQUEST,
+		metadata: <IdData>{
+			ID
+		},
+	};
+
+const destroyCurrentPage = (): IEvent =>
+	<IEvent>{
+		key: EventType.DESTROY_CURRENT_PAGE_REQUEST,
 		metadata: <Empty>{},
+	};
+
+const initErrorPageRequest = (error: Error): IEvent =>
+	<IEvent>{
+		key: EventType.INIT_ERROR_PAGE_REQUEST,
+		metadata: <ErrorMsgData>{
+			error
+		},
 	};
 
 export {
-	initPageRequest,
 	newInitPageRequest,
-	INIT_LOGIN_PAGE_REQUEST,
-	INIT_REGISTER_PAGE_REQUEST,
 	initLoginPageRequest,
 	initRegisterPageRequest,
-	DESTROY_CURRENT_PAGE,
+	initCountryPageRequest,
+	initTripPageRequest,
+	initSightPageRequest,
+	initErrorPageRequest,
 	destroyCurrentPage,
 };

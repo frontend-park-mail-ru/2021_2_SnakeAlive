@@ -1,6 +1,7 @@
-import { EventType } from './metadata_types';
+import { DataType } from '.';
+import { EventType } from './event_types';
 
-export interface Event {
-	key: string;
-	metadata: EventType;
+export interface IEvent {
+	key: EventType;
+	metadata: DataType;
 }

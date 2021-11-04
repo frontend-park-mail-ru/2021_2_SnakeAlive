@@ -1,27 +1,22 @@
-import { Event, UserLoginData, UserRegisterData, ValidationErrors } from '../dispatcher';
+import { IEvent, LoginData, RegisterData, ValidationErrData } from '@/dispatcher';
+import { EventType } from '@/dispatcher/event_types';
 
-const SUBMIT_LOGIN_DATA = 'SUBMIT_LOGIN_DATA';
-
-const submitLoginData = (email: string, password: string): Event =>
-	<Event>{
-		key: SUBMIT_LOGIN_DATA,
-		metadata: <UserLoginData>{
+const submitLoginData = (email: string, password: string): IEvent =>
+	<IEvent>{
+		key: EventType.SUBMIT_LOGIN_DATA,
+		metadata: <LoginData>{
 			email,
 			password,
 		},
 	};
 
-const SET_VALIDATION_ERROR_LOGIN = 'SET_VALIDATION_ERROR_LOGIN';
-
-const setValidationErrorLogin = (data: Map<string, string>): Event =>
-	<Event>{
-		key: SET_VALIDATION_ERROR_LOGIN,
-		metadata: <ValidationErrors>{
+const setValidationErrorLogin = (data: Map<string, string>): IEvent =>
+	<IEvent>{
+		key: EventType.SET_VALIDATION_ERROR_LOGIN,
+		metadata: <ValidationErrData>{
 			data,
 		},
 	};
-
-const SUBMIT_REGISTER_DATA = 'SUBMIT_LOGIN_DATA';
 
 const submitRegisterData = (
 	name: string,
@@ -29,10 +24,10 @@ const submitRegisterData = (
 	email: string,
 	password: string,
 	repeatedPassword: string
-): Event =>
-	<Event>{
-		key: SUBMIT_REGISTER_DATA,
-		metadata: <UserRegisterData>{
+): IEvent =>
+	<IEvent>{
+		key: EventType.SUBMIT_REGISTER_DATA,
+		metadata: <RegisterData>{
 			name,
 			surname,
 			email,
@@ -41,23 +36,17 @@ const submitRegisterData = (
 		},
 	};
 
-const SET_VALIDATION_ERROR_REGISTER = 'SET_VALIDATION_ERROR_LOGIN';
-
-const setValidationErrorRegister = (data: Map<string, string>): Event =>
-	<Event>{
-		key: SET_VALIDATION_ERROR_REGISTER,
-		metadata: <ValidationErrors>{
+const setValidationErrorRegister = (data: Map<string, string>): IEvent =>
+	<IEvent>{
+		key: EventType.SET_VALIDATION_ERROR_REGISTER,
+		metadata: <ValidationErrData>{
 			data,
 		},
 	};
 
 export {
-	SUBMIT_LOGIN_DATA,
 	submitLoginData,
-	SET_VALIDATION_ERROR_LOGIN,
 	setValidationErrorLogin,
-	SUBMIT_REGISTER_DATA,
 	submitRegisterData,
-	SET_VALIDATION_ERROR_REGISTER,
 	setValidationErrorRegister,
 };

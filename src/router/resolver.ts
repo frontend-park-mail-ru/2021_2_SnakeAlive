@@ -1,12 +1,47 @@
-import { Event } from '@/dispatcher';
-import { newInitPageRequest, initLoginPageRequest, initRegisterPageRequest } from '@/actions';
+import { DataType, IEvent } from '@/dispatcher';
+import {
+	newInitPageRequest,
+	initLoginPageRequest,
+	initRegisterPageRequest,
+	initSightPageRequest,
+	initTripPageRequest,
+	initErrorPageRequest,
+	initCountryPageRequest,
+} from '@/actions';
+import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
 
-const paths: Map<string, Event> = new Map([
-	['/', newInitPageRequest()],
-	['/login', initLoginPageRequest()],
-	['/signup', initRegisterPageRequest()],
-]);
+const pathErrorEvent: IEvent = initErrorPageRequest(new Error('Неверная ссылка'));
 
-const resolve = (_path: string): Event | undefined => paths.get(_path);
+const tryGetIdParam = (path: URL, event: (data: string)=>IEvent): IEvent => {
+	const id = path.searchParams.get(paramsURLfrontend.id);
+	if ( id === null ) {
+		return pathErrorEvent;
+	}
+return event(id);
+};
 
-export { resolve };
+export const resolve = (path: URL): IEvent =>{
+	console.log('path :', path);
+
+	switch (path.pathname) {
+		case pathsURLfrontend.root: {
+			return newInitPageRequest();
+		}
+		case pathsURLfrontend.country: {
+			return tryGetIdParam(path, initCountryPageRequest);
+		}
+		case pathsURLfrontend.trip: {
+			return tryGetIdParam(path, initTripPageRequest);
+		}
+		case pathsURLfrontend.login: {
+			return initLoginPageRequest();
+		}
+		case pathsURLfrontend.register: {
+			return initRegisterPageRequest();
+		}
+		case pathsURLfrontend.sight: {
+			return tryGetIdParam(path, initSightPageRequest);
+		}
+		default: return pathErrorEvent;
+	}
+};

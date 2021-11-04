@@ -4,3 +4,4 @@ src-old/precompiled/templates.js
 src-old/handlebars.runtime-v4.7.7.js
 dist/
 **/.DS_Store
+.DS_Store

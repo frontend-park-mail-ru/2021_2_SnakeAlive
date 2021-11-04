@@ -1,8 +1,9 @@
-	<div class='logo-h' id='logo-h'>
-		<img src="image/logo"/>
-		<h2>TripAdvisor</h2>
+<div class='header__wrapper'>
+<div class='header__logo' id='logo-h'>
+		<img src="{{logo}}" class="header__logo__img"/>
+		<h2 class="header__logo__text">TripAdvisor</h2>
 	</div>
-	<div class='user-block' id='user-block'>
+	<div class='header__button' id='user-block'>
 		{{#if isUser}}
 			<div class="circle-img">
 				<img src="{{avatarPath}}"/>
@@ -12,3 +13,4 @@
 			<p>{{btnText}}</p>
 		{{/if}}
 	</div>
+</div>

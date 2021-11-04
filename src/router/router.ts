@@ -3,24 +3,22 @@ import { dispatcher } from '@/dispatcher';
 
 class Router {
 	start = (_data?: object) => {
-		const event = resolve(window.location.pathname);
-		if (event !== undefined) {
-			dispatcher.notify(event);
-		}
+		const url = new URL(window.location.href); // это встроенный класс
+		const event = resolve(url);
+		dispatcher.notify(event);
 	};
 
 	go = (_path: string, _data?: object) => {
-		console.log('go');
 		if (window.location.pathname === _path) return;
-		const event = resolve(_path);
-		if (event !== undefined) {
-			this.#pushHistoryState(_path, _data);
-			dispatcher.notify(event);
-		}
+		const url = new URL(_path, window.location.href);
+		const event = resolve(url);
+		this.#pushHistoryState(_path, _data);
+		dispatcher.notify(event);
 	};
 
 	popstate = (): void => {
-		const event = resolve(window.location.pathname);
+		const url = new URL(window.location.href);
+		const event = resolve(url);
 		if (event !== undefined) {
 			dispatcher.notify(event);
 		}

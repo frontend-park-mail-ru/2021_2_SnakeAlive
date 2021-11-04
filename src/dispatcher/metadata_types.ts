@@ -1,26 +1,24 @@
-import { UserMetadata } from '@/models';
-
 export interface Empty {}
 
-export interface ID {
-	ID: any;
+export interface IdData {
+	ID: string;
 }
 
 export interface NamedID {
-	ID: any;
+	ID: string;
 	name: string;
 }
 
-export interface ErrorMessage {
+export interface ErrorMsgData {
 	error: Error;
 }
 
-export interface UserLoginData {
+export interface LoginData {
 	email: string;
 	password: string;
 }
 
-export interface UserRegisterData {
+export interface RegisterData {
 	name: string;
 	surname: string;
 	email: string;
@@ -28,20 +26,46 @@ export interface UserRegisterData {
 	repeatedPassword: string;
 }
 
-export interface ValidationErrors {
+export interface ValidationErrData {
 	data: Map<string, string>;
 }
 
-export interface UserCommonData {
-	user: UserMetadata;
+export interface UserMinData {
+	name: string;
+	avatar: string;
 }
 
-export type EventType =
-	| Empty
-	| ID
+// export interface SightData {
+// 	id: string,
+// 	name: string,
+// 	description: string,
+// 	country: string,
+// 	rating: string,
+// 	tags: Array<string>
+// }
+//
+// export interface TripData {
+// 	id: string,
+// 	title: string,
+// 	description: string,
+// 	days: Array<Array<SightData>>,
+// }
+//
+// export interface CountryData {
+// 	name: string,
+// 	description: string,
+// 	sights: Array<SightData>,
+// }
+
+export type DataType =
+	| IdData
 	| NamedID
-	| ErrorMessage
-	| UserLoginData
-	| UserRegisterData
-	| UserCommonData
-	| ValidationErrors;
+	| ErrorMsgData
+	| LoginData
+	| RegisterData
+	| ValidationErrData
+  | UserMinData
+  // | SightData
+	// | TripData
+  // | CountryData
+	| Empty;

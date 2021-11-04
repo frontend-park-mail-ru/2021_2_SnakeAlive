@@ -115,7 +115,7 @@ body {
 }
 ol,
 ul {
-	list-style: none;
+	margin-left: 20px;
 }
 blockquote,
 q {

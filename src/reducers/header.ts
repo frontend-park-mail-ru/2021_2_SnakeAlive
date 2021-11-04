@@ -1,17 +1,13 @@
 import { storage } from '../storage';
-import { dispatcher, EventType, Token } from '../dispatcher';
+import { DataType, dispatcher, EventType, Token } from '../dispatcher';
 import {
-	destroyCountryPage,
-	getCountryCardRequest,
-	initCountryRequest,
+	newSetEmptyHeaderResponse,
 	newSetMainHeaderBasicResponse,
 	newSetMainHeaderLoggedResponse,
-	removeHeaderRequest,
-	setMainHeaderRequest,
 } from '@/actions/index';
-import { sendGetJSONRequest, HttpError } from '@/http/index';
+import { HttpError, sendGetJSONRequest } from '@/http/index';
 import { backendEndpoint, profile } from '@/constants/index';
-import { UserMetadata } from '@/models/index';
+import { UserMetadata } from '@/models';
 
 export default class HeaderReducer {
 	#tokens: Token[];
@@ -22,18 +18,18 @@ export default class HeaderReducer {
 
 	init = () => {
 		this.#tokens = [
-			dispatcher.register(setMainHeaderRequest, this.setHeader),
-			dispatcher.register(removeHeaderRequest, this.destroy),
+			dispatcher.register(EventType.SET_MAIN_HEADER_REQUEST, this.setHeader),
+			dispatcher.register(EventType.REMOVE_HEADER_REQUEST, this.destroy),
 		];
 	};
 
-	destroy = (metadata: EventType): void => {
+	destroy = (metadata: DataType): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});
 	};
 
-	setHeader = (metadata: EventType): void => {
+	setHeader = (metadata: DataType): void => {
 		console.log('setHeader');
 		sendGetJSONRequest(backendEndpoint + profile)
 			.then(response => {

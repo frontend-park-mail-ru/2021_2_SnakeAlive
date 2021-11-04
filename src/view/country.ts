@@ -1,42 +1,45 @@
-import BasicView from './view';
-import {
-	getCountryCardsError,
-	getCountryCardsResult,
-	newGetCountryCardsRequest,
-	destroyInnerRequest,
-	destroyCountryPage,
-	newDestroyCountryPage,
-	DESTROY_CURRENT_PAGE,
-	newSetEmptyHeaderResponse,
-	newSetMainHeaderRequest,
-} from '@/actions';
-import { storage } from '@/storage';
-import { dispatcher, ErrorMessage, EventType, Token } from '../dispatcher';
+// import BasicView from './view';
+// import {
+// 	getCountryCardsError,
+// 	getCountryCardsResult,
+// 	newGetCountryCardsRequest,
+// 	destroyInnerRequest,
+// 	destroyCountryPage,
+// 	newDestroyCountryPage,
+// 	DESTROY_CURRENT_PAGE,
+// 	newSetEmptyHeaderResponse,
+// 	newSetMainHeaderRequest,
+// } from '@/actions';
+// import { storage } from '@/storage';
+// import { DataType, dispatcher, ErrorMessage, EventType, Token } from '../dispatcher';
 
 import sights from '@/templates/sights.handlebars';
 
 import countryPageTemplate from '@/templates/country_sights.handlebars';
+import { DataType, dispatcher, ErrorMsgData, EventType, Token } from '@/dispatcher';
+import BasicView from '@/view/view';
+import { storage } from '@/storage';
+import { destroyCurrentPage, newGetCountryCardsRequest, newSetEmptyHeaderResponse } from '@/actions';
 
 class CountryCardsHolderView extends BasicView {
 	#tokens: Token[];
 
 	constructor() {
-		// super('.card__grid');
-		super(new HTMLElement());
+		super('.card__grid');
 
 		this.#tokens = [];
 	}
 
 	init = () => {
 		this.#tokens = [
-			dispatcher.register(getCountryCardsResult, this.renderCountryCards),
-			dispatcher.register(getCountryCardsError, this.renderErrorMessage),
-			dispatcher.register(destroyCountryPage, this.destroy),
-			dispatcher.register(DESTROY_CURRENT_PAGE, this.destroy),
+			dispatcher.register(EventType.GET_COUNTRY_CARDS_RESULT, this.renderCountryCards),
+			// dispatcher.register(EventType.GET_COUNTRY_CARDS_ERROR, this.renderErrorMessage),
+			// dispatcher.register(destroyCountryPage, this.destroy),
+			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
 		];
 	};
 
-	destroy = (metadata: EventType = {}): void => {
+	destroy = (metadata: DataType): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});
@@ -44,12 +47,12 @@ class CountryCardsHolderView extends BasicView {
 		this.setEmpty();
 	};
 
-	renderCountryCards = (metadata: EventType = {}): void => {
+	renderCountryCards = (metadata: DataType): void => {
 		this.setView(sights(storage.getCountryCards()));
 	};
 
-	renderErrorMessage = (metadata: EventType = {}): void => {
-		const event = <ErrorMessage>metadata;
+	renderErrorMessage = (metadata: DataType): void => {
+		const event = <ErrorMsgData>metadata;
 		this.setView(`<p>${event.error}</p>`);
 	};
 }
@@ -57,32 +60,30 @@ class CountryCardsHolderView extends BasicView {
 class CountryHolderView extends BasicView {
 	#tokens: Token[];
 
-	constructor(parent: HTMLElement) {
-		// super('#inner');
-		super(parent);
+	constructor() {
+		super('#inner');
 
 		this.#tokens = [];
 	}
 
 	init() {
-		dispatcher.notify(newSetEmptyHeaderResponse());
 		this.#tokens = [
-			dispatcher.register(getCountryCardsResult, this.renderCountry),
-			dispatcher.register(destroyInnerRequest, this.destroy),
+			dispatcher.register(EventType.GET_COUNTRY_CARDS_RESULT, this.renderCountry),
+			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
 		];
 	}
 
-	destroy = (metadata: EventType = {}): void => {
+	destroy = (metadata: DataType): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});
 
-		dispatcher.notify(newDestroyCountryPage());
+		dispatcher.notify(destroyCurrentPage());
 
 		this.setEmpty();
 	};
 
-	renderCountry = (metadata: EventType = {}): void => {
+	renderCountry = (metadata: DataType): void => {
 		const { name, ID } = storage.getCountry();
 		this.setView(countryPageTemplate({ name }));
 

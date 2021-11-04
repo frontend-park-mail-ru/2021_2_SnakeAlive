@@ -16,6 +16,9 @@ module.exports = {
 		port: 3000,
 		historyApiFallback: true,
 	},
+	stats: {
+		children:true,
+	},
 	context: path.resolve(__dirname, 'src'),
 	resolve: {
 		extensions: ['.ts', '.js'],
@@ -29,6 +32,7 @@ module.exports = {
 	output: {
 		filename: filename('js'),
 		path: path.resolve(__dirname, 'dist'),
+		publicPath: "/"
 	},
 	plugins: [
 		new HTMLWebpackPlugin({
@@ -57,6 +61,20 @@ module.exports = {
 				use: 'ts-loader',
 				exclude: /node_modules/,
 			},
+			{
+				test: /\.(jpe?g|png|gif|svg|ico|webp)$/i,
+				use: [{
+					loader: 'file-loader',
+					options: {
+						outputPath: 'image',
+						relativePath: true,
+					}
+				}],
+			},
+			// {
+			// 	test: /\.(html)$/,
+			// 	loader: 'html-loader'
+			// }
 		],
 	},
 };

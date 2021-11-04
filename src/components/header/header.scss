@@ -1,0 +1,56 @@
+@import "../../index_new";
+
+$logo_height: 48px;
+
+.header {
+  grid-column-start: 1;
+  grid-column-end: 19;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  padding: ($header_height - $logo_height)/2 0;
+
+  display: grid;
+  grid-template: "ml c c c c mr"  / 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-column-gap: 10px;
+
+  background: white;
+}
+
+.header__wrapper {
+  grid-area: c;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header__logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.header__logo:hover {
+  // указатель мыши
+  cursor: pointer;
+}
+
+.header__logo__img {
+  height: $logo_height;
+   //background: url('../../../image/logo48.png');
+}
+
+.header__logo__text {
+  font-size: $logo_height /2;
+}
+
+.header__button {
+
+}
+
+.header__button:hover {
+
+}
+
+
+

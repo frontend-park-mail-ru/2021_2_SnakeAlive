@@ -1,24 +1,24 @@
-export default class BasicView {
-	// #component: string;
-	readonly #component: HTMLElement;
+import errorPage from '@/components/errorPage.handlebars';
 
-	// constructor(component: string) {
-	// 	this.#component = component;
-	// }
-	constructor(component: HTMLElement) {
+export default class BasicView {
+	#component: string;
+
+	constructor(component: string) {
 		this.#component = component;
 	}
 
 	setEmpty = (): void => {
-		this.setView('');
+		const element: Element | null = document.querySelector(this.#component);
+		if (element !== null) {
+			element.innerHTML = '';
+		}
 	};
 
 	setView = (data: string): void => {
-		// const element: Element | null = document.querySelector(this.#component);
-		// if (element === null) {
-		// 	throw new Error(`empty element ${this.#component}`);
-		// }
-
-		this.#component.innerHTML = data;
+		const element: Element | null = document.querySelector(this.#component);
+		if (element === null) {
+			throw new Error(`empty element ${this.#component}`);
+		}
+		element.innerHTML = data;
 	};
 }

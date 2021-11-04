@@ -12,20 +12,18 @@ class Form {
 
 	#inputs: Array<Input> = [];
 
-	#closeBtn: Button | undefined;
-
-	constructor(config: FormConfig, parent: HTMLElement) {
-		const formHTML = new HTMLFormElement();
+	constructor(config: FormConfig, parent: Element) {
+		const formHTML = document.createElement('form');
 		formHTML.method = 'POST';
 		formHTML.id = config.formId;
 		formHTML.classList.add(config.cssClass);
 		this.#elem = formHTML;
 
-		const name = new HTMLHeadingElement();
+		const name = document.createElement('h2');
 		name.classList.add('formName');
 		formHTML.appendChild(name);
 
-		const errHTML = new HTMLDivElement();
+		const errHTML = document.createElement('div');
 		errHTML.id = 'formErrorBlock';
 		errHTML.classList.add('formErrorBlock');
 		errHTML.textContent = 'ошибок нет';
@@ -42,7 +40,7 @@ class Form {
 			this.#inputs.push(new Input(inputHTML));
 		});
 
-		const btn = new HTMLButtonElement();
+		const btn = document.createElement('button');
 		btn.id = config.button.id;
 		btn.classList.add(config.button.cssClass);
 		btn.innerText = config.button.text;
@@ -50,23 +48,18 @@ class Form {
 		this.#button = new Button(btn);
 
 		parent.appendChild(formHTML);
-
-		const closeBtn = document.getElementById('btnClose');
-		if (closeBtn !== null) {
-			this.#closeBtn = new Button(closeBtn);
-			this.#closeBtn.addClickListener(config.closeCallback);
-			this.#closeBtn.setActive();
-		}
+		console.log(parent);
 	}
 
 	/**
 	 * Получает из html значения всех полей ввода с их id
 	 * @return {Object.<String, String>} Объект где ключ - id поля ввода, значение - введенная пользователем строка
 	 */
-	getValues = (): Map<string, string> => {
-		const result: Map<string, string> = new Map();
+	getValues = (): {[key: string]: string} => {
+		// const result: Map<string, string> = new Map();
+		const result: {[key: string]: string} = {};
 		this.#inputs.forEach(input => {
-			result.set(input.getId(), input.getValue());
+			result[input.getId()] =  input.getValue();
 		});
 		return result;
 	};
@@ -78,18 +71,14 @@ class Form {
 	 * @return {null}
 	 */
 	setButtonEvent(
-		action: (values: Map<string, string>) => Promise<Response>,
-		callbacks: Array<(response: Response) => void>
+		action: (values: {[key: string]: string}) => void,
+		// callbacks: Array<(response: Response) => void>
 	) {
 		this.#elem.addEventListener('click', evt => {
 			if (this.#button.isIt(evt.target)) {
 				evt.preventDefault();
 				this.#inputs.forEach(input => input.clearErrors());
-				action(this.getValues())
-					.then(response => {
-						callbacks.forEach(callback => callback(response));
-					})
-					.catch(err => this.setError(err));
+				action(this.getValues());
 			}
 		});
 	}

@@ -1,37 +1,31 @@
 import BasicView from './view';
 import { storage } from '@/storage';
-import { dispatcher, EventType, Token } from '@/dispatcher';
+import { DataType, dispatcher, EventType, Token } from '@/dispatcher';
 import { UserMetadata } from '@/models';
 
-import {
-	newSetMainHeaderRequest,
-	removeHeaderRequest,
-	setMainHeaderBasicResponse,
-	setMainHeaderLoggedResponse,
-	SET_EMPTY_HEADER_RESPONSE,
-} from '../actions';
-
-import headerContentTemplate from '@/components/header/headerContent.handlebars';
 import { makeSimpleButton } from '@/components';
+import { pathsURLfrontend } from '@/constants';
+
+import { makeHeader } from '@/components/header/header';
 
 export default class HeaderView extends BasicView {
 	#tokens: Token[];
 
-	constructor(place: HTMLDivElement) {
-		super(place);
+	constructor() {
+		super('#header');
 		this.#tokens = [];
 	}
 
 	init = (): void => {
 		this.#tokens = [
-			dispatcher.register(removeHeaderRequest, this.destroy),
-			dispatcher.register(setMainHeaderLoggedResponse, this.setMainHeaderLogged),
-			dispatcher.register(setMainHeaderBasicResponse, this.setMainHeaderBasic),
-			dispatcher.register(SET_EMPTY_HEADER_RESPONSE, this.setMainHeaderEmpty),
+			dispatcher.register(EventType.REMOVE_HEADER_REQUEST, this.destroy),
+			dispatcher.register(EventType.SET_MAIN_HEADER_LOGGED_RESPONSE, this.setMainHeaderLogged),
+			dispatcher.register(EventType.SET_MAIN_HEADER_BASIC_RESPONSE, this.setMainHeaderBasic),
+			dispatcher.register(EventType.SET_MAIN_HEADER_EMPTY_RESPONSE, this.setMainHeaderEmpty),
 		];
 	};
 
-	destroy = (metadata: EventType): void => {
+	destroy = (metadata: DataType): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});
@@ -39,36 +33,36 @@ export default class HeaderView extends BasicView {
 		this.setEmpty();
 	};
 
-	setMainHeaderLogged = (metadata: EventType): void => {
+	setMainHeaderLogged = (metadata: DataType): void => {
 		const user: UserMetadata = storage.getUserMetadata();
 		const dataTemplate = {
 			isUser: true,
 			name: user.name,
 			avatarPath: user.avatarPath,
 		};
-		this.setView(headerContentTemplate(dataTemplate));
+		this.setView(makeHeader(dataTemplate));
 
-		makeSimpleButton('logo-h', '/');
-		makeSimpleButton('user-block', '/profile');
+		makeSimpleButton('logo-h', pathsURLfrontend.root);
+		makeSimpleButton('user-block', pathsURLfrontend.profile);
 	};
 
-	setMainHeaderBasic = (metadata: EventType): void => {
+	setMainHeaderBasic = (metadata: DataType): void => {
 		const dataTemplate = {
 			isUser: false,
 			btnText: 'Войти',
 		};
-		this.setView(headerContentTemplate(dataTemplate));
+		this.setView(makeHeader(dataTemplate));
 
-		makeSimpleButton('logo-h', '/');
-		makeSimpleButton('user-block', '/login');
+		makeSimpleButton('logo-h', pathsURLfrontend.root);
+		makeSimpleButton('user-block', pathsURLfrontend.login);
 	};
 
-	setMainHeaderEmpty = (metadata: EventType): void => {
+	setMainHeaderEmpty = (metadata: DataType): void => {
 		const dataTemplate = {
 			isUser: false,
 		};
-		this.setView(headerContentTemplate(dataTemplate));
+		this.setView(makeHeader(dataTemplate));
 
-		makeSimpleButton('logo-h', '/');
+		makeSimpleButton('logo-h', pathsURLfrontend.root);
 	};
 }

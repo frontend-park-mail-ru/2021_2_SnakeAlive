@@ -1,9 +1,9 @@
 const webpack = require('webpack');
 module.exports = {
 	parser: '@typescript-eslint/parser',
-	globals: {
-		"Handlebars": "readonly"
-	},
+	// globals: {
+	// 	"Handlebars": "readonly"
+	// },
 	env: {
 		es6: true,
 		browser: true,
@@ -50,7 +50,9 @@ module.exports = {
           В то время как для экспорта по умолчанию мы выбираем любое имя при импорте
          */
 		'import/prefer-default-export': 'off',
-		'@typescript-eslint/no-empty-interface': 'off'
+		'@typescript-eslint/no-empty-interface': 'off',
+		"no-shadow": "off",
+		"@typescript-eslint/no-shadow": ["error"]
 	},
 	"settings": {
 		"import/resolver": {
