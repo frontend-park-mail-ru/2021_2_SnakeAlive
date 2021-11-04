@@ -5,10 +5,10 @@ export const enum pathsURLfrontend {
 	register = '/signup',
 	profile = '/profile',
 	sight = '/sight',
-	trip = '/trip'
+	trip = '/trip',
 }
 
-export  const enum paramsURLfrontend {
+export const enum paramsURLfrontend {
 	id = 'id',
-	name = 'name'
+	name = 'name',
 }

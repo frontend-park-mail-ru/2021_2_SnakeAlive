@@ -31,7 +31,7 @@ export default class TripReducer {
 			.catch((error: Error) => {
 				dispatcher.notify(initErrorPageRequest(error));
 			});
-	}
+	};
 
 	#getTrip = (id: string): Promise<Trip> =>
 		sendGetJSONRequest(backendEndpoint + tripURI + id)

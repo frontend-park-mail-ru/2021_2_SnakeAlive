@@ -10,7 +10,7 @@ import ErrorView from '@/view/error';
 
 export default class PageReducer {
 	constructor() {
-		console.log("pageReducer constructed");
+		console.log('pageReducer constructed');
 	}
 
 	init = () => {
@@ -39,13 +39,13 @@ export default class PageReducer {
 		countryCardsHolderView.init();
 	};
 
-	createErrorPage = (metadata: ErrorMsgData):void => {
+	createErrorPage = (metadata: ErrorMsgData): void => {
 		dispatcher.notify(destroyCurrentPage());
 
 		const errorView: ErrorView = new ErrorView();
 
 		errorView.init(metadata.error);
-	}
+	};
 
 	createLoginPage = (): void => {
 		dispatcher.notify(destroyCurrentPage());

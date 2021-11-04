@@ -11,7 +11,7 @@ const initCountryPageRequest = (ID: string): IEvent =>
 	<IEvent>{
 		key: EventType.INIT_COUNTRY_PAGE_REQUEST,
 		metadata: <IdData>{
-			ID
+			ID,
 		},
 	};
 
@@ -31,7 +31,7 @@ const initSightPageRequest = (ID: string): IEvent =>
 	<IEvent>{
 		key: EventType.INIT_SIGHT_PAGE_REQUEST,
 		metadata: <IdData>{
-			ID
+			ID,
 		},
 	};
 
@@ -39,7 +39,7 @@ const initTripPageRequest = (ID: string): IEvent =>
 	<IEvent>{
 		key: EventType.INIT_TRIP_PAGE_REQUEST,
 		metadata: <IdData>{
-			ID
+			ID,
 		},
 	};
 
@@ -53,7 +53,7 @@ const initErrorPageRequest = (error: Error): IEvent =>
 	<IEvent>{
 		key: EventType.INIT_ERROR_PAGE_REQUEST,
 		metadata: <ErrorMsgData>{
-			error
+			error,
 		},
 	};
 

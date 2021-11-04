@@ -20,9 +20,7 @@ export default class ErrorView extends BasicView {
 
 		const { message } = err; // упростить нельзя, тк handlebars не хочет читать поля напрямую
 		this.setView(errorPage({ message }));
-		this.#tokens = [
-			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.#destroy),
-		];
+		this.#tokens = [dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.#destroy)];
 	};
 
 	#destroy = (metadata: DataType): void => {

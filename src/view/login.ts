@@ -2,9 +2,7 @@ import BasicView from './view';
 import { DataType, dispatcher, EventType, Token } from '@/dispatcher';
 import { Form, loginHTML, makeSimpleButton } from '@/components';
 
-import {
-	submitLoginData,
-} from '@/actions';
+import { submitLoginData } from '@/actions';
 import { formLoginConfig } from '@/components/simple_form/login_conf';
 import { pathsURLfrontend } from '@/constants';
 
@@ -25,7 +23,6 @@ export default class LoginView extends BasicView {
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.#destroy),
 		];
 		this.setView(loginHTML());
-		makeSimpleButton('go-reg', pathsURLfrontend.register);
 		const formPlaceElement = document.querySelector('#form_place');
 		if (formPlaceElement !== null) {
 			this.#form = new Form(formLoginConfig, formPlaceElement);
@@ -33,11 +30,7 @@ export default class LoginView extends BasicView {
 		}
 	};
 
-	#submit = (values: {[key: string]: string}) => {
-		// const data: Map<string, string> = new Map([
-		// 	["email", "test"],
-		// 	["password", "test"],
-		// ]);
+	#submit = (values: { [key: string]: string }) => {
 		const { email, password } = values;
 		dispatcher.notify(submitLoginData(email, password));
 	};

@@ -2,7 +2,7 @@ import { PageReducer, HeaderReducer } from './reducers';
 import HeaderView from './view/header';
 import { router } from './router';
 
-import './index.scss';
+// import './index.scss';
 import './drop_default.css';
 import './index_new.scss';
 

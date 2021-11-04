@@ -1,7 +1,7 @@
 import {
 	newGetCountryCardsRequest,
 	newGetCountryCardsResult,
-	newGetCountryCardsError
+	newGetCountryCardsError,
 	// newInitCountryRequest,
 	// newInitCountryResponse,
 } from './country';
@@ -21,7 +21,7 @@ import {
 	initSightPageRequest,
 	initTripPageRequest,
 	initErrorPageRequest,
-	initCountryPageRequest
+	initCountryPageRequest,
 } from './page';
 
 import {
@@ -39,15 +39,9 @@ import {
 	setValidationErrorRegister,
 } from './auth';
 
-import {
-	newGetSightRequest,
-	newGetSightResult
-} from './sight';
-import {
-	newGetTripRequest,
-	newGetTripResult,
-} from './trip';
-//рефактор
+import { newGetSightRequest, newGetSightResult } from './sight';
+import { newGetTripRequest, newGetTripResult } from './trip';
+// рефактор need
 export {
 	// getCountryCardRequest,
 	// getCountryCardsResult,

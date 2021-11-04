@@ -15,8 +15,4 @@ const newGetSightResult = (): IEvent =>
 		metadata: <Empty>{},
 	};
 
-
-export {
-	newGetSightRequest,
-	newGetSightResult,
-};
+export { newGetSightRequest, newGetSightResult };

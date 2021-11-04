@@ -35,7 +35,7 @@ const newGetCountryCardsResult = (/* countryID: string, countryName: string */):
 		// 	ID: countryID,
 		// 	name: countryName
 		// },
-		metadata: <Empty>{}
+		metadata: <Empty>{},
 	};
 
 const newGetCountryCardsError = (error: Error): IEvent =>

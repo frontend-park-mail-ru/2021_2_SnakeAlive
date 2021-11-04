@@ -1,10 +1,11 @@
 import loginTemplate from './login.handlebars';
 import registerTemplate from './register.handlebars';
-import { Button } from '@/components';
+import { Button, makeSimpleButton } from '@/components';
 import { router } from '@/router';
 import { texts } from '../texts';
 
 import './auth.scss';
+import { pathsURLfrontend } from '@/constants';
 
 // const loginHTML = (): { view: string, form: Form } => {
 const loginHTML = (): string => {
@@ -24,9 +25,13 @@ const loginHTML = (): string => {
 	parent.appendChild(formPlace);
 	parent.appendChild(textPlace);
 
-	parent.classList.add("auth_page");
+	parent.classList.add('auth_page');
+
 	const grandparent = document.createElement('div');
 	grandparent.appendChild(parent);
+
+	makeSimpleButton('go-reg', pathsURLfrontend.register);
+
 	console.log(grandparent.innerHTML);
 	return grandparent.innerHTML;
 };
@@ -42,7 +47,7 @@ const registerHTML = (parent: HTMLDivElement): HTMLDivElement => {
 	textPlace.innerHTML = registerTemplate();
 
 	const btn = new Button();
-	btn.makeButton(texts.BTN_GO_FROM_REG_TO_LOGIN, 'btn-css-ept', 'to_login', textPlace);
+	btn.makeButton(texts.BTN_GO_FROM_REG_TO_LOGIN, ['usual_button usual_button_light'], 'to_login', textPlace);
 	btn.addClickListener(() => {
 		router.go('/login');
 	});

@@ -1,3 +1,5 @@
+@import "../../index_new";
+
 .auth_page {
   width: 100%;
   display: grid;
@@ -15,6 +17,13 @@
 
 .text_place {
   grid-area: t;
+  h2 {
+    @include text-local-header;
+  }
+  p, li {
+    @include text-plain-no-wrap;
+  }
 }
+
 
 

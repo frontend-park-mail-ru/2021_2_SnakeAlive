@@ -6,8 +6,6 @@ import popup from '@/templates/popup.handlebars';
 class Form {
 	#elem: HTMLFormElement;
 
-	#error: HTMLElement;
-
 	#button: Button;
 
 	#inputs: Array<Input> = [];
@@ -23,26 +21,30 @@ class Form {
 		name.classList.add('formName');
 		formHTML.appendChild(name);
 
-		const errHTML = document.createElement('div');
-		errHTML.id = 'formErrorBlock';
-		errHTML.classList.add('formErrorBlock');
-		errHTML.textContent = 'ошибок нет';
-		formHTML.appendChild(errHTML);
-		this.#error = errHTML;
-
 		config.inputs.forEach(input => {
+			const blockErrInput = document.createElement('div');
+			blockErrInput.classList.add('auth_form__error_block');
+
+			const errText = document.createElement('p');
+			errText.id = input.id;
+			errText.classList.add('auth_form__error_block__text');
+			errText.textContent = 'ошибок нет';
+			blockErrInput.appendChild(errText);
+
 			const inputHTML: HTMLInputElement = document.createElement('input');
 			inputHTML.id = input.id;
 			inputHTML.type = input.type;
 			inputHTML.placeholder = input.name;
-			inputHTML.classList.add('startInput');
-			formHTML.appendChild(inputHTML);
+			inputHTML.classList.add('auth_form__input');
+
+			blockErrInput.appendChild(inputHTML);
+			formHTML.appendChild(blockErrInput);
 			this.#inputs.push(new Input(inputHTML));
 		});
 
 		const btn = document.createElement('button');
 		btn.id = config.button.id;
-		btn.classList.add(config.button.cssClass);
+		config.button.cssClass.forEach((el) => btn.classList.add(el));
 		btn.innerText = config.button.text;
 		formHTML.appendChild(btn);
 		this.#button = new Button(btn);
@@ -55,11 +57,11 @@ class Form {
 	 * Получает из html значения всех полей ввода с их id
 	 * @return {Object.<String, String>} Объект где ключ - id поля ввода, значение - введенная пользователем строка
 	 */
-	getValues = (): {[key: string]: string} => {
+	getValues = (): { [key: string]: string } => {
 		// const result: Map<string, string> = new Map();
-		const result: {[key: string]: string} = {};
+		const result: { [key: string]: string } = {};
 		this.#inputs.forEach(input => {
-			result[input.getId()] =  input.getValue();
+			result[input.getId()] = input.getValue();
 		});
 		return result;
 	};
@@ -71,7 +73,7 @@ class Form {
 	 * @return {null}
 	 */
 	setButtonEvent(
-		action: (values: {[key: string]: string}) => void,
+		action: (values: { [key: string]: string }) => void
 		// callbacks: Array<(response: Response) => void>
 	) {
 		this.#elem.addEventListener('click', evt => {
@@ -91,12 +93,12 @@ class Form {
 			// 	input.setError();
 			// }
 		});
-		this.#error.innerHTML = error.message;
-		this.#error.classList.add('err');
+		// this.#error.innerHTML = error.message;
+		// this.#error.classList.add('err');
 	}
 }
 
 /** Функция возвращает html верстку формы по FormConfig */
-const formHTML = (config: FormConfig) => popup(config);
+// const formHTML = (config: FormConfig) => popup(config);
 
-export { Form, formHTML };
+export { Form };

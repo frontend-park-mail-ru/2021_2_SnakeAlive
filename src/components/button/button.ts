@@ -1,6 +1,8 @@
 import { router } from '@/router';
 import { pathsURLfrontend } from '@/constants';
 
+import './button.scss';
+
 /** Класс соответствует кнопке. Создаается либо конструктором из существующего html элемента,
  * либо функцией makeButton по параметрам */
 
@@ -18,7 +20,7 @@ export class Button {
 	 */
 	makeButton = (
 		text: string,
-		styleClass: string,
+		styleClass: string[],
 		id: string,
 		parentElement: HTMLElement,
 		href?: string
@@ -26,10 +28,8 @@ export class Button {
 		this.#elem = document.createElement('button');
 		this.#elem.id = id;
 		this.#elem.innerHTML = text;
-
-		parentElement.appendChild(this.#elem);
-		this.#elem.classList.add(styleClass);
-
+		// @ts-ignore
+		styleClass.forEach((cl) => this.#elem.classList.add(cl));
 		return this.#elem;
 	};
 

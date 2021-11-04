@@ -2,10 +2,7 @@ import BasicView from './view';
 import { DataType, dispatcher, EventType, Token } from '@/dispatcher/';
 import { registerHTML } from '@/components';
 
-import {
-	newSetEmptyHeaderResponse,
-	submitRegisterData,
-} from '../actions';
+import { newSetEmptyHeaderResponse, submitRegisterData } from '../actions';
 
 export default class RegisterView extends BasicView {
 	#tokens: Token[];

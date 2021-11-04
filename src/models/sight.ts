@@ -4,10 +4,10 @@ interface Review {
 }
 
 export interface Sight {
-	id: string,
-	name: string,
-	description: string,
-	country: string,
-	rating: string,
-	tags: Array<string>
+	id: string;
+	name: string;
+	description: string;
+	country: string;
+	rating: string;
+	tags: Array<string>;
 }

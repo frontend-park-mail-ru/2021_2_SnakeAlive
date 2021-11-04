@@ -15,8 +15,4 @@ const newGetTripResult = (): IEvent =>
 		metadata: <Empty>{},
 	};
 
-
-export {
-	newGetTripRequest,
-	newGetTripResult,
-};
+export { newGetTripRequest, newGetTripResult };

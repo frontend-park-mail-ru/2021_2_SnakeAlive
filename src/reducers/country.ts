@@ -3,7 +3,6 @@ import { backendEndpoint, countrySights } from '@/constants';
 import {
 	destroyCurrentPage,
 	newGetCountryCardsError,
-
 	newGetCountryCardsResult,
 	newSetMainHeaderRequest,
 } from '@/actions';
@@ -11,8 +10,6 @@ import { adaptGetCards } from '@/adapters';
 import { storage } from '@/storage';
 import { dispatcher, EventType, NamedID, IdData, Token, IEvent, DataType } from '@/dispatcher';
 import { Country, CountryCard, CountryCardResponse } from '@/models';
-
-
 
 export default class CountryReducer {
 	#tokens: Token[];

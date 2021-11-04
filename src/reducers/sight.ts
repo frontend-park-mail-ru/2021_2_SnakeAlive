@@ -4,7 +4,7 @@ import { backendEndpoint, sightURI } from '@/constants';
 import { storage } from '@/storage';
 import { initErrorPageRequest } from '@/actions/page';
 import { Sight } from '@/models';
-import { newGetSightResult } from '@/actions';
+import { newGetSightResult, newSetMainHeaderRequest } from '@/actions';
 
 export default class SightReducer {
 	#tokens: Token[];
@@ -14,14 +14,13 @@ export default class SightReducer {
 	}
 
 	init = (id: string) => {
-		this.#tokens = [
-			dispatcher.register(EventType.INIT_COUNTRY_PAGE_REQUEST, this.initSightPage)
+		this.#tokens = [dispatcher.register(EventType.INIT_COUNTRY_PAGE_REQUEST, this.initSightPage)];
 
-		];
 		// карточки отзывов - также, как у страны
 		// dispatcher.notify();
 		console.log('id = ', id);
 		this.initSightPage(id);
+		dispatcher.notify(newSetMainHeaderRequest());
 	};
 
 	initSightPage = (id: string) => {
@@ -34,7 +33,7 @@ export default class SightReducer {
 			.catch((error: Error) => {
 				dispatcher.notify(initErrorPageRequest(error));
 			});
-	}
+	};
 
 	#getSight = (id: string): Promise<Sight> =>
 		sendGetJSONRequest(backendEndpoint + sightURI + id)
@@ -49,5 +48,3 @@ export default class SightReducer {
 			})
 			.then(response => response.json());
 }
-
-

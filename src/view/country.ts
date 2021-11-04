@@ -19,7 +19,11 @@ import countryPageTemplate from '@/templates/country_sights.handlebars';
 import { DataType, dispatcher, ErrorMsgData, EventType, Token } from '@/dispatcher';
 import BasicView from '@/view/view';
 import { storage } from '@/storage';
-import { destroyCurrentPage, newGetCountryCardsRequest, newSetEmptyHeaderResponse } from '@/actions';
+import {
+	destroyCurrentPage,
+	newGetCountryCardsRequest,
+	newSetEmptyHeaderResponse,
+} from '@/actions';
 
 class CountryCardsHolderView extends BasicView {
 	#tokens: Token[];

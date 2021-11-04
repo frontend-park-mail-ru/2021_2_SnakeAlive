@@ -23,7 +23,7 @@ export default class TripView extends BasicView {
 
 	#setSight = (metadata: EventType): void => {
 		this.setView(storage.getTrip().toString());
-	}
+	};
 
 	#destroy = (metadata: EventType): void => {
 		this.#tokens.forEach(element => {

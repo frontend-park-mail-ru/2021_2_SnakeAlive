@@ -17,5 +17,5 @@ export {
 	nicaraguaFormName,
 	nicaraguaUriName,
 	pathsURLfrontend,
-	paramsURLfrontend
+	paramsURLfrontend,
 };

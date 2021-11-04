@@ -85,7 +85,8 @@ mark,
 audio,
 video,
 button,
-input {
+input
+input:active{
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -95,6 +96,8 @@ input {
 	background-color: transparent;
 	letter-spacing: inherit;
 	border-radius: 0px;
+	border: none;
+	display: block;
 }
 /* HTML5 display-role reset for older browsers */
 article,

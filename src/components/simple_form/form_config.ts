@@ -9,7 +9,7 @@ export interface InputConfig {
 export interface ButtonConfig {
 	text: string;
 	id: string;
-	cssClass: string;
+	cssClass: string[];
 }
 
 export interface FormConfig {

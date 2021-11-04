@@ -64,8 +64,8 @@ export type DataType =
 	| LoginData
 	| RegisterData
 	| ValidationErrData
-  | UserMinData
-  // | SightData
+	| UserMinData
+	// | SightData
 	// | TripData
-  // | CountryData
+	// | CountryData
 	| Empty;

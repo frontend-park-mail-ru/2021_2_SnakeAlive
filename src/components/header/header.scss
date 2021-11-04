@@ -8,6 +8,7 @@ $logo_height: 48px;
   grid-row-start: 1;
   grid-row-end: 2;
   padding: ($header_height - $logo_height)/2 0;
+  border-bottom: 1px solid $my--frame-border;
 
   display: grid;
   grid-template: "ml c c c c mr"  / 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -37,11 +38,10 @@ $logo_height: 48px;
 
 .header__logo__img {
   height: $logo_height;
-   //background: url('../../../image/logo48.png');
 }
 
 .header__logo__text {
-  font-size: $logo_height /2;
+  @include text-header;
 }
 
 .header__button {
@@ -49,6 +49,7 @@ $logo_height: 48px;
 }
 
 .header__button:hover {
+  cursor: pointer;
 
 }
 

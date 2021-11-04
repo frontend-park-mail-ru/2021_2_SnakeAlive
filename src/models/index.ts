@@ -19,5 +19,5 @@ export {
 	CountryCardTag,
 	UserMetadata,
 	Sight,
-	Trip
+	Trip,
 };

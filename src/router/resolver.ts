@@ -12,15 +12,16 @@ import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
 
 const pathErrorEvent: IEvent = initErrorPageRequest(new Error('Неверная ссылка'));
 
-const tryGetIdParam = (path: URL, event: (data: string)=>IEvent): IEvent => {
+const tryGetIdParam = (path: URL, event: (data: string) => IEvent): IEvent => {
 	const id = path.searchParams.get(paramsURLfrontend.id);
-	if ( id === null ) {
+	console.log("id : ", id);
+	if (id === null) {
 		return pathErrorEvent;
 	}
-return event(id);
+	return event(id);
 };
 
-export const resolve = (path: URL): IEvent =>{
+export const resolve = (path: URL): IEvent => {
 	console.log('path :', path);
 
 	switch (path.pathname) {
@@ -42,6 +43,7 @@ export const resolve = (path: URL): IEvent =>{
 		case pathsURLfrontend.sight: {
 			return tryGetIdParam(path, initSightPageRequest);
 		}
-		default: return pathErrorEvent;
+		default:
+			return pathErrorEvent;
 	}
 };

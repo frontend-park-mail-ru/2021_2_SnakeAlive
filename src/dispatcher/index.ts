@@ -13,7 +13,7 @@ import {
 	// SightData,
 	// TripData,
 	// CountryData,
-	DataType
+	DataType,
 } from './metadata_types';
 
 import { EventType } from '@/dispatcher/event_types';

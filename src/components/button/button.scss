@@ -1,3 +1,30 @@
-.btn {
-  background: cadetblue;
+@import "../../index_new";
+
+.usual_button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+  border-radius: 4px;
+  text-align: center;
+  @include text-button;
+}
+
+.usual_button_light {
+  background: $my--button-fill;
+  color: $my--button-text;
+}
+.usual_button_light:hover {
+  background: $my--button-fill-hover;
+  cursor: pointer;
+}
+
+.usual_button_dark {
+  background: $my--bright-btn;
+  color: $white;
+}
+.usual_button_dark:hover {
+  background: $my--bright-btn-hover;
+  cursor: pointer;
 }

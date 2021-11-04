@@ -44,9 +44,4 @@ const setValidationErrorRegister = (data: Map<string, string>): IEvent =>
 		},
 	};
 
-export {
-	submitLoginData,
-	setValidationErrorLogin,
-	submitRegisterData,
-	setValidationErrorRegister,
-};
+export { submitLoginData, setValidationErrorLogin, submitRegisterData, setValidationErrorRegister };
