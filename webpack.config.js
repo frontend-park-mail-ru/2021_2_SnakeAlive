@@ -13,7 +13,7 @@ module.exports = {
 	devtool: 'eval-source-map',
 	devServer: {
 		static: './dist',
-		port: 3000,
+		port: 2000,
 		historyApiFallback: true,
 	},
 	stats: {

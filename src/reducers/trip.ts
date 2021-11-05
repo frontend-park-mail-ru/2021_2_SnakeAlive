@@ -1,4 +1,4 @@
-import { dispatcher, EventType, Token } from '@/dispatcher';
+import { dispatcher, EventType, IdData, Token } from '@/dispatcher';
 import { Trip } from '@/models';
 import { storage } from '@/storage';
 import { sendGetJSONRequest } from '@/http';
@@ -12,18 +12,23 @@ export default class TripReducer {
 		this.#tokens = [];
 	}
 
-	init = (id: string) => {
-		// this.#tokens = [
-		// 	dispatcher.register(GET_TRIP_INFO_REQUEST, this.initTripPage)
-		// ];
-		console.log('init trip');
+	init = () => {
+		this.#tokens = [
+			dispatcher.register(EventType.GET_TRIP_REQUEST, this.initTripPage),
+			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
+		];
 		// карточки достопримечательностей - также, как у страны
-		this.initTripPage(id);
 	};
 
-	initTripPage = (id: string) => {
-		console.log(id);
-		this.#getTrip(id)
+	destroy = (metadata: EventType): void => {
+		this.#tokens.forEach(element => {
+			dispatcher.unregister(element);
+		});
+	};
+
+	initTripPage = (metadata: IdData) => {
+		const { ID } = metadata;
+		this.#getTrip(ID)
 			.then((trip: Trip) => {
 				storage.storeTrip(trip);
 				dispatcher.notify(newGetTripResult());
@@ -45,10 +50,4 @@ export default class TripReducer {
 				return Promise.resolve(response);
 			})
 			.then(response => response.json());
-
-	destroy = (metadata: EventType): void => {
-		this.#tokens.forEach(element => {
-			dispatcher.unregister(element);
-		});
-	};
 }

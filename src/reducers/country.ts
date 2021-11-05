@@ -3,7 +3,8 @@ import { backendEndpoint, countrySights } from '@/constants';
 import {
 	newGetCountryCardsError,
 	newGetCountryCardsRequest,
-	newGetCountryCardsResult, newInitCountryResponse,
+	newGetCountryCardsResult,
+	newInitCountryResponse,
 	newSetMainHeaderRequest,
 } from '@/actions';
 import { adaptGetCards } from '@/adapters';
@@ -38,7 +39,7 @@ export default class CountryReducer {
 			name: country.name,
 			ID: <string>country.ID,
 		});
-		dispatcher.notify(newSetMainHeaderRequest())
+		dispatcher.notify(newSetMainHeaderRequest());
 		dispatcher.notify(newInitCountryResponse());
 		dispatcher.notify(newGetCountryCardsRequest(country.name, <string>country.ID));
 	};

@@ -31,7 +31,7 @@ import {
 	newRemoveHeaderRequest,
 	newSetEmptyHeaderRequest,
 	newSetEmptyHeaderResponse,
-	newSetMainHeaderStrongRequest
+	newSetMainHeaderStrongRequest,
 } from './header';
 
 import {
@@ -39,10 +39,14 @@ import {
 	setValidationErrorLogin,
 	submitRegisterData,
 	setValidationErrorRegister,
+	showRegisterForm,
+	showLoginForm,
 } from './auth';
 
-import { newGetSightRequest, newGetSightResult } from './sight';
+import { newGetSightRequest, newGetSightResult, newGetSightReviewResult } from './sight';
+
 import { newGetTripRequest, newGetTripResult } from './trip';
+
 // рефактор need
 export {
 	// getCountryCardRequest,
@@ -79,8 +83,13 @@ export {
 	initTripPageRequest,
 	initCountryPageRequest,
 	initErrorPageRequest,
+	// newGetSightRequest,
+	// newGetSightResult,
 	newGetSightRequest,
 	newGetSightResult,
+	newGetSightReviewResult,
 	newGetTripRequest,
 	newGetTripResult,
+	showRegisterForm,
+	showLoginForm,
 };

@@ -16,13 +16,11 @@ export default class TripView extends BasicView {
 			dispatcher.register(EventType.GET_TRIP_RESPONSE, this.#setSight),
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.#destroy),
 		];
-		dispatcher.notify(newSetMainHeaderRequest());
-		console.log('trip started');
-		this.setView(`<p class="full-screen">trip. hope to get server response</p>`);
 	};
 
 	#setSight = (metadata: EventType): void => {
-		this.setView(storage.getTrip().toString());
+		dispatcher.notify(newSetMainHeaderRequest());
+		this.setView(`<div class='full-page'>${JSON.stringify(storage.getTrip(), null, 4)}</div>`);
 	};
 
 	#destroy = (metadata: EventType): void => {

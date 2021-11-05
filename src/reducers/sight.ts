@@ -1,4 +1,4 @@
-import { dispatcher, EventType, Token } from '@/dispatcher';
+import { DataType, dispatcher, EventType, IdData, Token } from '@/dispatcher';
 import { sendGetJSONRequest } from '@/http';
 import { backendEndpoint, sightURI } from '@/constants';
 import { storage } from '@/storage';
@@ -13,18 +13,23 @@ export default class SightReducer {
 		this.#tokens = [];
 	}
 
-	init = (id: string) => {
-		this.#tokens = [dispatcher.register(EventType.INIT_COUNTRY_PAGE_REQUEST, this.initSightPage)];
-
-		// карточки отзывов - также, как у страны
-
-		dispatcher.notify(newSetMainHeaderRequest());
-
-		this.initSightPage(id);
+	init = () => {
+		this.#tokens = [
+			dispatcher.register(EventType.GET_SIGHT_REQUEST, this.initSightPage),
+			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
+		];
 	};
 
-	initSightPage = (id: string) => {
-		this.#getSight(id)
+	destroy = () => {
+		this.#tokens.forEach(element => {
+			dispatcher.unregister(element);
+		});
+	};
+
+	initSightPage = (metadata: IdData) => {
+		dispatcher.notify(newSetMainHeaderRequest());
+		const { ID } = metadata;
+		this.#getSight(ID)
 			.then((sight: Sight) => {
 				storage.storeSight(sight);
 				dispatcher.notify(newGetSightResult());
@@ -32,6 +37,14 @@ export default class SightReducer {
 			.catch((error: Error) => {
 				dispatcher.notify(initErrorPageRequest(error));
 			});
+		// this.#getReviews(ID)
+		// 	.then((sight: Sight) => {
+		// 		storage.storeSight(sight);
+		// 		dispatcher.notify(newGetSightReviewResult());
+		// 	})
+		// 	.catch((error: Error) => {
+		// 		dispatcher.notify(newGetSightReviewError(error));
+		// 	});
 	};
 
 	#getSight = (id: string): Promise<Sight> =>
@@ -42,6 +55,16 @@ export default class SightReducer {
 				}
 				if (response.status === 401) {
 					return Promise.reject(new Error('Нужно войти в систему'));
+				}
+				return Promise.resolve(response);
+			})
+			.then(response => response.json());
+
+	#getReviews = (id: string): Promise<Sight> =>
+		sendGetJSONRequest(backendEndpoint + sightURI + id)
+			.then(response => {
+				if (response.status !== 200) {
+					return Promise.reject(new Error('не удалось загрузить отзывы'));
 				}
 				return Promise.resolve(response);
 			})

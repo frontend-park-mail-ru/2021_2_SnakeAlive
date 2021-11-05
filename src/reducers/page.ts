@@ -73,21 +73,21 @@ export default class PageReducer {
 		registerView.init();
 	};
 
-	createSightPage = (metadata: IdData): void => {
+	createSightPage = (): void => {
 		dispatcher.notify(destroyCurrentPage());
 
 		const sightReducer: SightReducer = new SightReducer();
-		sightReducer.init(metadata.ID);
+		sightReducer.init();
 
 		const sightView: SightView = new SightView();
 		sightView.init();
 	};
 
-	createTripPage = (metadata: IdData):void => {
+	createTripPage = (): void => {
 		dispatcher.notify(destroyCurrentPage());
 
 		const tripReducer: TripReducer = new TripReducer();
-		tripReducer.init(metadata.ID);
+		tripReducer.init();
 
 		const tripView: TripView = new TripView();
 		tripView.init();

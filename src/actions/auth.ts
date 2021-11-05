@@ -1,5 +1,17 @@
-import { IEvent, LoginData, RegisterData, ValidationErrData } from '@/dispatcher';
+import { Empty, IEvent, LoginData, RegisterData, ValidationErrData } from '@/dispatcher';
 import { EventType } from '@/dispatcher/event_types';
+
+const showLoginForm = (): IEvent =>
+	<IEvent>{
+		key: EventType.SHOW_LOGIN_FORM,
+		metadata: <Empty>{},
+	};
+
+const showRegisterForm = (): IEvent =>
+	<IEvent>{
+		key: EventType.SHOW_LOGIN_FORM,
+		metadata: <Empty>{},
+	};
 
 const submitLoginData = (email: string, password: string): IEvent =>
 	<IEvent>{
@@ -44,4 +56,11 @@ const setValidationErrorRegister = (data: Map<string, string>): IEvent =>
 		},
 	};
 
-export { submitLoginData, setValidationErrorLogin, submitRegisterData, setValidationErrorRegister };
+export {
+	submitLoginData,
+	setValidationErrorLogin,
+	submitRegisterData,
+	setValidationErrorRegister,
+	showRegisterForm,
+	showLoginForm,
+};

@@ -1,4 +1,4 @@
-const sendPostRequest = (uri: string, body: any, headers: any): Promise<Response> => {
+const sendPostRequest = (uri: string, body: any, headers?: any): Promise<Response> => {
 	if (!body) {
 		return Promise.reject(new Error('empty post request body'));
 	}
@@ -12,7 +12,7 @@ const sendPostRequest = (uri: string, body: any, headers: any): Promise<Response
 	});
 };
 
-const sendPostJSONRequest = (uri: string, body: any, headers: any): Promise<Response> =>
+const sendPostJSONRequest = (uri: string, body: any, headers?: any): Promise<Response> =>
 	sendPostRequest(uri, body, headers);
 
 export { sendPostJSONRequest };

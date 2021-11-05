@@ -10,9 +10,9 @@ import { backendEndpoint, profile } from '@/constants/index';
 import { UserMetadata } from '@/models';
 
 const enum state {
-	main = "main",
-	empty = "empty",
-	no = "no"
+	main = 'main',
+	empty = 'empty',
+	no = 'no',
 }
 
 export default class HeaderReducer {
@@ -43,19 +43,18 @@ export default class HeaderReducer {
 	checkIfMain = () => {
 		if (this.#state !== state.main) {
 			this.setHeader({});
-			console.log(this.#state, " -> ", state.main);
+			console.log(this.#state, ' -> ', state.main);
 			this.#state = state.main;
 		}
-
-	}
+	};
 
 	checkIfEmpty = () => {
 		if (this.#state !== state.empty) {
 			dispatcher.notify(newSetEmptyHeaderResponse());
-			console.log(this.#state, " -> ", state.empty);
+			console.log(this.#state, ' -> ', state.empty);
 			this.#state = state.empty;
 		}
-	}
+	};
 
 	setHeader = (metadata: DataType): void => {
 		console.log('setHeader');

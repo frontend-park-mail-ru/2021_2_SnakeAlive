@@ -50,5 +50,5 @@ export {
 	newRemoveHeaderRequest,
 	newSetEmptyHeaderRequest,
 	newSetEmptyHeaderResponse,
-	newSetMainHeaderStrongRequest
+	newSetMainHeaderStrongRequest,
 };

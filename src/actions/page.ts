@@ -10,7 +10,7 @@ const newInitPageRequest = (): IEvent =>
 const initCountryPageRequest = (): IEvent =>
 	<IEvent>{
 		key: EventType.INIT_COUNTRY_PAGE_REQUEST,
-		metadata: <Empty>{}
+		metadata: <Empty>{},
 	};
 
 const initRegisterPageRequest = (): IEvent =>
@@ -25,20 +25,16 @@ const initLoginPageRequest = (): IEvent =>
 		metadata: <Empty>{},
 	};
 
-const initSightPageRequest = (ID: string): IEvent =>
+const initSightPageRequest = (): IEvent =>
 	<IEvent>{
 		key: EventType.INIT_SIGHT_PAGE_REQUEST,
-		metadata: <IdData>{
-			ID,
-		},
+		metadata: <Empty>{},
 	};
 
-const initTripPageRequest = (ID: string): IEvent =>
+const initTripPageRequest = (): IEvent =>
 	<IEvent>{
 		key: EventType.INIT_TRIP_PAGE_REQUEST,
-		metadata: <IdData>{
-			ID,
-		},
+		metadata: <Empty>{},
 	};
 
 const destroyCurrentPage = (): IEvent =>

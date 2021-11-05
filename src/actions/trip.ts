@@ -3,7 +3,7 @@ import { EventType } from '@/dispatcher/event_types';
 
 const newGetTripRequest = (countryID: string): IEvent =>
 	<IEvent>{
-		key: EventType.GET_SIGHT_REQUEST,
+		key: EventType.GET_TRIP_REQUEST,
 		metadata: <IdData>{
 			ID: countryID,
 		},
@@ -11,7 +11,7 @@ const newGetTripRequest = (countryID: string): IEvent =>
 
 const newGetTripResult = (): IEvent =>
 	<IEvent>{
-		key: EventType.GET_SIGHT_RESPONSE,
+		key: EventType.GET_TRIP_RESPONSE,
 		metadata: <Empty>{},
 	};
 

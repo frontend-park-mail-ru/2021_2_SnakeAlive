@@ -1,4 +1,4 @@
-import { Empty, IdData, IEvent } from '@/dispatcher';
+import { dispatcher, Empty, IdData, IEvent } from '@/dispatcher';
 import { EventType } from '@/dispatcher/event_types';
 
 const newGetSightRequest = (countryID: string): IEvent =>
@@ -15,4 +15,10 @@ const newGetSightResult = (): IEvent =>
 		metadata: <Empty>{},
 	};
 
-export { newGetSightRequest, newGetSightResult };
+const newGetSightReviewResult = (): IEvent =>
+	<IEvent>{
+		key: EventType.GET_SIGHT_RESPONSE,
+		metadata: <Empty>{},
+	};
+
+export { newGetSightRequest, newGetSightResult, newGetSightReviewResult };

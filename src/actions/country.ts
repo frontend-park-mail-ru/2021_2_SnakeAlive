@@ -20,7 +20,7 @@ const newGetCountryCardsRequest = (countryName: string, countryID: string): IEve
 		key: EventType.GET_COUNTRY_CARDS_REQUEST,
 		metadata: <NamedID>{
 			ID: countryID,
-			name: countryName
+			name: countryName,
 		},
 	};
 
@@ -47,7 +47,7 @@ export {
 	newGetCountryCardsResult,
 	newGetCountryCardsError,
 	newInitCountryRequest,
-	newInitCountryResponse
+	newInitCountryResponse,
 	// newGetCountryCardsError,
 	// newInitCountryRequest,
 	// newInitCountryResponse,
