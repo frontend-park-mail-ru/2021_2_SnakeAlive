@@ -37,7 +37,7 @@ class CountryCardsHolderView extends BasicView {
 	init = () => {
 		this.#tokens = [
 			dispatcher.register(EventType.GET_COUNTRY_CARDS_RESULT, this.renderCountryCards),
-			// dispatcher.register(EventType.GET_COUNTRY_CARDS_ERROR, this.renderErrorMessage),
+			dispatcher.register(EventType.GET_COUNTRY_CARDS_ERROR, this.renderErrorMessage),
 			// dispatcher.register(destroyCountryPage, this.destroy),
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
 		];
@@ -65,14 +65,14 @@ class CountryHolderView extends BasicView {
 	#tokens: Token[];
 
 	constructor() {
-		super('#inner');
+		super('#content');
 
 		this.#tokens = [];
 	}
 
 	init() {
 		this.#tokens = [
-			dispatcher.register(EventType.GET_COUNTRY_CARDS_RESULT, this.renderCountry),
+			dispatcher.register(EventType.INIT_COUNTRY_RESPONSE, this.renderCountry),
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
 		];
 	}
@@ -91,7 +91,7 @@ class CountryHolderView extends BasicView {
 		const { name, ID } = storage.getCountry();
 		this.setView(countryPageTemplate({ name }));
 
-		dispatcher.notify(newGetCountryCardsRequest(ID));
+		dispatcher.notify(newGetCountryCardsRequest(name, ID));
 	};
 }
 

@@ -1,5 +1,6 @@
 import {Country, CountryCard, Sight, TemplateCards, Trip, UserMetadata} from '@/models';
 import {Profile, ProfileMetadata} from "@/models/profile";
+import {Review} from "@/models/review";
 
 class Storage {
     #countryCards: TemplateCards;
@@ -14,6 +15,8 @@ class Storage {
 
     #profile: Profile;
 
+    #reviews: Review[];
+
     constructor() {
         this.#countryCards = <TemplateCards>{};
         this.#country = <Country>{};
@@ -21,6 +24,7 @@ class Storage {
         this.#sight = <Sight>{};
         this.#trip = <Trip>{};
         this.#profile = <Profile>{};
+        this.#reviews = [];
     }
 
     storeCountryCards = (cards: TemplateCards): void => {
@@ -64,6 +68,26 @@ class Storage {
     storeProfileMetadata = (metadata: ProfileMetadata): void => {
         this.#profile.meta = metadata;
     }
+
+    storeReviews = (reviews: Review[]): void => {
+        this.#reviews = reviews
+    }
+
+    getReviews = (): Review[] => this.#reviews
+
+    appendReview = (review: Review): number => {
+        this.#reviews.push(review);
+        return this.#reviews.length;
+    }
+
+    getReview = (position: number): Review | null => {
+        if (this.#reviews.length < position) {
+            return null
+        }
+
+        return this.#reviews[position];
+    }
 }
+
 
 export const storage = new Storage();

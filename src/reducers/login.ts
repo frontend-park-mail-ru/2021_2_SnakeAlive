@@ -1,10 +1,11 @@
 import { DataType, dispatcher, EventType } from '@/dispatcher';
-import { newSetEmptyHeaderResponse } from '../actions';
+import { newSetEmptyHeaderRequest } from '../actions';
 
 export default class LoginReducer {
 	init = () => {
+		console.log("login reducer inited");
 		dispatcher.register(EventType.SUBMIT_LOGIN_DATA, this.login);
-		dispatcher.notify(newSetEmptyHeaderResponse());
+		dispatcher.notify(newSetEmptyHeaderRequest());
 	};
 
 	login = (metadata: DataType) => {

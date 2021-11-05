@@ -19,8 +19,8 @@ export default class LoginView extends BasicView {
 
 	init = (): void => {
 		this.#tokens = [
-			dispatcher.register(EventType.SET_VALIDATION_ERROR_LOGIN, this.#setErrors),
-			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.#destroy),
+			dispatcher.register(EventType.SET_VALIDATION_ERROR_LOGIN, this.setErrors),
+			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
 		];
 		this.setView(loginHTML());
 		const formPlaceElement = document.querySelector('#form_place');
@@ -35,11 +35,11 @@ export default class LoginView extends BasicView {
 		dispatcher.notify(submitLoginData(email, password));
 	};
 
-	#setErrors = (metadata: DataType) => {
+	setErrors = (metadata: DataType) => {
 		alert(metadata);
 	};
 
-	#destroy = (metadata: DataType): void => {
+	destroy = (metadata: DataType): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});

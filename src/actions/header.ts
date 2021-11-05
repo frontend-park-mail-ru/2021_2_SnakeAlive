@@ -25,6 +25,18 @@ const newSetMainHeaderBasicResponse = (): IEvent =>
 		metadata: <Empty>{},
 	};
 
+const newSetEmptyHeaderRequest = (): IEvent =>
+	<IEvent>{
+		key: EventType.SET_MAIN_HEADER_EMPTY_REQUEST,
+		metadata: <Empty>{},
+	};
+
+const newSetMainHeaderStrongRequest = (): IEvent =>
+	<IEvent>{
+		key: EventType.SET_MAIN_HEADER_STRONG_REQUEST,
+		metadata: <Empty>{},
+	};
+
 const newSetEmptyHeaderResponse = (): IEvent =>
 	<IEvent>{
 		key: EventType.SET_MAIN_HEADER_EMPTY_RESPONSE,
@@ -36,5 +48,7 @@ export {
 	newSetMainHeaderLoggedResponse,
 	newSetMainHeaderBasicResponse,
 	newRemoveHeaderRequest,
+	newSetEmptyHeaderRequest,
 	newSetEmptyHeaderResponse,
+	newSetMainHeaderStrongRequest
 };

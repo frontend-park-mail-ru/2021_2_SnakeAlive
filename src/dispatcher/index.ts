@@ -3,8 +3,9 @@ import { IEvent } from './event';
 
 import {
 	Empty,
-	IdData,
-	NamedID,
+	UUID,
+	ID,
+	NamedUUID,
 	ErrorMsgData,
 	LoginData,
 	RegisterData,
@@ -12,6 +13,7 @@ import {
 	UserMinData,
 	File,
 	UpdateProfile,
+	CreateReview,
 	// SightData,
 	// TripData,
 	// CountryData,
@@ -27,8 +29,8 @@ export {
 	IEvent,
 	DataType,
 	Empty,
-	IdData,
-	NamedID,
+	UUID,
+	NamedUUID,
 	ErrorMsgData,
 	LoginData,
 	RegisterData,
@@ -36,7 +38,10 @@ export {
 	UserMinData,
 	UpdateProfile,
 	File,
+	ID,
+	CreateReview,
 	// SightData,
 	// TripData,
 	// CountryData,
 };
+

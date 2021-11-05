@@ -29,7 +29,7 @@ export class Button {
 		this.#elem.id = id;
 		this.#elem.innerHTML = text;
 		// @ts-ignore
-		styleClass.forEach((cl) => this.#elem.classList.add(cl));
+		styleClass.forEach(cl => this.#elem.classList.add(cl));
 		return this.#elem;
 	};
 

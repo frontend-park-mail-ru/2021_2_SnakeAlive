@@ -1,11 +1,15 @@
 export interface Empty {
 }
 
-export interface IdData {
+export interface ID {
+    ID: number;
+}
+
+export interface UUID {
     ID: string;
 }
 
-export interface NamedID {
+export interface NamedUUID {
     ID: string;
     name: string;
 }
@@ -48,6 +52,13 @@ export interface File {
     data: FormData,
 }
 
+export interface CreateReview {
+    title: string,
+    text: string,
+    rating: number,
+    place_id: number
+}
+
 // export interface SightData {
 // 	id: string,
 // 	name: string,
@@ -71,8 +82,9 @@ export interface File {
 // }
 
 export type DataType =
-    | IdData
-    | NamedID
+    | UUID
+    | ID
+    | NamedUUID
     | ErrorMsgData
     | LoginData
     | RegisterData
@@ -80,6 +92,7 @@ export type DataType =
     | UserMinData
     | UpdateProfile
     | File
+    | CreateReview
     // | SightData
     // | TripData
     // | CountryData

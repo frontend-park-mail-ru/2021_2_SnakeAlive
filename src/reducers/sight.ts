@@ -17,14 +17,13 @@ export default class SightReducer {
 		this.#tokens = [dispatcher.register(EventType.INIT_COUNTRY_PAGE_REQUEST, this.initSightPage)];
 
 		// карточки отзывов - также, как у страны
-		// dispatcher.notify();
-		console.log('id = ', id);
-		this.initSightPage(id);
+
 		dispatcher.notify(newSetMainHeaderRequest());
+
+		this.initSightPage(id);
 	};
 
 	initSightPage = (id: string) => {
-		console.log('id = ', id);
 		this.#getSight(id)
 			.then((sight: Sight) => {
 				storage.storeSight(sight);

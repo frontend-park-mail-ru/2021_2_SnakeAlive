@@ -44,7 +44,7 @@ class Form {
 
 		const btn = document.createElement('button');
 		btn.id = config.button.id;
-		config.button.cssClass.forEach((el) => btn.classList.add(el));
+		config.button.cssClass.forEach(el => btn.classList.add(el));
 		btn.innerText = config.button.text;
 		formHTML.appendChild(btn);
 		this.#button = new Button(btn);
