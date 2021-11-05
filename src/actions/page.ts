@@ -7,12 +7,10 @@ const newInitPageRequest = (): IEvent =>
 		metadata: <Empty>{},
 	};
 
-const initCountryPageRequest = (ID: string): IEvent =>
+const initCountryPageRequest = (): IEvent =>
 	<IEvent>{
 		key: EventType.INIT_COUNTRY_PAGE_REQUEST,
-		metadata: <IdData>{
-			ID,
-		},
+		metadata: <Empty>{}
 	};
 
 const initRegisterPageRequest = (): IEvent =>

@@ -1,15 +1,15 @@
 import { sendGetJSONRequest } from '@/http';
 import { backendEndpoint, countrySights } from '@/constants';
 import {
-	destroyCurrentPage,
 	newGetCountryCardsError,
-	newGetCountryCardsResult,
+	newGetCountryCardsRequest,
+	newGetCountryCardsResult, newInitCountryResponse,
 	newSetMainHeaderRequest,
 } from '@/actions';
 import { adaptGetCards } from '@/adapters';
 import { storage } from '@/storage';
-import { dispatcher, EventType, NamedID, IdData, Token, IEvent, DataType } from '@/dispatcher';
-import { Country, CountryCard, CountryCardResponse } from '@/models';
+import { DataType, dispatcher, EventType, IdData, NamedID, Token } from '@/dispatcher';
+import { Country, CountryCardResponse } from '@/models';
 
 export default class CountryReducer {
 	#tokens: Token[];
@@ -19,10 +19,8 @@ export default class CountryReducer {
 	}
 
 	init = () => {
-		dispatcher.notify(newSetMainHeaderRequest());
-
 		this.#tokens = [
-			// dispatcher.register(initCountryRequest, this.initCountryPage),
+			dispatcher.register(EventType.INIT_COUNTRY_REQUEST, this.initCountryPage),
 			dispatcher.register(EventType.GET_COUNTRY_CARDS_REQUEST, this.getCountryCards),
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
 		];
@@ -40,8 +38,9 @@ export default class CountryReducer {
 			name: country.name,
 			ID: <string>country.ID,
 		});
-
-		// dispatcher.notify(newGetCountryCardsResult(country.name, <string>country.ID));
+		dispatcher.notify(newSetMainHeaderRequest())
+		dispatcher.notify(newInitCountryResponse());
+		dispatcher.notify(newGetCountryCardsRequest(country.name, <string>country.ID));
 	};
 
 	getCountryCards = (metadata: DataType): void => {

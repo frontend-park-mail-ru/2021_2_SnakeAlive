@@ -29,6 +29,7 @@ $logo_height: 48px;
   display: flex;
   flex-direction: row;
   align-items: center;
+  gap: $small-px;
 }
 
 .header__logo:hover {

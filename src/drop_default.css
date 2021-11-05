@@ -85,8 +85,7 @@ mark,
 audio,
 video,
 button,
-input
-input:active{
+input input:active {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -117,8 +116,9 @@ body {
 	line-height: 1;
 }
 ol,
-ul {
-	margin-left: 20px;
+ul,
+li {
+	list-style-type: circle;
 }
 blockquote,
 q {

@@ -1,30 +1,26 @@
-import { Empty, ErrorMsgData, IdData, IEvent, NamedID } from '@/dispatcher';
-import { EventType } from '@/dispatcher/event_types';
+import { Empty, ErrorMsgData, EventType, IdData, IEvent, NamedID } from '@/dispatcher';
 
-// const initCountryRequest = 'INIT_COUNTRY_REQUEST';
-//
-// const newInitCountryRequest = (name: string, id: string): IEvent =>
-// 	<IEvent>{
-// 		key: initCountryRequest,
-// 		metadata: <NamedID>{
-// 			name,
-// 			ID: id,
-// 		},
-// 	};
-//
-// const initCountryResponse = 'INIT_COUNTRY_RESPONSE';
-//
-// const newInitCountryResponse = (name: string, id: string): IEvent =>
-// 	<IEvent>{
-// 		key: initCountryResponse,
-// 		metadata: <NamedID>{},
-// 	};
+const newInitCountryRequest = (name: string, id: string): IEvent =>
+	<IEvent>{
+		key: EventType.INIT_COUNTRY_REQUEST,
+		metadata: <NamedID>{
+			name,
+			ID: id,
+		},
+	};
 
-const newGetCountryCardsRequest = (countryID: string): IEvent =>
+const newInitCountryResponse = (): IEvent =>
+	<IEvent>{
+		key: EventType.INIT_COUNTRY_RESPONSE,
+		metadata: <NamedID>{},
+	};
+
+const newGetCountryCardsRequest = (countryName: string, countryID: string): IEvent =>
 	<IEvent>{
 		key: EventType.GET_COUNTRY_CARDS_REQUEST,
-		metadata: <IdData>{
+		metadata: <NamedID>{
 			ID: countryID,
+			name: countryName
 		},
 	};
 
@@ -50,6 +46,8 @@ export {
 	newGetCountryCardsRequest,
 	newGetCountryCardsResult,
 	newGetCountryCardsError,
+	newInitCountryRequest,
+	newInitCountryResponse
 	// newGetCountryCardsError,
 	// newInitCountryRequest,
 	// newInitCountryResponse,

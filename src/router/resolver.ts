@@ -6,44 +6,55 @@ import {
 	initSightPageRequest,
 	initTripPageRequest,
 	initErrorPageRequest,
-	initCountryPageRequest,
+	initCountryPageRequest, newInitCountryRequest,
 } from '@/actions';
 import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
+import { dispatcher } from '@/dispatcher';
 
 const pathErrorEvent: IEvent = initErrorPageRequest(new Error('Неверная ссылка'));
 
-const tryGetIdParam = (path: URL, event: (data: string) => IEvent): IEvent => {
+const tryGetIdParam = (path: URL, initEvent: () => IEvent, event: (data: string) => IEvent): void /* IEvent */ => {
 	const id = path.searchParams.get(paramsURLfrontend.id);
-	console.log("id : ", id);
+	console.log('id : ', id);
 	if (id === null) {
-		return pathErrorEvent;
+		dispatcher.notify(pathErrorEvent);
+		return;
 	}
-	return event(id);
+	dispatcher.notify(initEvent());
+	dispatcher.notify(event(id));
 };
 
-export const resolve = (path: URL): IEvent => {
+export const notifier = (path: URL): void /* IEvent */ => {
 	console.log('path :', path);
 
 	switch (path.pathname) {
 		case pathsURLfrontend.root: {
-			return newInitPageRequest();
+			dispatcher.notify(newInitPageRequest());
+			dispatcher.notify(newInitCountryRequest('russia','0'));
+			break;
 		}
 		case pathsURLfrontend.country: {
-			return tryGetIdParam(path, initCountryPageRequest);
+			tryGetIdParam(path, initCountryPageRequest, newInitPageRequest);
+			break;
 		}
-		case pathsURLfrontend.trip: {
-			return tryGetIdParam(path, initTripPageRequest);
-		}
+		// case pathsURLfrontend.trip: {
+		// 	return tryGetIdParam(path, initTripPageRequest);
+		// 	break;
+		// }
 		case pathsURLfrontend.login: {
-			return initLoginPageRequest();
+			dispatcher.notify(initLoginPageRequest());
+			break;
 		}
-		case pathsURLfrontend.register: {
-			return initRegisterPageRequest();
-		}
-		case pathsURLfrontend.sight: {
-			return tryGetIdParam(path, initSightPageRequest);
-		}
+		// case pathsURLfrontend.register: {
+		// 	return initRegisterPageRequest();
+		// 	break;
+		// }
+		// case pathsURLfrontend.sight: {
+		// 	return tryGetIdParam(path, initSightPageRequest);
+		// 	break;
+		// }
 		default:
-			return pathErrorEvent;
+			dispatcher.notify(pathErrorEvent);
 	}
+	return;
 };

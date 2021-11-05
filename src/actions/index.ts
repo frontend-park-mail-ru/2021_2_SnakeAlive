@@ -2,8 +2,8 @@ import {
 	newGetCountryCardsRequest,
 	newGetCountryCardsResult,
 	newGetCountryCardsError,
-	// newInitCountryRequest,
-	// newInitCountryResponse,
+	newInitCountryRequest,
+	newInitCountryResponse,
 } from './country';
 
 // import {
@@ -29,7 +29,9 @@ import {
 	newSetMainHeaderLoggedResponse,
 	newSetMainHeaderBasicResponse,
 	newRemoveHeaderRequest,
+	newSetEmptyHeaderRequest,
 	newSetEmptyHeaderResponse,
+	newSetMainHeaderStrongRequest
 } from './header';
 
 import {
@@ -51,8 +53,8 @@ export {
 	newGetCountryCardsRequest,
 	newGetCountryCardsResult,
 	newGetCountryCardsError,
-	// newInitCountryRequest,
-	// newInitCountryResponse,
+	newInitCountryRequest,
+	newInitCountryResponse,
 	// destroyInnerRequest,
 	// destroyCountryPage,
 	// newDestroyInnerRequest,
@@ -63,6 +65,9 @@ export {
 	newSetMainHeaderLoggedResponse,
 	newSetMainHeaderBasicResponse,
 	newRemoveHeaderRequest,
+	newSetEmptyHeaderRequest,
+	newSetEmptyHeaderResponse,
+	newSetMainHeaderStrongRequest,
 	initLoginPageRequest,
 	initRegisterPageRequest,
 	submitLoginData,
@@ -70,7 +75,6 @@ export {
 	submitRegisterData,
 	setValidationErrorRegister,
 	destroyCurrentPage,
-	newSetEmptyHeaderResponse,
 	initSightPageRequest,
 	initTripPageRequest,
 	initCountryPageRequest,

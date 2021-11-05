@@ -5,6 +5,8 @@ import { router } from './router';
 // import './index.scss';
 import './drop_default.css';
 import './index_new.scss';
+import { dispatcher } from '@/dispatcher';
+import { newSetMainHeaderRequest } from '@/actions';
 
 const main = () => {
 	const contentPlace: HTMLDivElement = document.createElement('div');
@@ -18,7 +20,6 @@ const main = () => {
 	headerPlace.classList.add('header');
 	const headerReducer: HeaderReducer = new HeaderReducer();
 	headerReducer.init();
-
 	const headerView: HeaderView = new HeaderView();
 	headerView.init();
 

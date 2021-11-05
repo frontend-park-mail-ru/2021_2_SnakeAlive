@@ -4,7 +4,7 @@
   width: 100%;
   display: grid;
   //grid-template-columns: repeat(6, 1fr);
-  grid-template: "ml ml ml f f f f f f f f t t t t mr mr mr"  / 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template: "ml f f t t  mr"  / 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-column-gap: 10px;
   grid-row-gap: 10px;
   padding: 10px 0;
@@ -19,9 +19,11 @@
   grid-area: t;
   h2 {
     @include text-local-header;
+    padding-bottom: $small-px;
   }
   p, li {
     @include text-plain-no-wrap;
+    padding-bottom: $small-px;
   }
 }
 

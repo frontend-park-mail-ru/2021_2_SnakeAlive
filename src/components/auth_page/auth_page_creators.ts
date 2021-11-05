@@ -47,7 +47,12 @@ const registerHTML = (parent: HTMLDivElement): HTMLDivElement => {
 	textPlace.innerHTML = registerTemplate();
 
 	const btn = new Button();
-	btn.makeButton(texts.BTN_GO_FROM_REG_TO_LOGIN, ['usual_button usual_button_light'], 'to_login', textPlace);
+	btn.makeButton(
+		texts.BTN_GO_FROM_REG_TO_LOGIN,
+		['usual_button usual_button_light'],
+		'to_login',
+		textPlace
+	);
 	btn.addClickListener(() => {
 		router.go('/login');
 	});
