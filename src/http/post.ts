@@ -6,13 +6,16 @@ const sendPostRequest = (uri: string, body: any, headers: any): Promise<Response
 	return fetch(uri, {
 		method: 'POST',
 		headers,
-		body: JSON.stringify(body),
+		body: body,
 		mode: 'cors',
 		credentials: 'include',
 	});
 };
 
 const sendPostJSONRequest = (uri: string, body: any, headers: any): Promise<Response> =>
+	sendPostRequest(uri, JSON.stringify(body), headers);
+
+const sendPostFileRequest = (uri: string, body: FormData, headers?: any): Promise<Response> =>
 	sendPostRequest(uri, body, headers);
 
-export { sendPostJSONRequest };
+export { sendPostJSONRequest, sendPostFileRequest };

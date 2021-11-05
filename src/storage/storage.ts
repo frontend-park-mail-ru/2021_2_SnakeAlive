@@ -1,55 +1,69 @@
-import { Country, CountryCard, Sight, TemplateCards, Trip, UserMetadata } from '@/models';
+import {Country, CountryCard, Sight, TemplateCards, Trip, UserMetadata} from '@/models';
+import {Profile, ProfileMetadata} from "@/models/profile";
 
 class Storage {
-	#countryCards: TemplateCards;
+    #countryCards: TemplateCards;
 
-	#country: Country;
+    #country: Country;
 
-	#userMetadata: UserMetadata;
+    #userMetadata: UserMetadata;
 
-	#sight: Sight;
+    #sight: Sight;
 
-	#trip: Trip;
+    #trip: Trip;
 
-	constructor() {
-		this.#countryCards = <TemplateCards>{};
-		this.#country = <Country>{};
-		this.#userMetadata = <UserMetadata>{};
-		this.#sight = <Sight>{};
-		this.#trip = <Trip>{};
-	}
+    #profile: Profile;
 
-	storeCountryCards = (cards: TemplateCards): void => {
-		this.#countryCards = cards;
-	};
+    constructor() {
+        this.#countryCards = <TemplateCards>{};
+        this.#country = <Country>{};
+        this.#userMetadata = <UserMetadata>{};
+        this.#sight = <Sight>{};
+        this.#trip = <Trip>{};
+        this.#profile = <Profile>{};
+    }
 
-	getCountryCards = (): TemplateCards => this.#countryCards;
+    storeCountryCards = (cards: TemplateCards): void => {
+        this.#countryCards = cards;
+    };
 
-	storeCountry = (country: Country): void => {
-		this.#country = country;
-	};
+    getCountryCards = (): TemplateCards => this.#countryCards;
 
-	getCountry = (): Country => this.#country;
+    storeCountry = (country: Country): void => {
+        this.#country = country;
+    };
 
-	setUserMetadata = (user: UserMetadata): void => {
-		this.#userMetadata = user;
-	};
+    getCountry = (): Country => this.#country;
 
-	getUserMetadata(): UserMetadata {
-		return this.#userMetadata;
-	}
+    setUserMetadata = (user: UserMetadata): void => {
+        this.#userMetadata = user;
+    };
 
-	storeSight = (sight: Sight): void => {
-		this.#sight = sight;
-	};
+    getUserMetadata(): UserMetadata {
+        return this.#userMetadata;
+    }
 
-	getSight = (): Sight => this.#sight;
+    storeSight = (sight: Sight): void => {
+        this.#sight = sight;
+    };
 
-	storeTrip = (trip: Trip): void => {
-		this.#trip = trip;
-	};
+    getSight = (): Sight => this.#sight;
 
-	getTrip = (): Trip => this.#trip;
+    storeTrip = (trip: Trip): void => {
+        this.#trip = trip;
+    };
+
+    getTrip = (): Trip => this.#trip;
+
+    storeProfile = (profile: Profile): void => {
+        this.#profile = profile;
+    }
+
+    getProfile = (): Profile => this.#profile;
+
+    storeProfileMetadata = (metadata: ProfileMetadata): void => {
+        this.#profile.meta = metadata;
+    }
 }
 
 export const storage = new Storage();
