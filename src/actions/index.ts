@@ -14,6 +14,13 @@ import {
 // } from './view';
 
 import {
+	newGetProfileRequest,
+	newGetProfileResponse,
+	newUpdateProfileMetadataRequest,
+	newUpdateProfilePhotoRequest,
+} from './profile';
+
+import {
 	newInitPageRequest,
 	initLoginPageRequest,
 	initRegisterPageRequest,
@@ -22,6 +29,7 @@ import {
 	initTripPageRequest,
 	initErrorPageRequest,
 	initCountryPageRequest,
+	initProfilePageRequest,
 } from './page';
 
 import {
@@ -46,6 +54,14 @@ import {
 import { newGetSightRequest, newGetSightResult, newGetSightReviewResult } from './sight';
 
 import { newGetTripRequest, newGetTripResult } from './trip';
+
+import {
+	newGetReviewsRequest,
+	newGetReviewsResponse,
+	newDeleteReviewRequest,
+	newCreateReviewRequest,
+	newCreateReviewResponse,
+} from './review';
 
 // рефактор need
 export {
@@ -83,8 +99,6 @@ export {
 	initTripPageRequest,
 	initCountryPageRequest,
 	initErrorPageRequest,
-	// newGetSightRequest,
-	// newGetSightResult,
 	newGetSightRequest,
 	newGetSightResult,
 	newGetSightReviewResult,
@@ -92,4 +106,14 @@ export {
 	newGetTripResult,
 	showRegisterForm,
 	showLoginForm,
+	newGetProfileRequest,
+	newGetProfileResponse,
+	newUpdateProfileMetadataRequest,
+	newUpdateProfilePhotoRequest,
+	initProfilePageRequest,
+	newGetReviewsRequest,
+	newGetReviewsResponse,
+	newDeleteReviewRequest,
+	newCreateReviewRequest,
+	newCreateReviewResponse,
 };

@@ -2,15 +2,19 @@ import CountryReducer from './country';
 import LoginReducer from './login';
 import RegisterReducer from './register';
 
-import { destroyCurrentPage, initCountryPageRequest } from '@/actions';
+import { destroyCurrentPage } from '@/actions';
 import { CountryCardsHolderView, CountryHolderView, LoginView, RegisterView } from '@/view';
 
-import { DataType, dispatcher, ErrorMsgData, EventType, IdData } from '@/dispatcher';
+import { DataType, dispatcher, ErrorMsgData, EventType, UUID } from '@/dispatcher';
 import ErrorView from '@/view/error';
 import SightReducer from '@/reducers/sight';
 import SightView from '@/view/sight';
 import TripReducer from '@/reducers/trip';
 import TripView from '@/view/trip';
+import ProfileReducer from '@/reducers/profile';
+import ProfileView from '@/view/profile';
+import ReviewReducer from '@/reducers/review';
+import { ReviewCreateView, ReviewsView } from '@/view/review';
 
 export default class PageReducer {
 	constructor() {
@@ -25,6 +29,7 @@ export default class PageReducer {
 		dispatcher.register(EventType.INIT_LOGIN_PAGE_REQUEST, this.createLoginPage);
 		dispatcher.register(EventType.INIT_REGISTER_PAGE_REQUEST, this.createRegisterPage);
 		dispatcher.register(EventType.INIT_ERROR_PAGE_REQUEST, this.createErrorPage);
+		dispatcher.register(EventType.INIT_PROFILE_PAGE_REQUEST, this.createProfilePage);
 	};
 
 	createInitPage = (): void => {
@@ -81,9 +86,17 @@ export default class PageReducer {
 
 		const sightView: SightView = new SightView();
 		sightView.init();
+
+		const reviewReducer: ReviewReducer = new ReviewReducer();
+		reviewReducer.init();
+
+		const reviewsView: ReviewsView = new ReviewsView();
+		const reviewCreateView: ReviewCreateView = new ReviewCreateView();
+		reviewsView.init();
+		reviewCreateView.init();
 	};
 
-	createTripPage = (): void => {
+	createTripPage = (metadata: UUID): void => {
 		dispatcher.notify(destroyCurrentPage());
 
 		const tripReducer: TripReducer = new TripReducer();
@@ -91,5 +104,15 @@ export default class PageReducer {
 
 		const tripView: TripView = new TripView();
 		tripView.init();
+	};
+
+	createProfilePage = (metadata: DataType): void => {
+		dispatcher.notify(destroyCurrentPage());
+
+		const profileReducer: ProfileReducer = new ProfileReducer();
+		profileReducer.init();
+
+		const profileView: ProfileView = new ProfileView();
+		profileView.init();
 	};
 }

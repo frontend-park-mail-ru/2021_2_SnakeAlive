@@ -1,4 +1,4 @@
-import { DataType, dispatcher, EventType, IdData, Token } from '@/dispatcher';
+import { dispatcher, EventType, NumID, Token, UUID } from '@/dispatcher';
 import { sendGetJSONRequest } from '@/http';
 import { backendEndpoint, sightURI } from '@/constants';
 import { storage } from '@/storage';
@@ -26,7 +26,7 @@ export default class SightReducer {
 		});
 	};
 
-	initSightPage = (metadata: IdData) => {
+	initSightPage = (metadata: UUID) => {
 		dispatcher.notify(newSetMainHeaderRequest());
 		const { ID } = metadata;
 		this.#getSight(ID)

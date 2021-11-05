@@ -1,5 +1,15 @@
 import { backendEndpoint } from './endpoints';
-import { loginURI, registerURI, countrySights, profile, logout, sightURI, tripURI } from './uris';
+import {
+	loginURI,
+	registerURI,
+	countrySights,
+	profile,
+	logout,
+	sightURI,
+	tripURI,
+	reviewsURI,
+	reviewURI,
+} from './uris';
 import { russiaFormName, russiaUriName, nicaraguaFormName, nicaraguaUriName } from './defaults';
 import { pathsURLfrontend, paramsURLfrontend } from '@/constants/frontendURIs';
 
@@ -16,6 +26,8 @@ export {
 	logout,
 	nicaraguaFormName,
 	nicaraguaUriName,
+	reviewsURI,
+	reviewURI,
 	pathsURLfrontend,
 	paramsURLfrontend,
 };

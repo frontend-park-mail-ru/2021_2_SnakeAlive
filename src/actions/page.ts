@@ -1,5 +1,4 @@
-import { Empty, ErrorMsgData, IdData, IEvent } from '../dispatcher';
-import { EventType } from '@/dispatcher/event_types';
+import { Empty, ErrorMsgData, EventType, IEvent } from '../dispatcher';
 
 const newInitPageRequest = (): IEvent =>
 	<IEvent>{
@@ -51,6 +50,12 @@ const initErrorPageRequest = (error: Error): IEvent =>
 		},
 	};
 
+const initProfilePageRequest = (): IEvent =>
+	<IEvent>{
+		key: EventType.INIT_PROFILE_PAGE_REQUEST,
+		metadata: <Empty>{},
+	};
+
 export {
 	newInitPageRequest,
 	initLoginPageRequest,
@@ -60,4 +65,5 @@ export {
 	initSightPageRequest,
 	initErrorPageRequest,
 	destroyCurrentPage,
+	initProfilePageRequest,
 };

@@ -9,7 +9,7 @@ import {
 } from '@/actions';
 import { adaptGetCards } from '@/adapters';
 import { storage } from '@/storage';
-import { DataType, dispatcher, EventType, IdData, NamedID, Token } from '@/dispatcher';
+import { DataType, dispatcher, EventType, UUID, NamedUUID, Token } from '@/dispatcher';
 import { Country, CountryCardResponse } from '@/models';
 
 export default class CountryReducer {
@@ -34,7 +34,7 @@ export default class CountryReducer {
 	};
 
 	initCountryPage = (metadata: DataType): void => {
-		const country = <NamedID>metadata;
+		const country = <NamedUUID>metadata;
 		storage.storeCountry(<Country>{
 			name: country.name,
 			ID: <string>country.ID,
@@ -45,7 +45,7 @@ export default class CountryReducer {
 	};
 
 	getCountryCards = (metadata: DataType): void => {
-		const data = <IdData>metadata;
+		const data = <UUID>metadata;
 		this.#getCards(<string>data.ID)
 			.then((cards: CountryCardResponse[]) => {
 				storage.storeCountryCards(adaptGetCards(cards));

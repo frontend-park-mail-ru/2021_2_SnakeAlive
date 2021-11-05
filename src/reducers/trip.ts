@@ -1,4 +1,4 @@
-import { dispatcher, EventType, IdData, Token } from '@/dispatcher';
+import { DataType, dispatcher, EventType, NumID, Token, UUID } from '@/dispatcher';
 import { Trip } from '@/models';
 import { storage } from '@/storage';
 import { sendGetJSONRequest } from '@/http';
@@ -26,7 +26,7 @@ export default class TripReducer {
 		});
 	};
 
-	initTripPage = (metadata: IdData) => {
+	initTripPage = (metadata: UUID) => {
 		const { ID } = metadata;
 		this.#getTrip(ID)
 			.then((trip: Trip) => {

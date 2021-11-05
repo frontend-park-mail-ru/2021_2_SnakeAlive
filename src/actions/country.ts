@@ -1,9 +1,9 @@
-import { Empty, ErrorMsgData, EventType, IdData, IEvent, NamedID } from '@/dispatcher';
+import { Empty, ErrorMsgData, EventType, UUID, IEvent, NamedUUID } from '@/dispatcher';
 
 const newInitCountryRequest = (name: string, id: string): IEvent =>
 	<IEvent>{
 		key: EventType.INIT_COUNTRY_REQUEST,
-		metadata: <NamedID>{
+		metadata: <NamedUUID>{
 			name,
 			ID: id,
 		},
@@ -12,13 +12,13 @@ const newInitCountryRequest = (name: string, id: string): IEvent =>
 const newInitCountryResponse = (): IEvent =>
 	<IEvent>{
 		key: EventType.INIT_COUNTRY_RESPONSE,
-		metadata: <NamedID>{},
+		metadata: <NamedUUID>{},
 	};
 
 const newGetCountryCardsRequest = (countryName: string, countryID: string): IEvent =>
 	<IEvent>{
 		key: EventType.GET_COUNTRY_CARDS_REQUEST,
-		metadata: <NamedID>{
+		metadata: <NamedUUID>{
 			ID: countryID,
 			name: countryName,
 		},

@@ -21,4 +21,12 @@ export default class BasicView {
 		}
 		element.innerHTML = data;
 	};
+
+	appendLastChild = (data: string): void => {
+		const element: Element | null = document.querySelector(this.#component);
+		if (element === null) {
+			throw new Error(`empty element ${this.#component}`);
+		}
+		element.append(data);
+	};
 }

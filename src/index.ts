@@ -2,11 +2,8 @@ import { PageReducer, HeaderReducer } from './reducers';
 import HeaderView from './view/header';
 import { router } from './router';
 
-// import './index.scss';
 import './drop_default.css';
-import './index_new.scss';
-import { dispatcher } from '@/dispatcher';
-import { newSetMainHeaderRequest } from '@/actions';
+import './index_new.scss'
 
 const main = () => {
 	const contentPlace: HTMLDivElement = document.createElement('div');
@@ -26,7 +23,6 @@ const main = () => {
 	const root = document.getElementById('root');
 
 	if (root !== null) {
-		console.log(root);
 		root.appendChild(headerPlace);
 		root.appendChild(contentPlace);
 	}
