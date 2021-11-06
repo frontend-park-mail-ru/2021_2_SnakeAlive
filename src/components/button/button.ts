@@ -82,12 +82,12 @@ export class Button {
 	}
 }
 
-export const makeSimpleButton = (elementId: string, pathToGo: pathsURLfrontend) => {
+export const makeSimpleButton = (elementId: string, pathToGo: pathsURLfrontend, data?: string) => {
 	const btn = document.getElementById(elementId);
 	if (btn !== null) {
 		const profileBtn = new Button(btn);
 		profileBtn.addClickListener(() => {
-			router.go(pathToGo);
+			router.go(pathToGo, data);
 		});
 		profileBtn.setActive();
 	} else {

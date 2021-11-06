@@ -1,5 +1,5 @@
 import { notifier } from './resolver';
-import { dispatcher } from '@/dispatcher';
+import { dispatcher, UUID } from '@/dispatcher';
 
 class Router {
 	start = (_data?: object) => {
@@ -7,11 +7,14 @@ class Router {
 		notifier(url);
 	};
 
-	go = (_path: string, _data?: object) => {
+	go = (_path: string, _data?: string) => {
 		if (window.location.pathname === _path) return;
 		const url = new URL(_path, window.location.href);
+		if ( _data ) {
+			url.searchParams.append('id', _data)
+		}
 		notifier(url);
-		this.#pushHistoryState(_path, _data);
+		this.#pushHistoryState(_path, { _data });
 	};
 
 	// нужен если на странице делать кнопку назад

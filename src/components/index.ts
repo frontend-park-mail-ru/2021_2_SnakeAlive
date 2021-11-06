@@ -15,5 +15,5 @@ export {
 	loginHTML,
 	registerHTML,
 	createSightTemplate,
-	initReviewForm
+	initReviewForm,
 };

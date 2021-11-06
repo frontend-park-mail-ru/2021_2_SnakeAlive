@@ -7,7 +7,6 @@ import form from '../reviews/review_form.handlebars';
 import '../reviews/review.scss';
 // import '../reviews/review.scss';
 
-
 // id: string;
 // name: string;
 // description: string;
@@ -25,7 +24,7 @@ export const createSightTemplate = (data: Sight): string => {
 	dataCopied.testPhoto = testPhoto;
 	parent.innerHTML = sightTemplate(dataCopied);
 
-	const formPlace = parent.querySelector("#sight_page__review_form_place");
+	const formPlace = parent.querySelector('#sight_page__review_form_place');
 	if (formPlace !== null) {
 		formPlace.innerHTML = form();
 	}
@@ -33,4 +32,4 @@ export const createSightTemplate = (data: Sight): string => {
 	// тут еще просмотр фотографий нужно организовать
 
 	return parent.innerHTML;
-}
+};
