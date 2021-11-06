@@ -1,4 +1,4 @@
-import { Empty, ErrorMsgData, EventType, UUID, IEvent, NamedUUID } from '@/dispatcher';
+import { Empty, ErrorMsgData, EventType, IEvent, NamedUUID } from '@/dispatcher';
 
 const newInitCountryRequest = (name: string, id: string): IEvent =>
 	<IEvent>{

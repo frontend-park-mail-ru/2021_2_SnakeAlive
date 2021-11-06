@@ -1,4 +1,3 @@
-import { DataType } from './metadata_types';
 import { IEvent } from './event';
 import { EventType } from '@/dispatcher/event_types';
 
