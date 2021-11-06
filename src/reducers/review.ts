@@ -5,6 +5,7 @@ import { storage } from '@/storage';
 import { CreateReview, DataType, dispatcher, EventType, NumID, Token } from '@/dispatcher';
 import { CreateReviewRequest, CreateReviewResponse, Review } from '@/models/review';
 import { adaptCreateReviewRequest, adaptCreateReviewResponse } from '@/adapters/review';
+import { CreateReviewForm } from '@/dispatcher/metadata_types';
 
 export default class ReviewReducer {
 	#tokens: Token[];
@@ -17,7 +18,8 @@ export default class ReviewReducer {
 		this.#tokens = [
 			dispatcher.register(EventType.GET_REVIEWS_REQUEST, this.getReviews),
 			dispatcher.register(EventType.DELETE_REVIEW_REQUEST, this.deleteReview),
-			dispatcher.register(EventType.CREATE_REVIEW_REQUEST, this.createReview),
+			// dispatcher.register(EventType.CREATE_REVIEW_REQUEST, this.createReview),
+			dispatcher.register(EventType.CREATE_REVIEW_FORM, this.createReview),
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
 		];
 	};
@@ -47,8 +49,9 @@ export default class ReviewReducer {
 		});
 	};
 
-	createReview = (metadata: DataType): void => {
+	createReview = (metadata: CreateReviewForm): void => {
 		const event = <CreateReview>metadata;
+		event.placeId = Number(storage.getSight().id);
 		this.#sendCreateReview(adaptCreateReviewRequest(event))
 			.then((response: CreateReviewResponse) => {
 				const position = storage.appendReview(

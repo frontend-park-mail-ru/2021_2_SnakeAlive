@@ -1,4 +1,6 @@
-<form id="review_creator">
+<form id="review_creator" class="form_review">
+
+	<div id="active_form_area">
 
 	<div class="form__input_holder">
 		<label for="title">Кратко</label>
@@ -20,9 +22,25 @@
 
 	<div class="form__input_holder">
 		<label for="msg">Подробно</label>
-		<textarea id="msg" name="msg" class="form__text_area"></textarea>
+		<div class="form__input_holder__text">
+			<div class="comment_text_hidden">
+				<div class="textarea_behavior" id="comment_text_hidden">
+				</div>
+			</div>
+			<textarea class="textarea_behavior" rows="3" id="comment_text"></textarea>
+		</div>
 	</div>
 
-	<p id="review_error" class="review_error">для публикации отзыва укажите хотя бы рейтинг</p>
-	<button type="submit" id="review_submit">Опубликовать</button>
+	</div>
+
+	<p id="review_error" class="form_review__error">Укажите как минимум рейтинг</p>
+		<div class="form_review__submit_holder">
+			<div>
+			<button type="submit" id="review_submit" class="usual_button usual_button_dark">Опубликовать</button>
+				</div>
+				<div class="form_review__submit_holder__answer" id="form__submit_holder__answer">
+					<p class="form_review__submit_holder__answer__text" >Вы уверены?</p>
+					<button id="answer_button" class="usual_button usual_button_light">Да</button>
+			</div>
+		</div>
 </form>

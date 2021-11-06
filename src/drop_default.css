@@ -61,6 +61,8 @@ caption,
 tbody,
 tfoot,
 thead,
+textarea,
+textarea:active,
 tr,
 th,
 td,
@@ -85,17 +87,22 @@ mark,
 audio,
 video,
 button,
-input input:active {
+input,
+input:active,
+p
+{
 	margin: 0;
 	padding: 0;
 	border: 0;
 	font-size: 100%;
 	font: inherit;
+	font-family: inherit;
 	vertical-align: baseline;
 	background-color: transparent;
 	letter-spacing: inherit;
 	border-radius: 0px;
 	border: none;
+	border-color: transparent;
 	display: block;
 }
 /* HTML5 display-role reset for older browsers */

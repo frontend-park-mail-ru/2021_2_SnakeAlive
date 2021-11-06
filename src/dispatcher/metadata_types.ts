@@ -58,6 +58,12 @@ export interface CreateReview {
 	placeId: number;
 }
 
+export interface CreateReviewForm {
+	title: string;
+	text: string;
+	rating: number;
+}
+
 // export interface SightData {
 // 	id: string,
 // 	name: string,
@@ -92,6 +98,7 @@ export type DataType =
 	| UpdateProfile
 	| File
 	| CreateReview
+	| CreateReviewForm
 	// | SightData
 	// | TripData
 	// | CountryData

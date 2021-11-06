@@ -7,7 +7,8 @@ const sendPostRequest = (uri: string, body: any, headers?: any): Promise<Respons
 		method: 'POST',
 		headers,
 		body,
-		mode: 'cors',
+		// TODO
+		mode: 'no-cors',
 		credentials: 'include',
 	});
 };

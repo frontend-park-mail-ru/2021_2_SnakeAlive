@@ -12,12 +12,13 @@
 
 .sight_page__left_col {
   grid-area: l-t;
-  h2{
+  > h2{
     @include text-local-header;
   }
-  div {
+  > div {
     margin-bottom: $small-px;
   }
+  margin-bottom: - $small-px;
 }
 
 .sight_page__right_col {

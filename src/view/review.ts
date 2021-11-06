@@ -44,6 +44,7 @@ export class ReviewsView extends BasicView {
 
 		// add render ???
 
+		// изменила на добавление первым
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore
 		this.appendLastChild('');
@@ -65,9 +66,9 @@ export class ReviewCreateView extends BasicView {
 		// choose if user was logged and create redner here
 	};
 
-	#createReview = (): void => {
-		// как узнать про placeID ???
-		// скорее всего взять из storage
-		dispatcher.notify(newCreateReviewRequest('', '', 0, 0));
-	};
+	// #createReview = (): void => {
+	// 	// как узнать про placeID ???
+	// 	// скорее всего взять из storage
+	// 	dispatcher.notify(newCreateReviewRequest('', '', 0, 0));
+	// };
 }

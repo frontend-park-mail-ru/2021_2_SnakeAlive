@@ -15,6 +15,7 @@ $my--bright-btn: rgba(79, 130, 182, 1);
 $my--bright-btn-hover: rgba(100, 145, 190, 1);
 
 $my--input-border: rgba(213, 214, 215, 1);
+$my--input-fill: #F7F8FA;
 $my--input-border-active: rgba(57, 140, 221, 1);
 $my--error: rgba(231, 63, 70, 1);
 
@@ -60,8 +61,8 @@ p {
         line-height: 20px;
         letter-spacing: -0.5px;
         // насчет этих строчек терзают смутные сомнения
-        display: flex;
-        align-items: flex-end;
+        //display: flex;
+        //align-items: flex-end;
 };
 @mixin text-button {
         font-size: 12px;
@@ -87,6 +88,13 @@ html,body{
   border: 1px solid $my--frame-border;
   padding: $large-px;
   background: $white;
+}
+
+input {
+  background: $my--input-fill;
+  border: 1px $my--input-border;
+  border-radius: 4px;
+  width: 100%;
 }
 
 //<div class='error_page'>

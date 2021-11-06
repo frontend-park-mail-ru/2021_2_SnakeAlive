@@ -1,8 +1,86 @@
-// https://snipp.ru/html-css/rating-css
 @import "../../index";
+
+.form_review {
+  background: blueviolet;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  &__error {
+    @include text-small;
+    visibility: hidden;
+    color: $my--error;
+  }
+  &__submit_holder {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: $small-px;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    &__answer {
+      display: none;
+      flex-direction: row;
+      align-items: center;
+      gap: $small-px;
+      margin: 0;
+      &__text {
+        @include text-small;
+        color: $my--small-text;
+      }
+    }
+  }
+}
+
+// http://jsfiddle.net/NZKWH/
+
+.form__input_holder__text {
+  @include text-plain-no-wrap;
+  width:100% !important;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  //height: 85px;
+
+  .textarea_behavior{
+    border:0;
+    width:100%;
+    word-wrap: break-word;
+    background: $my--input-fill;
+
+    div {
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      padding: 0;
+    }
+  }
+  textarea{
+    width: 100% !important;
+    //overflow:hidden;
+    overflow-y: scroll;
+    max-height: 400px;
+    resize: none;
+    @include text-plain-no-wrap;
+    font-family: inherit;
+    height: 85px;
+  }
+  .comment_text_hidden{
+    width: 100% !important;
+    position: relative;
+  }
+  #comment_text_hidden {
+     visibility:hidden;
+    @include text-plain-no-wrap;
+     position: absolute;
+    color: green;
+   }
+}
+
+  // https://snipp.ru/html-css/rating-css
 .rating-area {
   overflow: hidden;
-  width: 265px;
+  width: max-content;
   margin: 0 auto;
 }
 .rating-area:not(:checked) > input {
@@ -10,11 +88,11 @@
 }
 .rating-area:not(:checked) > label {
   float: right;
-  width: 42px;
+  width: 28px;
   padding: 0;
   cursor: pointer;
-  font-size: 32px;
-  line-height: 32px;
+  font-size: 28px;
+  line-height: 28px;
   color: $my--input-border;
 }
 .rating-area:not(:checked) > label:before {
