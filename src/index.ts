@@ -3,7 +3,7 @@ import HeaderView from './view/header';
 import { router } from './router';
 
 import './drop_default.css';
-import './index_new.scss'
+import './index.scss';
 
 const main = () => {
 	const contentPlace: HTMLDivElement = document.createElement('div');

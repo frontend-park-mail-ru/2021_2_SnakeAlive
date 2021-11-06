@@ -1,0 +1,36 @@
+@import "../../index";
+
+.sight_page {
+  width: 100%;
+  display: grid;
+  grid-template: "ml l-t l-t r-b r-b  mr"  / 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+  padding: 10px 0;
+  align-items: flex-start;
+}
+
+.sight_page__left_col {
+  grid-area: l-t;
+  h2{
+    @include text-local-header;
+  }
+  div {
+    margin-bottom: $small-px;
+  }
+}
+
+.sight_page__right_col {
+  grid-area: r-b;
+}
+
+.sight_page__photo_holder_place {
+  width: 100%;
+  height: auto;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+}

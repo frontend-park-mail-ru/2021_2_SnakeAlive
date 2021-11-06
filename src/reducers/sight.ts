@@ -37,14 +37,6 @@ export default class SightReducer {
 			.catch((error: Error) => {
 				dispatcher.notify(initErrorPageRequest(error));
 			});
-		// this.#getReviews(ID)
-		// 	.then((sight: Sight) => {
-		// 		storage.storeSight(sight);
-		// 		dispatcher.notify(newGetSightReviewResult());
-		// 	})
-		// 	.catch((error: Error) => {
-		// 		dispatcher.notify(newGetSightReviewError(error));
-		// 	});
 	};
 
 	#getSight = (id: string): Promise<Sight> =>

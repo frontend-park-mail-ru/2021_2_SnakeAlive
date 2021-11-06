@@ -1,0 +1,39 @@
+// https://snipp.ru/html-css/rating-css
+@import "../../index";
+.rating-area {
+  overflow: hidden;
+  width: 265px;
+  margin: 0 auto;
+}
+.rating-area:not(:checked) > input {
+  display: none;
+}
+.rating-area:not(:checked) > label {
+  float: right;
+  width: 42px;
+  padding: 0;
+  cursor: pointer;
+  font-size: 32px;
+  line-height: 32px;
+  color: $my--input-border;
+}
+.rating-area:not(:checked) > label:before {
+  content: '✦';
+}
+.rating-area > input:checked ~ label {
+  color: $green;
+}
+.rating-area:not(:checked) > label:hover,
+.rating-area:not(:checked) > label:hover ~ label {
+  color: $green;
+}
+.rating-area > input:checked + label:hover,
+.rating-area > input:checked + label:hover ~ label,
+.rating-area > input:checked ~ label:hover,
+.rating-area > input:checked ~ label:hover ~ label,
+.rating-area > label:hover ~ input:checked ~ label {
+  color: $green;
+}
+.rate-area > label:active {
+  position: relative;
+}

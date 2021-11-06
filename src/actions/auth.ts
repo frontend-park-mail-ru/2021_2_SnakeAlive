@@ -22,7 +22,7 @@ const submitLoginData = (email: string, password: string): IEvent =>
 		},
 	};
 
-const setValidationErrorLogin = (data: Map<string, string>): IEvent =>
+const setValidationErrorLogin = (data: Record<string, string>[]): IEvent =>
 	<IEvent>{
 		key: EventType.SET_VALIDATION_ERROR_LOGIN,
 		metadata: <ValidationErrData>{
@@ -48,7 +48,7 @@ const submitRegisterData = (
 		},
 	};
 
-const setValidationErrorRegister = (data: Map<string, string>): IEvent =>
+const setValidationErrorRegister = (data: Record<string, string>[]): IEvent =>
 	<IEvent>{
 		key: EventType.SET_VALIDATION_ERROR_REGISTER,
 		metadata: <ValidationErrData>{

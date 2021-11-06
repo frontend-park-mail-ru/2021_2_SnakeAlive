@@ -2,12 +2,14 @@ import { Empty, EventType, IEvent, File } from '@/dispatcher';
 import { UpdateProfile } from '@/dispatcher/metadata_types';
 import { Form } from '@/components';
 
-const newGetProfileRequest = (): IEvent => <IEvent>{
+const newGetProfileRequest = (): IEvent =>
+	<IEvent>{
 		key: EventType.GET_PROFILE_REQUEST,
 		metadata: <Empty>{},
 	};
 
-const newGetProfileResponse = (): IEvent => <IEvent>{
+const newGetProfileResponse = (): IEvent =>
+	<IEvent>{
 		key: EventType.GET_PROFILE_RESPONSE,
 		metadata: <Empty>{},
 	};
@@ -17,7 +19,8 @@ const newUpdateProfileMetadataRequest = (
 	surname: string,
 	email: string,
 	password: string
-): IEvent => <IEvent>{
+): IEvent =>
+	<IEvent>{
 		key: EventType.UPDATE_PROFILE_METADATA_REQUEST,
 		metadata: <UpdateProfile>{
 			name,
@@ -27,7 +30,8 @@ const newUpdateProfileMetadataRequest = (
 		},
 	};
 
-const newUpdateProfilePhotoRequest = (file: FormData): IEvent => <IEvent>{
+const newUpdateProfilePhotoRequest = (file: FormData): IEvent =>
+	<IEvent>{
 		key: EventType.UPDATE_PROFILE_PHOTO_REQUEST,
 		metadata: <File>{
 			data: file,

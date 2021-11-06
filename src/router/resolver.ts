@@ -79,18 +79,14 @@ export const notifier = (path: URL): void /* IEvent */ => {
 		// 	return initRegisterPageRequest();
 		// 	break;
 		// }
-		// case pathsURLfrontend.sight: {
-		// 	tryGetIdParam(path, initSightPageRequest, newGetSightRequest);
-		// 	break;
-		// }
 		case pathsURLfrontend.sight: {
-			// tryGetIdParam(path, initSightPageRequest);
 			const id: number | null = getIDParamDispatchError(path);
 			if (id == null) {
 				break;
 			}
 
 			dispatcher.notify(initSightPageRequest());
+			dispatcher.notify(newGetSightRequest(String(id)));
 			dispatcher.notify(newGetReviewsRequest(id));
 			break;
 		}

@@ -31,7 +31,7 @@ export interface RegisterData {
 }
 
 export interface ValidationErrData {
-	data: Map<string, string>;
+	data: Record<string, string>[];
 }
 
 export interface UserMinData {

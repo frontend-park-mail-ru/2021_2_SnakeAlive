@@ -1,7 +1,7 @@
 import { DataType, dispatcher, EventType, LoginData, ValidationErrData } from '@/dispatcher';
-import { newSetEmptyHeaderRequest } from '../actions';
+import { newSetEmptyHeaderRequest, newSetMainHeaderStrongRequest, setValidationErrorLogin } from '../actions';
 import { sendGetJSONRequest, sendPostJSONRequest } from '@/http';
-import { backendEndpoint, countrySights, loginURI, sightURI } from '@/constants';
+import { backendEndpoint, countrySights, loginURI, pathsURLfrontend, sightURI } from '@/constants';
 import { router } from '@/router';
 
 export default class LoginReducer {
@@ -12,19 +12,28 @@ export default class LoginReducer {
 	};
 
 	login = (input: LoginData) => {
-		// let result: Record<string, string>;
 		let result: ValidationErrData;
-		sendPostJSONRequest(backendEndpoint + loginURI, input).then(response => {
+
+		sendPostJSONRequest(backendEndpoint + loginURI, input)
+			.then(response => {
 			if (response.status === 400) {
-				result.data.set('email', 'неверный пароль');
+				result.data.push({'email': 'неверный пароль'});
+				return Promise.reject();
 			}
 			if (response.status === 404) {
-				result.data.set('password', 'нет такого пользователя');
+				result.data.push({'password': 'нет такого пользователя'});
+				return Promise.reject();
 			}
 			if (response.status === 400) {
 				return Promise.reject(new Error('серверная валидация. сделать другую обработку ошибок'));
 			}
 			return Promise.resolve(response);
+		}).catch(() =>
+			dispatcher.notify(setValidationErrorLogin(result.data))
+		).then(() => {
+
+			dispatcher.notify(newSetMainHeaderStrongRequest());
+			router.popstate();
 		});
 	};
 }
