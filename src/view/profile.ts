@@ -6,7 +6,6 @@ import { storage } from '@/storage';
 import { Profile } from '@/models/profile';
 import profileTemplate from '@/templates/profile.handlebars';
 
-
 export default class ProfileView extends BasicView {
 	#tokens: Token[];
 
@@ -35,8 +34,8 @@ export default class ProfileView extends BasicView {
 
 	renderProfile = (metadata: DataType): void => {
 		const profile: Profile = storage.getProfile();
-		console.log(profile)
-		this.setView(profileTemplate(profile))
+		console.log(profile);
+		this.setView(profileTemplate(profile));
 	};
 
 	#uploadFile = (): void => {

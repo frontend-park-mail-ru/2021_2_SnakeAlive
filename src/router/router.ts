@@ -10,8 +10,8 @@ class Router {
 	go = (_path: string, _data?: string) => {
 		if (window.location.pathname === _path) return;
 		const url = new URL(_path, window.location.href);
-		if ( _data ) {
-			url.searchParams.append('id', _data)
+		if (_data) {
+			url.searchParams.append('id', _data);
 		}
 		notifier(url);
 		this.#pushHistoryState(_path, { _data });
