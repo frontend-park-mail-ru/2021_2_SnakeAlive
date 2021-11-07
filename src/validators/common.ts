@@ -24,7 +24,7 @@ export interface ValidationElement {
 	errorSetters: ErrorSetter[];
 }
 
-function validateElements (elements: ValidationElement[]): boolean  {
+function validateElements(elements: ValidationElement[]): boolean {
 	let result = true;
 
 	elements.forEach((elem: ValidationElement) => {
