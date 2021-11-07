@@ -24,7 +24,7 @@ export interface ValidationElement {
 	errorSetters: ErrorSetter[];
 }
 
-const validateElements = (elements: ValidationElement[]): boolean => {
+function validateElements (elements: ValidationElement[]): boolean  {
 	let result = true;
 
 	elements.forEach((elem: ValidationElement) => {
@@ -48,6 +48,6 @@ const validateElements = (elements: ValidationElement[]): boolean => {
 	});
 
 	return result;
-};
+}
 
-// export { validateNotEmpty, validateLength, validateEqual, validateElements };
+export { validateNotEmpty, validateLength, validateEqual, validateElements };
