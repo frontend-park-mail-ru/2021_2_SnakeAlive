@@ -1,5 +1,7 @@
 import {
 	GetProfileResponse,
+	Profile,
+	ProfileMetadata,
 	UpdateProfileMetadataRequest,
 	UpdateProfileMetadataResponse,
 } from '@/models/profile';
@@ -13,6 +15,7 @@ import {
 import { storage } from '@/storage';
 import { DataType, dispatcher, EventType, File, Token, UpdateProfile } from '@/dispatcher';
 import { initErrorPageRequest, newGetProfileRequest, newGetProfileResponse } from '@/actions';
+import { UserMetadata } from '@/models';
 
 export default class ProfileReducer {
 	#tokens: Token[];
@@ -37,14 +40,23 @@ export default class ProfileReducer {
 	};
 
 	getProfile = (metadata: DataType): void => {
-		this.#sendGetProfile()
-			.then((response: GetProfileResponse) => {
-				storage.storeProfile(adaptGetProfileResponse(response));
-				dispatcher.notify(newGetProfileResponse());
-			})
-			.catch((error: Error) => {
-				dispatcher.notify(initErrorPageRequest(error));
-			});
+		// this.#sendGetProfile()
+		// 	.then((response: GetProfileResponse) => {
+		// 		storage.storeProfile(adaptGetProfileResponse(response));
+		// 		dispatcher.notify(newGetProfileResponse());
+		// 	})
+		// 	.catch((error: Error) => {
+		// 		dispatcher.notify(initErrorPageRequest(error));
+		// 	});
+
+		storage.storeProfile(<Profile>{
+			profileImage: 'https://pbs.twimg.com/profile_images/915168817675931648/W9tXUyfM_400x400.jpg',
+			meta: <ProfileMetadata>{
+				name: 'Никита',
+				surname: 'Черных',
+			},
+		});
+		dispatcher.notify(newGetProfileResponse());
 	};
 
 	updateProfileMetadata = (metadata: UpdateProfile): void => {

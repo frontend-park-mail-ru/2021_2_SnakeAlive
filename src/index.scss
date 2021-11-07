@@ -114,3 +114,199 @@ input {
   }
 }
 
+
+.profile {
+  background-color: $white;
+  display: grid;
+
+  @media (max-width: 320px) {
+    height: 110px;
+    padding: 1px;
+    margin-top: 4px;
+
+    grid-template-areas: "photo name_holder"
+                          "btn_block btn_block";
+    grid-template-rows: 50px 50px;
+    grid-template-columns: 50px 1fr;
+    row-gap: 4px;
+  }
+
+  @media (min-width: 321px) and (max-width: 960px) {
+    height: 200px;
+    padding: 10px;
+    margin: 10px 60px 10px;
+    border-radius: 15px;
+
+    grid-template-areas: "photo name_holder btn_block";
+    grid-template-rows: 200px;
+    grid-template-columns: 200px 1fr 200px;
+    row-gap: 3px;
+  }
+
+  @media (min-width: 961px) {
+    border-radius: 15px;
+    height: 200px;
+    margin: 20px 100px 10px;
+
+    grid-template-areas: "photo name_holder btn_block";
+    grid-template-rows: 200px;
+    grid-template-columns: 200px 1fr 200px;
+    row-gap: 3px;
+  }
+
+  &__photo {
+    grid-area: photo;
+    justify-content: center;
+    align-items: center;
+
+    @media (max-width: 320px) {
+      max-height: 50px;
+      max-width: 50px;
+      border-radius: 3px;
+    }
+
+    @media (min-width: 321px) and (max-width: 960px) {
+      display: flex;
+      justify-content: center;
+    }
+
+    @media (min-width: 961px){
+      display: flex;
+      justify-content: center;
+    }
+
+    img{
+      border-radius: 50%;
+
+      @media (max-width: 320px) {
+        max-height: 50px;
+        max-width: 50px;
+      }
+
+      @media (min-width: 321px) and (max-width: 960px) {
+        width: 60%;
+      }
+
+      @media (min-width: 961px) {
+        width: 60%;
+      }
+    }
+  }
+
+  &__name-holder {
+    grid-area: name_holder;
+    text-align: left;
+    padding: 4px;
+
+    @media (max-width: 320px) {
+      padding-left: 10px;
+      @include text-small;
+    }
+
+    @media (min-width: 321px) and (max-width: 960px) {
+      padding-left: 15px;
+      @include text-local-header;
+
+      display: flex;
+      align-items: center;
+    }
+
+    @media (min-width: 961px) {
+      padding-left: 15px;
+      @include text-local-header;
+
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &__btn-block {
+    display: grid;
+    grid-area: btn_block;
+
+    @media (max-width: 320px) {
+      grid-template-areas: "edit-btn"
+                          "close-btn";
+      grid-template-rows: 25px 25px;
+      grid-template-columns: 1fr;
+      grid-gap: 2px;
+    }
+
+    @media (min-width: 321px) and (max-width: 960px) {
+      grid-template-areas:"edit-btn"
+                          "close-btn"
+                          ;
+      grid-template-rows: 100px 100px;
+      grid-template-columns: 150px;
+      grid-gap: 2px;
+    }
+
+    @media (min-width: 961px) {
+      grid-template-areas:"edit-btn"
+                          "close-btn"
+    ;
+      grid-template-rows: 100px 100px;
+      grid-template-columns: 150px;
+      grid-gap: 2px;
+    }
+  }
+
+  &__edit-btn {
+    background-color: $my--button-fill;
+    color: $my--button-text;
+    grid-area: edit-btn;
+
+    @media (max-width: 320px) {
+      @include text-small;
+      border-radius: 3px;
+    }
+
+    @media (min-width: 321px) and (max-width: 960px) {
+      height: 50px;
+      margin-top: 50px;
+      @include text-button;
+      border-radius: 5px;
+    }
+
+    @media (min-width: 961px) {
+      height: 30px;
+      margin-top: 70px;
+      @include text-button;
+      border-radius: 5px;
+    }
+
+    .btn:hover {
+      transition: 250ms;
+      background-color: $my--button-fill-hover;
+    }
+  }
+
+  &__close-btn {
+    background-color: $my--button-fill;
+    color: $my--button-text;
+    grid-area: close-btn;
+
+    @media (max-width: 320px) {
+      @include text-small;
+      border-radius: 3px;
+    }
+
+    @media (min-width: 321px) and (max-width: 960px) {
+      height: 50px;
+      @include text-button;
+      border-radius: 5px;
+    }
+
+    @media (min-width: 961px){
+      height: 30px;
+      margin-top: 10px;
+      @include text-button;
+      border-radius: 5px;
+    }
+
+    .btn:hover {
+      transition: 250ms;
+      background-color: $my--button-fill-hover;
+    }
+  }
+}

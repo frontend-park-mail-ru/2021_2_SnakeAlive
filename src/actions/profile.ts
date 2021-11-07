@@ -1,6 +1,5 @@
 import { Empty, EventType, IEvent, File } from '@/dispatcher';
 import { UpdateProfile } from '@/dispatcher/metadata_types';
-import { Form } from '@/components';
 
 const newGetProfileRequest = (): IEvent =>
 	<IEvent>{
