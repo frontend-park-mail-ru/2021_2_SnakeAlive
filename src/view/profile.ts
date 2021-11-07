@@ -16,6 +16,7 @@ import {
 
 export default class ProfileView extends BasicView {
 	#tokens: Token[];
+
 	#isProfile: boolean;
 
 	constructor() {

@@ -1,14 +1,14 @@
-const validateNotEmpty = (value: string): boolean => {
+function validateNotEmpty(value: string): boolean {
 	return !(value === '');
-};
+}
 
-const validateLength = (value: string, length: number): boolean => {
+function validateLength(value: string, length: number): boolean {
 	return value.length >= length;
-};
+}
 
-const validateEqual = (first: string, second: string) => {
+function validateEqual(first: string, second: string) {
 	return first === second;
-};
+}
 
 export interface ErrorSetter {
 	setError(): void;
@@ -25,14 +25,14 @@ export interface ValidationElement {
 }
 
 const validateElements = (elements: ValidationElement[]): boolean => {
-	let result: boolean = true;
+	let result = true;
 
 	elements.forEach((elem: ValidationElement) => {
 		let validationResult = true;
 
-		elem.validators.forEach(
-			(validator: ValidationCallback) => (validationResult = validationResult && validator())
-		);
+		elem.validators.forEach((validator: ValidationCallback) => {
+			validationResult = validationResult && validator();
+		});
 
 		if (!validationResult) {
 			elem.errorSetters.forEach((setter: ErrorSetter) => {
@@ -50,4 +50,4 @@ const validateElements = (elements: ValidationElement[]): boolean => {
 	return result;
 };
 
-export { validateNotEmpty, validateLength, validateEqual, validateElements };
+// export { validateNotEmpty, validateLength, validateEqual, validateElements };
