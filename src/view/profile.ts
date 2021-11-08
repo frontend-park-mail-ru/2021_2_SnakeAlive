@@ -155,7 +155,7 @@ export default class ProfileView extends BasicView {
 				surnameInput.getValue(),
 				'',
 				passInput.getValue(),
-				'',
+				''
 			)
 		);
 	};
