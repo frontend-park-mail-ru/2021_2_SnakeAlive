@@ -1,10 +1,8 @@
 @import "../../index";
 
 .form_review {
-  background: blueviolet;
   display: flex;
   flex-direction: column;
-  text-align: left;
   &__error {
     @include text-small;
     visibility: hidden;
@@ -29,6 +27,29 @@
         color: $my--small-text;
       }
     }
+  }
+  &__string {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: $small-px;
+  }
+  &__input_holder {
+    > div {
+      padding-bottom: $small-px / 2;
+    }
+    margin-bottom: $small-px;
+  }
+  input, textarea {
+    @include text-plain-no-wrap;
+    padding: 6px;
+  }
+  label {
+    @include text-plain-no-wrap;
+  }
+  h2 {
+    @include text-small;
+    margin-bottom: $small-px;
+    color: $my--small-text;
   }
 }
 
@@ -73,7 +94,6 @@
      visibility:hidden;
     @include text-plain-no-wrap;
      position: absolute;
-    color: green;
    }
 }
 
@@ -81,18 +101,18 @@
 .rating-area {
   overflow: hidden;
   width: max-content;
-  margin: 0 auto;
+  margin: 0 $small-px;
 }
 .rating-area:not(:checked) > input {
   display: none;
 }
 .rating-area:not(:checked) > label {
   float: right;
-  width: 28px;
+  width: $large-px;
   padding: 0;
   cursor: pointer;
-  font-size: 28px;
-  line-height: 28px;
+  font-size: $large-px;
+  line-height: $large-px;
   color: $my--input-border;
 }
 .rating-area:not(:checked) > label:before {

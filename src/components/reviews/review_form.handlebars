@@ -1,27 +1,35 @@
 <form id="review_creator" class="form_review">
-
+	<h2>Оставьте свой отзыв</h2>
 	<div id="active_form_area">
 
-	<div class="form__input_holder">
-		<label for="title">Кратко</label>
+	<div class="form_review__input_holder">
+		<div>
+<!--			<img src="{{imgTitle}}" class="icon">-->
+			<label for="title">Кратко</label>
+		</div>
 		<input type="text" id="title" name="title" class="form__input"/>
 	</div>
-
-	<div class="rating-area">
-		<input type="radio" id="star-5" name="rating" value="5">
-		<label for="star-5" title="Оценка «5»"></label>
-		<input type="radio" id="star-4" name="rating" value="4">
-		<label for="star-4" title="Оценка «4»"></label>
-		<input type="radio" id="star-3" name="rating" value="3">
-		<label for="star-3" title="Оценка «3»"></label>
-		<input type="radio" id="star-2" name="rating" value="2">
-		<label for="star-2" title="Оценка «2»"></label>
-		<input type="radio" id="star-1" name="rating" value="1">
-		<label for="star-1" title="Оценка «1»"></label>
+	<div class="form_review__string">
+		<img src="{{imgRating}}" class="icon">
+		<div class="rating-area form_review__string__rating_area">
+			<input type="radio" id="star-5" name="rating" value="5">
+			<label for="star-5" title="Оценка «5»"></label>
+			<input type="radio" id="star-4" name="rating" value="4">
+			<label for="star-4" title="Оценка «4»"></label>
+			<input type="radio" id="star-3" name="rating" value="3">
+			<label for="star-3" title="Оценка «3»"></label>
+			<input type="radio" id="star-2" name="rating" value="2">
+			<label for="star-2" title="Оценка «2»"></label>
+			<input type="radio" id="star-1" name="rating" value="1">
+			<label for="star-1" title="Оценка «1»"></label>
+		</div>
 	</div>
 
-	<div class="form__input_holder">
-		<label for="msg">Подробно</label>
+	<div class="form_review__input_holder">
+		<div>
+<!--			<img src="{{imgText}}" class="icon">-->
+			<label for="comment_text">Подробно</label>
+		</div>
 		<div class="form__input_holder__text">
 			<div class="comment_text_hidden">
 				<div class="textarea_behavior" id="comment_text_hidden">

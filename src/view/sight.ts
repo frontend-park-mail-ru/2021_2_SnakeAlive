@@ -1,6 +1,6 @@
 import BasicView from '@/view/view';
 import { dispatcher, EventType, Token } from '@/dispatcher';
-import { newSetMainHeaderRequest } from '@/actions';
+import { createReviewForm, newSetMainHeaderRequest } from '@/actions';
 import { storage } from '@/storage';
 import { createSightTemplate, initReviewForm } from '@/components';
 
@@ -22,7 +22,7 @@ export default class SightView extends BasicView {
 	#setSight = (metadata: EventType): void => {
 		dispatcher.notify(newSetMainHeaderRequest());
 		this.setView(createSightTemplate(storage.getSight()));
-		initReviewForm();
+  	dispatcher.notify(createReviewForm());
 
 		// this.setView(`<div class='full-page'>${JSON.stringify(storage.getSight(), null, 4)}</div>`);
 	};

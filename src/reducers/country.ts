@@ -41,13 +41,14 @@ export default class CountryReducer {
 		});
 		dispatcher.notify(newSetMainHeaderRequest());
 		dispatcher.notify(newInitCountryResponse());
-		dispatcher.notify(newGetCountryCardsRequest(country.name, <string>country.ID));
+		// dispatcher.notify(newGetCountryCardsRequest(country.name, <string>country.ID));
 	};
 
 	getCountryCards = (metadata: DataType): void => {
 		const data = <UUID>metadata;
 		this.#getCards(<string>data.ID)
 			.then((cards: CountryCardResponse[]) => {
+				console.log("country reducer : " ,cards);
 				storage.storeCountryCards(adaptGetCards(cards));
 				dispatcher.notify(newGetCountryCardsResult());
 			})

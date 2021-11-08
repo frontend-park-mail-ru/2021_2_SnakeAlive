@@ -24,11 +24,6 @@ export const createSightTemplate = (data: Sight): string => {
 	dataCopied.testPhoto = testPhoto;
 	parent.innerHTML = sightTemplate(dataCopied);
 
-	const formPlace = parent.querySelector('#sight_page__review_form_place');
-	if (formPlace !== null) {
-		formPlace.innerHTML = form();
-	}
-
 	// тут еще просмотр фотографий нужно организовать
 
 	return parent.innerHTML;

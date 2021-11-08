@@ -29,7 +29,7 @@ class CountryCardsHolderView extends BasicView {
 	#tokens: Token[];
 
 	constructor() {
-		super('.card__grid');
+		super('#card-grid-wrapper');
 
 		this.#tokens = [];
 	}
@@ -52,7 +52,9 @@ class CountryCardsHolderView extends BasicView {
 	};
 
 	renderCountryCards = (metadata: DataType): void => {
-		this.setView(sights(storage.getCountryCards()));
+		console.log(storage.getCountryCards());
+		this.setView(storage.getCountryCards().toString());
+		// this.setView(sights(storage.getCountryCards()));
 	};
 
 	renderErrorMessage = (metadata: DataType): void => {

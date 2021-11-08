@@ -4,7 +4,7 @@ import { initErrorPageRequest, newCreateReviewResponse, newGetReviewsResponse } 
 import { storage } from '@/storage';
 import { CreateReview, DataType, dispatcher, EventType, NumID, Token } from '@/dispatcher';
 import { CreateReviewRequest, CreateReviewResponse, Review } from '@/models/review';
-import { adaptCreateReviewRequest, adaptCreateReviewResponse } from '@/adapters/review';
+import { adaptCreateReviewRequest, adaptCreateReviewResponse, adoptReviewBeforePost } from '@/adapters/review';
 import { CreateReviewForm } from '@/dispatcher/metadata_types';
 
 export default class ReviewReducer {
@@ -18,8 +18,8 @@ export default class ReviewReducer {
 		this.#tokens = [
 			dispatcher.register(EventType.GET_REVIEWS_REQUEST, this.getReviews),
 			dispatcher.register(EventType.DELETE_REVIEW_REQUEST, this.deleteReview),
-			// dispatcher.register(EventType.CREATE_REVIEW_REQUEST, this.createReview),
-			dispatcher.register(EventType.CREATE_REVIEW_FORM, this.createReview),
+			// dispatcher.register(EventType.CREATE_REVIEW_REQUEST, this.createReview),EventType.GET_PROFILE_RESPONSE
+			dispatcher.register(EventType.CREATE_REVIEW_FORM_RESPONSE, this.createReview),
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
 		];
 	};
@@ -38,7 +38,7 @@ export default class ReviewReducer {
 				dispatcher.notify(newGetReviewsResponse());
 			})
 			.catch((error: Error) => {
-				dispatcher.notify(initErrorPageRequest(error));
+				console.log(error);
 			});
 	};
 
@@ -60,7 +60,7 @@ export default class ReviewReducer {
 				dispatcher.notify(newCreateReviewResponse(position));
 			})
 			.catch((error: Error) => {
-				dispatcher.notify(initErrorPageRequest(error));
+				console.log("something went wrong during POST /review", error);
 			});
 	};
 
@@ -89,7 +89,7 @@ export default class ReviewReducer {
 		});
 
 	#sendCreateReview = (request: CreateReviewRequest): Promise<CreateReviewResponse> =>
-		sendPostJSONRequest(backendEndpoint + reviewURI, request)
+		sendPostJSONRequest(backendEndpoint + reviewURI, adoptReviewBeforePost(request))
 			.then(response => {
 				if (response.status === 404) {
 					return Promise.reject(new Error('На сайте нет такой страницы'));

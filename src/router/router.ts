@@ -18,13 +18,11 @@ class Router {
 	};
 
 	// нужен если на странице делать кнопку назад
-	popstate = (): void => {
-		const url = new URL(window.location.href);
-		const event = notifier(url);
-		if (event !== undefined) {
-			dispatcher.notify(event);
-		}
-	};
+	// popstate = (): void => {
+	// 	window.history.back();
+	// 	const url = new URL(window.location.href);
+	// 	notifier(url);
+	// };
 
 	#pushHistoryState = (_path: string, _data?: object): void => {
 		window.history.pushState(_data, _path, _path);

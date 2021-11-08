@@ -61,7 +61,8 @@ import {
 	newDeleteReviewRequest,
 	newCreateReviewRequest,
 	newCreateReviewResponse,
-	newCreateReviewForm
+	newCreateReviewFormResponse,
+	createReviewForm
 } from './review';
 
 // рефактор need
@@ -117,5 +118,6 @@ export {
 	newDeleteReviewRequest,
 	newCreateReviewRequest,
 	newCreateReviewResponse,
-	newCreateReviewForm
+	newCreateReviewFormResponse,
+	createReviewForm
 };

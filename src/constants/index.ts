@@ -1,4 +1,4 @@
-import { backendEndpoint } from './endpoints';
+import { backendEndpoint, backendFileEndpoint } from './endpoints';
 import {
 	loginURI,
 	registerURI,
@@ -17,6 +17,7 @@ export {
 	sightURI,
 	tripURI,
 	backendEndpoint,
+	backendFileEndpoint,
 	loginURI,
 	registerURI,
 	russiaFormName,

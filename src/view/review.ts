@@ -3,6 +3,9 @@ import { DataType, dispatcher, EventType, NumID, Token } from '@/dispatcher';
 import { newCreateReviewRequest, newDeleteReviewRequest } from '@/actions';
 import { storage } from '@/storage';
 import { Review } from '@/models/review';
+import { initReviewForm } from '@/components';
+import { createReviewForm } from '@/components/reviews/review_form';
+import { UserMetadata } from '@/models';
 
 export class ReviewsView extends BasicView {
 	#tokens: Token[];
@@ -17,6 +20,7 @@ export class ReviewsView extends BasicView {
 		this.#tokens = [
 			dispatcher.register(EventType.GET_REVIEWS_RESPONSE, this.renderReviews),
 			dispatcher.register(EventType.CREATE_REVIEW_RESPONSE, this.appendReview),
+			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
 		];
 	};
 
@@ -58,13 +62,42 @@ export class ReviewsView extends BasicView {
 }
 
 export class ReviewCreateView extends BasicView {
+	#tokens: Token[];
+
 	constructor() {
-		super('reviews__input');
+		super('#sight_page__review_form_place');
+
+		this.#tokens = [];
 	}
 
 	init = (): void => {
-		// choose if user was logged and create redner here
+		this.#tokens = [
+			dispatcher.register(EventType.CREATE_REVIEW_FORM, this.createFormIfLogged),
+			dispatcher.register(EventType.SET_MAIN_HEADER_LOGGED_RESPONSE, this.createFormIfLogged),
+			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
+		];
 	};
+
+	createFormIfLogged = () => {
+		console.log("in ReviewCreateView");
+		if (storage.getUserMetadata().name !== undefined) {
+			console.log("in if, got name ", storage.getUserMetadata().name);
+			this.#createForm();
+		}
+	}
+
+	destroy = (): void => {
+		this.#tokens.forEach(element => {
+			dispatcher.unregister(element);
+		});
+
+		this.setEmpty();
+	};
+
+	#createForm = () => {
+		this.setView(createReviewForm());
+		initReviewForm();
+	}
 
 	// #createReview = (): void => {
 	// 	// как узнать про placeID ???

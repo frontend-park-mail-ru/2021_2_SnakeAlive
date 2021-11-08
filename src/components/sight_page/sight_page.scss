@@ -8,17 +8,39 @@
   grid-row-gap: 10px;
   padding: 10px 0;
   align-items: flex-start;
-}
 
-.sight_page__left_col {
-  grid-area: l-t;
-  > h2{
-    @include text-local-header;
+  &__left_col {
+    grid-area: l-t;
+
+    > h2{
+      @include text-local-header;
+    }
+    > div {
+      margin-bottom: $small-px;
+    }
+    margin-bottom: - $small-px;
+
+    &__info {
+      &__country {
+        //margin-top: $small-px;
+        //@include text-small;
+        //color: $my--small-text;
+      }
+    }
+    &__description {
+      &__title {
+        @include text-small;
+        color: $my--small-text;
+        margin-bottom: $small-px;
+      }
+    }
+    &__review_form_place {
+      > h2 {
+        @include text-small;
+        color: $my--small-text;
+      }
+    }
   }
-  > div {
-    margin-bottom: $small-px;
-  }
-  margin-bottom: - $small-px;
 }
 
 .sight_page__right_col {

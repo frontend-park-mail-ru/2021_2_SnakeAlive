@@ -1,9 +1,13 @@
 import { dispatcher } from '@/dispatcher';
-import { newCreateReviewForm, setValidationErrorLogin } from '@/actions';
-import { tokContexts } from 'acorn';
+import { newCreateReviewFormResponse, setValidationErrorLogin } from '@/actions';
+import imgRating from '../../../image/icon/rating.svg';
+import reviewFormTemplate from './review_form.handlebars';
 
-const setTextAreaResizeParams
-	= (textId: string, hiddenTextId: string, maxHeight: number): ()=>void => {
+const setTextAreaResizeParams = (
+	textId: string,
+	hiddenTextId: string,
+	maxHeight: number
+): (() => void) => {
 	const area = <HTMLTextAreaElement>document.getElementById(textId);
 	const areaHidden = document.getElementById(hiddenTextId);
 	if (area === null || areaHidden === null) {
@@ -15,56 +19,56 @@ const setTextAreaResizeParams
 		area.value
 			.replace(/[<>]/g, '_')
 			.split('\n')
-			.forEach((s) => {
-				text = `${  text  }<div>${  s.replace(/\s\s/g, ' &nbsp;')  }&nbsp</div>`;
-			} );
+			.forEach(s => {
+				text = `${text}<div>${s.replace(/\s\s/g, ' &nbsp;')}&nbsp</div>`;
+			});
 		areaHidden.innerHTML = text;
 		let height = areaHidden.offsetHeight;
 		height = Math.max(minHeight, height);
 		height = Math.min(maxHeight, height);
-		area.style.height = `${  height  }px`;
+		area.style.height = `${height}px`;
 	};
-}
+};
 
 const hideConfirm = (): void => {
 	const answerPlace = document.getElementById('form__submit_holder__answer');
 	if (answerPlace !== null) {
 		answerPlace.style.display = 'none';
 
-		const formArea =document.getElementById('active_form_area');
+		const formArea = document.getElementById('active_form_area');
 		if (formArea !== null) {
 			formArea.removeEventListener('click', hideConfirm, false);
 		}
 	}
-}
+};
 
 const titles: string[] = [
-	"Одна звезда: ужасно",
-	"Две звезды: плохо",
-	"Три звезды: средне",
-	"Четыре звезды: неплохо",
-	"Пять звезд: прекрасно"
+	'Одна звезда: ужасно',
+	'Две звезды: плохо',
+	'Три звезды: средне',
+	'Четыре звезды: неплохо',
+	'Пять звезд: прекрасно',
 ];
 const getTitleFromRating = (rating: number): string => {
-	return titles[rating-1];
-}
+	return titles[rating - 1];
+};
 const checkTitle = (rating: number, title: string): string => {
 	if (titles.includes(title)) {
 		return getTitleFromRating(rating);
 	}
 	return title;
-}
+};
 
 const showConfirm = (title: string, text: string, rating: number) => {
 	const answerPlace = document.getElementById('form__submit_holder__answer');
 	if (answerPlace !== null) {
 		answerPlace.style.display = 'flex';
-		const formArea =document.getElementById('active_form_area');
+		const formArea = document.getElementById('active_form_area');
 		if (formArea !== null) {
 			formArea.addEventListener('click', hideConfirm, false);
 		}
 	}
-	if (title === "") {
+	if (title === '') {
 		const titleElement = <HTMLInputElement>document.getElementById('title');
 		if (titleElement !== null) {
 			titleElement.value = getTitleFromRating(rating);
@@ -75,15 +79,18 @@ const showConfirm = (title: string, text: string, rating: number) => {
 			titleElement.value = checkTitle(rating, titleElement.value);
 		}
 	}
-}
+};
 
 const notify = (title: string, text: string, rating: number) => {
-	dispatcher.notify(newCreateReviewForm(title, text, rating));
-}
+	dispatcher.notify(newCreateReviewFormResponse(title, text, rating));
+};
 
-const validate = (data: FormData, callback: (title: string, text: string, rating: number)=>void): boolean => {
+const validate = (
+	data: FormData,
+	callback: (title: string, text: string, rating: number) => void
+): boolean => {
 	const rating = data.get('rating');
-	if ( rating === null )  {
+	if (rating === null) {
 		return false;
 	}
 
@@ -92,10 +99,10 @@ const validate = (data: FormData, callback: (title: string, text: string, rating
 	if (title) {
 		titleSend = title.toString();
 	} else {
-		titleSend = "";
+		titleSend = '';
 	}
 
-	let textSend = "";
+	let textSend = '';
 	const textArea = <HTMLTextAreaElement>document.getElementById('comment_text');
 	console.log(textArea);
 	if (textArea !== null) {
@@ -107,7 +114,7 @@ const validate = (data: FormData, callback: (title: string, text: string, rating
 
 	callback(titleSend, textSend, Number(rating));
 	return true;
-}
+};
 
 const setValidationError = () => {
 	const errorPlace = document.getElementById('review_error');
@@ -116,11 +123,18 @@ const setValidationError = () => {
 	}
 	errorPlace.style.visibility = 'visible';
 	const ratings = document.getElementsByName('rating');
-	ratings.forEach((rating) =>
-		rating.addEventListener('click', () => {
-		errorPlace.style.visibility = 'hidden';
-	}, false));
-}
+	ratings.forEach(rating =>
+		rating.addEventListener(
+			'click',
+			() => {
+				errorPlace.style.visibility = 'hidden';
+			},
+			false
+		)
+	);
+};
+
+export const createReviewForm = (): string => reviewFormTemplate({ imgRating });
 
 export const initReviewForm = () => {
 	const form = document.querySelector('form');
@@ -130,7 +144,7 @@ export const initReviewForm = () => {
 			event => {
 				event.preventDefault();
 				const data = new FormData(form);
-				if (! validate(data, showConfirm)) {
+				if (!validate(data, showConfirm)) {
 					setValidationError();
 				}
 			},
@@ -138,22 +152,26 @@ export const initReviewForm = () => {
 		);
 		// answer_button
 		const sendButton = document.querySelector('#answer_button');
-		if ( sendButton !== null ) {
-			sendButton.addEventListener('click',			event => {
+		if (sendButton !== null) {
+			sendButton.addEventListener(
+				'click',
+				event => {
 					event.preventDefault();
 					const data = new FormData(form);
-					if (! validate(data, notify)) {
-							setValidationError();
-						}
-					},
-					false )
+					if (!validate(data, notify)) {
+						setValidationError();
+					}
+				},
+				false
+			);
 		}
 		const textArea = document.querySelector('#comment_text');
-		if ( textArea !== null ) {
+		if (textArea !== null) {
 			textArea.addEventListener(
 				'input',
 				setTextAreaResizeParams('comment_text', 'comment_text_hidden', 400),
-				false);
+				false
+			);
 		}
 	}
 };

@@ -50,6 +50,7 @@ export default class HeaderReducer {
 
 	checkIfEmpty = () => {
 		if (this.#state !== state.empty) {
+			console.log("here?77777");
 			dispatcher.notify(newSetEmptyHeaderResponse());
 			console.log(this.#state, ' -> ', state.empty);
 			this.#state = state.empty;
@@ -65,13 +66,18 @@ export default class HeaderReducer {
 						new HttpError('пользователь не авторизован', response.status.toString())
 					);
 				}
-
+				console.log(response.status);
 				return response.json();
 			})
 			.then((data: UserMetadata) => {
 				storage.setUserMetadata(data);
 				dispatcher.notify(newSetMainHeaderLoggedResponse());
 			})
-			.catch(() => dispatcher.notify(newSetMainHeaderBasicResponse()));
+			.catch((err) => {
+				console.log("err ", err.status);
+				if (err.status !== undefined) {
+					dispatcher.notify(newSetMainHeaderBasicResponse());
+				}
+			});
 	};
 }

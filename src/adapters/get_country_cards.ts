@@ -6,13 +6,26 @@ import {
 	CountryCardPhoto,
 } from '../models/index';
 
-export function adaptGetCards(cards: CountryCardResponse[]): TemplateCards {
-	return <TemplateCards>{
+export const adaptGetCards = (cards: CountryCardResponse[]): TemplateCards => {
+	console.log("adaptGetCards", cards.map<CountryCard>((name, i)=>
+		<CountryCard>{
+			name: "",
+			author: "",
+			comment: "",
+			tags: [<CountryCardTag>{
+				name: "",
+			}],
+			imgs: [<CountryCardPhoto>{
+				source: "",
+			}]
+		}
+	));
+	const convertedCards =  <TemplateCards>{
 		cards: cards.map<CountryCard>(
 			(card, cardIndex) =>
 				<CountryCard>{
 					name: `${cardIndex + 1}.${card.name}`,
-					author: card.author,
+					author: card.user_id,
 					comment: card.review,
 					tags: card.tags.map<CountryCardTag>(
 						tag =>
@@ -29,4 +42,6 @@ export function adaptGetCards(cards: CountryCardResponse[]): TemplateCards {
 				}
 		),
 	};
+	console.log("convertedCards ", convertedCards);
+	return  <TemplateCards>{};
 }

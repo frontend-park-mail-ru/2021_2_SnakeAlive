@@ -4,7 +4,7 @@ import { backendEndpoint, sightURI } from '@/constants';
 import { storage } from '@/storage';
 import { initErrorPageRequest } from '@/actions/page';
 import { Sight } from '@/models';
-import { newGetSightResult, newSetMainHeaderRequest } from '@/actions';
+import { createReviewForm, newGetSightResult, newSetMainHeaderRequest } from '@/actions';
 
 export default class SightReducer {
 	#tokens: Token[];
@@ -33,6 +33,7 @@ export default class SightReducer {
 			.then((sight: Sight) => {
 				storage.storeSight(sight);
 				dispatcher.notify(newGetSightResult());
+				// dispatcher.notify(createReviewForm());
 			})
 			.catch((error: Error) => {
 				dispatcher.notify(initErrorPageRequest(error));

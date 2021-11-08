@@ -36,7 +36,8 @@ export default class LoginReducer {
 			.catch(() => dispatcher.notify(setValidationErrorLogin(result.data)))
 			.then(() => {
 				dispatcher.notify(newSetMainHeaderStrongRequest());
-				router.popstate();
+				// надо сделать перейти на страницу откуда пришел, а не на главную
+				router.go(pathsURLfrontend.root);
 			});
 	};
 }

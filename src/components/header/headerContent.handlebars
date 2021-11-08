@@ -3,14 +3,15 @@
 		<img src="{{logo}}" class="header__logo__img"/>
 		<h2 class="header__logo__text">TripAdvisor</h2>
 	</div>
+	{{#if isUser}}
 	<div class='header__button' id='user-block'>
-		{{#if isUser}}
+
 			<div class="circle-img">
 				<img src="{{avatarPath}}"/>
 			</div>
 			<p>{{name}}</p>
 		{{else}}
 			<p>{{btnText}}</p>
-		{{/if}}
 	</div>
+	{{/if}}
 </div>

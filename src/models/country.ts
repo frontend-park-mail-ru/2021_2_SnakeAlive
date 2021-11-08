@@ -4,11 +4,13 @@ interface Country {
 }
 
 interface CountryCardResponse {
+	id: number;
 	name: string;
-	author: string;
-	review: string;
 	tags: string[];
 	photos: string[];
+	// eslint-disable-next-line camelcase
+	user_id: string;
+	review: string;
 }
 
 interface CountryCardTag {

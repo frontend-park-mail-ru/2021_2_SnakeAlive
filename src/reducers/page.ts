@@ -33,7 +33,6 @@ export default class PageReducer {
 	};
 
 	createInitPage = (): void => {
-		// default country id = 0
 		this.createCountryPage();
 	};
 

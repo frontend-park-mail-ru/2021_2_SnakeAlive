@@ -28,6 +28,10 @@ const main = () => {
 	}
 
 	router.start();
+
+	window.onpopstate = () => {
+		router.go(window.location.href);
+	}
 };
 
 main();

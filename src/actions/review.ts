@@ -39,17 +39,19 @@ const newCreateReviewRequest = (
 		},
 	};
 
-const newCreateReviewForm = (
-	title: string,
-	text: string,
-	rating: number
-): IEvent =>
+const createReviewForm = (): IEvent =>
 	<IEvent>{
 		key: EventType.CREATE_REVIEW_FORM,
+		metadata: <Empty>{},
+	};
+
+const newCreateReviewFormResponse = (title: string, text: string, rating: number): IEvent =>
+	<IEvent>{
+		key: EventType.CREATE_REVIEW_FORM_RESPONSE,
 		metadata: <CreateReviewForm>{
 			title,
 			text,
-			rating
+			rating,
 		},
 	};
 
@@ -65,5 +67,6 @@ export {
 	newDeleteReviewRequest,
 	newCreateReviewRequest,
 	newCreateReviewResponse,
-	newCreateReviewForm
+	newCreateReviewFormResponse,
+	createReviewForm
 };

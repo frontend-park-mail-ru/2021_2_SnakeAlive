@@ -19,19 +19,19 @@ import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
 
 const pathErrorEvent: IEvent = initErrorPageRequest(new Error('Неверная ссылка'));
 
-const tryGetIdParam = (
+const tryGetParam = (
+	param: paramsURLfrontend,
 	path: URL,
 	initEvent: () => IEvent,
 	event: any // => IEvent
 ): void /* IEvent */ => {
-	const id = path.searchParams.get(paramsURLfrontend.id);
-	console.log('id : ', id);
+	const id = path.searchParams.get(param);
 	if (id === null) {
 		dispatcher.notify(pathErrorEvent);
 		return;
 	}
 	dispatcher.notify(initEvent());
-	dispatcher.notify(event(id));
+	dispatcher.notify(event(id, id)); // второй раз это на самом деле name, для страны, не убирать
 };
 
 const getIDParam = (path: URL): number | null =>
@@ -54,15 +54,15 @@ export const notifier = (path: URL): void /* IEvent */ => {
 	switch (path.pathname) {
 		case pathsURLfrontend.root: {
 			dispatcher.notify(newInitPageRequest());
-			dispatcher.notify(newInitCountryRequest('russia', 'russia'));
+			dispatcher.notify(newInitCountryRequest('Russia', 'Russia'));
 			break;
 		}
 		case pathsURLfrontend.country: {
-			tryGetIdParam(path, newInitPageRequest, newInitCountryRequest);
+			tryGetParam(paramsURLfrontend.name, path, newInitPageRequest, newInitCountryRequest);
 			break;
 		}
 		case pathsURLfrontend.trip: {
-			tryGetIdParam(path, initTripPageRequest, newGetTripRequest);
+			tryGetParam(paramsURLfrontend.id, path, initTripPageRequest, newGetTripRequest);
 			break;
 		}
 		case pathsURLfrontend.login: {

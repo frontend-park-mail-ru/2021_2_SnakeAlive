@@ -97,6 +97,11 @@ input {
   width: 100%;
 }
 
+.icon {
+  width: $large-px;
+  height: $large-px;
+}
+
 //<div class='error_page'>
 //<h2>Сожалеем, возникла ошибка</h2>
 //<<img src="{{logo}}" class="error_page__img"/>>

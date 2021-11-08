@@ -1,18 +1,20 @@
 <div class='sight_page'>
 	<div class='sight_page__left_col'>
 
-		<div id="sight_page__info" class="sight_page__info frame">
+		<div id="sight_page__left_col__info" class="frame sight_page__left_col__info">
 			<h2>{{name}}</h2>
-			<div class="sight_page__info__place_view">
+			<div class="sight_page__left_col__info__place_view">
 				<img src='{{placeIcon}}'>
-				<p>{{country}}</p>
+				<p class="sight_page__left_col__info__country">{{country}}</p>
 			</div>
 		</div>
 
-		<div id="sight_page__review_form_place" class="sight_page__review_form_place frame">
+		<div id="sight_page__review_form_place" class="sight_page__left_col__review_form_place frame">
+			<p>Войдите, чтобы оставить отзыв</p>
 		</div>
 
-		<div class="frame">
+		<div class="frame sight_page__left_col__description">
+			<p class="sight_page__left_col__description__title">О месте</p>
 			<p>{{description}}</p>
 			{{#each tags}}
 				<span>{{tags}} </span>

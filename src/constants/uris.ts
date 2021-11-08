@@ -5,8 +5,8 @@ const profile = '/profile';
 const logout = '/logout';
 const sightURI = '/sight/';
 const tripURI = '/trip/';
-const reviewsURI = '/review/;';
-const reviewURI = '/review;';
+const reviewsURI = '/review/';
+const reviewURI = '/review';
 
 export {
 	loginURI,
