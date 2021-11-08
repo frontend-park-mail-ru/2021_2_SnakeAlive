@@ -10,6 +10,11 @@ function validateEqual(first: string, second: string) {
 	return first === second;
 }
 
+function validateEmail(value: string): boolean {
+	const re = /^\w+(?:\.\w*)*@\w+(?:\.\w*)+$/;
+	return re.test(String(value));
+}
+
 export interface ErrorSetter {
 	setError(): void;
 	clean(): void;
@@ -50,4 +55,4 @@ function validateElements(elements: ValidationElement[]): boolean {
 	return result;
 }
 
-export { validateNotEmpty, validateLength, validateEqual, validateElements };
+export { validateNotEmpty, validateLength, validateEqual, validateElements, validateEmail };

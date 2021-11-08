@@ -17,7 +17,8 @@ const newUpdateProfileMetadataRequest = (
 	name: string,
 	surname: string,
 	email: string,
-	password: string
+	password: string,
+	description: string
 ): IEvent =>
 	<IEvent>{
 		key: EventType.UPDATE_PROFILE_METADATA_REQUEST,
@@ -26,6 +27,7 @@ const newUpdateProfileMetadataRequest = (
 			surname,
 			email,
 			password,
+			description,
 		},
 	};
 

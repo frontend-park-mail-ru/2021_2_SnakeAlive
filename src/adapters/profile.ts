@@ -12,7 +12,8 @@ export function adaptGetProfileResponse(response: GetProfileResponse): Profile {
 		meta: <ProfileMetadata>{
 			name: response.name,
 			surname: response.surname,
-			description: '',
+			description: response.description,
+			email: response.email,
 		},
 		profileImage: response.avatar,
 	};
@@ -26,6 +27,7 @@ export function adaptUpdateProfileMetadataRequest(
 		surname: request.surname,
 		password: request.password,
 		email: request.email,
+		description: request.description,
 	};
 }
 

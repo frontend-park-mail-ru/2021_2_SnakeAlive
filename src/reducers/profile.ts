@@ -40,22 +40,23 @@ export default class ProfileReducer {
 	};
 
 	getProfile = (metadata: DataType): void => {
-		this.#sendGetProfile()
-			.then((response: GetProfileResponse) => {
-				storage.storeProfile(adaptGetProfileResponse(response));
-				dispatcher.notify(newGetProfileResponse());
-			})
-			.catch((error: Error) => {
-				dispatcher.notify(initErrorPageRequest(error));
-			});
+		// this.#sendGetProfile()
+		// 	.then((response: GetProfileResponse) => {
+		// 		storage.storeProfile(adaptGetProfileResponse(response));
+		// 		dispatcher.notify(newGetProfileResponse());
+		// 	})
+		// 	.catch((error: Error) => {
+		// 		dispatcher.notify(initErrorPageRequest(error));
+		// 	});
 
-		// storage.storeProfile(<Profile>{
-		// 	profileImage: 'https://pbs.twimg.com/profile_images/915168817675931648/W9tXUyfM_400x400.jpg',
-		// 	meta: <ProfileMetadata>{
-		// 		name: 'Никита',
-		// 		surname: 'Черных',
-		// 	},
-		// });
+		storage.storeProfile(<Profile>{
+			profileImage: 'https://pbs.twimg.com/profile_images/915168817675931648/W9tXUyfM_400x400.jpg',
+			meta: <ProfileMetadata>{
+				name: 'Никита',
+				surname: 'Черных',
+				email: 'asd@mail.ru',
+			},
+		});
 		dispatcher.notify(newGetProfileResponse());
 	};
 

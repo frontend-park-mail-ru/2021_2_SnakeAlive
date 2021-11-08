@@ -2,6 +2,8 @@ export interface GetProfileResponse {
 	name: string;
 	surname: string;
 	avatar: string;
+	description: string;
+	email: string;
 }
 
 export interface UpdateProfileMetadataRequest {
@@ -9,6 +11,7 @@ export interface UpdateProfileMetadataRequest {
 	surname: string;
 	password: string;
 	email: string;
+	description: string;
 }
 
 export interface UpdateProfileMetadataResponse {
@@ -22,6 +25,7 @@ export interface ProfileMetadata {
 	name: string;
 	surname: string;
 	description: string;
+	email: string;
 }
 
 export interface Profile {

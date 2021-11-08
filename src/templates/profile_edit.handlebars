@@ -1,10 +1,12 @@
 <div id='profile_edit' class="profile_edit">
-    <div class="profile_edit__photo" id="current_photo">
-        <img src="{{profileImage}}" alt="">
-    </div>
+    <div class="profile_edit__photo_block">
+        <div class="profile_edit__photo" id="current_photo">
+            <img src="{{profileImage}}" alt="">
+        </div>
 
-    <input type="file" class="profile_edit__upload_box" id="update_photo_input" value="" placeholder=""/>
-    <button id="update_photo" class="profile_edit__btn">Обновить фотографию</button>
+        <button id="update_photo" class="profile_edit__btn">Обновить фотографию</button>
+        <input type="file" class="profile_edit__upload_box" id="update_photo_input" value="" placeholder=""/>
+    </div>
 
     <div class="profile_edit__metadata" id="profile_edit__metadata">
         <div class="profile_edit__meta_holder">
@@ -19,6 +21,11 @@
         </div>
 
         <div class="profile_edit__meta_holder">
+            <div class="profile_edit__naming_holder">Почта:</div>
+            <input type="text" class="profile_edit__meta_holder__input" id="email_holder" value="{{meta.email}}"/>
+        </div>
+
+        <div class="profile_edit__meta_holder">
             <div class="profile_edit__naming_holder">Новый пароль:</div>
             <input type="password" class="profile_edit__meta_holder__input" id="password_holder" value=""
                    placeholder="Введите новый пароль"/>
@@ -30,7 +37,9 @@
         </div>
     </div>
 
-    <button id="update_profile" class="profile_edit__btn">Обновить профиль</button>
-    <button id="back" class="profile_edit__btn">Назад</button>
+    <div class="profile_edit__button_block">
+        <button id="update_profile" class="profile_edit__btn">Обновить профиль</button>
+        <button id="back" class="profile_edit__btn">Назад</button>
+    </div>
 </div>
 </div>

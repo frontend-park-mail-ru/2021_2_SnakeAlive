@@ -12,6 +12,7 @@ import {
 	validateEqual,
 	validateLength,
 	validateNotEmpty,
+	validateEmail,
 } from '@/validators/common';
 
 export default class ProfileView extends BasicView {
@@ -95,6 +96,7 @@ export default class ProfileView extends BasicView {
 		const surnameInput: Input = new Input('#surname_holder', 'input-error-red');
 		const passInput: Input = new Input('#password_holder', 'input-error-red');
 		const repeatedPassInput: Input = new Input('#repeated_password_holder', 'input-error-red');
+		const emailInput: Input = new Input('#email_holder', 'input-error-red');
 
 		if (
 			!validateElements([
@@ -113,6 +115,14 @@ export default class ProfileView extends BasicView {
 						},
 					],
 					errorSetters: [surnameInput],
+				},
+				{
+					validators: [
+						function (): boolean {
+							return validateEmail(emailInput.getValue());
+						},
+					],
+					errorSetters: [emailInput],
 				},
 				{
 					validators: [
@@ -144,7 +154,8 @@ export default class ProfileView extends BasicView {
 				nameInput.getValue(),
 				surnameInput.getValue(),
 				'',
-				passInput.getValue()
+				passInput.getValue(),
+				''
 			)
 		);
 	};
