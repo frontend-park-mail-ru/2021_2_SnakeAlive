@@ -148,7 +148,7 @@ input {
     padding: 1px;
     margin-top: 4px;
 
-    grid-template-areas: "photo name_holder"
+    grid-template-areas: "photo metadata_holder"
                           "btn_block btn_block";
     grid-template-rows: 50px 50px;
     grid-template-columns: 50px 1fr;
@@ -161,7 +161,7 @@ input {
     margin: 10px 60px 10px;
     border-radius: 15px;
 
-    grid-template-areas: "photo name_holder btn_block";
+    grid-template-areas: "photo metadata_holder btn_block";
     grid-template-rows: 200px;
     grid-template-columns: 200px 1fr 200px;
     row-gap: 3px;
@@ -172,7 +172,7 @@ input {
     height: 200px;
     margin: 20px 100px 10px;
 
-    grid-template-areas: "photo name_holder btn_block";
+    grid-template-areas: "photo metadata_holder btn_block";
     grid-template-rows: 200px;
     grid-template-columns: 200px 1fr 200px;
     row-gap: 3px;
@@ -217,8 +217,28 @@ input {
     }
   }
 
-  &__name-holder {
-    grid-area: name_holder;
+  &__metadata-holder {
+    grid-area: metadata_holder;
+    display: grid;
+
+    @media (max-width: 320px) {
+      grid-template-rows: 20px 15px;
+    }
+
+    @media (min-width: 321px) and (max-width: 960px) {
+      grid-template-rows: 30px 20px;
+      padding-top: 15%;
+      row-gap: 5px;
+    }
+
+    @media (min-width: 961px) {
+      grid-template-rows: 30px 20px;
+      padding-top: 10%;
+      row-gap: 5px;
+    }
+  }
+
+  &__data-holder {
     text-align: left;
     padding: 4px;
 
@@ -339,17 +359,59 @@ input {
   justify-content: center;
 
   @media (max-width: 320px) {
-    height: 460px;
+    height: 525px;
     padding: 1px;
     margin-top: 4px;
 
-    grid-template-rows: 100px 0px 30px 250px 30px 30px;
+    grid-template-rows: 130px 310px 60px;
     grid-template-columns: 300px;
     row-gap: 3px;
   }
 
+  @media (min-width: 321px) and (max-width: 960px) {
+    height: 300px;
+    padding: 10px;
+    margin-top: 5px;
+
+    grid-template-rows: 500px;
+    grid-template-columns: 200px 400px 170px;
+    row-gap: 3px;
+  }
+
+  @media (min-width: 961px) {
+    height: 300px;
+    padding: 10px;
+    margin-top: 5px;
+
+    grid-template-rows: 500px;
+    grid-template-columns: 200px 400px 170px;
+    row-gap: 3px;
+  }
+
+  &__photo_block {
+    display: grid;
+    justify-content: center;
+
+    @media (max-width: 320px) {
+      grid-template-rows: 100px 30px 0px;
+      grid-template-columns: 250px;
+      row-gap: 3px;
+    }
+
+    @media (min-width: 321px) and (max-width: 960px) {
+      grid-template-rows: 200px 0px 50px;
+      grid-template-columns: 170px;
+      row-gap: 5px;
+    }
+
+    @media (min-width: 961px) {
+      grid-template-rows: 200px 0px 50px;
+      grid-template-columns: 170px;
+      row-gap: 5px;
+    }
+  }
+
   &__photo {
-    //grid-area: photo;
     display: flex;
     justify-content: center;
 
@@ -357,34 +419,71 @@ input {
       border-radius: 50%;
 
       @media (max-width: 320px) {
-        width: 30%;
+        width: 43%;
       }
+
+      @media (min-width: 321px) and (max-width: 960px) {
+        width: 70%;
+        height: 70%;
+
+        margin-top: 20%;
+      }
+
+      @media (min-width: 961px) {
+        width: 70%;
+        height: 70%;
+
+        margin-top: 20%;
+      }
+    }
+  }
+
+
+  &__button_block {
+    display: grid;
+    justify-content: center;
+
+    @media (max-width: 320px) {
+      grid-template-rows: 30px 30px;
+      grid-template-columns: 250px;
+      row-gap: 3px;
+    }
+
+    @media (min-width: 321px) and (max-width: 960px) {
+      margin-top: 27px;
+      grid-template-rows: 50px 50px;
+      grid-template-columns: 170px;
+      row-gap: 5px;
+    }
+
+    @media (min-width: 961px) {
+      margin-top: 27px;
+      grid-template-rows: 30px 30px;
+      grid-template-columns: 170px;
+      row-gap: 2px;
     }
   }
 
   &__btn {
     background-color: $my--button-fill;
     color: $my--button-text;
-    //grid-area: btn;
 
     @media (max-width: 320px) {
       @include text-small;
       border-radius: 3px;
     }
 
-    //@media (min-width: 321px) and (max-width: 960px) {
-    //  height: 50px;
-    //  margin-top: 50px;
-    //  @include text-button;
-    //  border-radius: 5px;
-    //}
-    //
-    //@media (min-width: 961px) {
-    //  height: 30px;
-    //  margin-top: 70px;
-    //  @include text-button;
-    //  border-radius: 5px;
-    //}
+    @media (min-width: 321px) and (max-width: 960px) {
+      height: 50px;
+      @include text-button;
+      border-radius: 5px;
+    }
+
+    @media (min-width: 961px) {
+      height: 30px;
+      @include text-button;
+      border-radius: 5px;
+    }
 
     .btn:hover {
       transition: 250ms;
@@ -393,14 +492,29 @@ input {
   }
 
   &__metadata {
-    //grid-area: metadata;
     display: grid;
     justify-content: center;
 
     @media (max-width: 320px) {
       margin-top: 15px;
 
-      grid-template-rows: 50px 50px 50px 50px;
+      grid-template-rows: 50px 50px 50px 50px 50px;
+      grid-template-columns: 250px;
+      row-gap: 10px;
+    }
+
+    @media (min-width: 321px) and (max-width: 960px) {
+      margin-top: 15px;
+
+      grid-template-rows: 50px 50px 50px 50px 50px;
+      grid-template-columns: 250px;
+      row-gap: 10px;
+    }
+
+    @media (min-width: 961px) {
+      margin-top: 15px;
+
+      grid-template-rows: 50px 50px 50px 50px 50px;
       grid-template-columns: 250px;
       row-gap: 10px;
     }
