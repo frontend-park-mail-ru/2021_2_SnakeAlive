@@ -22,7 +22,7 @@ export default class SightView extends BasicView {
 	#setSight = (metadata: EventType): void => {
 		dispatcher.notify(newSetMainHeaderRequest());
 		this.setView(createSightTemplate(storage.getSight()));
-  	dispatcher.notify(createReviewForm());
+		dispatcher.notify(createReviewForm());
 
 		// this.setView(`<div class='full-page'>${JSON.stringify(storage.getSight(), null, 4)}</div>`);
 	};

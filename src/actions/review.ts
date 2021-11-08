@@ -68,5 +68,5 @@ export {
 	newCreateReviewRequest,
 	newCreateReviewResponse,
 	newCreateReviewFormResponse,
-	createReviewForm
+	createReviewForm,
 };

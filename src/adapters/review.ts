@@ -31,10 +31,11 @@ export function adaptCreateReviewResponse(
 }
 
 interface backReviewPost {
-	"title": string,
-	"text": string,
-	"rating": number,
-	"place_id": number
+	title: string;
+	text: string;
+	rating: number;
+	// eslint-disable-next-line camelcase
+	place_id: number;
 }
 
 export const adoptReviewBeforePost = (request: CreateReviewRequest): backReviewPost => {
@@ -43,6 +44,6 @@ export const adoptReviewBeforePost = (request: CreateReviewRequest): backReviewP
 		title,
 		text,
 		rating,
-		place_id: placeId
-	}
-}
+		place_id: placeId,
+	};
+};

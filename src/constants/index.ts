@@ -6,15 +6,18 @@ import {
 	profile,
 	logout,
 	sightURI,
+	sightsURI,
 	tripURI,
 	reviewsURI,
 	reviewURI,
+	queryParamsToGetReview,
 } from './uris';
 import { russiaFormName, russiaUriName, nicaraguaFormName, nicaraguaUriName } from './defaults';
 import { pathsURLfrontend, paramsURLfrontend } from '@/constants/frontendURIs';
 
 export {
 	sightURI,
+	sightsURI,
 	tripURI,
 	backendEndpoint,
 	backendFileEndpoint,
@@ -31,4 +34,5 @@ export {
 	reviewURI,
 	pathsURLfrontend,
 	paramsURLfrontend,
+	queryParamsToGetReview
 };

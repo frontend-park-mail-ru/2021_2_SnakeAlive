@@ -1,0 +1,13 @@
+{{#each reviews}}
+	<p>
+
+		{{this.review.id}}
+		{{this.review.title}}
+		{{this.review.text}}
+		{{#if this.owned}}
+			<b>my - can delete</b>
+		{{/if}}
+		{{this.user.name}}
+	</p>
+	<br>
+{{/each}}

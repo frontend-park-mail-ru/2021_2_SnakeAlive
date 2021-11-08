@@ -1,14 +1,26 @@
 import { sendDeleteJSONRequest, sendGetJSONRequest, sendPostJSONRequest } from '@/http';
-import { backendEndpoint, reviewsURI, reviewURI } from '@/constants';
-import { initErrorPageRequest, newCreateReviewResponse, newGetReviewsResponse } from '@/actions';
+import { backendEndpoint, queryParamsToGetReview, reviewsURI, reviewURI } from '@/constants';
+import {
+	createReviewForm,
+	initErrorPageRequest,
+	newCreateReviewFormResponse,
+	newCreateReviewResponse, newGetReviewsRequest,
+	newGetReviewsResponse,
+} from '@/actions';
 import { storage } from '@/storage';
 import { CreateReview, DataType, dispatcher, EventType, NumID, Token } from '@/dispatcher';
 import { CreateReviewRequest, CreateReviewResponse, Review } from '@/models/review';
-import { adaptCreateReviewRequest, adaptCreateReviewResponse, adoptReviewBeforePost } from '@/adapters/review';
+import {
+	adaptCreateReviewRequest,
+	adaptCreateReviewResponse,
+	adoptReviewBeforePost,
+} from '@/adapters/review';
 import { CreateReviewForm } from '@/dispatcher/metadata_types';
 
 export default class ReviewReducer {
 	#tokens: Token[];
+
+	#placeId = -1;
 
 	constructor() {
 		this.#tokens = [];
@@ -18,7 +30,7 @@ export default class ReviewReducer {
 		this.#tokens = [
 			dispatcher.register(EventType.GET_REVIEWS_REQUEST, this.getReviews),
 			dispatcher.register(EventType.DELETE_REVIEW_REQUEST, this.deleteReview),
-			// dispatcher.register(EventType.CREATE_REVIEW_REQUEST, this.createReview),EventType.GET_PROFILE_RESPONSE
+			// dispatcher.register(EventType.CREATE_REVIEW_REQUEST, this.createReview),
 			dispatcher.register(EventType.CREATE_REVIEW_FORM_RESPONSE, this.createReview),
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
 		];
@@ -32,6 +44,7 @@ export default class ReviewReducer {
 
 	getReviews = (metadata: DataType): void => {
 		const event = <NumID>metadata;
+		this.#placeId = event.ID;
 		this.#sendGetReviews(event.ID)
 			.then((reviews: Review[]) => {
 				storage.storeReviews(reviews);
@@ -53,19 +66,21 @@ export default class ReviewReducer {
 		const event = <CreateReview>metadata;
 		event.placeId = Number(storage.getSight().id);
 		this.#sendCreateReview(adaptCreateReviewRequest(event))
-			.then((response: CreateReviewResponse) => {
-				const position = storage.appendReview(
-					adaptCreateReviewResponse(response, storage.getUserMetadata())
-				);
-				dispatcher.notify(newCreateReviewResponse(position));
+			.then((responseText: string) => {
+					console.log(responseText);
+					dispatcher.notify(createReviewForm());
+					dispatcher.notify(newGetReviewsRequest(this.#placeId));
+					// надо добавлять а не ререндить всех но что поделать
+					// как бы надо проверять ок/не ок ответ пришел, ноо мы этого не делаем
+					// все равно только по обновлению работает. починить если останется время
 			})
 			.catch((error: Error) => {
-				console.log("something went wrong during POST /review", error);
+				console.log('something went wrong during POST /review', error);
 			});
 	};
 
 	#sendGetReviews = (sightID: number): Promise<Review[]> =>
-		sendGetJSONRequest(backendEndpoint + reviewsURI + sightID)
+		sendGetJSONRequest(backendEndpoint + reviewsURI + sightID+ queryParamsToGetReview)
 			.then(response => {
 				if (response.status === 404) {
 					return Promise.reject(new Error('На сайте нет такой страницы'));
@@ -88,7 +103,7 @@ export default class ReviewReducer {
 			return Promise.resolve(response);
 		});
 
-	#sendCreateReview = (request: CreateReviewRequest): Promise<CreateReviewResponse> =>
+	#sendCreateReview = (request: CreateReviewRequest): Promise<string> =>
 		sendPostJSONRequest(backendEndpoint + reviewURI, adoptReviewBeforePost(request))
 			.then(response => {
 				if (response.status === 404) {
@@ -99,5 +114,5 @@ export default class ReviewReducer {
 				}
 				return Promise.resolve(response);
 			})
-			.then(response => response.json());
+			.then((response) => response.text());
 }

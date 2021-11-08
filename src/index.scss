@@ -27,53 +27,76 @@ $white: white;
 $black: black; // вдруг захочется поизголяться тут
 $green: #68B058;
 
+.input-error-red {
+  border-radius: 2px;
+  border-color: red;
+  border-style: solid;
+}
+
 // шрифты
 @mixin text-header {
-font-size: 30px;
-font-weight: 400;
-};
+  font-size: 30px;
+  font-weight: 400;
+}
+
+;
 h2 {
   @include text-header;
 }
+
 @mixin text-local-header {
-        font-size: 19px;
-        font-weight: 400;
-};
+  font-size: 19px;
+  font-weight: 400;
+}
+
+;
 h4 {
   @include text-local-header;
 }
+
 @mixin text-local-name {
-        font-size: 14px;
-        font-weight: 500;
-};
+  font-size: 14px;
+  font-weight: 500;
+}
+
+;
 @mixin text-plain {
-        font-size: 14px;
-        font-weight: 300;
-        line-height: 20px;
-        letter-spacing: -0.5px;
-};
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 20px;
+  letter-spacing: -0.5px;
+}
+
+;
 p {
   @include text-plain;
 }
-@mixin text-plain-no-wrap {
-        font-size: 14px;
-        font-weight: 300;
-        line-height: 20px;
-        letter-spacing: -0.5px;
-        // насчет этих строчек терзают смутные сомнения
-        //display: flex;
-        //align-items: flex-end;
-};
-@mixin text-button {
-        font-size: 12px;
-        font-weight: 400;
-};
-@mixin text-small {
-        font-size: 12px;
-        font-weight: 400;
-};
 
-html,body{
+@mixin text-plain-no-wrap {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 20px;
+  letter-spacing: -0.5px;
+  // насчет этих строчек терзают смутные сомнения
+  //display: flex;
+  //align-items: flex-end;
+}
+
+;
+@mixin text-button {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+;
+@mixin text-small {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+;
+
+html, body {
   margin: 0;
   font-family: 'Open Sans', serif;
   background: $my--main-background;
@@ -114,6 +137,7 @@ input {
   align-items: center;
   gap: 8vh;
   padding: 8vh;
+
   img {
     height: 30vh;
   }
@@ -175,12 +199,12 @@ input {
       justify-content: center;
     }
 
-    @media (min-width: 961px){
+    @media (min-width: 961px) {
       display: flex;
       justify-content: center;
     }
 
-    img{
+    img {
       border-radius: 50%;
 
       @media (max-width: 320px) {
@@ -239,8 +263,7 @@ input {
 
     @media (min-width: 321px) and (max-width: 960px) {
       grid-template-areas:"edit-btn"
-                          "close-btn"
-                          ;
+                          "close-btn";
       grid-template-rows: 100px 100px;
       grid-template-columns: 150px;
       grid-gap: 2px;
@@ -248,8 +271,7 @@ input {
 
     @media (min-width: 961px) {
       grid-template-areas:"edit-btn"
-                          "close-btn"
-    ;
+                          "close-btn";
       grid-template-rows: 100px 100px;
       grid-template-columns: 150px;
       grid-gap: 2px;
@@ -302,7 +324,7 @@ input {
       border-radius: 5px;
     }
 
-    @media (min-width: 961px){
+    @media (min-width: 961px) {
       height: 30px;
       margin-top: 10px;
       @include text-button;
@@ -313,5 +335,114 @@ input {
       transition: 250ms;
       background-color: $my--button-fill-hover;
     }
+  }
+}
+
+.profile_edit {
+  background-color: $white;
+  display: grid;
+  justify-content: center;
+
+  @media (max-width: 320px) {
+    height: 460px;
+    padding: 1px;
+    margin-top: 4px;
+
+    grid-template-rows: 100px 0px 30px 250px 30px 30px;
+    grid-template-columns: 300px;
+    row-gap: 3px;
+  }
+
+  &__photo {
+    //grid-area: photo;
+    display: flex;
+    justify-content: center;
+
+    img {
+      border-radius: 50%;
+
+      @media (max-width: 320px) {
+        width: 30%;
+      }
+    }
+  }
+
+  &__btn {
+    background-color: $my--button-fill;
+    color: $my--button-text;
+    //grid-area: btn;
+
+    @media (max-width: 320px) {
+      @include text-small;
+      border-radius: 3px;
+    }
+
+    //@media (min-width: 321px) and (max-width: 960px) {
+    //  height: 50px;
+    //  margin-top: 50px;
+    //  @include text-button;
+    //  border-radius: 5px;
+    //}
+    //
+    //@media (min-width: 961px) {
+    //  height: 30px;
+    //  margin-top: 70px;
+    //  @include text-button;
+    //  border-radius: 5px;
+    //}
+
+    .btn:hover {
+      transition: 250ms;
+      background-color: $my--button-fill-hover;
+    }
+  }
+
+  &__metadata {
+    //grid-area: metadata;
+    display: grid;
+    justify-content: center;
+
+    @media (max-width: 320px) {
+      margin-top: 15px;
+
+      grid-template-rows: 50px 50px 50px 50px;
+      grid-template-columns: 250px;
+      row-gap: 10px;
+    }
+  }
+
+  &__meta_holder {
+    @media (max-width: 320px) {
+      height: 30px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    &__input {
+      @media (max-width: 320px) {
+        margin-top: 2px;
+        background-color: $my--button-fill;
+        padding: 5px;
+      }
+    }
+  }
+
+  &__naming_holder {
+    @include text-small;
+
+    @media (max-width: 320px) {
+      height: 10px;
+      display: flex;
+      justify-content: left;
+      margin-bottom: 4px;
+    }
+  }
+
+  &__upload_box {
+    visibility: hidden;
+    width: 0;
+    height: 0;
   }
 }

@@ -6,12 +6,13 @@ import { Review } from '@/models/review';
 import { initReviewForm } from '@/components';
 import { createReviewForm } from '@/components/reviews/review_form';
 import { UserMetadata } from '@/models';
+import reviewsListTemplate from '@/components/reviews/reviews.handlebars';
 
 export class ReviewsView extends BasicView {
 	#tokens: Token[];
 
 	constructor() {
-		super('reviews__content');
+		super('#reviews__content');
 
 		this.#tokens = [];
 	}
@@ -33,7 +34,10 @@ export class ReviewsView extends BasicView {
 	};
 
 	renderReviews = (metadata: DataType): void => {
-		const reviews = storage.getReviews();
+		// const reviews = ;
+		console.log(storage.getReviews());
+		console.log(reviewsListTemplate(storage.getReviews()));
+		this.setView(reviewsListTemplate({ reviews: storage.getReviews() }));
 
 		// and fucking render
 		// id of review: sight_review_{id} => here add callbacks for delete
@@ -51,7 +55,7 @@ export class ReviewsView extends BasicView {
 		// изменила на добавление первым
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore
-		this.appendLastChild('');
+		this.appendLastChild(reviewsListTemplate({ reviews: review }));
 	};
 
 	// for buttons:
@@ -79,12 +83,12 @@ export class ReviewCreateView extends BasicView {
 	};
 
 	createFormIfLogged = () => {
-		console.log("in ReviewCreateView");
+		console.log('in ReviewCreateView');
 		if (storage.getUserMetadata().name !== undefined) {
-			console.log("in if, got name ", storage.getUserMetadata().name);
+			console.log('in if, got name ', storage.getUserMetadata().name);
 			this.#createForm();
 		}
-	}
+	};
 
 	destroy = (): void => {
 		this.#tokens.forEach(element => {
@@ -97,7 +101,7 @@ export class ReviewCreateView extends BasicView {
 	#createForm = () => {
 		this.setView(createReviewForm());
 		initReviewForm();
-	}
+	};
 
 	// #createReview = (): void => {
 	// 	// как узнать про placeID ???

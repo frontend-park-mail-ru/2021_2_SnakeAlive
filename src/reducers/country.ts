@@ -1,5 +1,5 @@
 import { sendGetJSONRequest } from '@/http';
-import { backendEndpoint, countrySights } from '@/constants';
+import { backendEndpoint, countrySights, sightsURI } from '@/constants';
 import {
 	newGetCountryCardsError,
 	newGetCountryCardsRequest,
@@ -48,7 +48,7 @@ export default class CountryReducer {
 		const data = <UUID>metadata;
 		this.#getCards(<string>data.ID)
 			.then((cards: CountryCardResponse[]) => {
-				console.log("country reducer : " ,cards);
+				console.log('country reducer : ', cards);
 				storage.storeCountryCards(adaptGetCards(cards));
 				dispatcher.notify(newGetCountryCardsResult());
 			})
@@ -58,7 +58,7 @@ export default class CountryReducer {
 	};
 
 	#getCards = (countryID: string): Promise<CountryCardResponse[]> =>
-		sendGetJSONRequest(backendEndpoint + countrySights + countryID)
+		sendGetJSONRequest(backendEndpoint + sightsURI + countryID)
 			.then(response => {
 				if (response.status === 404) {
 					return Promise.reject(new Error('На сайте нет такой страницы'));

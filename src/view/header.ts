@@ -36,6 +36,7 @@ export default class HeaderView extends BasicView {
 	setMainHeaderLogged = (metadata: DataType): void => {
 		const user: UserMetadata = storage.getUserMetadata();
 		const dataTemplate = {
+			isNotEmpty: true,
 			isUser: true,
 			name: user.name,
 			avatarPath: user.avatarPath,
@@ -48,6 +49,7 @@ export default class HeaderView extends BasicView {
 
 	setMainHeaderBasic = (metadata: DataType): void => {
 		const dataTemplate = {
+			isNotEmpty: true,
 			isUser: false,
 			btnText: 'Войти',
 		};
@@ -59,6 +61,7 @@ export default class HeaderView extends BasicView {
 
 	setMainHeaderEmpty = (metadata: DataType): void => {
 		const dataTemplate = {
+			isNotEmpty: false,
 			isUser: false,
 		};
 		this.setView(makeHeader(dataTemplate));

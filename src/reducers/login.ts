@@ -33,11 +33,14 @@ export default class LoginReducer {
 				}
 				return Promise.resolve(response);
 			})
-			.catch(() => dispatcher.notify(setValidationErrorLogin(result.data)))
 			.then(() => {
 				dispatcher.notify(newSetMainHeaderStrongRequest());
 				// надо сделать перейти на страницу откуда пришел, а не на главную
 				router.go(pathsURLfrontend.root);
+			})
+			.catch(() => {
+				console.log("rejected");
+				dispatcher.notify(setValidationErrorLogin(result.data))
 			});
 	};
 }

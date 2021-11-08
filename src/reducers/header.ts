@@ -50,7 +50,7 @@ export default class HeaderReducer {
 
 	checkIfEmpty = () => {
 		if (this.#state !== state.empty) {
-			console.log("here?77777");
+			console.log('here?77777');
 			dispatcher.notify(newSetEmptyHeaderResponse());
 			console.log(this.#state, ' -> ', state.empty);
 			this.#state = state.empty;
@@ -73,8 +73,8 @@ export default class HeaderReducer {
 				storage.setUserMetadata(data);
 				dispatcher.notify(newSetMainHeaderLoggedResponse());
 			})
-			.catch((err) => {
-				console.log("err ", err.status);
+			.catch(err => {
+				console.log('err ', err.status);
 				if (err.status !== undefined) {
 					dispatcher.notify(newSetMainHeaderBasicResponse());
 				}

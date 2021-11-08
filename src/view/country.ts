@@ -52,8 +52,8 @@ class CountryCardsHolderView extends BasicView {
 	};
 
 	renderCountryCards = (metadata: DataType): void => {
-		console.log(storage.getCountryCards());
-		this.setView(storage.getCountryCards().toString());
+		console.log("storage.getCountryCards()", storage.getCountryCards());
+		this.setView(JSON.stringify(storage.getCountryCards().cards));
 		// this.setView(sights(storage.getCountryCards()));
 	};
 

@@ -31,7 +31,7 @@ const main = () => {
 
 	window.onpopstate = () => {
 		router.go(window.location.href);
-	}
+	};
 };
 
 main();
