@@ -2,7 +2,7 @@ const sendDeleteRequest = (uri: string, headers?: any): Promise<Response> =>
 	fetch(uri, {
 		method: 'DELETE',
 		headers,
-		mode: 'cors',
+		mode: 'no-cors',
 		credentials: 'include',
 	});
 
