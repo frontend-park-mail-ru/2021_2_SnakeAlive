@@ -7,7 +7,7 @@ const sendPatchRequest = (uri: string, body: any, headers: any): Promise<Respons
 		method: 'PATCH',
 		headers,
 		body: JSON.stringify(body),
-		mode: 'no-cors',
+		mode: 'cors',
 		credentials: 'include',
 	});
 };
