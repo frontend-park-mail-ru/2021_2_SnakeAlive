@@ -6,7 +6,7 @@ import './drop_default.css';
 import './index.scss';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-console.log = () => {}; // !!
+// console.log = () => {}; // !!
 
 const main = () => {
 	const contentPlace: HTMLDivElement = document.createElement('div');

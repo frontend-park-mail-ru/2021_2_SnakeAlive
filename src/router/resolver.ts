@@ -57,7 +57,9 @@ export const notifier = (path: URL): void /* IEvent */ => {
 	switch (path.pathname) {
 		case pathsURLfrontend.root: {
 			dispatcher.notify(newInitPageRequest());
-			dispatcher.notify(newInitCountryRequest('Russia', 'Russia'));
+			// dispatcher.notify(newInitCountryRequest('Russia', 'Russia'));
+			dispatcher.notify(initLoginPageRequest());
+			dispatcher.notify(showLoginForm());
 			break;
 		}
 		case pathsURLfrontend.country: {
@@ -77,6 +79,7 @@ export const notifier = (path: URL): void /* IEvent */ => {
 			break;
 		}
 		case pathsURLfrontend.login: {
+			dispatcher.notify(newInitPageRequest());
 			dispatcher.notify(initLoginPageRequest());
 			dispatcher.notify(showLoginForm());
 			break;
