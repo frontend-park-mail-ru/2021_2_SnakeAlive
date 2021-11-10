@@ -299,6 +299,7 @@ input {
   }
 
   &__edit-btn {
+    cursor: pointer;
     background-color: $my--button-fill;
     color: $my--button-text;
     grid-area: edit-btn;
@@ -326,6 +327,10 @@ input {
       transition: 250ms;
       background-color: $my--button-fill-hover;
     }
+  }
+  &__edit-btn:hover {
+    cursor: pointer;
+    background-color: $my--button-fill-hover;
   }
 
   &__close-btn {
@@ -355,6 +360,10 @@ input {
       transition: 250ms;
       background-color: $my--button-fill-hover;
     }
+  }
+  &__close-btn:hover {
+    cursor: pointer;
+    background-color: $my--button-fill-hover;
   }
 }
 
@@ -494,6 +503,10 @@ input {
       transition: 250ms;
       background-color: $my--button-fill-hover;
     }
+  }
+  &__btn:hover {
+    cursor: pointer;
+    background-color: $my--button-fill-hover;
   }
 
   &__metadata {

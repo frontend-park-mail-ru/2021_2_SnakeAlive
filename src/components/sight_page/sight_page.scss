@@ -45,6 +45,17 @@
 
 .sight_page__right_col {
   grid-area: r-b;
+  > div {
+    margin-bottom: 10px;
+    > div {
+      margin-bottom: 10px;
+
+    }
+  }
+}
+
+.header-review {
+  @include text-local-name;
 }
 
 .sight_page__photo_holder_place {

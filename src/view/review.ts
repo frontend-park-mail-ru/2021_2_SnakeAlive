@@ -1,6 +1,6 @@
 import BasicView from '@/view/view';
 import { DataType, dispatcher, EventType, NumID, Token } from '@/dispatcher';
-import { newCreateReviewRequest, newDeleteReviewRequest } from '@/actions';
+import { deleteCurrentTripPlace, newCreateReviewRequest, newDeleteReviewRequest } from '@/actions';
 import { storage } from '@/storage';
 import { Review } from '@/models/review';
 import { initReviewForm } from '@/components';
@@ -34,10 +34,29 @@ export class ReviewsView extends BasicView {
 	};
 
 	renderReviews = (metadata: DataType): void => {
-		// const reviews = ;
-		console.log(storage.getReviews());
-		console.log(reviewsListTemplate(storage.getReviews()));
-		this.setView(reviewsListTemplate({ reviews: storage.getReviews() }));
+		const reviews = storage.getReviews();
+		this.setView(reviewsListTemplate({ reviews }));
+
+		reviews.forEach(reviewInfo => {
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
+			const deleteBtn = document.getElementById(`delete_button_${String(reviewInfo.review.id)}`);
+			console.log(`delete_button_${reviewInfo.id}`);
+			if (deleteBtn !== null) {
+				console.log('try to delete');
+				deleteBtn.addEventListener(
+					'click',
+					event => {
+						event.preventDefault();
+						// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+						// @ts-ignore
+						dispatcher.notify(newDeleteReviewRequest(reviewInfo.review.id));
+						deleteBtn.style.display = 'none';
+					},
+					false
+				);
+			}
+		});
 
 		// and fucking render
 		// id of review: sight_review_{id} => here add callbacks for delete

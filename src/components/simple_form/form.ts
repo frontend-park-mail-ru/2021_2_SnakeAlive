@@ -87,6 +87,8 @@ class Form {
 
 	/** Функция показывает в форме ошибку: показывает ее текст и указывает поле, в котором содержится ошибка */
 	setError(error: Error) {
+		// можно сделать попроще
+
 		// FormValidationError
 		this.#inputs.forEach(input => {
 			// if (input.getId() === error.errorField) {

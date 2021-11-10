@@ -1,5 +1,5 @@
-import { Empty, UUID, IEvent } from '@/dispatcher';
-import { EventType } from '@/dispatcher/event_types';
+import { Empty, EventType, IEvent, UUID } from '@/dispatcher';
+import { sightToTrip, isTripEdited, SubmitTripInfo, TripInfo } from '@/dispatcher/metadata_types';
 
 const newGetTripRequest = (countryID: string): IEvent =>
 	<IEvent>{
@@ -15,4 +15,91 @@ const newGetTripResult = (): IEvent =>
 		metadata: <Empty>{},
 	};
 
-export { newGetTripRequest, newGetTripResult };
+const createTripFormRequest = (): IEvent =>
+	<IEvent>{
+		key: EventType.CREATE_TRIP_FORM_REQUEST,
+		metadata: <Empty>{},
+	};
+
+const rerenderTripCards = (isEdit: boolean): IEvent =>
+	<IEvent>{
+		key: EventType.RERENDER_TRIP_CARDS,
+		metadata: <isTripEdited>{
+			isEdit,
+		},
+	};
+
+const tripFormSubmit = (
+	title: string,
+	description: string,
+	days: Array<Array<Record<string, number>>>
+): IEvent =>
+	<IEvent>{
+		key: EventType.CREATE_TRIP_FORM_SUBMIT,
+		metadata: <SubmitTripInfo>{
+			info: {
+				title,
+				description,
+				days,
+			},
+		},
+	};
+
+const updateCurrentTripInfo = (title: string, description: string) =>
+	<IEvent>{
+		key: EventType.UPDATE_CURRENT_TRIP_INFO,
+		metadata: <TripInfo>{
+			title,
+			description,
+		},
+	};
+
+const addCurrentTripPlace = (sightId: number, day: number) =>
+	<IEvent>{
+		key: EventType.ADD_CURRENT_TRIP_PLACE,
+		metadata: <sightToTrip>{
+			sightId,
+			day,
+		},
+	};
+
+const deleteCurrentTripPlace = (sightId: number, day: number) =>
+	<IEvent>{
+		key: EventType.DELETE_CURRENT_TRIP_PLACE,
+		metadata: <sightToTrip>{
+			sightId,
+			day,
+		},
+	};
+
+const createFilledEditTrip = () =>
+	<IEvent>{
+		key: EventType.GET_TRIP_EDIT_RESPONSE,
+		metadata: <Empty>{},
+	};
+
+const sendTrip = () =>
+	<IEvent>{
+		key: EventType.SEND_TRIP,
+		metadata: <Empty>{},
+	};
+
+const deleteTrip = () =>
+	<IEvent>{
+		key: EventType.DELETE_TRIP,
+		metadata: <Empty>{},
+	};
+
+export {
+	newGetTripRequest,
+	newGetTripResult,
+	createTripFormRequest,
+	tripFormSubmit,
+	updateCurrentTripInfo,
+	addCurrentTripPlace,
+	sendTrip,
+	createFilledEditTrip,
+	deleteTrip,
+	deleteCurrentTripPlace,
+	rerenderTripCards,
+};

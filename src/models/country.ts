@@ -33,6 +33,16 @@ interface TemplateCards {
 	cards: CountryCard[];
 }
 
+export interface minCardInfo {
+	sight: {
+		id: string;
+		name: string;
+		rating: number;
+		tag: string[];
+	};
+	PP: number;
+}
+
 export {
 	Country,
 	CountryCard,

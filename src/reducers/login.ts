@@ -39,8 +39,8 @@ export default class LoginReducer {
 				router.go(pathsURLfrontend.root);
 			})
 			.catch(() => {
-				console.log("rejected");
-				dispatcher.notify(setValidationErrorLogin(result.data))
+				console.log('rejected');
+				// dispatcher.notify(setValidationErrorLogin());
 			});
 	};
 }

@@ -5,8 +5,20 @@ import {
 	UpdateProfileMetadataRequest,
 	UpdateProfileMetadataResponse,
 } from '@/models/profile';
-import { sendGetJSONRequest, sendPatchJSONRequest, sendPostFileRequest } from '@/http';
-import { backendEndpoint, profile } from '@/constants';
+import {
+	sendDeleteJSONRequest,
+	sendGetJSONRequest,
+	sendPatchJSONRequest,
+	sendPostFileRequest,
+} from '@/http';
+import {
+	backendEndpoint,
+	backendFileEndpoint,
+	logout,
+	pathsURLfrontend,
+	profile,
+	upload,
+} from '@/constants';
 import {
 	adaptGetProfileResponse,
 	adaptUpdateProfileMetadataRequest,
@@ -14,8 +26,14 @@ import {
 } from '@/adapters/profile';
 import { storage } from '@/storage';
 import { DataType, dispatcher, EventType, File, Token, UpdateProfile } from '@/dispatcher';
-import { initErrorPageRequest, newGetProfileRequest, newGetProfileResponse } from '@/actions';
+import {
+	initErrorPageRequest,
+	newGetProfileRequest,
+	newGetProfileResponse,
+	newSetEmptyHeaderRequest,
+} from '@/actions';
 import { UserMetadata } from '@/models';
+import { router } from '@/router';
 
 export default class ProfileReducer {
 	#tokens: Token[];
@@ -26,6 +44,7 @@ export default class ProfileReducer {
 			dispatcher.register(EventType.UPDATE_PROFILE_METADATA_REQUEST, this.updateProfileMetadata),
 			dispatcher.register(EventType.UPDATE_PROFILE_PHOTO_REQUEST, this.updateProfilePhoto),
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
+			dispatcher.register(EventType.LOGOUT_REQUEST, this.sendLogoutRequest),
 		];
 	}
 
@@ -40,24 +59,15 @@ export default class ProfileReducer {
 	};
 
 	getProfile = (metadata: DataType): void => {
-		// this.#sendGetProfile()
-		// 	.then((response: GetProfileResponse) => {
-		// 		storage.storeProfile(adaptGetProfileResponse(response));
-		// 		dispatcher.notify(newGetProfileResponse());
-		// 	})
-		// 	.catch((error: Error) => {
-		// 		dispatcher.notify(initErrorPageRequest(error));
-		// 	});
-
-		storage.storeProfile(<Profile>{
-			profileImage: 'https://pbs.twimg.com/profile_images/915168817675931648/W9tXUyfM_400x400.jpg',
-			meta: <ProfileMetadata>{
-				name: 'Никита',
-				surname: 'Черных',
-				email: 'asd@mail.ru',
-			},
-		});
-		dispatcher.notify(newGetProfileResponse());
+		dispatcher.notify(newSetEmptyHeaderRequest());
+		this.#sendGetProfile()
+			.then((response: GetProfileResponse) => {
+				storage.storeProfile(adaptGetProfileResponse(response));
+				dispatcher.notify(newGetProfileResponse());
+			})
+			.catch((error: Error) => {
+				dispatcher.notify(initErrorPageRequest(error));
+			});
 	};
 
 	updateProfileMetadata = (metadata: UpdateProfile): void => {
@@ -78,6 +88,16 @@ export default class ProfileReducer {
 			.catch((error: Error) => {
 				dispatcher.notify(initErrorPageRequest(error));
 			});
+	};
+
+	sendLogoutRequest = (): void => {
+		sendDeleteJSONRequest(backendEndpoint + logout).then(request => {
+			if (request.ok) {
+				router.go(pathsURLfrontend.root);
+			} else {
+				console.log('problems in logout');
+			}
+		});
 	};
 
 	#sendGetProfile = (): Promise<GetProfileResponse> =>
@@ -109,7 +129,7 @@ export default class ProfileReducer {
 			.then(response => response.json());
 
 	#sendUpdateProfilePhoto = (request: FormData): Promise<Response> =>
-		sendPostFileRequest(backendEndpoint + profile, request).then(response => {
+		sendPostFileRequest(backendEndpoint + upload, request).then(response => {
 			if (response.status === 404) {
 				return Promise.reject(new Error('На сайте нет такой страницы'));
 			}

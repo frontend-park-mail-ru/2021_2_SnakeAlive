@@ -18,14 +18,14 @@ const newUpdateProfileMetadataRequest = (
 	surname: string,
 	email: string,
 	password: string,
-	description: string
+	description?: string
 ): IEvent =>
 	<IEvent>{
 		key: EventType.UPDATE_PROFILE_METADATA_REQUEST,
 		metadata: <UpdateProfile>{
 			name,
 			surname,
-			email,
+			// email,
 			password,
 			description,
 		},
@@ -39,9 +39,16 @@ const newUpdateProfilePhotoRequest = (file: FormData): IEvent =>
 		},
 	};
 
+const logoutRequest = (): IEvent =>
+	<IEvent>{
+		key: EventType.LOGOUT_REQUEST,
+		metadata: <Empty>{},
+	};
+
 export {
 	newGetProfileRequest,
 	newGetProfileResponse,
 	newUpdateProfileMetadataRequest,
 	newUpdateProfilePhotoRequest,
+	logoutRequest,
 };

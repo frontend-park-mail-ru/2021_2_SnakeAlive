@@ -1,6 +1,10 @@
 import BasicView from '@/view/view';
 import { DataType, dispatcher, EventType, Token } from '@/dispatcher';
-import { newUpdateProfileMetadataRequest, newUpdateProfilePhotoRequest } from '@/actions';
+import {
+	logoutRequest,
+	newUpdateProfileMetadataRequest,
+	newUpdateProfilePhotoRequest,
+} from '@/actions';
 import { storage } from '@/storage';
 import { Profile } from '@/models/profile';
 import profileTemplate from '@/templates/profile.handlebars';
@@ -12,8 +16,25 @@ import {
 	validateEqual,
 	validateLength,
 	validateNotEmpty,
-	validateEmail,
 } from '@/validators/common';
+import { router } from '@/router';
+import { createFrontendQueryParams } from '@/router/router';
+import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
+
+const setListenersOnTrips = (trips: number[]) => {
+	trips.forEach(id => {
+		// id="go_trip_{{this}}
+		const btn = document.getElementById(`go_trip_${id}`);
+		if (btn !== null) {
+			btn.addEventListener('click', event => {
+				event.preventDefault();
+				router.go(
+					createFrontendQueryParams(pathsURLfrontend.trip, paramsURLfrontend.id, String(id))
+				);
+			});
+		}
+	});
+};
 
 export default class ProfileView extends BasicView {
 	#tokens: Token[];
@@ -51,10 +72,31 @@ export default class ProfileView extends BasicView {
 		const profile: Profile = storage.getProfile();
 		console.log(profile);
 
-		this.setView(profileTemplate(profile));
+		const trips = storage.getLastTrips(); // поездки
+		const ifTrips = trips.length > 0;
+
+		this.setView(profileTemplate({ profile, ifTrips, trips }));
+
+		setListenersOnTrips(trips); // поездки
 
 		const editBtn: Button = new Button('#profile__edit_btn');
 		editBtn.setOnClick(this.#renderEdit);
+
+		// const logoutBtn: Button = new Button('#profile__logout_btn');
+		// logoutBtn.setOnClick(dispatcher.notify(logoutRequest()));
+
+		const logoutBtn = document.querySelector('#profile__logout_btn');
+		console.log(logoutBtn);
+		if (logoutBtn !== null) {
+			logoutBtn.addEventListener(
+				'click',
+				event => {
+					event.preventDefault();
+					dispatcher.notify(logoutRequest());
+				},
+				false
+			);
+		}
 	};
 
 	#renderEdit = (): void => {
@@ -96,7 +138,7 @@ export default class ProfileView extends BasicView {
 		const surnameInput: Input = new Input('#surname_holder', 'input-error-red');
 		const passInput: Input = new Input('#password_holder', 'input-error-red');
 		const repeatedPassInput: Input = new Input('#repeated_password_holder', 'input-error-red');
-		const emailInput: Input = new Input('#email_holder', 'input-error-red');
+		// const emailInput: Input = new Input('#email_holder', 'input-error-red');
 
 		if (
 			!validateElements([
@@ -116,14 +158,14 @@ export default class ProfileView extends BasicView {
 					],
 					errorSetters: [surnameInput],
 				},
-				{
-					validators: [
-						function (): boolean {
-							return validateEmail(emailInput.getValue());
-						},
-					],
-					errorSetters: [emailInput],
-				},
+				// {
+				// 	validators: [
+				// 		function (): boolean {
+				// 			return validateEmail(emailInput.getValue());
+				// 		},
+				// 	],
+				// 	errorSetters: [emailInput],
+				// },
 				{
 					validators: [
 						function (): boolean {
@@ -153,9 +195,9 @@ export default class ProfileView extends BasicView {
 			newUpdateProfileMetadataRequest(
 				nameInput.getValue(),
 				surnameInput.getValue(),
-				'',
+				// emailInput.getValue(),
 				passInput.getValue(),
-				''
+				'no description now'
 			)
 		);
 	};

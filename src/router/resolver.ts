@@ -14,8 +14,11 @@ import {
 	initProfilePageRequest,
 	newGetProfileRequest,
 	newGetReviewsRequest,
+	createTripFormRequest,
+	showRegisterForm,
 } from '@/actions';
 import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
+import { storage } from '@/storage';
 
 const pathErrorEvent: IEvent = initErrorPageRequest(new Error('Неверная ссылка'));
 
@@ -62,7 +65,15 @@ export const notifier = (path: URL): void /* IEvent */ => {
 			break;
 		}
 		case pathsURLfrontend.trip: {
-			tryGetParam(paramsURLfrontend.id, path, initTripPageRequest, newGetTripRequest);
+			const id: number | null = getIDParam(path);
+			if (id === null) {
+				dispatcher.notify(initTripPageRequest());
+				dispatcher.notify(createTripFormRequest());
+			} else {
+				tryGetParam(paramsURLfrontend.id, path, initTripPageRequest, newGetTripRequest);
+				storage.addLastTripId(id);
+			}
+
 			break;
 		}
 		case pathsURLfrontend.login: {
@@ -75,10 +86,11 @@ export const notifier = (path: URL): void /* IEvent */ => {
 			dispatcher.notify(newGetProfileRequest());
 			break;
 		}
-		// case pathsURLfrontend.register: {
-		// 	return initRegisterPageRequest();
-		// 	break;
-		// }
+		case pathsURLfrontend.register: {
+			dispatcher.notify(initRegisterPageRequest());
+			dispatcher.notify(showRegisterForm());
+			break;
+		}
 		case pathsURLfrontend.sight: {
 			const id: number | null = getIDParamDispatchError(path);
 			if (id == null) {

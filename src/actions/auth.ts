@@ -9,7 +9,7 @@ const showLoginForm = (): IEvent =>
 
 const showRegisterForm = (): IEvent =>
 	<IEvent>{
-		key: EventType.SHOW_LOGIN_FORM,
+		key: EventType.SHOW_REGISTER_FORM,
 		metadata: <Empty>{},
 	};
 

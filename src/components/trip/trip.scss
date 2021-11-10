@@ -1,0 +1,77 @@
+@import "src";
+
+.delete_trip__submit_holder {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: $small-px;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  &__answer {
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    gap: $small-px;
+    margin: 0;
+    &__text {
+      @include text-small;
+      color: $my--small-text;
+    }
+  }
+}
+
+.error_block {
+  visibility: hidden;
+  &__text {
+    @include text-small;
+    color: $my--error;
+  }
+}
+
+#button_select {
+  display: none;
+}
+
+.trip_page {
+  display: grid;
+  grid-template: l;
+
+  &__left__info {
+    > div {
+      margin-bottom: 10px;
+    }
+    grid-area: l;
+  }
+}
+
+.trip_form {
+  &__horizontal_holder {
+    display: flex;
+    flex-direction: row;
+    height: min-content;
+    margin-right: $small-px;
+
+    > div {
+      display: flex;
+      flex-direction: row;
+      height: min-content;
+      //padding: $small-px  0;
+      margin-right: $small-px;
+    }
+  }
+
+  input, textarea {
+    background: $my--input-fill;
+    border: 1px $my--input-border;
+    border-radius: 4px;
+    width: 100%;
+    @include text-plain-no-wrap;
+    padding: 6px;
+  }
+}
+
+.buttons_holder {
+  margin-top: $small-px;
+  margin-right: $small-px;
+}

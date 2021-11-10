@@ -6,6 +6,8 @@ import {
 	UpdateProfileMetadataResponse,
 } from '@/models/profile';
 import { UpdateProfile } from '@/dispatcher';
+import { backendFileEndpoint } from '@/constants';
+import { storage } from '@/storage';
 
 export function adaptGetProfileResponse(response: GetProfileResponse): Profile {
 	return <Profile>{
@@ -26,7 +28,7 @@ export function adaptUpdateProfileMetadataRequest(
 		name: request.name,
 		surname: request.surname,
 		password: request.password,
-		email: request.email,
+		email: storage.getProfile().meta.email,
 		description: request.description,
 	};
 }

@@ -18,6 +18,7 @@ import {
 	newGetProfileResponse,
 	newUpdateProfileMetadataRequest,
 	newUpdateProfilePhotoRequest,
+	logoutRequest,
 } from './profile';
 
 import {
@@ -53,7 +54,19 @@ import {
 
 import { newGetSightRequest, newGetSightResult, newGetSightReviewResult } from './sight';
 
-import { newGetTripRequest, newGetTripResult } from './trip';
+import {
+	createTripFormRequest,
+	newGetTripRequest,
+	newGetTripResult,
+	tripFormSubmit,
+	updateCurrentTripInfo,
+	addCurrentTripPlace,
+	sendTrip,
+	createFilledEditTrip,
+	deleteTrip,
+	deleteCurrentTripPlace,
+	rerenderTripCards,
+} from './trip';
 
 import {
 	newGetReviewsRequest,
@@ -106,6 +119,7 @@ export {
 	newGetSightReviewResult,
 	newGetTripRequest,
 	newGetTripResult,
+	deleteTrip,
 	showRegisterForm,
 	showLoginForm,
 	newGetProfileRequest,
@@ -120,4 +134,13 @@ export {
 	newCreateReviewResponse,
 	newCreateReviewFormResponse,
 	createReviewForm,
+	logoutRequest,
+	createTripFormRequest,
+	tripFormSubmit,
+	updateCurrentTripInfo,
+	addCurrentTripPlace,
+	sendTrip,
+	createFilledEditTrip,
+	deleteCurrentTripPlace,
+	rerenderTripCards,
 };

@@ -10,7 +10,7 @@ import ErrorView from '@/view/error';
 import SightReducer from '@/reducers/sight';
 import SightView from '@/view/sight';
 import TripReducer from '@/reducers/trip';
-import TripView from '@/view/trip';
+import { TripInfoView, TripView } from '@/view/trip';
 import ProfileReducer from '@/reducers/profile';
 import ProfileView from '@/view/profile';
 import ReviewReducer from '@/reducers/review';
@@ -103,6 +103,9 @@ export default class PageReducer {
 
 		const tripView: TripView = new TripView();
 		tripView.init();
+
+		const tripInfoView: TripInfoView = new TripInfoView();
+		tripInfoView.init();
 	};
 
 	createProfilePage = (metadata: DataType): void => {

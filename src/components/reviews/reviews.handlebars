@@ -1,13 +1,14 @@
 {{#each reviews}}
-	<p>
-
-		{{this.review.id}}
-		{{this.review.title}}
-		{{this.review.text}}
-		{{#if this.owned}}
-			<b>my - can delete</b>
+	<div class='frame'>
+	<p class='header-review'>{{this.review.title}}</p>
+		<p>✦ {{this.review.rating}}</p>
+		<p>{{this.review.text}}</p>
+		{{#if this.owner}}
+			<button id="delete_button_{{this.review.id}}" class='usual_button_light usual_button'>
+				Ваш отзыв. Можете удалить
+			</button>
+		{{else}}
+		<p>{{this.user.name}}</p>
 		{{/if}}
-		{{this.user.name}}
-	</p>
-	<br>
+	</div>
 {{/each}}

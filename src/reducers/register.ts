@@ -1,5 +1,8 @@
-import { DataType, dispatcher, EventType } from '../dispatcher';
-import { newSetEmptyHeaderResponse } from '@/actions';
+import { DataType, dispatcher, EventType, RegisterData, ValidationErrData } from '../dispatcher';
+import { newSetEmptyHeaderResponse, newSetMainHeaderStrongRequest } from '@/actions';
+import { sendPostJSONRequest } from '@/http';
+import { backendEndpoint, loginURI, pathsURLfrontend, registerURI } from '@/constants';
+import { router } from '@/router';
 
 export default class RegisterReducer {
 	init = () => {
@@ -7,7 +10,32 @@ export default class RegisterReducer {
 		dispatcher.notify(newSetEmptyHeaderResponse());
 	};
 
-	register = (metadata: DataType) => {
-		console.log(metadata);
+	register = (input: RegisterData) => {
+		let result: ValidationErrData;
+
+		sendPostJSONRequest(backendEndpoint + registerURI, input)
+			.then(response => {
+				if (response.status === 400) {
+					result.data.push({ email: 'неверный пароль' });
+					return Promise.reject();
+				}
+				if (response.status === 404) {
+					result.data.push({ password: 'нет такого пользователя' });
+					return Promise.reject();
+				}
+				if (response.status === 400) {
+					return Promise.reject(new Error('серверная валидация. сделать другую обработку ошибок'));
+				}
+				return Promise.resolve(response);
+			})
+			.then(() => {
+				dispatcher.notify(newSetMainHeaderStrongRequest());
+				// надо сделать перейти на страницу откуда пришел, а не на главную
+				router.go(pathsURLfrontend.profile);
+			})
+			.catch(() => {
+				console.log('rejected');
+				// dispatcher.notify(setValidationErrorLogin());
+			});
 	};
 }

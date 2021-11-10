@@ -45,6 +45,7 @@ export default class HeaderView extends BasicView {
 
 		makeSimpleButton('logo-h', pathsURLfrontend.root);
 		makeSimpleButton('user-block', pathsURLfrontend.profile);
+		makeSimpleButton('trip-block', pathsURLfrontend.trip);
 	};
 
 	setMainHeaderBasic = (metadata: DataType): void => {

@@ -27,5 +27,17 @@
   }
 }
 
+.auth_form {
+  &__error_block {
+
+    margin-top: $small-px /2;
+    &__text {
+      visibility: hidden;
+      @include text-small;
+      color: $my--error;
+    }
+  }
+}
+
 
 

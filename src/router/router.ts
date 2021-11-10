@@ -1,5 +1,17 @@
 import { notifier } from './resolver';
 import { dispatcher, UUID } from '@/dispatcher';
+import { frontEndEndPoint, paramsURLfrontend, pathsURLfrontend } from '@/constants';
+
+export const createFrontendQueryParams = (
+	uri: pathsURLfrontend,
+	paramName: paramsURLfrontend,
+	idOrName: string
+): string => {
+	const url = new URL(frontEndEndPoint + uri);
+	url.searchParams.set(paramName, idOrName);
+	// console.log("madeUrl: ", url);
+	return url.href;
+};
 
 class Router {
 	start = (_data?: object) => {
@@ -8,7 +20,8 @@ class Router {
 	};
 
 	go = (_path: string, _data?: string) => {
-		if (window.location.pathname === _path) return;
+		const testQ = new URL(window.location.href);
+		if (window.location.pathname === _path && testQ.searchParams.toString() === '') return;
 		const url = new URL(_path, window.location.href);
 		if (_data) {
 			url.searchParams.append('id', _data);

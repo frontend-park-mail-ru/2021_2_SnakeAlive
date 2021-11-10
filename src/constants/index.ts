@@ -1,4 +1,4 @@
-import { backendEndpoint, backendFileEndpoint } from './endpoints';
+import { backendEndpoint, backendFileEndpoint, frontEndEndPoint } from './endpoints';
 import {
 	loginURI,
 	registerURI,
@@ -11,6 +11,9 @@ import {
 	reviewsURI,
 	reviewURI,
 	queryParamsToGetReview,
+	upload,
+	postTripURI,
+	listOfCountries,
 } from './uris';
 import { russiaFormName, russiaUriName, nicaraguaFormName, nicaraguaUriName } from './defaults';
 import { pathsURLfrontend, paramsURLfrontend } from '@/constants/frontendURIs';
@@ -34,5 +37,9 @@ export {
 	reviewURI,
 	pathsURLfrontend,
 	paramsURLfrontend,
-	queryParamsToGetReview
+	queryParamsToGetReview,
+	upload,
+	postTripURI,
+	frontEndEndPoint,
+	listOfCountries,
 };

@@ -11,6 +11,7 @@ import { adaptGetCards } from '@/adapters';
 import { storage } from '@/storage';
 import { DataType, dispatcher, EventType, UUID, NamedUUID, Token } from '@/dispatcher';
 import { Country, CountryCardResponse } from '@/models';
+import { minAdaptCountryCards } from '@/adapters/country_cards_2';
 
 export default class CountryReducer {
 	#tokens: Token[];
@@ -49,7 +50,8 @@ export default class CountryReducer {
 		this.#getCards(<string>data.ID)
 			.then((cards: CountryCardResponse[]) => {
 				console.log('country reducer : ', cards);
-				storage.storeCountryCards(adaptGetCards(cards));
+				// storage.storeCountryCards(adaptGetCards(cards));
+				storage.storeCountryCardsMin(minAdaptCountryCards(cards));
 				dispatcher.notify(newGetCountryCardsResult());
 			})
 			.catch((error: Error) => {

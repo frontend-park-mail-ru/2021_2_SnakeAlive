@@ -5,6 +5,9 @@ import { router } from './router';
 import './drop_default.css';
 import './index.scss';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+console.log = () => {}; // !!
+
 const main = () => {
 	const contentPlace: HTMLDivElement = document.createElement('div');
 	contentPlace.id = 'content';

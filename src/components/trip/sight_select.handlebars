@@ -1,0 +1,7 @@
+<label for="sight_select"></label>
+<select form="trip_form" id="sight_select">
+	<option value='-1'>выберите интересность</option>
+	{{#each sights}}
+		<option value='{{this.id}}' id='{{this.id}}'>{{ this.name }}</option>
+	{{/each}}
+</select>

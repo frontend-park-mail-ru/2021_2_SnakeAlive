@@ -1,3 +1,5 @@
+import { TripFormInfo } from '@/models/trip';
+
 export interface Empty {}
 
 export interface NumID {
@@ -42,7 +44,7 @@ export interface UserMinData {
 export interface UpdateProfile {
 	name: string;
 	surname: string;
-	email: string;
+	//	email: string;
 	password: string;
 	description: string;
 }
@@ -62,6 +64,24 @@ export interface CreateReviewForm {
 	title: string;
 	text: string;
 	rating: number;
+}
+
+export interface SubmitTripInfo {
+	info: TripFormInfo;
+}
+
+export interface TripInfo {
+	title: string;
+	description: string;
+}
+
+export interface sightToTrip {
+	sightId: number;
+	day: number;
+}
+
+export interface isTripEdited {
+	isEdit: boolean;
 }
 
 // export interface SightData {
@@ -99,7 +119,10 @@ export type DataType =
 	| File
 	| CreateReview
 	| CreateReviewForm
+	| sightToTrip
+	| isTripEdited
 	// | SightData
 	// | TripData
 	// | CountryData
+	| SubmitTripInfo
 	| Empty;

@@ -1,0 +1,35 @@
+{{#if isEdit}}
+
+{{#each sights}}
+	{{#each this}}
+		<div class='frame'>
+			<h2 id="go_button_{{ this.sight.id }}_{{this.PP}}">{{ this.sight.name }}</h2>
+			<img src="{{defaultPicture}}">
+			<p>✦ {{ this.sight.rating }}</p>
+			<p>Тэги: {{ this.sight.tags }}</p>
+<!--			<p>{{ this.sight.photos }}</p>-->
+<!--			<p>{{ this.sight.description }}</p>-->
+			<button
+				id="delete_button_{{ this.sight.id }}_{{this.PP}}"
+				class='usual_button_light usual_button'
+			>удалить из поездки</button>
+
+		</div>
+	{{/each}}
+{{/each}}
+
+{{else}}
+
+	{{#each sights}}
+		{{#each this}}
+			<div class='frame'>
+				<h2 id="go_button_{{ this.sight.id }}_{{this.PP}}">{{ this.sight.name }}</h2>
+				<img src="{{defaultPicture}}">
+				<p>✦ {{ this.sight.rating }}</p>
+				<p>Тэги: {{ this.sight.tags }}</p>
+
+			</div>
+		{{/each}}
+	{{/each}}
+
+{{/if}}

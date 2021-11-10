@@ -3,6 +3,14 @@
 		<img src="{{logo}}" class="header__logo__img"/>
 		<h2 class="header__logo__text">TripAdvisor</h2>
 	</div>
+
+	<div class="right">
+	{{#if isUser}}
+		<div class='header__button' id='trip-block'>
+			<p>Создать поездку</p>
+		</div>
+	{{/if}}
+
 	{{#if isNotEmpty}}
 	<div class='header__button' id='user-block'>
 		{{#if isUser}}
@@ -15,4 +23,5 @@
 		{{/if}}
 	</div>
 	{{/if}}
+		</div>
 </div>

@@ -1,13 +1,22 @@
 <div id='profile' class="profile">
     <div class="profile__photo" id="profile__photo">
-        <img src="{{profileImage}}" alt="">
+        <img src="{{profile.profileImage}}" alt="">
     </div>
     <div id="profile__metadata-holder" class="profile__metadata-holder">
-        <div class="profile__data-holder">{{meta.name}} {{meta.surname}} </div>
-        <div class="profile__data-holder">{{meta.email}} </div>
+        <div class="profile__data-holder">{{profile.meta.name}} {{profile.meta.surname}} </div>
+        <div class="profile__data-holder">{{profile.meta.email}} </div>
     </div>
     <div id="btn_block" class="profile__btn-block">
         <button id="profile__edit_btn" class="profile__edit-btn">Редактировать</button>
         <button id="profile__logout_btn" class="profile__close-btn">Выйти</button>
     </div>
 </div>
+
+{{#if ifTrips}}
+<div>
+	<p>Последние поездки</p>
+	{{#each trips}}
+			<button id="go_trip_{{this}}">🚌</button>
+	{{/each}}
+</div>
+{{/if}}

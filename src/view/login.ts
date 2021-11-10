@@ -32,6 +32,7 @@ export default class LoginView extends BasicView {
 			this.#form = new Form(formLoginConfig, formPlaceElement);
 			this.#form.setButtonEvent(this.#submit);
 		}
+		makeSimpleButton('go-reg', pathsURLfrontend.register);
 	};
 
 	setErrors = (metadata: DataType) => {

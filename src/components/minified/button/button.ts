@@ -4,7 +4,7 @@ export default class Button {
 	constructor(componentName: string) {
 		const tryComponent = document.querySelector(componentName) as HTMLButtonElement | null;
 		if (tryComponent === null) {
-			throw new Error('component ' + componentName + ' empty');
+			throw new Error(`component ${componentName} empty`);
 		}
 
 		this.#component = tryComponent;

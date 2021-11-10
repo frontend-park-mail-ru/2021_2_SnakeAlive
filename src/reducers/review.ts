@@ -4,7 +4,8 @@ import {
 	createReviewForm,
 	initErrorPageRequest,
 	newCreateReviewFormResponse,
-	newCreateReviewResponse, newGetReviewsRequest,
+	newCreateReviewResponse,
+	newGetReviewsRequest,
 	newGetReviewsResponse,
 } from '@/actions';
 import { storage } from '@/storage';
@@ -67,12 +68,12 @@ export default class ReviewReducer {
 		event.placeId = Number(storage.getSight().id);
 		this.#sendCreateReview(adaptCreateReviewRequest(event))
 			.then((responseText: string) => {
-					console.log(responseText);
-					dispatcher.notify(createReviewForm());
-					dispatcher.notify(newGetReviewsRequest(this.#placeId));
-					// надо добавлять а не ререндить всех но что поделать
-					// как бы надо проверять ок/не ок ответ пришел, ноо мы этого не делаем
-					// все равно только по обновлению работает. починить если останется время
+				console.log(responseText);
+				dispatcher.notify(createReviewForm());
+				dispatcher.notify(newGetReviewsRequest(this.#placeId));
+				// надо добавлять а не ререндить всех но что поделать
+				// как бы надо проверять ок/не ок ответ пришел, ноо мы этого не делаем
+				// все равно только по обновлению работает. починить если останется время
 			})
 			.catch((error: Error) => {
 				console.log('something went wrong during POST /review', error);
@@ -80,7 +81,7 @@ export default class ReviewReducer {
 	};
 
 	#sendGetReviews = (sightID: number): Promise<Review[]> =>
-		sendGetJSONRequest(backendEndpoint + reviewsURI + sightID+ queryParamsToGetReview)
+		sendGetJSONRequest(backendEndpoint + reviewsURI + sightID + queryParamsToGetReview)
 			.then(response => {
 				if (response.status === 404) {
 					return Promise.reject(new Error('На сайте нет такой страницы'));
@@ -114,5 +115,5 @@ export default class ReviewReducer {
 				}
 				return Promise.resolve(response);
 			})
-			.then((response) => response.text());
+			.then(response => response.text());
 }
