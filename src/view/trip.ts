@@ -6,13 +6,15 @@ import tripInfo from '@/components/trip/trip_info.handlebars';
 import tripSights from '@/components/trip/trip_sights.handlebars';
 import { initTripForm } from '@/components/trip/trip_form';
 import { sendGetJSONRequest, sendPostJSONRequest } from '@/http';
-import { backendEndpoint, listOfCountries, tripURI } from '@/constants';
+import { backendEndpoint, listOfCountries, paramsURLfrontend, pathsURLfrontend, tripURI } from '@/constants';
 import { isTripEdited, SubmitTripInfo } from '@/dispatcher/metadata_types';
 import { storage } from '@/storage';
-import { createFilledEditTrip, rerenderTripCards } from '@/actions';
+import { rerenderTripCards } from '@/actions';
 import { SightCardInTrip } from '@/view/sight_cards';
 import { Sight } from '@/models';
 import defaultPicture from '@/../image/moscow_city_1.jpeg';
+import { router } from '@/router';
+import { createFrontendQueryParams } from '@/router/router';
 
 export class CardSightsHolder extends BasicView {
 	#tokens: Token[];
@@ -94,8 +96,8 @@ export class TripInfoView extends BasicView {
 
 	init = (): void => {
 		this.#tokens = [
-			dispatcher.register(EventType.GET_TRIP_RESPONSE, this.showTrip),
-			dispatcher.register(EventType.GET_TRIP_EDIT_RESPONSE, this.createFilledTripForm),
+			dispatcher.register(EventType.GET_TRIP_RESPONSE, this.isEditedOrNot), // !
+			// dispatcher.register(EventType.GET_TRIP_EDIT_RESPONSE, this.createFilledTripForm), // !
 			dispatcher.register(EventType.CREATE_TRIP_FORM_REQUEST, this.createEmptyTripForm),
 			dispatcher.register(EventType.CREATE_TRIP_FORM_SUBMIT, this.postTripFormInfo),
 		];
@@ -112,7 +114,17 @@ export class TripInfoView extends BasicView {
 		// this.setEmpty();
 	};
 
+	isEditedOrNot = (isEdited: isTripEdited) => {
+		if (isEdited.isEdit) {
+			this.createFilledTripForm();
+		} else {
+			this.showTrip();
+		}
+	}
+
 	showTrip = () => {
+		// router.go(frontEndEndPoint );// ckj;ysq gen
+
 		const trip = storage.getCurrentTrip();
 		this.setView(tripInfo(trip));
 
@@ -122,7 +134,18 @@ export class TripInfoView extends BasicView {
 				'click',
 				event => {
 					event.preventDefault();
-					dispatcher.notify(createFilledEditTrip());
+					router.go(createFrontendQueryParams(
+						pathsURLfrontend.trip,
+						[{
+							key: paramsURLfrontend.edit,
+							value: '1'
+						},
+							{
+								key: paramsURLfrontend.id,
+								value: storage.getCurrentTrip().id
+							}]
+					));
+					// dispatcher.notify(newGetTripResult(true));
 				},
 				false
 			);

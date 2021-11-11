@@ -1,14 +1,6 @@
 // import tripFormTemplate from '@/components/trip/trip_form.handlebars';
-import { TripFormInfo } from '@/models/trip';
 import { dispatcher } from '@/dispatcher';
-import {
-	deleteTrip,
-	sendTrip,
-	tripFormSubmit,
-	addCurrentTripPlace,
-	updateCurrentTripInfo,
-} from '@/actions';
-import { SubmitTripInfo } from '@/dispatcher/metadata_types';
+import { addCurrentTripPlace, deleteTrip, updateCurrentTripInfo } from '@/actions';
 import { sendGetJSONRequest } from '@/http';
 import { backendEndpoint, paramsURLfrontend, pathsURLfrontend, sightsURI } from '@/constants';
 import tripSightsSelectTemplate from './sight_select.handlebars';
@@ -161,13 +153,14 @@ export const initTripForm = (isNew: boolean): void => {
 					dispatcher.notify(updateCurrentTripInfo(title, text));
 				}
 
-				router.go(
-					createFrontendQueryParams(
-						pathsURLfrontend.trip,
-						paramsURLfrontend.id,
-						storage.getCurrentTrip().id
-					)
-				);
+				// перейти к просмотру
+				router.go(createFrontendQueryParams(
+					pathsURLfrontend.trip,
+					[{
+					key: paramsURLfrontend.id,
+					value: storage.getCurrentTrip().id
+				}]
+				));
 			},
 			false
 		);

@@ -21,7 +21,7 @@ import {
 	newSetMainHeaderRequest,
 	rerenderTripCards,
 } from '@/actions';
-import { sightToTrip, TripInfo } from '@/dispatcher/metadata_types';
+import { IDState, sightToTrip, TripInfo } from '@/dispatcher/metadata_types';
 import { adoptForSend } from '@/adapters';
 import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
@@ -63,12 +63,16 @@ export default class TripReducer {
 		this.#sendTrip(tripSend, trip.id);
 	};
 
-	initTripPage = (metadata: UUID) => {
-		const { ID } = metadata;
+	initTripPage = (metadata: IDState) => {
+		// сюда пихнуть едит или нет?
+		const { ID, state } = metadata;
+		console.log('state', state);
 		this.#getTrip(ID)
 			.then((trip: Trip) => {
+				console.log('trippp ', trip);
 				storage.storeCurrentTrip(trip);
-				dispatcher.notify(newGetTripResult());
+				dispatcher.notify(newGetTripResult(state));
+				// ?
 			})
 			.catch((error: Error) => {
 				dispatcher.notify(initErrorPageRequest(error));
@@ -152,7 +156,12 @@ export default class TripReducer {
 				.then(response => response.json())
 				.then(response => {
 					router.go(
-						createFrontendQueryParams(pathsURLfrontend.trip, paramsURLfrontend.id, response.id)
+						createFrontendQueryParams(pathsURLfrontend.trip, 							[
+							{
+								key: paramsURLfrontend.id,
+								value: response.id
+							}
+						])
 					);
 				});
 		}

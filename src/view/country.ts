@@ -111,8 +111,6 @@ class CountryHolderView extends BasicView {
 			dispatcher.unregister(element);
 		});
 
-		dispatcher.notify(destroyCurrentPage());
-
 		this.setEmpty();
 	};
 

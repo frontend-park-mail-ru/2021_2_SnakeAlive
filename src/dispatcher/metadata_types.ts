@@ -10,6 +10,11 @@ export interface UUID {
 	ID: string;
 }
 
+export interface IDState {
+	ID: string;
+	state: boolean;
+}
+
 export interface NamedUUID {
 	ID: string;
 	name: string;

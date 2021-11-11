@@ -98,7 +98,7 @@ p {
 
 html, body {
   margin: 0;
-  font-family: 'Open Sans', serif;
+  font-family: 'Open Sans', sans-serif;
   background: $my--main-background;
 }
 
@@ -113,11 +113,13 @@ html, body {
   background: $white;
 }
 
-input {
+input, textarea {
   background: $my--input-fill;
-  border: 1px $my--input-border;
+  border: 0.5px solid $my--input-border;
   border-radius: 4px;
   width: 100%;
+  @include text-plain-no-wrap;
+  padding: 6px;
 }
 
 .icon {

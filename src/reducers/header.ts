@@ -58,6 +58,7 @@ export default class HeaderReducer {
 	};
 
 	setHeader = (metadata: DataType): void => {
+		this.#state = state.main;
 		console.log('setHeader');
 		sendGetJSONRequest(backendEndpoint + profile)
 			.then(response => {

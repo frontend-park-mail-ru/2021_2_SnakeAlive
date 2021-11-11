@@ -61,17 +61,23 @@
     }
   }
 
-  input, textarea {
-    background: $my--input-fill;
-    border: 1px $my--input-border;
-    border-radius: 4px;
-    width: 100%;
-    @include text-plain-no-wrap;
-    padding: 6px;
-  }
+  //input, textarea {
+  //  background: $my--input-fill;
+  //  border-color: $my--input-border;
+  //  border: solid;
+  //  border-radius: 4px;
+  //  width: 100%;
+  //  @include text-plain-no-wrap;
+  //  padding: 6px;
+  //}
 }
 
 .buttons_holder {
   margin-top: $small-px;
   margin-right: $small-px;
+}
+
+.label-div {
+  margin-top: $large-px;
+  margin-bottom: $large-px /2;
 }

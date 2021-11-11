@@ -47,8 +47,12 @@ export class SightCardInTrip {
 					router.go(
 						createFrontendQueryParams(
 							pathsURLfrontend.sight,
-							paramsURLfrontend.id,
-							String(this.#id)
+							[
+								{
+									key: paramsURLfrontend.id,
+									value: String(this.#id)
+								}
+							]
 						)
 					);
 				},
@@ -93,8 +97,12 @@ export class SightCardInCountry {
 					router.go(
 						createFrontendQueryParams(
 							pathsURLfrontend.sight,
-							paramsURLfrontend.id,
-							String(this.#id)
+							[
+								{
+									key: paramsURLfrontend.id,
+									value: String(this.#id)
+								}
+							]
 						)
 					);
 				},

@@ -11,4 +11,5 @@ export const enum pathsURLfrontend {
 export const enum paramsURLfrontend {
 	id = 'id',
 	name = 'name',
+	edit = 'edit'
 }

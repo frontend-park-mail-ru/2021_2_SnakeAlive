@@ -62,7 +62,7 @@ import {
 	updateCurrentTripInfo,
 	addCurrentTripPlace,
 	sendTrip,
-	createFilledEditTrip,
+	// createFilledEditTrip,
 	deleteTrip,
 	deleteCurrentTripPlace,
 	rerenderTripCards,
@@ -140,7 +140,7 @@ export {
 	updateCurrentTripInfo,
 	addCurrentTripPlace,
 	sendTrip,
-	createFilledEditTrip,
+	// createFilledEditTrip,
 	deleteCurrentTripPlace,
 	rerenderTripCards,
 };

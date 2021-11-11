@@ -2,14 +2,14 @@
 <form id="trip_form" class="trip_form">
 
 		<div class="form_form__input_holder">
-			<div>
+			<div class='label-div'>
 				<label for="title">Название поездки</label>
 			</div>
 			<input type="text" id="title" name="title" class="form__input" value="{{title}}"/>
 		</div>
 
 	<div class="trip_form__input_holder">
-		<div>
+		<div class='label-div'>
 			<label for="comment_text">Информация о поездке</label>
 		</div>
 		<div class="trip_form__input_holder__text">
@@ -23,6 +23,10 @@
 
 	<div class="error_block" id="error_block">
 		<p class="error_block__text">Ошибка. Обязательны название поездки и хотя бы одно место, которое вы собираетесь посетить</p>
+	</div>
+
+	<div class='label-div'>
+		<label for="country_select">Прежде чем продолжить, пожалуйста, выберите хотя бы одно место, которое хотите посетить:</label>
 	</div>
 
 	<div class="trip_form__horizontal_holder">
