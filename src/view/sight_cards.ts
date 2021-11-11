@@ -45,15 +45,12 @@ export class SightCardInTrip {
 				event => {
 					event.preventDefault();
 					router.go(
-						createFrontendQueryParams(
-							pathsURLfrontend.sight,
-							[
-								{
-									key: paramsURLfrontend.id,
-									value: String(this.#id)
-								}
-							]
-						)
+						createFrontendQueryParams(pathsURLfrontend.sight, [
+							{
+								key: paramsURLfrontend.id,
+								value: String(this.#id),
+							},
+						])
 					);
 				},
 				false
@@ -95,15 +92,12 @@ export class SightCardInCountry {
 				event => {
 					event.preventDefault();
 					router.go(
-						createFrontendQueryParams(
-							pathsURLfrontend.sight,
-							[
-								{
-									key: paramsURLfrontend.id,
-									value: String(this.#id)
-								}
-							]
-						)
+						createFrontendQueryParams(pathsURLfrontend.sight, [
+							{
+								key: paramsURLfrontend.id,
+								value: String(this.#id),
+							},
+						])
 					);
 				},
 				false

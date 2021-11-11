@@ -23,7 +23,7 @@ const pathErrorEvent: IEvent = initErrorPageRequest(new Error('Неверная 
 
 const tryGetParam = (
 	params: paramsURLfrontend[],
-	path: URL,
+	path: URL
 	// initEvent: () => IEvent,
 	// event: any // => IEvent
 ): Record<string, string> /* IEvent */ => {
@@ -37,8 +37,8 @@ const tryGetParam = (
 		if (gotParam) {
 			res[param] = gotParam;
 		}
-	})
-	console.log(res, "res");
+	});
+	console.log(res, 'res');
 	return res;
 	// костыль для обработки редактирования
 	// if (res.edit) {
@@ -100,9 +100,8 @@ export const notifier = (path: URL): void /* IEvent */ => {
 				dispatcher.notify(createTripFormRequest());
 			}
 
-
-				// ,
-				// storage.addLastTripId(id);
+			// ,
+			// storage.addLastTripId(id);
 			// }
 
 			break;

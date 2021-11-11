@@ -1,12 +1,18 @@
 import { Empty, EventType, IEvent, UUID } from '@/dispatcher';
-import { sightToTrip, isTripEdited, SubmitTripInfo, TripInfo, IDState } from '@/dispatcher/metadata_types';
+import {
+	sightToTrip,
+	isTripEdited,
+	SubmitTripInfo,
+	TripInfo,
+	IDState,
+} from '@/dispatcher/metadata_types';
 
 const newGetTripRequest = (tripID: string, isEdit: boolean): IEvent =>
 	<IEvent>{
 		key: EventType.GET_TRIP_REQUEST,
 		metadata: <IDState>{
 			ID: tripID,
-			state: isEdit
+			state: isEdit,
 		},
 	};
 

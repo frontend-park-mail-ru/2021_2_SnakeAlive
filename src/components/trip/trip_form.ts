@@ -154,13 +154,14 @@ export const initTripForm = (isNew: boolean): void => {
 				}
 
 				// перейти к просмотру
-				router.go(createFrontendQueryParams(
-					pathsURLfrontend.trip,
-					[{
-					key: paramsURLfrontend.id,
-					value: storage.getCurrentTrip().id
-				}]
-				));
+				router.go(
+					createFrontendQueryParams(pathsURLfrontend.trip, [
+						{
+							key: paramsURLfrontend.id,
+							value: storage.getCurrentTrip().id,
+						},
+					])
+				);
 			},
 			false
 		);

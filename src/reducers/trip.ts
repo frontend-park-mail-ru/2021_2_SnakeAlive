@@ -64,7 +64,6 @@ export default class TripReducer {
 	};
 
 	initTripPage = (metadata: IDState) => {
-		// сюда пихнуть едит или нет?
 		const { ID, state } = metadata;
 		console.log('state', state);
 		this.#getTrip(ID)
@@ -156,11 +155,15 @@ export default class TripReducer {
 				.then(response => response.json())
 				.then(response => {
 					router.go(
-						createFrontendQueryParams(pathsURLfrontend.trip, 							[
+						createFrontendQueryParams(pathsURLfrontend.trip, [
 							{
 								key: paramsURLfrontend.id,
-								value: response.id
-							}
+								value: response.id,
+							},
+							{
+								key: paramsURLfrontend.edit,
+								value: '1',
+							},
 						])
 					);
 				});

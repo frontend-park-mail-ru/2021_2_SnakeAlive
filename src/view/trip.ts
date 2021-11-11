@@ -6,7 +6,13 @@ import tripInfo from '@/components/trip/trip_info.handlebars';
 import tripSights from '@/components/trip/trip_sights.handlebars';
 import { initTripForm } from '@/components/trip/trip_form';
 import { sendGetJSONRequest, sendPostJSONRequest } from '@/http';
-import { backendEndpoint, listOfCountries, paramsURLfrontend, pathsURLfrontend, tripURI } from '@/constants';
+import {
+	backendEndpoint,
+	listOfCountries,
+	paramsURLfrontend,
+	pathsURLfrontend,
+	tripURI,
+} from '@/constants';
 import { isTripEdited, SubmitTripInfo } from '@/dispatcher/metadata_types';
 import { storage } from '@/storage';
 import { rerenderTripCards } from '@/actions';
@@ -120,7 +126,7 @@ export class TripInfoView extends BasicView {
 		} else {
 			this.showTrip();
 		}
-	}
+	};
 
 	showTrip = () => {
 		// router.go(frontEndEndPoint );// ckj;ysq gen
@@ -134,17 +140,18 @@ export class TripInfoView extends BasicView {
 				'click',
 				event => {
 					event.preventDefault();
-					router.go(createFrontendQueryParams(
-						pathsURLfrontend.trip,
-						[{
-							key: paramsURLfrontend.edit,
-							value: '1'
-						},
+					router.go(
+						createFrontendQueryParams(pathsURLfrontend.trip, [
+							{
+								key: paramsURLfrontend.edit,
+								value: '1',
+							},
 							{
 								key: paramsURLfrontend.id,
-								value: storage.getCurrentTrip().id
-							}]
-					));
+								value: storage.getCurrentTrip().id,
+							},
+						])
+					);
 					// dispatcher.notify(newGetTripResult(true));
 				},
 				false

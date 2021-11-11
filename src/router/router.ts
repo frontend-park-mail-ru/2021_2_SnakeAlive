@@ -4,14 +4,14 @@ import { frontEndEndPoint, paramsURLfrontend, pathsURLfrontend } from '@/constan
 
 export const createFrontendQueryParams = (
 	uri: pathsURLfrontend,
-	params: {key: paramsURLfrontend, value: string}[]
+	params: { key: paramsURLfrontend; value: string }[]
 	// paramName: paramsURLfrontend,
 	// idOrName: string
 ): string => {
 	const url = new URL(frontEndEndPoint + uri);
-	params.forEach((param) => {
+	params.forEach(param => {
 		url.searchParams.set(param.key, param.value);
-	})
+	});
 	// console.log("madeUrl: ", url);
 	return url.href;
 };

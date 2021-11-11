@@ -24,10 +24,12 @@
 	<div class="error_block" id="error_block">
 		<p class="error_block__text">Ошибка. Обязательны название поездки и хотя бы одно место, которое вы собираетесь посетить</p>
 	</div>
-
-	<div class='label-div'>
-		<label for="country_select">Прежде чем продолжить, пожалуйста, выберите хотя бы одно место, которое хотите посетить:</label>
-	</div>
+	{{#if isNotNew}}
+	{{else}}
+		<div class='label-div'>
+			<label for="country_select">Прежде чем продолжить, пожалуйста, выберите хотя бы одно место, которое хотите посетить:</label>
+		</div>
+	{{/if}}
 
 	<div class="trip_form__horizontal_holder">
 		<div class="select_string">

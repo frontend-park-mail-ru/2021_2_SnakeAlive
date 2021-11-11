@@ -29,11 +29,11 @@ const setListenersOnTrips = (trips: number[]) => {
 			btn.addEventListener('click', event => {
 				event.preventDefault();
 				router.go(
-					createFrontendQueryParams(pathsURLfrontend.trip, 							[
+					createFrontendQueryParams(pathsURLfrontend.trip, [
 						{
 							key: paramsURLfrontend.id,
-							value: String(id)
-						}
+							value: String(id),
+						},
 					])
 				);
 			});

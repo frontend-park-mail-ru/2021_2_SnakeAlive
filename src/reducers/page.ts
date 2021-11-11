@@ -97,7 +97,7 @@ export default class PageReducer {
 
 	createTripPage = (metadata: UUID): void => {
 		dispatcher.notify(destroyCurrentPage());
-		console.log("page reducer create trip");
+		console.log('page reducer create trip');
 
 		const tripReducer: TripReducer = new TripReducer();
 		tripReducer.init();
