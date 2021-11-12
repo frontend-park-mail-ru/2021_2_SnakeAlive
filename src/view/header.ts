@@ -7,6 +7,8 @@ import { makeSimpleButton } from '@/components';
 import { pathsURLfrontend } from '@/constants';
 
 import { makeHeader } from '@/components/header/header';
+import { Profile } from '@/models/profile';
+import { IsTrue } from '@/dispatcher/metadata_types';
 
 export default class HeaderView extends BasicView {
 	#tokens: Token[];
@@ -34,12 +36,13 @@ export default class HeaderView extends BasicView {
 	};
 
 	setMainHeaderLogged = (metadata: DataType): void => {
-		const user: UserMetadata = storage.getUserMetadata();
+		const user: Profile = storage.getProfile();
+		console.log(user);
 		const dataTemplate = {
 			isNotEmpty: true,
 			isUser: true,
-			name: user.name,
-			avatarPath: user.avatarPath,
+			name: user.meta.name,
+			avatarPath: user.profileImage,
 		};
 		this.setView(makeHeader(dataTemplate));
 
@@ -60,13 +63,15 @@ export default class HeaderView extends BasicView {
 		makeSimpleButton('user-block', pathsURLfrontend.login);
 	};
 
-	setMainHeaderEmpty = (metadata: DataType): void => {
+	setMainHeaderEmpty = (metadata: IsTrue): void => {
+		console.log(metadata.isTrue);
 		const dataTemplate = {
 			isNotEmpty: false,
-			isUser: false,
+			isUser: metadata.isTrue,
 		};
 		this.setView(makeHeader(dataTemplate));
 
 		makeSimpleButton('logo-h', pathsURLfrontend.root);
+		makeSimpleButton('trip-block', pathsURLfrontend.trip);
 	};
 }

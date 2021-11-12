@@ -1,7 +1,7 @@
 import { Empty, EventType, IEvent, UUID } from '@/dispatcher';
 import {
-	sightToTrip,
-	isTripEdited,
+	SightToTrip,
+	IsTrue,
 	SubmitTripInfo,
 	TripInfo,
 	IDState,
@@ -19,8 +19,8 @@ const newGetTripRequest = (tripID: string, isEdit: boolean): IEvent =>
 const newGetTripResult = (isEdit: boolean): IEvent =>
 	<IEvent>{
 		key: EventType.GET_TRIP_RESPONSE,
-		metadata: <isTripEdited>{
-			isEdit,
+		metadata: <IsTrue>{
+			isTrue: isEdit,
 		},
 	};
 
@@ -33,8 +33,8 @@ const createTripFormRequest = (): IEvent =>
 const rerenderTripCards = (isEdit: boolean): IEvent =>
 	<IEvent>{
 		key: EventType.RERENDER_TRIP_CARDS,
-		metadata: <isTripEdited>{
-			isEdit,
+		metadata: <IsTrue>{
+			isTrue: isEdit,
 		},
 	};
 
@@ -66,7 +66,7 @@ const updateCurrentTripInfo = (title: string, description: string) =>
 const addCurrentTripPlace = (sightId: number, day: number) =>
 	<IEvent>{
 		key: EventType.ADD_CURRENT_TRIP_PLACE,
-		metadata: <sightToTrip>{
+		metadata: <SightToTrip>{
 			sightId,
 			day,
 		},
@@ -75,7 +75,7 @@ const addCurrentTripPlace = (sightId: number, day: number) =>
 const deleteCurrentTripPlace = (sightId: number, day: number) =>
 	<IEvent>{
 		key: EventType.DELETE_CURRENT_TRIP_PLACE,
-		metadata: <sightToTrip>{
+		metadata: <SightToTrip>{
 			sightId,
 			day,
 		},

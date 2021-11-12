@@ -15,7 +15,7 @@ export function adaptGetProfileResponse(response: GetProfileResponse): Profile {
 			name: response.name,
 			surname: response.surname,
 			description: response.description,
-			email: response.email,
+			email: response.email
 		},
 		profileImage: response.avatar,
 	};

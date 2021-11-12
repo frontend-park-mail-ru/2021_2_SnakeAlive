@@ -1,14 +1,14 @@
 <div class='header__wrapper'>
 <div class='header__logo' id='logo-h'>
 		<img src="{{logo}}" class="header__logo__img"/>
-		<h2 class="header__logo__text">TripAdvisor</h2>
+		<h2 class="header__logo__text">путешествия</h2>
 	</div>
 
 	<div class="right">
 	{{#if isUser}}
-		<div class='header__button' id='trip-block'>
-			<p>Создать поездку</p>
-		</div>
+		<button class='usual_button usual_button_light' id='trip-block'>
+			Создать поездку
+		</button>
 	{{/if}}
 
 	{{#if isNotEmpty}}

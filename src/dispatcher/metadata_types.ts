@@ -80,13 +80,13 @@ export interface TripInfo {
 	description: string;
 }
 
-export interface sightToTrip {
+export interface SightToTrip {
 	sightId: number;
 	day: number;
 }
 
-export interface isTripEdited {
-	isEdit: boolean;
+export interface IsTrue {
+	isTrue: boolean;
 }
 
 // export interface SightData {
@@ -124,8 +124,8 @@ export type DataType =
 	| File
 	| CreateReview
 	| CreateReviewForm
-	| sightToTrip
-	| isTripEdited
+	| SightToTrip
+	| IsTrue
 	// | SightData
 	// | TripData
 	// | CountryData

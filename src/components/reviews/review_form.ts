@@ -3,7 +3,7 @@ import { newCreateReviewFormResponse, setValidationErrorLogin } from '@/actions'
 import imgRating from '../../../image/icon/rating.svg';
 import reviewFormTemplate from './review_form.handlebars';
 
-const setTextAreaResizeParams = (
+export const setTextAreaResizeParams = (
 	textId: string,
 	hiddenTextId: string,
 	maxHeight: number

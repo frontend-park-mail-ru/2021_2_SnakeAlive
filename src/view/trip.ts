@@ -13,7 +13,7 @@ import {
 	pathsURLfrontend,
 	tripURI,
 } from '@/constants';
-import { isTripEdited, SubmitTripInfo } from '@/dispatcher/metadata_types';
+import { IsTrue, SubmitTripInfo } from '@/dispatcher/metadata_types';
 import { storage } from '@/storage';
 import { rerenderTripCards } from '@/actions';
 import { SightCardInTrip } from '@/view/sight_cards';
@@ -21,6 +21,7 @@ import { Sight } from '@/models';
 import defaultPicture from '@/../image/moscow_city_1.jpeg';
 import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
+import mapPicturePath from '@/../image/map.png';
 
 export class CardSightsHolder extends BasicView {
 	#tokens: Token[];
@@ -40,7 +41,7 @@ export class CardSightsHolder extends BasicView {
 		];
 	};
 
-	rerenderCards = (metadata: isTripEdited) => {
+	rerenderCards = (metadata: IsTrue) => {
 		this.setEmpty();
 		this.#cards = [];
 
@@ -65,7 +66,7 @@ export class CardSightsHolder extends BasicView {
 			});
 		}
 
-		this.setView(tripSights({ sights: sightsAdopted, isEdit: metadata.isEdit, defaultPicture }));
+		this.setView(tripSights({ sights: sightsAdopted, isEdit: metadata.isTrue, defaultPicture }));
 
 		sightsAdopted.forEach(day => {
 			day.forEach(sight => {
@@ -120,8 +121,8 @@ export class TripInfoView extends BasicView {
 		// this.setEmpty();
 	};
 
-	isEditedOrNot = (isEdited: isTripEdited) => {
-		if (isEdited.isEdit) {
+	isEditedOrNot = (isEdited: IsTrue) => {
+		if (isEdited.isTrue) {
 			this.createFilledTripForm();
 		} else {
 			this.showTrip();
@@ -177,7 +178,6 @@ export class TripInfoView extends BasicView {
 				initTripForm(true);
 				dispatcher.notify(rerenderTripCards(true));
 			});
-		// запросить список стран!
 
 		this.#firstCreated = true;
 
@@ -252,7 +252,7 @@ export class TripView extends BasicView {
 
 	setBasicTripPage = () => {
 		console.log('tripPageTemplate({})');
-		this.setView(tripPageTemplate());
+		this.setView(tripPageTemplate({ mapPicturePath }));
 	};
 
 	#destroy = (metadata: EventType): void => {

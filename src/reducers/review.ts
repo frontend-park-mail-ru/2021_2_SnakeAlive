@@ -58,7 +58,13 @@ export default class ReviewReducer {
 
 	deleteReview = (metadata: DataType): void => {
 		const event = <NumID>metadata;
-		this.#sendDeleteReview(event.ID).catch((error: Error) => {
+		this.#sendDeleteReview(event.ID)
+			.then((response) => {
+				if (response.ok) {
+					dispatcher.notify(newGetReviewsRequest(this.#placeId));
+				}
+			})
+			.catch((error: Error) => {
 			dispatcher.notify(initErrorPageRequest(error));
 		});
 	};

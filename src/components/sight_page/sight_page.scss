@@ -8,6 +8,14 @@
   grid-row-gap: 10px;
   padding: 10px 0;
   align-items: flex-start;
+  //sight_page__reviews_place
+  .__reviews_place {
+    //> .frame {
+    //  display: flex;
+    //  flex-direction: row;
+    //  align-items: end;
+    //}
+  }
 
   &__left_col {
     grid-area: l-t;

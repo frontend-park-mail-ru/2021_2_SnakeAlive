@@ -21,7 +21,7 @@ import {
 	newSetMainHeaderRequest,
 	rerenderTripCards,
 } from '@/actions';
-import { IDState, sightToTrip, TripInfo } from '@/dispatcher/metadata_types';
+import { IDState, SightToTrip, TripInfo } from '@/dispatcher/metadata_types';
 import { adoptForSend } from '@/adapters';
 import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
@@ -78,7 +78,7 @@ export default class TripReducer {
 			});
 	};
 
-	addCurrentTripPlace = (metadata: sightToTrip) => {
+	addCurrentTripPlace = (metadata: SightToTrip) => {
 		const trip = storage.getCurrentTrip();
 		const tripSend = adoptForSend(trip);
 		tripSend.days[metadata.day].push({ id: metadata.sightId });
@@ -89,7 +89,7 @@ export default class TripReducer {
 		});
 	};
 
-	deleteCurrentTripPlace = (metadata: sightToTrip) => {
+	deleteCurrentTripPlace = (metadata: SightToTrip) => {
 		const trip = storage.getCurrentTrip();
 
 		const copiedDays: Sight[][] = [[]];

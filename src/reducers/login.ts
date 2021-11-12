@@ -12,7 +12,7 @@ export default class LoginReducer {
 	init = () => {
 		console.log('login reducer inited');
 		dispatcher.register(EventType.SUBMIT_LOGIN_DATA, this.login);
-		dispatcher.notify(newSetEmptyHeaderRequest());
+		dispatcher.notify(newSetEmptyHeaderRequest(false));
 	};
 
 	login = (input: LoginData) => {
@@ -34,7 +34,7 @@ export default class LoginReducer {
 				return Promise.resolve(response);
 			})
 			.then(() => {
-				dispatcher.notify(newSetMainHeaderStrongRequest());
+				// dispatcher.notify(newSetMainHeaderStrongRequest());
 				// надо сделать перейти на страницу откуда пришел, а не на главную
 				router.go(pathsURLfrontend.root);
 			})

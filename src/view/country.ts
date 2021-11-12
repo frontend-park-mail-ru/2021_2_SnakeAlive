@@ -13,9 +13,9 @@
 // import { storage } from '@/storage';
 // import { DataType, dispatcher, ErrorMessage, EventType, Token } from '../dispatcher';
 
-import sights from '@/templates/sights.handlebars';
+import sights from '@/components/country_page/sights.handlebars';
 
-import countryPageTemplate from '@/templates/country_sights.handlebars';
+import countryPageTemplate from '@/components/country_page/country_sights.handlebars';
 import { DataType, dispatcher, ErrorMsgData, EventType, Token } from '@/dispatcher';
 import BasicView from '@/view/view';
 import { storage } from '@/storage';
@@ -24,7 +24,7 @@ import {
 	newGetCountryCardsRequest,
 	newSetEmptyHeaderResponse,
 } from '@/actions';
-import { isTripEdited } from '@/dispatcher/metadata_types';
+import { IsTrue } from '@/dispatcher/metadata_types';
 import { Sight } from '@/models';
 import tripSights from '@/components/trip/trip_sights.handlebars';
 import defaultPicture from '../../image/moscow_city_1.jpeg';
@@ -66,6 +66,8 @@ class CountryCardsHolderView extends BasicView {
 
 		const cards = storage.getCountryCardsMin();
 		const cardsArray: minCardInfo[][] = [cards];
+
+		// адаптер
 
 		this.setView(tripSights({ sights: cardsArray }));
 

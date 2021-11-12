@@ -8,6 +8,9 @@ import {
 import { HttpError, sendGetJSONRequest } from '@/http/index';
 import { backendEndpoint, profile } from '@/constants/index';
 import { UserMetadata } from '@/models';
+import { UpdateProfileMetadataRequest } from '@/models/profile';
+import { adoptGotDataToProfile, GotProfileResponse } from '@/adapters/header';
+import { IsTrue } from '@/dispatcher/metadata_types';
 
 const enum state {
 	main = 'main',
@@ -48,10 +51,10 @@ export default class HeaderReducer {
 		}
 	};
 
-	checkIfEmpty = () => {
+	checkIfEmpty = (metadata: IsTrue) => {
 		if (this.#state !== state.empty) {
 			console.log('here?77777');
-			dispatcher.notify(newSetEmptyHeaderResponse());
+			dispatcher.notify(newSetEmptyHeaderResponse(metadata.isTrue));
 			console.log(this.#state, ' -> ', state.empty);
 			this.#state = state.empty;
 		}
@@ -70,8 +73,10 @@ export default class HeaderReducer {
 				console.log(response.status);
 				return response.json();
 			})
-			.then((data: UserMetadata) => {
-				storage.setUserMetadata(data);
+			.then((data: GotProfileResponse) => { // случайно подошел
+
+				// storage.setUserMetadata(data);
+				storage.storeProfile(adoptGotDataToProfile(data));
 				dispatcher.notify(newSetMainHeaderLoggedResponse());
 			})
 			.catch(err => {

@@ -88,6 +88,8 @@ audio,
 video,
 button,
 input,
+input:focus,
+input:hover,
 input:active,
 p {
 	margin: 0;

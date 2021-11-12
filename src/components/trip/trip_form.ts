@@ -1,6 +1,12 @@
 // import tripFormTemplate from '@/components/trip/trip_form.handlebars';
 import { dispatcher } from '@/dispatcher';
-import { addCurrentTripPlace, deleteTrip, updateCurrentTripInfo } from '@/actions';
+import {
+	addCurrentTripPlace,
+	deleteTrip,
+	newGetReviewsResponse,
+	rerenderTripCards,
+	updateCurrentTripInfo,
+} from '@/actions';
 import { sendGetJSONRequest } from '@/http';
 import { backendEndpoint, paramsURLfrontend, pathsURLfrontend, sightsURI } from '@/constants';
 import tripSightsSelectTemplate from './sight_select.handlebars';
@@ -10,6 +16,7 @@ import { storage } from '@/storage';
 import './trip.scss';
 import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
+import { setTextAreaResizeParams } from '@/components/reviews/review_form';
 
 const getName = (russianName: string): string => {
 	switch (russianName) {
@@ -44,33 +51,17 @@ const deleteSightBtnListener = (event: Event) => {
 	if (btn !== null) {
 		deletedSight = Number(btn.id);
 		dispatcher.notify(addCurrentTripPlace(deletedSight, 0));
-		// btn.removeEventListener('click', deleteSightBtnListener);
-	}
-	let deletedSightInfo = '';
-	storage.getCurrentTrip().days.forEach(day => {
-		day.forEach(place => {
-			// eslint-disable-next-line eqeqeq
-			if (place.id == String(deletedSight)) {
-				deletedSightInfo = place.name;
-			}
-		});
-	});
-	console.log(deletedSightInfo);
-	// отобразить его в форме
-	const workedSights = document.querySelector('#worked-sights');
-	if (workedSights !== null) {
-		const div = document.createElement('div');
-		div.innerHTML = sightTemplate({ title: deletedSightInfo });
-		workedSights.append(div);
+		dispatcher.notify(newGetReviewsResponse());
 	}
 };
 
 const hideConfirm = (): void => {
+	console.log('hid confirm');
 	const answerPlace = document.getElementById('form__submit_holder__answer');
 	if (answerPlace !== null) {
 		answerPlace.style.display = 'none';
 
-		const formArea = document.getElementById('active_form_area');
+		const formArea = document.getElementById('trip_form');
 		if (formArea !== null) {
 			formArea.removeEventListener('click', hideConfirm, false);
 		}
@@ -83,7 +74,7 @@ const showConfirm = () => {
 	const answerPlace = document.getElementById('form__submit_holder__answer');
 	if (answerPlace !== null) {
 		answerPlace.style.display = 'flex';
-		const formArea = document.getElementById('active_form_area');
+		const formArea = document.getElementById('trip_form');
 		if (formArea !== null) {
 			formArea.addEventListener('click', hideConfirm, false);
 		}
@@ -137,6 +128,16 @@ const getFormInfo = (): {
 };
 
 export const initTripForm = (isNew: boolean): void => {
+	// установить красоту для инпута
+	const textArea = document.querySelector('#comment_text');
+	if (textArea !== null) {
+		textArea.addEventListener(
+			'input',
+			setTextAreaResizeParams('comment_text', 'comment_text_hidden', 700),
+			false
+		);
+	}
+
 	// убирание стандартного поведения для кнопки "завершить"
 	const formForPrevent = document.querySelector('form');
 	if (formForPrevent !== null) {
@@ -291,7 +292,8 @@ export const initTripForm = (isNew: boolean): void => {
 			event => {
 				deleteSightBtnListener(event);
 				// eslint-disable-next-line no-restricted-globals
-				removeEventListener('click', deleteSightBtnListener);
+				// removeEventListener('click', deleteSightBtnListener);
+				// const sightFrame = deleteSightBtns[i].parentElement;
 			},
 			false
 		);

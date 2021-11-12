@@ -1,4 +1,4 @@
-$header_height: 60px;
+$header_height: 7.5vh;
 
 // отступы
 $large-px: 24px;
@@ -103,7 +103,6 @@ html, body {
 }
 
 .content {
-
 }
 
 .frame {
@@ -113,7 +112,14 @@ html, body {
   background: $white;
 }
 
-input, textarea {
+input,
+input:focus,
+input:hover,
+input:active,
+textarea,
+textarea:focus,
+textarea:hover,
+textarea:active {
   background: $my--input-fill;
   border: 0.5px solid $my--input-border;
   border-radius: 4px;
@@ -573,5 +579,28 @@ input, textarea {
     visibility: hidden;
     width: 0;
     height: 0;
+  }
+}
+
+//profile_show__photo временное, простити
+.profile_show__photo {
+  align-self: center;
+  justify-self: center;
+  width: 80%;
+  height: 80%;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+
+  img {
+    min-height: 100%;
+    min-width: 100%;
+    object-fit: cover;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
   }
 }

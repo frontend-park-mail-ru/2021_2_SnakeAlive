@@ -7,7 +7,7 @@ import { router } from '@/router';
 export default class RegisterReducer {
 	init = () => {
 		dispatcher.register(EventType.SUBMIT_REGISTER_DATA, this.register);
-		dispatcher.notify(newSetEmptyHeaderResponse());
+		dispatcher.notify(newSetEmptyHeaderResponse(false));
 	};
 
 	register = (input: RegisterData) => {
@@ -29,7 +29,7 @@ export default class RegisterReducer {
 				return Promise.resolve(response);
 			})
 			.then(() => {
-				dispatcher.notify(newSetMainHeaderStrongRequest());
+				// dispatcher.notify(newSetMainHeaderStrongRequest());
 				// надо сделать перейти на страницу откуда пришел, а не на главную
 				router.go(pathsURLfrontend.profile);
 			})

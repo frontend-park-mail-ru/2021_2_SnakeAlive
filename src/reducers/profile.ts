@@ -59,7 +59,7 @@ export default class ProfileReducer {
 	};
 
 	getProfile = (metadata: DataType): void => {
-		dispatcher.notify(newSetEmptyHeaderRequest());
+		dispatcher.notify(newSetEmptyHeaderRequest(true)); // ???
 		this.#sendGetProfile()
 			.then((response: GetProfileResponse) => {
 				storage.storeProfile(adaptGetProfileResponse(response));

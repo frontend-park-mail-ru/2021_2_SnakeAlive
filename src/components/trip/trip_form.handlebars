@@ -27,7 +27,7 @@
 	{{#if isNotNew}}
 	{{else}}
 		<div class='label-div'>
-			<label for="country_select">Прежде чем продолжить, пожалуйста, выберите хотя бы одно место, которое хотите посетить:</label>
+			<label for="country_select" class='trip_form__some_info'>Прежде чем продолжить, пожалуйста, выберите одно место, которое хотите посетить:</label>
 		</div>
 	{{/if}}
 
@@ -36,7 +36,7 @@
 			<div id="country_select_container">
 				<label for="country_select"></label>
 				<select form="trip_form" id="country_select">
-					<option>Выберите страну</option>
+					<option>cтрана</option>
 					{{#each countries}}
 						<option>{{ this.name }}</option>
 					{{/each}}

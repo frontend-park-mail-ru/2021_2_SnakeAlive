@@ -1,6 +1,11 @@
 import BasicView from '@/view/view';
 import { DataType, dispatcher, EventType, NumID, Token } from '@/dispatcher';
-import { deleteCurrentTripPlace, newCreateReviewRequest, newDeleteReviewRequest } from '@/actions';
+import {
+	deleteCurrentTripPlace,
+	newCreateReviewRequest,
+	newDeleteReviewRequest,
+	newGetReviewsRequest,
+} from '@/actions';
 import { storage } from '@/storage';
 import { Review } from '@/models/review';
 import { initReviewForm } from '@/components';
@@ -10,6 +15,8 @@ import reviewsListTemplate from '@/components/reviews/reviews.handlebars';
 
 export class ReviewsView extends BasicView {
 	#tokens: Token[];
+
+	#deleteBtns = [];
 
 	constructor() {
 		super('#reviews__content');
@@ -41,17 +48,20 @@ export class ReviewsView extends BasicView {
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-ignore
 			const deleteBtn = document.getElementById(`delete_button_${String(reviewInfo.review.id)}`);
-			console.log(`delete_button_${reviewInfo.id}`);
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
+			console.log(`delete_button_${String(reviewInfo.review.id)}`);
+			console.log(deleteBtn);
 			if (deleteBtn !== null) {
 				console.log('try to delete');
 				deleteBtn.addEventListener(
 					'click',
-					event => {
+					(event) => {
 						event.preventDefault();
+						console.log("clicked");
 						// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 						// @ts-ignore
 						dispatcher.notify(newDeleteReviewRequest(reviewInfo.review.id));
-						deleteBtn.style.display = 'none';
 					},
 					false
 				);
@@ -103,7 +113,8 @@ export class ReviewCreateView extends BasicView {
 
 	createFormIfLogged = () => {
 		console.log('in ReviewCreateView');
-		if (storage.getUserMetadata().name !== undefined) {
+		console.log(storage.getProfile());
+		if (storage.getProfile().meta !== undefined) {
 			console.log('in if, got name ', storage.getUserMetadata().name);
 			this.#createForm();
 		}

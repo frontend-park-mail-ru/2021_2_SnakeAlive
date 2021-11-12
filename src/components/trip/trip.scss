@@ -35,14 +35,41 @@
 
 .trip_page {
   display: grid;
-  grid-template: l;
+  grid-template: "l map map"  / 1fr 1fr 1fr;
+  grid-column-gap: 10px;
 
   &__left__info {
     > div {
-      margin-bottom: 10px;
+      margin-top: 10px;
     }
     grid-area: l;
+    width: 100%;
   }
+
+  &__map {
+    grid-area: map;
+     &__image_container {
+       position: sticky;
+       top: 0;
+        display: block;
+        width: 100%;
+        height: 100vh;
+
+       img {
+         object-fit: cover;
+         object-position: center;
+         width: 100%;
+         height: 100%;
+       }
+    }
+  }
+}
+
+.select_string {
+  display: flex;
+  flex-direction: row;
+  height: min-content;
+  margin-right: $small-px;
 }
 
 .trip_form {
@@ -51,25 +78,12 @@
     flex-direction: row;
     height: min-content;
     margin-right: $small-px;
-
-    > div {
-      display: flex;
-      flex-direction: row;
-      height: min-content;
-      //padding: $small-px  0;
-      margin-right: $small-px;
-    }
+    flex-wrap: wrap;
   }
-
-  //input, textarea {
-  //  background: $my--input-fill;
-  //  border-color: $my--input-border;
-  //  border: solid;
-  //  border-radius: 4px;
-  //  width: 100%;
-  //  @include text-plain-no-wrap;
-  //  padding: 6px;
-  //}
+  &__some_info {
+    @include text-small;
+    color: $my--small-text;
+  }
 }
 
 .buttons_holder {
@@ -80,4 +94,48 @@
 .label-div {
   margin-top: $large-px;
   margin-bottom: $large-px /2;
+}
+
+// http://jsfiddle.net/NZKWH/
+
+.trip_form__input_holder__text {
+  @include text-plain-no-wrap;
+  width:100% !important;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  //height: 85px;
+
+  .textarea_behavior{
+    border:0;
+    width:100%;
+    word-wrap: break-word;
+    background: $my--input-fill;
+
+    div {
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      padding: 0;
+    }
+  }
+  textarea{
+    width: 100% !important;
+    //overflow:hidden;
+    overflow-y: scroll;
+    max-height: 400px;
+    resize: none;
+    @include text-plain-no-wrap;
+    font-family: inherit;
+    height: 85px;
+  }
+  .comment_text_hidden{
+    width: 100% !important;
+    position: relative;
+  }
+  #comment_text_hidden {
+    visibility:hidden;
+    @include text-plain-no-wrap;
+    position: absolute;
+  }
 }

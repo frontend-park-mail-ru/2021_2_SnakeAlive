@@ -42,11 +42,13 @@ class Form {
 			this.#inputs.push(new Input(inputHTML));
 		});
 
+		const btnDiv = document.createElement('div');
 		const btn = document.createElement('button');
 		btn.id = config.button.id;
 		config.button.cssClass.forEach(el => btn.classList.add(el));
 		btn.innerText = config.button.text;
-		formHTML.appendChild(btn);
+		btnDiv.appendChild(btn);
+		formHTML.appendChild(btnDiv);
 		this.#button = new Button(btn);
 
 		parent.appendChild(formHTML);

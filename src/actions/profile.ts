@@ -25,7 +25,7 @@ const newUpdateProfileMetadataRequest = (
 		metadata: <UpdateProfile>{
 			name,
 			surname,
-			// email,
+			email,
 			password,
 			description,
 		},

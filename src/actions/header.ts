@@ -1,5 +1,6 @@
 import { Empty, IEvent } from '../dispatcher/index';
 import { EventType } from '@/dispatcher/event_types';
+import { IsTrue } from '@/dispatcher/metadata_types';
 
 const newRemoveHeaderRequest = (): IEvent =>
 	<IEvent>{
@@ -25,10 +26,12 @@ const newSetMainHeaderBasicResponse = (): IEvent =>
 		metadata: <Empty>{},
 	};
 
-const newSetEmptyHeaderRequest = (): IEvent =>
+const newSetEmptyHeaderRequest = (isLogged: boolean): IEvent =>
 	<IEvent>{
 		key: EventType.SET_MAIN_HEADER_EMPTY_REQUEST,
-		metadata: <Empty>{},
+		metadata: <IsTrue>{
+			isTrue: isLogged
+		},
 	};
 
 const newSetMainHeaderStrongRequest = (): IEvent =>
@@ -37,10 +40,12 @@ const newSetMainHeaderStrongRequest = (): IEvent =>
 		metadata: <Empty>{},
 	};
 
-const newSetEmptyHeaderResponse = (): IEvent =>
+const newSetEmptyHeaderResponse = (isLogged: boolean): IEvent =>
 	<IEvent>{
 		key: EventType.SET_MAIN_HEADER_EMPTY_RESPONSE,
-		metadata: <Empty>{},
+		metadata: <IsTrue>{
+			isTrue: isLogged
+		},
 	};
 
 export {
