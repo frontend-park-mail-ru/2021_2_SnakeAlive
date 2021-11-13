@@ -67,6 +67,7 @@ class CountryCardsHolderView extends BasicView {
 		const cards = storage.getCountryCardsMin();
 		const cardsArray: minCardInfo[][] = [cards];
 
+		console.log(cards);
 		// адаптер
 
 		this.setView(tripSights({ sights: cardsArray }));
@@ -118,9 +119,10 @@ class CountryHolderView extends BasicView {
 
 	renderCountry = (metadata: DataType): void => {
 		const { name, ID } = storage.getCountry();
+		console.log('renderCountry', name, ID);
 		this.setView(countryPageTemplate({ name }));
 
-		dispatcher.notify(newGetCountryCardsRequest(name, ID));
+		// dispatcher.notify(newGetCountryCardsRequest(name,ID));
 	};
 }
 

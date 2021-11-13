@@ -71,21 +71,21 @@ export const notifier = (path: URL): void /* IEvent */ => {
 	switch (path.pathname) {
 		case pathsURLfrontend.root: {
 			dispatcher.notify(newInitPageRequest());
-			dispatcher.notify(newInitCountryRequest('Russia', 'Russia'));
-			// dispatcher.notify(initLoginPageRequest());
-			// dispatcher.notify(showLoginForm());
+			dispatcher.notify(newInitCountryRequest('Russia', '1'));
 			break;
 		}
 		case pathsURLfrontend.country: {
-			// const params = tryGetParam([paramsURLfrontend.name], path, newInitPageRequest, newInitCountryRequest);
+			console.log('country');
+			dispatcher.notify(newInitPageRequest());
+			const params = tryGetParam([paramsURLfrontend.id], path);
+			if (params.id) {
+				dispatcher.notify(newInitCountryRequest(params.id, params.id));
+			} else {
+				dispatcher.notify(initErrorPageRequest(Error('эта страна не поддерживается')));
+			}
 			break;
 		}
 		case pathsURLfrontend.trip: {
-			// const id: number | null = getIDParam(path);
-			// if (id === null) {
-			// 	dispatcher.notify(initTripPageRequest());
-			//
-			// } else {
 			const params = tryGetParam([paramsURLfrontend.id, paramsURLfrontend.edit], path);
 			console.log(params);
 
@@ -99,11 +99,6 @@ export const notifier = (path: URL): void /* IEvent */ => {
 			} else {
 				dispatcher.notify(createTripFormRequest());
 			}
-
-			// ,
-			// storage.addLastTripId(id);
-			// }
-
 			break;
 		}
 		case pathsURLfrontend.login: {

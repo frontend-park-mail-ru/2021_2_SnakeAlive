@@ -38,7 +38,7 @@
 				<select form="trip_form" id="country_select">
 					<option>cтрана</option>
 					{{#each countries}}
-						<option>{{ this.name }}</option>
+						<option value='{{ this.id }}'>{{ this.name }}</option>
 					{{/each}}
 				</select>
 			</div>

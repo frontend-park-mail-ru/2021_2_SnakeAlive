@@ -9,12 +9,12 @@ export interface GotProfileResponse {
 }
 
 export const adoptGotDataToProfile = (data: GotProfileResponse): Profile =>
-<Profile>{
-	meta: {
-		name: data.name,
-		surname: data.surname,
-		email: data.email,
-		description: data.description
-	},
-	profileImage: data.avatar
-};
+	<Profile>{
+		meta: {
+			name: data.name,
+			surname: data.surname,
+			email: data.email,
+			description: data.description,
+		},
+		profileImage: data.avatar,
+	};

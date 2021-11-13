@@ -73,7 +73,8 @@ export default class HeaderReducer {
 				console.log(response.status);
 				return response.json();
 			})
-			.then((data: GotProfileResponse) => { // случайно подошел
+			.then((data: GotProfileResponse) => {
+				// случайно подошел
 
 				// storage.setUserMetadata(data);
 				storage.storeProfile(adoptGotDataToProfile(data));

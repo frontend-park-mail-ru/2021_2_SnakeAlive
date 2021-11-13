@@ -56,9 +56,9 @@ export class ReviewsView extends BasicView {
 				console.log('try to delete');
 				deleteBtn.addEventListener(
 					'click',
-					(event) => {
+					event => {
 						event.preventDefault();
-						console.log("clicked");
+						console.log('clicked');
 						// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 						// @ts-ignore
 						dispatcher.notify(newDeleteReviewRequest(reviewInfo.review.id));

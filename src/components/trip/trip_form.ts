@@ -8,7 +8,13 @@ import {
 	updateCurrentTripInfo,
 } from '@/actions';
 import { sendGetJSONRequest } from '@/http';
-import { backendEndpoint, paramsURLfrontend, pathsURLfrontend, sightsURI } from '@/constants';
+import {
+	backendEndpoint,
+	countrySights,
+	paramsURLfrontend,
+	pathsURLfrontend,
+	sightsURI,
+} from '@/constants';
 import tripSightsSelectTemplate from './sight_select.handlebars';
 import { Sight } from '@/models';
 import sightTemplate from './sight.handlebars';
@@ -17,18 +23,6 @@ import './trip.scss';
 import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
 import { setTextAreaResizeParams } from '@/components/reviews/review_form';
-
-const getName = (russianName: string): string => {
-	switch (russianName) {
-		case 'Россия': {
-			return 'Russia';
-		}
-		default: {
-			console.log('default');
-			return 'Russia';
-		}
-	}
-};
 
 const setError = () => {
 	const err = document.getElementById('error_block');
@@ -196,7 +190,7 @@ export const initTripForm = (isNew: boolean): void => {
 			'change',
 			event => {
 				event.preventDefault();
-				sendGetJSONRequest(backendEndpoint + sightsURI + getName(countrySelect.value))
+				sendGetJSONRequest(backendEndpoint + countrySights + 'id/' + countrySelect.value)
 					.then(response => {
 						if (response.ok) {
 							return Promise.resolve(response.json());

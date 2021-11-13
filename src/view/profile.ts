@@ -195,11 +195,11 @@ export default class ProfileView extends BasicView {
 		) {
 			return;
 		}
-// name: string,
-// 	surname: string,
-// 	email: string,
-// 	password: string,
-// 	description?: string
+		// name: string,
+		// 	surname: string,
+		// 	email: string,
+		// 	password: string,
+		// 	description?: string
 		console.log(storage.getProfile().meta.email);
 		dispatcher.notify(
 			newUpdateProfileMetadataRequest(

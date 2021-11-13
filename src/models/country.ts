@@ -3,6 +3,13 @@ interface Country {
 	ID: string;
 }
 
+interface CountryResponse {
+	name: string;
+	id: number;
+	description: string;
+	photo: string;
+}
+
 interface CountryCardResponse {
 	id: number;
 	name: string;
@@ -50,4 +57,5 @@ export {
 	TemplateCards,
 	CountryCardPhoto,
 	CountryCardTag,
+	CountryResponse,
 };

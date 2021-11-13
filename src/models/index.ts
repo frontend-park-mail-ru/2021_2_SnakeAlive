@@ -5,6 +5,7 @@ import {
 	TemplateCards,
 	CountryCardPhoto,
 	CountryCardTag,
+	CountryResponse,
 } from './country';
 import { UserMetadata } from './user';
 import { Sight } from './sight';
@@ -20,4 +21,5 @@ export {
 	UserMetadata,
 	Sight,
 	Trip,
+	CountryResponse,
 };

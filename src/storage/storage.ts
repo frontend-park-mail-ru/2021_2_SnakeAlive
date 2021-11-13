@@ -68,6 +68,7 @@ class Storage {
 	getCountryCards = (): TemplateCards => this.#countryCards;
 
 	storeCountry = (country: Country): void => {
+		console.log(country);
 		this.#country = country;
 	};
 

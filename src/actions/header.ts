@@ -30,7 +30,7 @@ const newSetEmptyHeaderRequest = (isLogged: boolean): IEvent =>
 	<IEvent>{
 		key: EventType.SET_MAIN_HEADER_EMPTY_REQUEST,
 		metadata: <IsTrue>{
-			isTrue: isLogged
+			isTrue: isLogged,
 		},
 	};
 
@@ -44,7 +44,7 @@ const newSetEmptyHeaderResponse = (isLogged: boolean): IEvent =>
 	<IEvent>{
 		key: EventType.SET_MAIN_HEADER_EMPTY_RESPONSE,
 		metadata: <IsTrue>{
-			isTrue: isLogged
+			isTrue: isLogged,
 		},
 	};
 

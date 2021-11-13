@@ -27,10 +27,6 @@ const newGetCountryCardsRequest = (countryName: string, countryID: string): IEve
 const newGetCountryCardsResult = (/* countryID: string, countryName: string */): IEvent =>
 	<IEvent>{
 		key: EventType.GET_COUNTRY_CARDS_RESULT,
-		// metadata: <NamedID>{
-		// 	ID: countryID,
-		// 	name: countryName
-		// },
 		metadata: <Empty>{},
 	};
 
