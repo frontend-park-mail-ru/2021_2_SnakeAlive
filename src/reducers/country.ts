@@ -102,7 +102,7 @@ export default class CountryReducer {
 			.then(response => response.json());
 
 	#getCountry = (countryID: string): Promise<CountryResponse> =>
-		sendGetJSONRequest(`${backendEndpoint + countrySights  }id/${  countryID}`)
+		sendGetJSONRequest(`${backendEndpoint + countrySights}id/${countryID}`)
 			.then(response => {
 				if (response.status === 404) {
 					return Promise.reject(new Error('Информации по этой стране пока нет'));

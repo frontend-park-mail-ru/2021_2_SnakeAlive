@@ -190,22 +190,29 @@ export const initTripForm = (isNew: boolean): void => {
 			'change',
 			event => {
 				event.preventDefault();
-				sendGetJSONRequest(backendEndpoint + countrySights + 'id/' + countrySelect.value)
+				sendGetJSONRequest(backendEndpoint + sightsURI + countrySelect.value)
 					.then(response => {
 						if (response.ok) {
-							return Promise.resolve(response.json());
+							return Promise.resolve(response);
 						}
 						return Promise.reject(response);
 					})
+					.then(
+						(response) => response.json()
+					)
 					.then(response => {
+						const sights = response;
+						console.log(sights);
 						const sightSelect = <HTMLSelectElement>(
 							document.querySelector('#sight_select_container')
 						);
+						console.log(sightSelect);
 						if (sightSelect !== null) {
-							sightSelect.innerHTML = tripSightsSelectTemplate({ sights: response });
+							sightSelect.innerHTML = tripSightsSelectTemplate({ sights });
 
+							console.log(tripSightsSelectTemplate({ sights }));
 							const map: Record<string, number> = {};
-							response.forEach((sight: Sight) => {
+							sights.forEach((sight: Sight) => {
 								const { id, name } = sight;
 								map[name] = Number(id);
 							});
@@ -217,6 +224,7 @@ export const initTripForm = (isNew: boolean): void => {
 							sightSelect.addEventListener(
 								'change',
 								eventt => {
+									console.log('пора получать страну');
 									eventt.preventDefault();
 
 									// показать кнопку добавления

@@ -139,3 +139,11 @@
     position: absolute;
   }
 }
+
+
+.select_string {
+  display: block;
+  > div {
+    padding-bottom: $small-px;
+  }
+}
