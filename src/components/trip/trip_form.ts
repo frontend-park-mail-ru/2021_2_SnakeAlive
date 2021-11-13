@@ -26,22 +26,22 @@ import { setTextAreaResizeParams } from '@/components/reviews/review_form';
 
 export const GET_COUNTRY_NAME = (id: string) => {
 	switch (id) {
-		case '1' :
+		case '1':
 			return 'Russia';
-		case '2' :
+		case '2':
 			return 'Germany';
-		case '3' :
+		case '3':
 			return 'USA';
-		case '4' :
+		case '4':
 			return 'UK';
-		case '5' :
+		case '5':
 			return 'Chile';
-		case '6' :
+		case '6':
 			return 'Nicaragua';
 		default:
 			return 'Russia';
 	}
-}
+};
 
 const setError = () => {
 	const err = document.getElementById('error_block');
@@ -116,7 +116,6 @@ let addedSight = -1;
 // 		case '4' : return 'Russia';
 // 		default: return  'Russia';
 // }
-
 
 const getFormInfo = (): {
 	title: string;
