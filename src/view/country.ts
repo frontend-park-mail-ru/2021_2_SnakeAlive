@@ -1,18 +1,3 @@
-// import BasicView from './view';
-// import {
-// 	getCountryCardsError,
-// 	getCountryCardsResult,
-// 	newGetCountryCardsRequest,
-// 	destroyInnerRequest,
-// 	destroyCountryPage,
-// 	newDestroyCountryPage,
-// 	DESTROY_CURRENT_PAGE,
-// 	newSetEmptyHeaderResponse,
-// 	newSetMainHeaderRequest,
-// } from '@/actions';
-// import { storage } from '@/storage';
-// import { DataType, dispatcher, ErrorMessage, EventType, Token } from '../dispatcher';
-
 import sights from '@/components/country_page/sights.handlebars';
 
 import countryPageTemplate from '@/components/country_page/country_sights.handlebars';
@@ -47,7 +32,6 @@ class CountryCardsHolderView extends BasicView {
 		this.#tokens = [
 			dispatcher.register(EventType.GET_COUNTRY_CARDS_RESULT, this.rerenderCards),
 			dispatcher.register(EventType.GET_COUNTRY_CARDS_ERROR, this.renderErrorMessage),
-			// dispatcher.register(destroyCountryPage, this.destroy),
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
 		];
 	};
