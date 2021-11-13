@@ -24,6 +24,21 @@ import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
 import { setTextAreaResizeParams } from '@/components/reviews/review_form';
 
+export const GET_COUNTRY_NAME = (id: string) => {
+	switch (id) {
+		case '1' :
+			return 'Russia';
+		case '2' :
+			return 'Germany';
+		case '3' :
+			return 'USA';
+		case '4' :
+			return 'GreatBritain';
+		default:
+			return 'Russia';
+	}
+}
+
 const setError = () => {
 	const err = document.getElementById('error_block');
 	if (err !== null) {
@@ -88,6 +103,16 @@ const showConfirm = () => {
 
 let addedSight = -1;
 // let addedSightInfo = '';
+
+// export const GET_COUNTRY_NAME = (id: string) => {
+// 	switch (id) {
+// 		case '1' : return 'Russia';
+// 		case '2' : return '';
+// 		case '3' : return 'USA';
+// 		case '4' : return 'Russia';
+// 		default: return  'Russia';
+// }
+
 
 const getFormInfo = (): {
 	title: string;
@@ -190,16 +215,15 @@ export const initTripForm = (isNew: boolean): void => {
 			'change',
 			event => {
 				event.preventDefault();
-				sendGetJSONRequest(backendEndpoint + sightsURI + countrySelect.value)
+				sendGetJSONRequest(backendEndpoint + sightsURI + GET_COUNTRY_NAME(countrySelect.value))
+				// sendGetJSONRequest(backendEndpoint + sightsURI + 'id/' +)
 					.then(response => {
 						if (response.ok) {
 							return Promise.resolve(response);
 						}
 						return Promise.reject(response);
 					})
-					.then(
-						(response) => response.json()
-					)
+					.then(response => response.json())
 					.then(response => {
 						const sights = response;
 						console.log(sights);

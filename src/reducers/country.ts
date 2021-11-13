@@ -14,6 +14,7 @@ import { storage } from '@/storage';
 import { DataType, dispatcher, EventType, UUID, NamedUUID, Token } from '@/dispatcher';
 import { Country, CountryCardResponse, CountryResponse } from '@/models';
 import { minAdaptCountryCards } from '@/adapters/country_cards_2';
+import { GET_COUNTRY_NAME } from '@/components/trip/trip_form';
 
 // export const getCountryName = (russianName: string): string => {
 // 	switch (russianName) {
@@ -89,7 +90,7 @@ export default class CountryReducer {
 	};
 
 	#getCards = (countryID: string): Promise<CountryCardResponse[]> =>
-		sendGetJSONRequest(backendEndpoint + sightsURI + countryID)
+		sendGetJSONRequest(backendEndpoint + sightsURI + GET_COUNTRY_NAME(countryID))
 			.then(response => {
 				if (response.status === 404) {
 					return Promise.reject(new Error('На сайте нет такой страницы'));
