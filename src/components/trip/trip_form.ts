@@ -33,7 +33,11 @@ export const GET_COUNTRY_NAME = (id: string) => {
 		case '3' :
 			return 'USA';
 		case '4' :
-			return 'GreatBritain';
+			return 'UK';
+		case '5' :
+			return 'Chile';
+		case '6' :
+			return 'Nicaragua';
 		default:
 			return 'Russia';
 	}
@@ -216,7 +220,7 @@ export const initTripForm = (isNew: boolean): void => {
 			event => {
 				event.preventDefault();
 				sendGetJSONRequest(backendEndpoint + sightsURI + GET_COUNTRY_NAME(countrySelect.value))
-				// sendGetJSONRequest(backendEndpoint + sightsURI + 'id/' +)
+					// sendGetJSONRequest(backendEndpoint + sightsURI + 'id/' +)
 					.then(response => {
 						if (response.ok) {
 							return Promise.resolve(response);
