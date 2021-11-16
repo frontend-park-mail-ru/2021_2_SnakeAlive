@@ -66,7 +66,12 @@ export class CardSightsHolder extends BasicView {
 			});
 		}
 
-		this.setView(tripSights({ sights: sightsAdopted, isEdit: metadata.isTrue, defaultPicture }));
+		this.setView(tripSights({
+			sights: sightsAdopted,
+			isEdit: metadata.isTrue,
+			defaultPicture,
+			picture : sightsAdopted[0][0].sight.photos[0]
+		}));
 
 		sightsAdopted.forEach(day => {
 			day.forEach(sight => {

@@ -10,4 +10,5 @@ export interface Sight {
 	country: string;
 	rating: string;
 	tags: Array<string>;
+	photos: Array<string>;
 }
