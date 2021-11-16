@@ -26,6 +26,7 @@ $my--button-header-hover: #EDEEF0;
 $white: white;
 $black: black; // вдруг захочется поизголяться тут
 $green: #68B058;
+$logo-color: #0077FF;
 
 .input-error-red {
   border-radius: 2px;
@@ -666,11 +667,20 @@ textarea:active {
 	margin-top: 10px;
 	width: 100%;
 	text-align: left;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .tag {
-	font-style: normal;
-	display: inline-block;
+	//font-style: normal;
+@include text-small;
+	//display: inline-block;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .card__tag {
@@ -718,13 +728,16 @@ textarea:active {
 }
 
 .card__grid {
-	display: grid;
-	margin-left: 9.2vw;
-	margin-right: 9.2vw;
-	grid-template-rows: minmax(200px, 550px);
-	margin-bottom: 1vh;
-	grid-row-gap: 2vh;
-	grid-column-gap: 1vw;
+  grid-area: content;
+  display: grid;
+
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+}
+
+.card_grid_wrapper {
+  display: grid;
+  grid-template: "ml content  mr"  / 1fr 4fr 1fr;
 }
 .card__grid__1 {
 	grid-template-columns: repeat(1, minmax(var(--photo-width), 1fr));
@@ -733,15 +746,15 @@ textarea:active {
 	grid-template-columns: repeat(2, minmax(var(--photo-width), 1fr));
 }
 .card__grid__3 {
-	grid-template-columns: repeat(3, minmax(var(--photo-width), 1fr));
+    grid-template-columns: repeat(3, 1fr);
 }
 .card {
-	padding: 4px 4px 4px 4px;
+	//padding: 4px 4px 4px 4px;
 	max-width: var(--photo-width);
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
-	min-height: 520px;
+	//min-height: 520px;
 }
 
 .header__default {
@@ -765,4 +778,45 @@ textarea:active {
 	display: block;
 	margin-top: 10px;
 	margin-bottom: 15px;
+}
+
+.span__font__large {
+    margin: 0 3px;
+	font-family: var(--font-default);
+	font-weight: var(--font-header-weight);
+	font-size: 18px;
+   &-blue {
+     color: $logo-color;
+   }
+  &-green {
+    color: $green;
+  }
+}
+
+.rating__tag {
+  span {
+    @include text-plain-no-wrap;
+  }
+
+}
+
+.card__photo_wrapper {
+  align-self: center;
+  justify-self: center;
+  width: 100%;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+
+  img {
+    min-height: 100%;
+    min-width: 100%;
+    object-fit: cover;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
 }

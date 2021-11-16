@@ -45,7 +45,8 @@ export interface minCardInfo {
 		id: string;
 		name: string;
 		rating: number;
-		tag: string[];
+		tags: string[];
+		photo: string;
 	};
 	PP: number;
 }

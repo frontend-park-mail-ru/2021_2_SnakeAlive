@@ -7,6 +7,24 @@
 				<img src='{{placeIcon}}'>
 				<p class="sight_page__left_col__info__country">{{country}}</p>
 			</div>
+
+			<div class="rating tag__holder">
+				<!--				сложная верстка дробного значения рейтинга-->
+				<span class="span__font__large span__font__large-green">✦</span><span class='rating__text'>{{rating}}</span>
+			</div>
+
+			<div class="tag__holder">
+				{{#each tags}}
+					<div class="tag card__tag card__tag__font">
+						{{this}}
+						{{#if @last}}
+						{{else}}
+							<span class="span__font__large span__font__large-blue">•</span>
+						{{/if}}
+					</div>
+				{{/each}}
+			</div>
+
 		</div>
 
 		<div id="sight_page__review_form_place" class="sight_page__left_col__review_form_place frame">
@@ -14,19 +32,19 @@
 		</div>
 
 		<div class="frame sight_page__left_col__description">
+
 			<p class="sight_page__left_col__description__title">О месте</p>
 			<p>{{description}}</p>
-			{{#each tags}}
-				<span>{{tags}} </span>
-			{{/each}}
 		</div>
 
 	</div>
 
 	<div class='sight_page__right_col'>
-		<div id="sight_page__photo_holder_place" class="sight_page__photo_holder_place">
-			<img src='{{testPhoto}}'>
-		</div>
+		{{#each photos}}
+			<div id="sight_page__photo_holder_place" class="sight_page__photo_holder_place">
+				<img src='{{this}}' alt='photo'>
+			</div>
+		{{/each}}
 		<div id="reviews__content" class="sight_page__reviews_place">
 			<p style="text-align: center;">✦ Здесь будут отзывы ✦</p>
 		</div>

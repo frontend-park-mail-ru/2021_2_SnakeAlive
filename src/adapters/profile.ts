@@ -16,8 +16,9 @@ export function adaptGetProfileResponse(response: GetProfileResponse): Profile {
 			surname: response.surname,
 			description: response.description,
 			email: response.email,
+			// avatar: backendFileEndpoint + response.avatar
 		},
-		profileImage: response.avatar,
+		profileImage: backendFileEndpoint + response.avatar,
 	};
 }
 

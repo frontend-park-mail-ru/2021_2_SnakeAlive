@@ -22,6 +22,7 @@ interface dataEmptyTemplate {
 export const makeHeader = (
 	info: dataLoggedTemplate | dataMainTemplate | dataEmptyTemplate
 ): string => {
+	console.log(info);
 	// eslint-disable-next-line no-param-reassign
 	info.logo = logo;
 	return headerTemplate(info);

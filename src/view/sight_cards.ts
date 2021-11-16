@@ -40,6 +40,7 @@ export class SightCardInTrip {
 
 		const goBtn = document.getElementById(`go_button_${this.#id}_${this.#PP}`);
 		if (goBtn !== null) {
+			console.log(goBtn.id);
 			goBtn.addEventListener(
 				'click',
 				event => {

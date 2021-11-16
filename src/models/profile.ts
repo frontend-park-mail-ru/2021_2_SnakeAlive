@@ -26,6 +26,7 @@ export interface ProfileMetadata {
 	surname: string;
 	description: string;
 	email: string;
+	avatar: string;
 }
 
 export interface Profile {

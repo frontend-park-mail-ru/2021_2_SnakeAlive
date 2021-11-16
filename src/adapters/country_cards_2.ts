@@ -8,8 +8,9 @@ export const minAdaptCountryCards = (cards: CountryCardResponse[]): minCardInfo[
 			sight: {
 				id: String(card.id),
 				name: card.name,
-				rating: 10,
-				tag: card.tags,
+				rating: 5,
+				tags: card.tags,
+				photo: card.photos[0]
 			},
 			PP: i,
 		});

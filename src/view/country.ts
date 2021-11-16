@@ -4,15 +4,7 @@ import countryPageTemplate from '@/components/country_page/country_sights.handle
 import { DataType, dispatcher, ErrorMsgData, EventType, Token } from '@/dispatcher';
 import BasicView from '@/view/view';
 import { storage } from '@/storage';
-import {
-	destroyCurrentPage,
-	newGetCountryCardsRequest,
-	newSetEmptyHeaderResponse,
-} from '@/actions';
-import { IsTrue } from '@/dispatcher/metadata_types';
-import { Sight } from '@/models';
-import tripSights from '@/components/trip/trip_sights.handlebars';
-import defaultPicture from '../../image/moscow_city_1.jpeg';
+import tripSights from '@/components/country_page/sights.handlebars';
 import { SightCardInTrip } from '@/view/sight_cards';
 import { minCardInfo } from '@/models/country';
 
@@ -48,28 +40,25 @@ class CountryCardsHolderView extends BasicView {
 		this.setEmpty();
 		this.#cards = [];
 
-		const cards = storage.getCountryCardsMin();
-		const cardsArray: minCardInfo[][] = [cards];
+		const cardsArray = storage.getCountryCardsMin();
+		console.log(cardsArray);
+// ?
 
-		console.log(cards);
-		// адаптер
+		this.setView(tripSights({ cards: cardsArray }));
 
-		this.setView(tripSights({ sights: cardsArray }));
-
-		cardsArray.forEach(day => {
-			day.forEach(sight => {
+		cardsArray.forEach(sight => {
 				const card = new SightCardInTrip();
 				card.createCard(sight.sight.id, sight.PP);
 				this.#cards.push(card);
 			});
-		});
+		console.log(this.#cards);
 	};
-
-	renderCountryCards = (metadata: DataType): void => {
-		console.log('storage.getCountryCards()', storage.getCountryCards());
-		this.setView(JSON.stringify(storage.getCountryCards().cards));
-		// this.setView(sights(storage.getCountryCards()));
-	};
+	//
+	// renderCountryCards = (metadata: DataType): void => {
+	// 	console.log('storage.getCountryCards()', storage.getCountryCards());
+	// 	this.setView(JSON.stringify(storage.getCountryCards().cards));
+	// 	// this.setView(sights(storage.getCountryCards()));
+	// };
 
 	renderErrorMessage = (metadata: DataType): void => {
 		const event = <ErrorMsgData>metadata;

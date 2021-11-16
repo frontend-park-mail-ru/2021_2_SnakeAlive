@@ -39,7 +39,7 @@ export const GET_COUNTRY_NAME = (id: string) => {
 		case '6':
 			return 'Nicaragua';
 		default:
-			return 'Russia';
+			return '';
 	}
 };
 

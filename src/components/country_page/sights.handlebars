@@ -1,43 +1,49 @@
 {{#each cards}}
-<div class="card">
-    <div class="carousel">
-        {{#each imgs}}
-            {{#if @first}}
-              <div class ="card__carousel__item card__carousel__item_main">
-            {{else}}
-              <div class ="card__carousel__item">
-            {{/if}}
-                  <img src="{{source}}" alt="" class='photo'>
-              </div>
-        {{/each}}
+<div class="card frame">
+    <div class="carousel card__photo_wrapper">
+			<img src="{{sight.photo}}" alt="" class='photo'>
+<!--        {{#each imgs}} -->
+<!--            {{#if @first}} -->
+<!--              <div class ="card__carousel__item card__carousel__item_main"> -->
+<!--            {{else}} -->
+<!--              <div class ="card__carousel__item"> -->
+<!--            {{/if}} -->
+<!--                  <img src="{{photo}}" alt="" class='photo'>-->
+<!--              </div> -->
+<!--        {{/each}} -->
     </div>
 
-    <div class="card__data__holder">
+    <div class="card__data__holder" id="go_button_{{sight.id}}_{{PP}}">
         <div class="card__name__holder">
-            {{name}}
+            {{sight.name}}
         </div>
 
+			<div class="rating tag__holder">
+<!--				сложная верстка дробного значения рейтинга-->
+				<span class="span__font__large span__font__large-green">✦</span><span class='rating__text'>{{sight.rating}}</span>
+			</div>
+
         <div class="tag__holder">
-            {{#each tags}}
+            {{#each sight.tags}}
                 <div class="tag card__tag card__tag__font">
-                    {{name}}
+                    {{this}}
                     {{#if @last}}
                     {{else}}
-                        <span class="span__font__large">•</span>
+                        <span class="span__font__large span__font__large-blue">•</span>
                     {{/if}}
                 </div>
             {{/each}}
         </div>
 
-        <div class="card__comment__holder">
-										<span class="card__comment__author font__default">
-											Автор:
-											<a class="font__link">{{author}}</a>
-										</span>
-            <div class="card__comment__data font__default">
-                {{comment}}
-            </div>
-        </div>
+<!--        <div class="card__comment__holder">-->
+<!--										<span class="card__comment__author font__default">-->
+<!--											Автор:-->
+<!--											<a class="font__link">{{author}}</a>-->
+<!--										</span>-->
+<!--            <div class="card__comment__data font__default">-->
+<!--                {{comment}}-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
 </div>
 {{/each}}

@@ -1,4 +1,5 @@
 import { Profile } from '@/models/profile';
+import { backendFileEndpoint } from '@/constants';
 
 export interface GotProfileResponse {
 	name: string;
@@ -16,5 +17,5 @@ export const adoptGotDataToProfile = (data: GotProfileResponse): Profile =>
 			email: data.email,
 			description: data.description,
 		},
-		profileImage: data.avatar,
+		profileImage: backendFileEndpoint + data.avatar,
 	};
