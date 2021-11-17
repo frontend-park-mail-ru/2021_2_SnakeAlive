@@ -51,7 +51,7 @@ export default class LoginView extends BasicView {
 	};
 
 	setErrors = (metadata: ValidationErrData) => {
-		let err: Error = new Error(metadata.data[0]['error']);
+		const err: Error = new Error(metadata.data[0].error);
 		this.#form?.setError(err);
 	};
 
@@ -67,7 +67,7 @@ export default class LoginView extends BasicView {
 		const { email_holder, password_holder } = values;
 		const emailInput: Input = new Input('#email_holder', 'input-error-red');
 		const passInput: Input = new Input('#password_holder', 'input-error-red');
-		let metadata: ValidationErrData = {
+		const metadata: ValidationErrData = {
 			data: [],
 		};
 		if (
