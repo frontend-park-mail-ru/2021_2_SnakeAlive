@@ -13,13 +13,13 @@ export const formLoginConfig: FormConfig = {
 	inputs: [
 		{
 			type: 'email',
-			name: 'email',
-			id: 'email',
+			name: 'Электронная почта',
+			id: 'email_holder',
 		},
 		{
 			type: 'password',
-			name: 'password',
-			id: 'password',
+			name: 'Пароль',
+			id: 'password_holder',
 		},
 	],
 };

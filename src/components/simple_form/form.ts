@@ -26,7 +26,7 @@ class Form {
 			blockErrInput.classList.add('auth_form__error_block');
 
 			const errText = document.createElement('p');
-			errText.id = input.id;
+			errText.id = input.name;
 			errText.classList.add('auth_form__error_block__text');
 			errText.textContent = 'ошибок нет';
 			blockErrInput.appendChild(errText);
@@ -41,6 +41,10 @@ class Form {
 			formHTML.appendChild(blockErrInput);
 			this.#inputs.push(new Input(inputHTML));
 		});
+
+		const errDiv = document.createElement('div');
+		errDiv.id = 'error_text';
+		formHTML.appendChild(errDiv);
 
 		const btnDiv = document.createElement('div');
 		const btn = document.createElement('button');
@@ -89,16 +93,16 @@ class Form {
 
 	/** Функция показывает в форме ошибку: показывает ее текст и указывает поле, в котором содержится ошибка */
 	setError(error: Error) {
-		// можно сделать попроще
-
-		// FormValidationError
 		this.#inputs.forEach(input => {
-			// if (input.getId() === error.errorField) {
-			// 	input.setError();
-			// }
+			input.setError();
 		});
 		// this.#error.innerHTML = error.message;
 		// this.#error.classList.add('err');
+		let errDiv = document.getElementById('error_text');
+		if (errDiv != null) {
+			errDiv.textContent = error.message;
+			errDiv.style.color = 'red';
+		}
 	}
 }
 

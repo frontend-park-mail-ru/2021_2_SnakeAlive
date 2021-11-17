@@ -48,9 +48,7 @@ export default class ProfileReducer {
 		];
 	}
 
-	init = (): void => {
-		this.#tokens = [];
-	};
+	init = (): void => {};
 
 	destroy = (metadata: DataType): void => {
 		this.#tokens.forEach(element => {
