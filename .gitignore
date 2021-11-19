@@ -5,3 +5,4 @@ src-old/handlebars.runtime-v4.7.7.js
 dist/
 **/.DS_Store
 .DS_Store
+./src/constants/endpoints.ts

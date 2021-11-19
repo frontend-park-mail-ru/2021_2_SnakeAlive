@@ -8,18 +8,18 @@ export default class Input {
 		this.#elem = DOMelement;
 		this.name = DOMelement.name;
 		this.#elem.addEventListener('focusout', () => {
-			this.#elem.classList.remove('err-input');
+			this.#elem.classList.remove('input-error-red');
 		});
 	}
 
 	/** Выделяет input как содержащий ошибку */
 	setError = (): void => {
-		this.#elem.classList.add('err-input');
+		this.#elem.classList.add('input-error-red');
 	};
 
 	/** Убирает отображение ошибки на input, если оно было */
 	clearErrors = (): void => {
-		this.#elem.classList.remove('err-input');
+		this.#elem.classList.remove('input-error-red');
 	};
 
 	/** Получает из html значение, введенное пользователем в input */

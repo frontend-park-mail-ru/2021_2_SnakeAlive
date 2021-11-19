@@ -10,7 +10,7 @@ export const minAdaptCountryCards = (cards: CountryCardResponse[]): minCardInfo[
 				name: card.name,
 				rating: 5,
 				tags: card.tags,
-				photo: card.photos[0]
+				photo: card.photos[0],
 			},
 			PP: i,
 		});

@@ -16,19 +16,22 @@ export default class LoginReducer {
 	};
 
 	login = (input: LoginData) => {
-		let result: ValidationErrData;
+		let result: ValidationErrData = {
+			data: [],
+		};
 
 		sendPostJSONRequest(backendEndpoint + loginURI, input)
 			.then(response => {
 				if (response.status === 400) {
-					result.data.push({ email: 'неверный пароль' });
+					result.data.push({ error: 'Неверный пароль' });
 					return Promise.reject();
 				}
 				if (response.status === 404) {
-					result.data.push({ password: 'нет такого пользователя' });
+					result.data.push({ error: 'Пользователь не найден' });
 					return Promise.reject();
 				}
 				if (response.status === 400) {
+					result.data.push({ error: 'Некорректные данные' });
 					return Promise.reject(new Error('серверная валидация. сделать другую обработку ошибок'));
 				}
 				return Promise.resolve(response);
@@ -40,7 +43,7 @@ export default class LoginReducer {
 			})
 			.catch(() => {
 				console.log('rejected');
-				// dispatcher.notify(setValidationErrorLogin());
+				dispatcher.notify(setValidationErrorLogin(result.data));
 			});
 	};
 }

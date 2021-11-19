@@ -42,15 +42,15 @@ class CountryCardsHolderView extends BasicView {
 
 		const cardsArray = storage.getCountryCardsMin();
 		console.log(cardsArray);
-// ?
+		// ?
 
 		this.setView(tripSights({ cards: cardsArray }));
 
 		cardsArray.forEach(sight => {
-				const card = new SightCardInTrip();
-				card.createCard(sight.sight.id, sight.PP);
-				this.#cards.push(card);
-			});
+			const card = new SightCardInTrip();
+			card.createCard(sight.sight.id, sight.PP);
+			this.#cards.push(card);
+		});
 		console.log(this.#cards);
 	};
 	//
