@@ -1,4 +1,4 @@
-import { Form } from './simple_form/form';
+import { Form } from './simple_form/authform';
 import { FormConfig } from './simple_form/form_config';
 import { Button, makeSimpleButton } from './button/button';
 import Input from './input';
