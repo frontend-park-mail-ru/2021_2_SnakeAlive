@@ -608,6 +608,8 @@ textarea:active {
 
 /*cards__data*/
 
+
+
 .card__name__holder {
 	font-family: inherit;
 	font-size: 22px;
@@ -819,4 +821,8 @@ textarea:active {
     left: 0;
     width: 100%;
   }
+}
+
+.card.frame:hover {
+  cursor: pointer;
 }

@@ -1,5 +1,5 @@
 {{#each cards}}
-<div class="card frame">
+<div class="card frame" id="go_button_{{sight.id}}_{{PP}}">
     <div class="carousel card__photo_wrapper">
 			<img src="{{sight.photo}}" alt="" class='photo'>
 <!--        {{#each imgs}} -->
@@ -13,7 +13,7 @@
 <!--        {{/each}} -->
     </div>
 
-    <div class="card__data__holder" id="go_button_{{sight.id}}_{{PP}}">
+    <div class="card__data__holder" >
         <div class="card__name__holder">
             {{sight.name}}
         </div>
