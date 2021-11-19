@@ -53,7 +53,7 @@ export default class LoginView extends BasicView {
 	setErrors = (metadata: ValidationErrData) => {
 		const err: Error = new Error(metadata.data[0].error);
 		err.name = metadata.data[0].name
-		this.#form?.setError(err);
+		this.#form?.setLoginError(err);
 	};
 
 	destroy = (metadata: DataType): void => {

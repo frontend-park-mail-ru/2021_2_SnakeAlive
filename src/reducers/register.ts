@@ -1,5 +1,5 @@
 import { DataType, dispatcher, EventType, RegisterData, ValidationErrData } from '../dispatcher';
-import { newSetEmptyHeaderResponse, newSetMainHeaderStrongRequest } from '@/actions';
+import { newSetEmptyHeaderResponse, newSetMainHeaderStrongRequest, setValidationErrorRegister } from '@/actions';
 import { sendPostJSONRequest } from '@/http';
 import { backendEndpoint, loginURI, pathsURLfrontend, registerURI } from '@/constants';
 import { router } from '@/router';
@@ -11,20 +11,15 @@ export default class RegisterReducer {
 	};
 
 	register = (input: RegisterData) => {
-		let result: ValidationErrData;
+		let result: ValidationErrData = {
+			data: [],
+		};
 
 		sendPostJSONRequest(backendEndpoint + registerURI, input)
 			.then(response => {
 				if (response.status === 400) {
-					result.data.push({ email: 'неверный пароль' });
+					result.data.push({ error: 'Пользователь с такой почтой уже существует', name: 'wrong_email'  });
 					return Promise.reject();
-				}
-				if (response.status === 404) {
-					result.data.push({ password: 'нет такого пользователя' });
-					return Promise.reject();
-				}
-				if (response.status === 400) {
-					return Promise.reject(new Error('серверная валидация. сделать другую обработку ошибок'));
 				}
 				return Promise.resolve(response);
 			})
@@ -35,7 +30,7 @@ export default class RegisterReducer {
 			})
 			.catch(() => {
 				console.log('rejected');
-				// dispatcher.notify(setValidationErrorLogin());
+				dispatcher.notify(setValidationErrorRegister(result.data));
 			});
 	};
 }

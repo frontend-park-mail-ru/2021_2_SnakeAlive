@@ -93,7 +93,7 @@ class Form {
 	}
 
 	/** Функция показывает в форме ошибку: показывает ее текст и указывает поле, в котором содержится ошибка */
-	setError(error: Error) {
+	setLoginError(error: Error) {
 		if (error.name == 'wrong_email'){
 			this.#inputs[0].setError()
 		}else if(error.name == 'wrong_password'){
@@ -102,6 +102,25 @@ class Form {
 			this.#inputs.forEach(input => {
 				input.setError();
 			});
+		}
+		const errDiv = document.getElementById('error_text');
+		if (errDiv != null) {
+			errDiv.textContent = error.message;
+			errDiv.style.color = 'red';
+		}
+	}
+
+	setRegisterError(error: Error) {
+		if (error.name == 'wrong_name'){
+			this.#inputs[0].setError()
+		}else if(error.name == 'wrong_surname'){
+			this.#inputs[1].setError()
+		}
+		else if(error.name == 'wrong_email'){
+			this.#inputs[2].setError()
+		}else if(error.name == 'wrong_password'){
+			this.#inputs[3].setError()
+			this.#inputs[4].setError()
 		}
 		const errDiv = document.getElementById('error_text');
 		if (errDiv != null) {
