@@ -34,6 +34,7 @@ class Form {
 			const inputHTML: HTMLInputElement = document.createElement('input');
 			inputHTML.id = input.id;
 			inputHTML.type = input.type;
+			inputHTML.name = input.type;
 			inputHTML.placeholder = input.name;
 			inputHTML.classList.add('auth_form__input');
 
@@ -93,11 +94,15 @@ class Form {
 
 	/** Функция показывает в форме ошибку: показывает ее текст и указывает поле, в котором содержится ошибка */
 	setError(error: Error) {
-		this.#inputs.forEach(input => {
-			input.setError();
-		});
-		// this.#error.innerHTML = error.message;
-		// this.#error.classList.add('err');
+		if (error.name == 'wrong_email'){
+			this.#inputs[0].setError()
+		}else if(error.name == 'wrong_password'){
+			this.#inputs[1].setError()
+		}else if(error.name  == 'no_user'){
+			this.#inputs.forEach(input => {
+				input.setError();
+			});
+		}
 		const errDiv = document.getElementById('error_text');
 		if (errDiv != null) {
 			errDiv.textContent = error.message;

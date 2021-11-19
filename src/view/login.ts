@@ -52,6 +52,7 @@ export default class LoginView extends BasicView {
 
 	setErrors = (metadata: ValidationErrData) => {
 		const err: Error = new Error(metadata.data[0].error);
+		err.name = metadata.data[0].name
 		this.#form?.setError(err);
 	};
 
@@ -76,7 +77,7 @@ export default class LoginView extends BasicView {
 					validators: [
 						function (): boolean {
 							if (!validateEmail(emailInput.getValue())) {
-								metadata.data.push({ error: 'Некорректная элетронная почта' });
+								metadata.data.push({ error: 'Некорректная элетронная почта', name: 'wrong_email' });
 							}
 							return validateEmail(emailInput.getValue());
 						},
@@ -92,7 +93,7 @@ export default class LoginView extends BasicView {
 							) {
 								return true;
 							}
-							metadata.data.push({ error: 'Пароль должен содержать не менее 8 символов' });
+							metadata.data.push({ error: 'Пароль должен содержать не менее 8 символов', name: 'wrong_password'});
 							return false;
 						},
 					],
