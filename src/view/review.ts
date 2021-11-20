@@ -1,22 +1,14 @@
 import BasicView from '@/view/view';
 import { DataType, dispatcher, EventType, NumID, Token } from '@/dispatcher';
-import {
-	deleteCurrentTripPlace,
-	newCreateReviewRequest,
-	newDeleteReviewRequest,
-	newGetReviewsRequest,
-} from '@/actions';
+import { newDeleteReviewRequest } from '@/actions/review';
 import { storage } from '@/storage';
 import { Review } from '@/models/review';
 import { initReviewForm } from '@/components';
 import { createReviewForm } from '@/components/reviews/review_form';
-import { UserMetadata } from '@/models';
 import reviewsListTemplate from '@/components/reviews/reviews.handlebars';
 
 export class ReviewsView extends BasicView {
 	#tokens: Token[];
-
-	#deleteBtns = [];
 
 	constructor() {
 		super('#reviews__content');

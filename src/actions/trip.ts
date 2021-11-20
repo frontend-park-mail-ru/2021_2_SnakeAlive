@@ -1,11 +1,5 @@
-import { Empty, EventType, IEvent, UUID } from '@/dispatcher';
-import {
-	SightToTrip,
-	IsTrue,
-	SubmitTripInfo,
-	TripInfo,
-	IDState,
-} from '@/dispatcher/metadata_types';
+import { Empty, EventType, IEvent } from '@/dispatcher';
+import { SightToTrip, IsTrue, TripInfo, IDState } from '@/dispatcher/metadata_types';
 
 const newGetTripRequest = (tripID: string, isEdit: boolean): IEvent =>
 	<IEvent>{
@@ -38,22 +32,6 @@ const rerenderTripCards = (isEdit: boolean): IEvent =>
 		},
 	};
 
-const tripFormSubmit = (
-	title: string,
-	description: string,
-	days: Array<Array<Record<string, number>>>
-): IEvent =>
-	<IEvent>{
-		key: EventType.CREATE_TRIP_FORM_SUBMIT,
-		metadata: <SubmitTripInfo>{
-			info: {
-				title,
-				description,
-				days,
-			},
-		},
-	};
-
 const updateCurrentTripInfo = (title: string, description: string) =>
 	<IEvent>{
 		key: EventType.UPDATE_CURRENT_TRIP_INFO,
@@ -81,12 +59,6 @@ const deleteCurrentTripPlace = (sightId: number, day: number) =>
 		},
 	};
 
-// const createFilledEditTrip = () =>
-// 	<IEvent>{
-// 		key: EventType.GET_TRIP_EDIT_RESPONSE,
-// 		metadata: <Empty>{},
-// 	};
-
 const sendTrip = () =>
 	<IEvent>{
 		key: EventType.SEND_TRIP,
@@ -103,7 +75,7 @@ export {
 	newGetTripRequest,
 	newGetTripResult,
 	createTripFormRequest,
-	tripFormSubmit,
+	// tripFormSubmit,
 	updateCurrentTripInfo,
 	addCurrentTripPlace,
 	sendTrip,

@@ -10,6 +10,7 @@ import {
 import { UserMetadata } from './user';
 import { Sight } from './sight';
 import { Trip } from './trip';
+import { Album } from './album';
 
 export {
 	Country,

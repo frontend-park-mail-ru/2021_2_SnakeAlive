@@ -4,7 +4,7 @@ import {
 	logoutRequest,
 	newUpdateProfileMetadataRequest,
 	newUpdateProfilePhotoRequest,
-} from '@/actions';
+} from '@/actions/profile';
 import { storage } from '@/storage';
 import { Profile } from '@/models/profile';
 import profileTemplate from '@/templates/profile.handlebars';

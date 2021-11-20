@@ -26,13 +26,9 @@ import {
 } from '@/adapters/profile';
 import { storage } from '@/storage';
 import { DataType, dispatcher, EventType, File, Token, UpdateProfile } from '@/dispatcher';
-import {
-	initErrorPageRequest,
-	newGetProfileRequest,
-	newGetProfileResponse,
-	newSetEmptyHeaderRequest,
-} from '@/actions';
-import { UserMetadata } from '@/models';
+import { newGetProfileRequest, newGetProfileResponse } from '@/actions/profile';
+import { initErrorPageRequest } from '@/actions/page';
+import { newSetEmptyHeaderRequest } from '@/actions/header';
 import { router } from '@/router';
 
 export default class ProfileReducer {
@@ -48,6 +44,7 @@ export default class ProfileReducer {
 		];
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
 	init = (): void => {};
 
 	destroy = (metadata: DataType): void => {

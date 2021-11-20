@@ -4,28 +4,37 @@
 	{{#each this}}
 		<div class='frame'>
 			<h2 id="go_button_{{ this.sight.id }}_{{this.PP}}">{{ this.sight.name }}</h2>
-			<img src="{{picture}}">
+			<div class="trip_sight__preview_photo">
+				<img src="{{this.preview}}">
+			</div>
 <!--			<p>✦ {{ this.sight.rating }}</p>-->
 <!--			<p>Тэги: {{ this.sight.tags }}</p>-->
 <!--			<p>{{ this.sight.photos }}</p>-->
 <!--			<p>{{ this.sight.description }}</p>-->
+{{!--             {{> horizontalScroll this.sight.photos }} --}}
+                {{this.photosTemplate}}
 
-			<div class="rating tag__holder">
-				<!--				сложная верстка дробного значения рейтинга-->
-				<span class="span__font__large span__font__large-green">✦</span><span class='rating__text'>{{sight.rating}}</span>
-			</div>
+            <div class="trip_sight__info_string">
 
-			<div class="tag__holder">
-				{{#each this.sight.tags}}
-					<div class="tag card__tag card__tag__font">
-						{{this}}
-						{{#if @last}}
-						{{else}}
-							<span class="span__font__large span__font__large-blue">•</span>
-						{{/if}}
-					</div>
-				{{/each}}
-			</div>
+            			<div class="rating tag__holder">
+            				<!--				сложная верстка дробного значения рейтинга-->
+            				<span class="span__font__large span__font__large-green">✦</span><span class='rating__text'>{{sight.rating}}</span>
+            			</div>
+
+            			<div class="tag__holder">
+            				{{#each this.sight.tags}}
+            					<div class="tag card__tag card__tag__font">
+            						{{this}}
+            						{{#if @last}}
+            						{{else}}
+            							<span class="span__font__large span__font__large-blue">•</span>
+            						{{/if}}
+            					</div>
+            				{{/each}}
+            			</div>
+
+            </div>
+
 			<p style='visibility: hidden'>no</p>
 			<button
 				id="delete_button_{{ this.sight.id }}_{{this.PP}}"

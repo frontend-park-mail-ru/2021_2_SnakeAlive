@@ -1,35 +1,18 @@
 import { sendGetJSONRequest } from '@/http';
 import { backendEndpoint, countrySights, sightsURI } from '@/constants';
 import {
-	initErrorPageRequest,
 	newGetCountryCardsError,
 	newGetCountryCardsRequest,
 	newGetCountryCardsResult,
-	newInitCountryRequest,
 	newInitCountryResponse,
-	newSetMainHeaderRequest,
-} from '@/actions';
-import { adaptGetCards } from '@/adapters';
+} from '@/actions/country';
+import { initErrorPageRequest } from '@/actions/page';
+import { newSetMainHeaderRequest } from '@/actions/header';
 import { storage } from '@/storage';
 import { DataType, dispatcher, EventType, UUID, NamedUUID, Token } from '@/dispatcher';
-import { Country, CountryCardResponse, CountryResponse } from '@/models';
+import { CountryCardResponse, CountryResponse } from '@/models';
 import { minAdaptCountryCards } from '@/adapters/country_cards_2';
 import { GET_COUNTRY_NAME } from '@/components/trip/trip_form';
-
-// export const getCountryName = (russianName: string): string => {
-// 	switch (russianName) {
-// 		case 'Россия': {
-// 			return 'Russia';
-// 		}
-// 		case 'Великобритания': {
-// 			return 'Russia';
-// 		}
-// 		default: {
-// 			console.log('default');
-// 			return 'Russia';
-// 		}
-// 	}
-// };
 
 export default class CountryReducer {
 	#tokens: Token[];

@@ -1,15 +1,8 @@
 import BasicView from './view';
-import {
-	DataType,
-	dispatcher,
-	ErrorMsgData,
-	EventType,
-	Token,
-	ValidationErrData,
-} from '@/dispatcher';
+import { DataType, dispatcher, EventType, Token, ValidationErrData } from '@/dispatcher';
 import { Form, loginHTML, makeSimpleButton } from '@/components';
 
-import { submitLoginData } from '@/actions';
+import { submitLoginData } from '@/actions/auth';
 import { formLoginConfig } from '@/components/simple_form/login_conf';
 import { pathsURLfrontend } from '@/constants';
 
@@ -64,12 +57,14 @@ export default class LoginView extends BasicView {
 	};
 
 	#submit = (values: { [key: string]: string }) => {
-		const { email_holder, password_holder } = values;
+		const emailHolder = values.email_holder;
+		const passwordHolder = values.password_holder;
 		const emailInput: Input = new Input('#email_holder', 'input-error-red');
 		const passInput: Input = new Input('#password_holder', 'input-error-red');
 		const metadata: ValidationErrData = {
 			data: [],
 		};
+		console.log(submitLoginData(emailHolder, passwordHolder));
 		if (
 			!validateElements([
 				{
@@ -103,7 +98,6 @@ export default class LoginView extends BasicView {
 			this.setErrors(metadata);
 			return;
 		}
-
-		dispatcher.notify(submitLoginData(email_holder, password_holder));
+		dispatcher.notify(submitLoginData(emailHolder, passwordHolder));
 	};
 }

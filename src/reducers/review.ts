@@ -1,13 +1,7 @@
 import { sendDeleteJSONRequest, sendGetJSONRequest, sendPostJSONRequest } from '@/http';
 import { backendEndpoint, queryParamsToGetReview, reviewsURI, reviewURI } from '@/constants';
-import {
-	createReviewForm,
-	initErrorPageRequest,
-	newCreateReviewFormResponse,
-	newCreateReviewResponse,
-	newGetReviewsRequest,
-	newGetReviewsResponse,
-} from '@/actions';
+import { createReviewForm, newGetReviewsRequest, newGetReviewsResponse } from '@/actions/review';
+import { initErrorPageRequest } from '@/actions/page';
 import { storage } from '@/storage';
 import { CreateReview, DataType, dispatcher, EventType, NumID, Token } from '@/dispatcher';
 import { CreateReviewRequest, CreateReviewResponse, Review } from '@/models/review';

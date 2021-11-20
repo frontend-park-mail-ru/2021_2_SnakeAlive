@@ -4,7 +4,8 @@ import { backendEndpoint, sightURI } from '@/constants';
 import { storage } from '@/storage';
 import { initErrorPageRequest } from '@/actions/page';
 import { Sight } from '@/models';
-import { createReviewForm, newGetSightResult, newSetMainHeaderRequest } from '@/actions';
+import { newGetSightResult } from '@/actions/sight';
+import { newSetMainHeaderRequest } from '@/actions/header';
 
 export default class SightReducer {
 	#tokens: Token[];

@@ -1,11 +1,8 @@
 import { DataType, dispatcher, EventType, LoginData, ValidationErrData } from '@/dispatcher';
-import {
-	newSetEmptyHeaderRequest,
-	newSetMainHeaderStrongRequest,
-	setValidationErrorLogin,
-} from '../actions';
-import { sendGetJSONRequest, sendPostJSONRequest } from '@/http';
-import { backendEndpoint, countrySights, loginURI, pathsURLfrontend, sightURI } from '@/constants';
+import { newSetEmptyHeaderRequest, newSetMainHeaderStrongRequest } from '@/actions/header';
+import { setValidationErrorLogin } from '@/actions/auth';
+import { sendPostJSONRequest } from '@/http';
+import { backendEndpoint, loginURI, pathsURLfrontend } from '@/constants';
 import { router } from '@/router';
 
 export default class LoginReducer {
@@ -16,7 +13,7 @@ export default class LoginReducer {
 	};
 
 	login = (input: LoginData) => {
-		let result: ValidationErrData = {
+		const result: ValidationErrData = {
 			data: [],
 		};
 
@@ -37,7 +34,7 @@ export default class LoginReducer {
 				return Promise.resolve(response);
 			})
 			.then(() => {
-				// dispatcher.notify(newSetMainHeaderStrongRequest());
+				dispatcher.notify(newSetMainHeaderStrongRequest());
 				// надо сделать перейти на страницу откуда пришел, а не на главную
 				router.go(pathsURLfrontend.root);
 			})

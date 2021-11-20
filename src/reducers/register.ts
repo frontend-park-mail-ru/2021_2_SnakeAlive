@@ -1,7 +1,7 @@
-import { DataType, dispatcher, EventType, RegisterData, ValidationErrData } from '../dispatcher';
-import { newSetEmptyHeaderResponse, newSetMainHeaderStrongRequest } from '@/actions';
+import { dispatcher, EventType, RegisterData, ValidationErrData } from '../dispatcher';
+import { newSetEmptyHeaderResponse, newSetMainHeaderStrongRequest } from '@/actions/header';
 import { sendPostJSONRequest } from '@/http';
-import { backendEndpoint, loginURI, pathsURLfrontend, registerURI } from '@/constants';
+import { backendEndpoint, pathsURLfrontend, registerURI } from '@/constants';
 import { router } from '@/router';
 
 export default class RegisterReducer {
@@ -29,7 +29,7 @@ export default class RegisterReducer {
 				return Promise.resolve(response);
 			})
 			.then(() => {
-				// dispatcher.notify(newSetMainHeaderStrongRequest());
+				dispatcher.notify(newSetMainHeaderStrongRequest());
 				// надо сделать перейти на страницу откуда пришел, а не на главную
 				router.go(pathsURLfrontend.profile);
 			})

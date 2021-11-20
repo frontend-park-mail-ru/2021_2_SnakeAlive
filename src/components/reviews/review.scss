@@ -61,7 +61,6 @@
   border: none;
   display: flex;
   flex-direction: column;
-  //height: 85px;
 
   .textarea_behavior{
     border:0;
@@ -77,9 +76,8 @@
     }
   }
   textarea{
+    overflow-y: hidden;
     width: 100% !important;
-    //overflow:hidden;
-    overflow-y: scroll;
     max-height: 400px;
     resize: none;
     @include text-plain-no-wrap;

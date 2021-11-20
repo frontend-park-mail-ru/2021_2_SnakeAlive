@@ -37,7 +37,6 @@ export default class HeaderView extends BasicView {
 
 	setMainHeaderLogged = (metadata: DataType): void => {
 		const user: Profile = storage.getProfile();
-		console.log(user);
 		const dataTemplate = {
 			isNotEmpty: true,
 			isUser: true,

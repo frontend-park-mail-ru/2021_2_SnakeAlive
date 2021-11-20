@@ -89,28 +89,6 @@ export interface IsTrue {
 	isTrue: boolean;
 }
 
-// export interface SightData {
-// 	id: string,
-// 	name: string,
-// 	description: string,
-// 	country: string,
-// 	rating: string,
-// 	tags: Array<string>
-// }
-//
-// export interface TripData {
-// 	id: string,
-// 	title: string,
-// 	description: string,
-// 	days: Array<Array<SightData>>,
-// }
-//
-// export interface CountryData {
-// 	name: string,
-// 	description: string,
-// 	sights: Array<SightData>,
-// }
-
 export type DataType =
 	| UUID
 	| NumID

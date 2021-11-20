@@ -15,13 +15,15 @@ import {
 } from '@/constants';
 import { IsTrue, SubmitTripInfo } from '@/dispatcher/metadata_types';
 import { storage } from '@/storage';
-import { rerenderTripCards } from '@/actions';
+import { rerenderTripCards } from '@/actions/trip';
 import { SightCardInTrip } from '@/view/sight_cards';
 import { Sight } from '@/models';
 import defaultPicture from '@/../image/moscow_city_1.jpeg';
 import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
 import mapPicturePath from '@/../image/map.png';
+
+import horizontalScroll from '@/components/horizontal_scroll/horisontal_scroll.handlebars';
 
 export class CardSightsHolder extends BasicView {
 	#tokens: Token[];
@@ -47,6 +49,8 @@ export class CardSightsHolder extends BasicView {
 
 		interface sightAdopted {
 			sight: Sight;
+			preview: string;
+			photosTemplate: string;
 			PP: number;
 		}
 		const sightsAdopted: Array<Array<sightAdopted>> = [[]];
@@ -59,6 +63,8 @@ export class CardSightsHolder extends BasicView {
 				day.forEach(sight => {
 					sightsAdopted[0].push({
 						sight,
+						preview: sight.photos[0],
+						photosTemplate: horizontalScroll({ photos: sight.photos }),
 						PP: i,
 					});
 					i += 1;
@@ -71,7 +77,6 @@ export class CardSightsHolder extends BasicView {
 				sights: sightsAdopted,
 				isEdit: metadata.isTrue,
 				defaultPicture,
-				picture: sightsAdopted[0][0].sight.photos[0],
 			})
 		);
 
@@ -100,6 +105,8 @@ export class TripInfoView extends BasicView {
 
 	#firstCreated = false;
 
+	// #albums: albumListHolder;
+
 	#cardHolder: CardSightsHolder;
 
 	constructor() {
@@ -110,10 +117,9 @@ export class TripInfoView extends BasicView {
 
 	init = (): void => {
 		this.#tokens = [
-			dispatcher.register(EventType.GET_TRIP_RESPONSE, this.isEditedOrNot), // !
-			// dispatcher.register(EventType.GET_TRIP_EDIT_RESPONSE, this.createFilledTripForm), // !
+			dispatcher.register(EventType.GET_TRIP_RESPONSE, this.isEditedOrNot),
 			dispatcher.register(EventType.CREATE_TRIP_FORM_REQUEST, this.createEmptyTripForm),
-			dispatcher.register(EventType.CREATE_TRIP_FORM_SUBMIT, this.postTripFormInfo),
+			// dispatcher.register(EventType.CREATE_TRIP_FORM_SUBMIT, this.postTripFormInfo),
 		];
 
 		const cardsHolder = new CardSightsHolder();
@@ -125,7 +131,7 @@ export class TripInfoView extends BasicView {
 			dispatcher.unregister(element);
 		});
 
-		// this.setEmpty();
+		this.setEmpty();
 	};
 
 	isEditedOrNot = (isEdited: IsTrue) => {
@@ -170,7 +176,6 @@ export class TripInfoView extends BasicView {
 	};
 
 	createEmptyTripForm = () => {
-		// this.setView(tripFormTemplate());
 		const countriesPromise = sendGetJSONRequest(backendEndpoint + listOfCountries)
 			.then(response => {
 				if (response.ok) {
@@ -183,7 +188,7 @@ export class TripInfoView extends BasicView {
 				console.log(response);
 				this.setView(tripFormTemplate({ countries: response, isNotNew: false })); // ОТ info: TripFormCreation
 				initTripForm(true);
-				dispatcher.notify(rerenderTripCards(true));
+				// dispatcher.notify(rerenderTripCards(true));
 			});
 
 		this.#firstCreated = true;
@@ -192,6 +197,7 @@ export class TripInfoView extends BasicView {
 			days: [[]],
 			title: '',
 			description: '',
+			albums: [],
 			id: '-1',
 		});
 	};
@@ -222,22 +228,15 @@ export class TripInfoView extends BasicView {
 			});
 	};
 
-	postTripFormInfo = (metadata: SubmitTripInfo) => {
-		if (this.#firstCreated) {
-			// let daysArray = new Array<Array<any>>();
-			// daysArray.length = metadata.info.days;
-			// daysArray = daysArray.fill([{
-			// 	id: 88
-			// }]);
-			sendPostJSONRequest(backendEndpoint + tripURI, {
-				title: metadata.info.title,
-				description: metadata.info.description,
-				days: metadata.info.days,
-			});
-		} else {
-			//
-		}
-	};
+	// postTripFormInfo = (metadata: SubmitTripInfo) => {
+	// 	if (this.#firstCreated) {
+	// 		sendPostJSONRequest(backendEndpoint + tripURI, {
+	// 			title: metadata.info.title,
+	// 			description: metadata.info.description,
+	// 			days: metadata.info.days,
+	// 		});
+	// 	}
+	// };
 }
 
 export class TripView extends BasicView {
@@ -249,16 +248,11 @@ export class TripView extends BasicView {
 	}
 
 	init = (): void => {
-		this.#tokens = [
-			// dispatcher.register(EventType.GET_TRIP_REQUEST, this.setBasicTripPage),
-			// dispatcher.register(EventType.GET_TRIP_RESPONSE, this.setBasicTripPage),
-			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.#destroy),
-		];
+		this.#tokens = [dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.#destroy)];
 		this.setBasicTripPage();
 	};
 
 	setBasicTripPage = () => {
-		console.log('tripPageTemplate({})');
 		this.setView(tripPageTemplate({ mapPicturePath }));
 	};
 

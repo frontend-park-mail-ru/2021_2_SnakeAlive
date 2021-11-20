@@ -1,23 +1,11 @@
 // import tripFormTemplate from '@/components/trip/trip_form.handlebars';
 import { dispatcher } from '@/dispatcher';
-import {
-	addCurrentTripPlace,
-	deleteTrip,
-	newGetReviewsResponse,
-	rerenderTripCards,
-	updateCurrentTripInfo,
-} from '@/actions';
+import { addCurrentTripPlace, deleteTrip, updateCurrentTripInfo } from '@/actions/trip';
+import { newGetReviewsResponse } from '@/actions/review';
 import { sendGetJSONRequest } from '@/http';
-import {
-	backendEndpoint,
-	countrySights,
-	paramsURLfrontend,
-	pathsURLfrontend,
-	sightsURI,
-} from '@/constants';
+import { backendEndpoint, paramsURLfrontend, pathsURLfrontend, sightsURI } from '@/constants';
 import tripSightsSelectTemplate from './sight_select.handlebars';
 import { Sight } from '@/models';
-import sightTemplate from './sight.handlebars';
 import { storage } from '@/storage';
 import './trip.scss';
 import { router } from '@/router';
@@ -106,16 +94,6 @@ const showConfirm = () => {
 };
 
 let addedSight = -1;
-// let addedSightInfo = '';
-
-// export const GET_COUNTRY_NAME = (id: string) => {
-// 	switch (id) {
-// 		case '1' : return 'Russia';
-// 		case '2' : return '';
-// 		case '3' : return 'USA';
-// 		case '4' : return 'Russia';
-// 		default: return  'Russia';
-// }
 
 const getFormInfo = (): {
 	title: string;
@@ -245,9 +223,6 @@ export const initTripForm = (isNew: boolean): void => {
 							});
 
 							// обработка выбора достопр с записью в переменнЫЕ
-							// const sightSelect = <HTMLSelectElement>document.querySelector('#sight_select');
-							// console.log(sightSelect);
-							// if (sightSelect !== null) {
 							sightSelect.addEventListener(
 								'change',
 								eventt => {
@@ -267,12 +242,9 @@ export const initTripForm = (isNew: boolean): void => {
 									if (sightSelectInner !== null) {
 										addedSight = Number(sightSelectInner.value);
 									}
-									console.log(addedSight);
-									// }
 								},
 								false
 							);
-							// }
 						}
 					});
 			},
@@ -300,6 +272,7 @@ export const initTripForm = (isNew: boolean): void => {
 								title,
 								description: text,
 								id: String(-1),
+								albums: storage.getCurrentTrip().albums,
 								days: [[]],
 							});
 						}
@@ -320,9 +293,6 @@ export const initTripForm = (isNew: boolean): void => {
 			'click',
 			event => {
 				deleteSightBtnListener(event);
-				// eslint-disable-next-line no-restricted-globals
-				// removeEventListener('click', deleteSightBtnListener);
-				// const sightFrame = deleteSightBtns[i].parentElement;
 			},
 			false
 		);
@@ -333,5 +303,18 @@ export const initTripForm = (isNew: boolean): void => {
 	const askConfirmBtn = document.getElementById('ask_confirm_button');
 	if (askConfirmBtn !== null) {
 		askConfirmBtn.addEventListener('click', showConfirm, false);
+	}
+
+	// добавление альбома (переход на страницу)
+	const addAlbumBtn = document.getElementById('btn-add-album');
+	if (addAlbumBtn !== null) {
+		addAlbumBtn.addEventListener(
+			'click',
+			event => {
+				event.preventDefault();
+				router.go(pathsURLfrontend.album);
+			},
+			false
+		);
 	}
 };

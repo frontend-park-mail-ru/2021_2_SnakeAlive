@@ -2,7 +2,7 @@ import CountryReducer from './country';
 import LoginReducer from './login';
 import RegisterReducer from './register';
 
-import { destroyCurrentPage } from '@/actions';
+import { destroyCurrentPage } from '@/actions/page';
 import { CountryCardsHolderView, CountryHolderView, LoginView, RegisterView } from '@/view';
 
 import { DataType, dispatcher, ErrorMsgData, EventType, UUID } from '@/dispatcher';
@@ -15,6 +15,8 @@ import ProfileReducer from '@/reducers/profile';
 import ProfileView from '@/view/profile';
 import ReviewReducer from '@/reducers/review';
 import { ReviewCreateView, ReviewsView } from '@/view/review';
+import AlbumReducer from '@/reducers/album';
+import { AlbumView } from '@/view/album';
 
 export default class PageReducer {
 	constructor() {
@@ -25,6 +27,7 @@ export default class PageReducer {
 		dispatcher.register(EventType.INIT_COUNTRY_PAGE_REQUEST, this.createCountryPage);
 		dispatcher.register(EventType.INIT_SIGHT_PAGE_REQUEST, this.createSightPage);
 		dispatcher.register(EventType.INIT_TRIP_PAGE_REQUEST, this.createTripPage);
+		dispatcher.register(EventType.INIT_ALBUM_PAGE_REQUEST, this.createAlbumPage);
 		dispatcher.register(EventType.INIT_PAGE_REQUEST, this.createInitPage);
 		dispatcher.register(EventType.INIT_LOGIN_PAGE_REQUEST, this.createLoginPage);
 		dispatcher.register(EventType.INIT_REGISTER_PAGE_REQUEST, this.createRegisterPage);
@@ -95,7 +98,7 @@ export default class PageReducer {
 		reviewCreateView.init();
 	};
 
-	createTripPage = (metadata: UUID): void => {
+	createTripPage = (): void => {
 		dispatcher.notify(destroyCurrentPage());
 		console.log('page reducer create trip');
 
@@ -107,6 +110,20 @@ export default class PageReducer {
 
 		const tripInfoView: TripInfoView = new TripInfoView();
 		tripInfoView.init();
+	};
+
+	createAlbumPage = (): void => {
+		dispatcher.notify(destroyCurrentPage());
+		console.log('page reducer create album');
+
+		const albumReducer: AlbumReducer = new AlbumReducer();
+		albumReducer.init();
+
+		const albumView: AlbumView = new AlbumView();
+		albumView.init();
+
+		// const tripInfoView: TripInfoView = new TripInfoView();
+		// tripInfoView.init();
 	};
 
 	createProfilePage = (metadata: DataType): void => {

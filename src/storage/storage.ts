@@ -2,6 +2,7 @@ import { Country, CountryCard, Sight, TemplateCards, Trip, UserMetadata } from '
 import { Profile, ProfileMetadata } from '@/models/profile';
 import { Review } from '@/models/review';
 import { minCardInfo } from '@/models/country';
+import { Album } from '@/models/album';
 
 class Storage {
 	#countryCards: TemplateCards;
@@ -12,11 +13,7 @@ class Storage {
 
 	#sight: Sight;
 
-	#serverTripState: Trip;
-
-	#currentTripEditState: Trip;
-
-	#addedSights: number[];
+	#trip: Trip;
 
 	#profile: Profile;
 
@@ -26,19 +23,19 @@ class Storage {
 
 	#cards: minCardInfo[];
 
+	#album: Album;
+
 	constructor() {
 		this.#countryCards = <TemplateCards>{};
 		this.#country = <Country>{};
 		this.#userMetadata = <UserMetadata>{};
 		this.#sight = <Sight>{};
-		// this.#trip = <Trip>{};
-		this.#serverTripState = <Trip>{};
-		this.#currentTripEditState = <Trip>{};
-		this.#addedSights = [];
+		this.#trip = <Trip>{};
 		this.#profile = <Profile>{};
 		this.#reviews = [];
 		this.#lastTrips = [];
 		this.#cards = [];
+		this.#album = <Album>{};
 	}
 
 	addLastTripId = (id: number) => {
@@ -89,10 +86,10 @@ class Storage {
 	getSight = (): Sight => this.#sight;
 
 	storeCurrentTrip = (trip: Trip): void => {
-		this.#currentTripEditState = trip;
+		this.#trip = trip;
 	};
 
-	getCurrentTrip = (): Trip => this.#currentTripEditState;
+	getCurrentTrip = (): Trip => this.#trip;
 
 	storeProfile = (profile: Profile): void => {
 		this.#profile = profile;
@@ -122,6 +119,12 @@ class Storage {
 
 		return this.#reviews[position];
 	};
+
+	storeAlbum = (album: Album): void => {
+		this.#album = album;
+	};
+
+	getAlbum = (): Album => this.#album;
 }
 
 export const storage = new Storage();
