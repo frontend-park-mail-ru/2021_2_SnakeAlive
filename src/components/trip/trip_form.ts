@@ -23,6 +23,7 @@ import './trip.scss';
 import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
 import { setTextAreaResizeParams } from '@/components/reviews/review_form';
+import { Loader } from "@googlemaps/js-api-loader"
 
 export const GET_COUNTRY_NAME = (id: string) => {
 	switch (id) {
@@ -106,16 +107,6 @@ const showConfirm = () => {
 };
 
 let addedSight = -1;
-// let addedSightInfo = '';
-
-// export const GET_COUNTRY_NAME = (id: string) => {
-// 	switch (id) {
-// 		case '1' : return 'Russia';
-// 		case '2' : return '';
-// 		case '3' : return 'USA';
-// 		case '4' : return 'Russia';
-// 		default: return  'Russia';
-// }
 
 const getFormInfo = (): {
 	title: string;
@@ -334,4 +325,17 @@ export const initTripForm = (isNew: boolean): void => {
 	if (askConfirmBtn !== null) {
 		askConfirmBtn.addEventListener('click', showConfirm, false);
 	}
+
+	const loader = new Loader({
+		apiKey: "AIzaSyAmfwtc-cyEkyrSqWaUfeRBRMV6dvOAnpg",
+		version: "weekly",
+		//...additionalOptions,
+	  });
+	  
+	  loader.load().then(() => {
+		let map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
+		  center: { lat: -34.397, lng: 150.644 },
+		  zoom: 8,
+		});
+	  });
 };
