@@ -32,7 +32,7 @@ class AlbumPhoto {
 					dispatcher.notify(deletePhoto(this.#id)); // обработка того что подставляется доменное имя!
 					const photo = document.getElementById(`album_page__photo_holder_place_${this.#id}`);
 					if (photo !== null) {
-						photo.style.display ='none';
+						photo.style.display = 'none';
 					}
 				},
 				false
@@ -61,10 +61,10 @@ export class PhotosView extends BasicView {
 		console.log('render photos ', photos, 'state', state.isTrue);
 		this.setView(albumPhotosTemplate({ isEdit: state.isTrue, photos }));
 		if (state.isTrue) {
-			photos.forEach((ph) => {
+			photos.forEach(ph => {
 				const photo = new AlbumPhoto();
 				photo.createPhoto(ph);
-			})
+			});
 		}
 	};
 
@@ -113,14 +113,20 @@ export class AlbumView extends BasicView {
 
 		const addBtn = document.getElementById('add_photos_btn');
 		if (addBtn !== null) {
-			addBtn.addEventListener('mouseover',
+			addBtn.addEventListener(
+				'mouseover',
 				() => {
-					addBtn.innerText = "Чтобы добавить фотографии, пожалуйста, создайте альбом";
-				}, false);
-			addBtn.addEventListener('mouseout',
+					addBtn.innerText = 'Чтобы добавить фотографии, пожалуйста, создайте альбом';
+				},
+				false
+			);
+			addBtn.addEventListener(
+				'mouseout',
 				() => {
-					addBtn.innerText = "Добавить фотографии";
-				}, false);
+					addBtn.innerText = 'Добавить фотографии';
+				},
+				false
+			);
 		}
 
 		const formPlace = document.getElementById('album_page__left_col__info');

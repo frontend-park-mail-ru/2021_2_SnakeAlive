@@ -9,13 +9,16 @@ import { storage } from '@/storage';
 const enableUploadPhotos = () => {
 	const addBtn = document.getElementById('add_photos_btn');
 	if (addBtn !== null) {
-		addBtn.addEventListener('click',
-			(event) => {
+		addBtn.addEventListener(
+			'click',
+			event => {
 				event.preventDefault();
 				console.log('i work');
-			}, false);
+			},
+			false
+		);
 	}
-}
+};
 
 const hideConfirm = (): void => {
 	console.log('hid confirm');
@@ -55,26 +58,26 @@ const showConfirm = () => {
 };
 
 const validateForm = (): AlbumInfo | false => {
-		const info: AlbumInfo = {
-			title: '',
-			description: ''
-		};
+	const info: AlbumInfo = {
+		title: '',
+		description: '',
+	};
 
-		const title = <HTMLInputElement>document.getElementById('title');
-		if (title !== null) {
-			if (title.value === '') {
-				return false;
-			}
-			info.title = title.value;
-
-			const description = <HTMLInputElement>document.getElementById('description');
-			if (description !== null) {
-				info.description = description.value;
-			}
-			return info;
+	const title = <HTMLInputElement>document.getElementById('title');
+	if (title !== null) {
+		if (title.value === '') {
+			return false;
 		}
+		info.title = title.value;
+
+		const description = <HTMLInputElement>document.getElementById('description');
+		if (description !== null) {
+			info.description = description.value;
+		}
+		return info;
+	}
 	return false;
-}
+};
 
 const setError = () => {
 	const errorBlock = document.getElementById('error_block');
@@ -87,8 +90,9 @@ export const initAlbumForm = (isNew: boolean) => {
 	// кнопка создания альбома = кнопка обновлениия инфы когда не новый
 	const createBtn = document.getElementById('btn_make_album');
 	if (createBtn !== null) {
-		createBtn.addEventListener('click',
-			(event) => {
+		createBtn.addEventListener(
+			'click',
+			event => {
 				event.preventDefault();
 				const isOk = validateForm();
 				if (isOk === false) {
@@ -97,15 +101,18 @@ export const initAlbumForm = (isNew: boolean) => {
 					const { title, description } = isOk;
 					dispatcher.notify(updateAlbumInfoRequest(title, description));
 				}
-			}, false);
+			},
+			false
+		);
 	}
 
-	if (! isNew) {
+	if (!isNew) {
 		// кнопка сохранить и завершить btn_make_and_finish
 		const createFinishBtn = document.getElementById('btn_make_and_finish');
 		if (createFinishBtn !== null) {
-			createFinishBtn.addEventListener('click',
-				(event) => {
+			createFinishBtn.addEventListener(
+				'click',
+				event => {
 					event.preventDefault();
 					const isOk = validateForm();
 					if (isOk === false) {
@@ -113,14 +120,18 @@ export const initAlbumForm = (isNew: boolean) => {
 					} else {
 						const { title, description } = isOk;
 						dispatcher.notify(updateAlbumInfoRequest(title, description));
-						router.go(createFrontendQueryParams(pathsURLfrontend.album, [
-							{
-								key: paramsURLfrontend.id,
-								value: storage.getAlbum().id.toString()
-							}
-						]));
+						router.go(
+							createFrontendQueryParams(pathsURLfrontend.album, [
+								{
+									key: paramsURLfrontend.id,
+									value: storage.getAlbum().id.toString(),
+								},
+							])
+						);
 					}
-				}, false);
+				},
+				false
+			);
 		}
 
 		// блок удаления альбома
@@ -131,4 +142,4 @@ export const initAlbumForm = (isNew: boolean) => {
 
 		enableUploadPhotos();
 	}
-}
+};

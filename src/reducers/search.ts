@@ -14,9 +14,7 @@ export default class SearchReducer {
 	}
 
 	init = () => {
-		this.#tokens = [
-			dispatcher.register(EventType.SEARCH_REQUEST, this.sendSearchRequest),
-		];
+		this.#tokens = [dispatcher.register(EventType.SEARCH_REQUEST, this.sendSearchRequest)];
 	};
 
 	sendSearchRequest = (search: Search) => {
@@ -25,29 +23,29 @@ export default class SearchReducer {
 		// this.#sendRequest(searchURL.toString())
 		// 	.then((sights: Sight[]) => {
 		// 		storage.storeSearchSightsResult(search.type, sights);
-		 		storage.storeSearchSightsResult(search.type, [
-					{
-						id: '1',
-						name: "мама",
-						description: "test",
-						rating: '7',
-						photos: [],
-						country: '1',
-						tags: []
-					},
-					{
-						id: '2',
-						name: "мапа",
-						description: "test",
-						rating: '7',
-						photos: [],
-						country: '1',
-						tags: []
-					}
-				]);
-				dispatcher.notify(gotSearchResults(search.type));
-			// });
-	}
+		storage.storeSearchSightsResult(search.type, [
+			{
+				id: '1',
+				name: 'мама',
+				description: 'test',
+				rating: '7',
+				photos: [],
+				country: '1',
+				tags: [],
+			},
+			{
+				id: '2',
+				name: 'мапа',
+				description: 'test',
+				rating: '7',
+				photos: [],
+				country: '1',
+				tags: [],
+			},
+		]);
+		dispatcher.notify(gotSearchResults(search.type));
+		// });
+	};
 
 	#sendRequest = (url: string): Promise<Sight[]> =>
 		sendGetJSONRequest(url)

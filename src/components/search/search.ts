@@ -32,24 +32,28 @@ export class SearchView {
 				'input',
 				() => {
 					dispatcher.notify(searchRequest(input.value, this.#type));
-				}, false);
+				},
+				false
+			);
 
 			input.addEventListener(
 				'input',
 				() => {
 					const { value } = input;
 					if (this.#searchList !== null) {
-						const values = <HTMLOptionElement[]><unknown>this.#searchList.childNodes;
-						values.forEach((option) => {
+						const values = <HTMLOptionElement[]>(<unknown>this.#searchList.childNodes);
+						values.forEach(option => {
 							if (value === option.value) {
 								this.#callback(option.id);
 							}
-						})
+						});
 					}
-				}, false);
+				},
+				false
+			);
 		}
 
-		dispatcher.register(EventType.GOT_SEARCH_RESULTS, this.showResults)
+		dispatcher.register(EventType.GOT_SEARCH_RESULTS, this.showResults);
 	}
 
 	showResults = (typeSearch: Search) => {
@@ -58,15 +62,15 @@ export class SearchView {
 			if (this.#searchList !== null) {
 				this.#searchList.innerHTML = '';
 			}
-			result.forEach((sight) => {
+			result.forEach(sight => {
 				// создание элемента в список и добавление его
-				const elem = <HTMLOptionElement>document.createElement('option')
+				const elem = <HTMLOptionElement>document.createElement('option');
 				elem.value = sight.name;
 				elem.id = sight.id;
 				if (this.#searchList !== null) {
 					this.#searchList.appendChild(elem);
 				}
-			})
+			});
 		}
-	}
+	};
 }

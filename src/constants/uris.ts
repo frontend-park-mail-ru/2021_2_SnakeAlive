@@ -34,5 +34,5 @@ export {
 	listOfCountries,
 	albumURI,
 	photoURI,
-	searchURI
+	searchURI,
 };

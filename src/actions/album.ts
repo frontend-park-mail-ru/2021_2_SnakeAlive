@@ -53,7 +53,7 @@ const updateAlbumInfoRequest = (title: string, description: string): IEvent =>
 		key: EventType.UPDATE_ALBUM_INFO,
 		metadata: <AlbumInfo>{
 			title,
-			description
+			description,
 		},
 	};
 
@@ -71,5 +71,5 @@ export {
 	deletePhoto,
 	createAlbumFormRequest,
 	updateAlbumInfoRequest,
-	deleteAlbum
+	deleteAlbum,
 };

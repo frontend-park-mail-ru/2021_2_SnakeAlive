@@ -56,14 +56,16 @@ export default class HeaderView extends BasicView {
 		// поиск
 		const searchPlace = document.getElementById('header-search-place');
 		if (searchPlace !== null) {
-			searchPlace.innerHTML = initSearchView("header");
-			this.#search = new SearchView("header", (id:string) => {
-				router.go(createFrontendQueryParams(pathsURLfrontend.sight, [
-					{
-						key: paramsURLfrontend.id,
-						value: id
-					}
-				]))
+			searchPlace.innerHTML = initSearchView('header');
+			this.#search = new SearchView('header', (id: string) => {
+				router.go(
+					createFrontendQueryParams(pathsURLfrontend.sight, [
+						{
+							key: paramsURLfrontend.id,
+							value: id,
+						},
+					])
+				);
 			});
 		}
 	};
@@ -82,14 +84,16 @@ export default class HeaderView extends BasicView {
 		// поиск
 		const searchPlace = document.getElementById('header-search-place');
 		if (searchPlace !== null) {
-			searchPlace.innerHTML = initSearchView("header");
-			this.#search = new SearchView("header", (id:string) => {
-				router.go(createFrontendQueryParams(pathsURLfrontend.sight, [
-					{
-						key: paramsURLfrontend.id,
-						value: id
-					}
-				]))
+			searchPlace.innerHTML = initSearchView('header');
+			this.#search = new SearchView('header', (id: string) => {
+				router.go(
+					createFrontendQueryParams(pathsURLfrontend.sight, [
+						{
+							key: paramsURLfrontend.id,
+							value: id,
+						},
+					])
+				);
 			});
 		}
 	};

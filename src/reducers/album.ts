@@ -1,5 +1,10 @@
 import { dispatcher, EventType, Token, UUID } from '@/dispatcher';
-import { sendDeleteJSONRequest, sendGetJSONRequest, sendPostFileRequest, sendPostJSONRequest } from '@/http';
+import {
+	sendDeleteJSONRequest,
+	sendGetJSONRequest,
+	sendPostFileRequest,
+	sendPostJSONRequest,
+} from '@/http';
 import { albumURI, backendEndpoint, paramsURLfrontend, pathsURLfrontend } from '@/constants';
 import { storage } from '@/storage';
 import { initErrorPageRequest } from '@/actions/page';
@@ -67,25 +72,24 @@ export default class AlbumReducer {
 	};
 
 	updateInfo = (data: AlbumInfo) => {
-		this.#sendAlbumInfo(data)
-			.then((album: Album) => {
-				storage.storeAlbum(album);
+		this.#sendAlbumInfo(data).then((album: Album) => {
+			storage.storeAlbum(album);
 
-				if (window.location.href.split('?').length <= 1) {
-					router.go(
-						createFrontendQueryParams(pathsURLfrontend.album, [
-							{
-								key: paramsURLfrontend.id,
-								value: storage.getAlbum().id.toString(),
-							},
-							{
-								key: paramsURLfrontend.edit,
-								value: '1',
-							},
-						])
-					);
-				}
-			});
+			if (window.location.href.split('?').length <= 1) {
+				router.go(
+					createFrontendQueryParams(pathsURLfrontend.album, [
+						{
+							key: paramsURLfrontend.id,
+							value: storage.getAlbum().id.toString(),
+						},
+						{
+							key: paramsURLfrontend.edit,
+							value: '1',
+						},
+					])
+				);
+			}
+		});
 	};
 
 	deleteAlbum = () => {
@@ -98,15 +102,16 @@ export default class AlbumReducer {
 			})
 			.then(response => response.json())
 			.then(() => {
-				router.go(createFrontendQueryParams(pathsURLfrontend.trip, [
+				router.go(
+					createFrontendQueryParams(pathsURLfrontend.trip, [
 						{
 							key: paramsURLfrontend.id,
-							value: storage.getAlbum().tripId.toString()
-						}
-					]
-				));
+							value: storage.getAlbum().tripId.toString(),
+						},
+					])
+				);
 			});
-	}
+	};
 
 	#sendAlbumInfo = (data: AlbumInfo): Promise<Album> => {
 		// значит только что созданная форма
@@ -122,16 +127,15 @@ export default class AlbumReducer {
 				})
 				.then(response => response.json());
 		}
-			return sendPostJSONRequest(backendEndpoint + albumURI + storage.getAlbum().id, data)
-				.then(response => {
-					if (response.status !== 200) {
-						return Promise.reject(new Error('не отправлена информация об альбоме'));
-					}
-					return Promise.resolve(response);
-				})
-				.then(response => response.json());
-	}
-
+		return sendPostJSONRequest(backendEndpoint + albumURI + storage.getAlbum().id, data)
+			.then(response => {
+				if (response.status !== 200) {
+					return Promise.reject(new Error('не отправлена информация об альбоме'));
+				}
+				return Promise.resolve(response);
+			})
+			.then(response => response.json());
+	};
 
 	#getAlbum = (id: string): Promise<Album> =>
 		sendGetJSONRequest(backendEndpoint + albumURI + id)

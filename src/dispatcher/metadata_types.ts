@@ -98,7 +98,6 @@ export interface AlbumInfo {
 	description: string;
 }
 
-
 export type DataType =
 	| UUID
 	| NumID

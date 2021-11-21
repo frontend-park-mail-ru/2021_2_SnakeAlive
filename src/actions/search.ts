@@ -6,7 +6,7 @@ const searchRequest = (text: string, type: string): IEvent =>
 		key: EventType.SEARCH_REQUEST,
 		metadata: <Search>{
 			text,
-			type
+			type,
 		},
 	};
 
@@ -14,11 +14,8 @@ const gotSearchResults = (type: string): IEvent =>
 	<IEvent>{
 		key: EventType.GOT_SEARCH_RESULTS,
 		metadata: <Search>{
-			type
+			type,
 		},
 	};
 
-export {
-	searchRequest,
-	gotSearchResults
-}
+export { searchRequest, gotSearchResults };

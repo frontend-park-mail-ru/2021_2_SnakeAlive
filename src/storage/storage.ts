@@ -28,9 +28,9 @@ class Storage {
 	#albumTripId = '';
 
 	#searchSightsResult: {
-			type: string,
-			sights: Sight[]
-		}[];
+		type: string;
+		sights: Sight[];
+	}[];
 
 	constructor() {
 		this.#countryCards = <TemplateCards>{};
@@ -148,21 +148,21 @@ class Storage {
 
 	storeAlbumTripId = (id: string) => {
 		this.#albumTripId = id;
-	}
+	};
 
-	getAlbumTripId = ():string => this.#albumTripId;
+	getAlbumTripId = (): string => this.#albumTripId;
 
 	storeSearchSightsResult = (type: string, sights: Sight[]): void => {
 		this.#searchSightsResult.push({
 			type,
-			sights
+			sights,
 		});
-	}
+	};
 
-	getSearchSightsResult = (type: string): Sight[]=> {
+	getSearchSightsResult = (type: string): Sight[] => {
 		let result: Sight[] = [];
 		// eslint-disable-next-line consistent-return
-		this.#searchSightsResult.forEach((obj) => {
+		this.#searchSightsResult.forEach(obj => {
 			if (obj.type === type) {
 				result = obj.sights;
 			}
