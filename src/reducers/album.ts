@@ -1,13 +1,15 @@
 import { dispatcher, EventType, Token, UUID } from '@/dispatcher';
-import { sendDeleteJSONRequest, sendGetJSONRequest, sendPostFileRequest } from '@/http';
-import { albumURI, backendEndpoint } from '@/constants';
+import { sendDeleteJSONRequest, sendGetJSONRequest, sendPostFileRequest, sendPostJSONRequest } from '@/http';
+import { albumURI, backendEndpoint, paramsURLfrontend, pathsURLfrontend } from '@/constants';
 import { storage } from '@/storage';
 import { initErrorPageRequest } from '@/actions/page';
 import { newSetMainHeaderRequest } from '@/actions/header';
 import { newGetAlbumResult, renderPhotos } from '@/actions/album';
 import { Album } from '@/models/album';
 import { photoURI } from '@/constants/uris';
-import { File, IDState } from '@/dispatcher/metadata_types';
+import { AlbumInfo, File, IDState } from '@/dispatcher/metadata_types';
+import { router } from '@/router';
+import { createFrontendQueryParams } from '@/router/router';
 
 export default class AlbumReducer {
 	#tokens: Token[];
@@ -22,6 +24,8 @@ export default class AlbumReducer {
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
 			dispatcher.register(EventType.ADD_ALBUM_PHOTOS, this.addPhotos),
 			dispatcher.register(EventType.DELETE_ALBUM_PHOTOS, this.deletePhotos),
+			dispatcher.register(EventType.UPDATE_ALBUM_INFO, this.updateInfo),
+			dispatcher.register(EventType.DELETE_ALBUM, this.deleteAlbum),
 		];
 	};
 
@@ -61,6 +65,73 @@ export default class AlbumReducer {
 			storage.storeAlbum(album);
 		});
 	};
+
+	updateInfo = (data: AlbumInfo) => {
+		this.#sendAlbumInfo(data)
+			.then((album: Album) => {
+				storage.storeAlbum(album);
+
+				if (window.location.href.split('?').length <= 1) {
+					router.go(
+						createFrontendQueryParams(pathsURLfrontend.album, [
+							{
+								key: paramsURLfrontend.id,
+								value: storage.getAlbum().id.toString(),
+							},
+							{
+								key: paramsURLfrontend.edit,
+								value: '1',
+							},
+						])
+					);
+				}
+			});
+	};
+
+	deleteAlbum = () => {
+		sendDeleteJSONRequest(backendEndpoint + albumURI + storage.getAlbum().id)
+			.then(response => {
+				if (response.status !== 200) {
+					return Promise.reject(new Error('не удален альбом'));
+				}
+				return Promise.resolve(response);
+			})
+			.then(response => response.json())
+			.then(() => {
+				router.go(createFrontendQueryParams(pathsURLfrontend.trip, [
+						{
+							key: paramsURLfrontend.id,
+							value: storage.getAlbum().tripId.toString()
+						}
+					]
+				));
+			});
+	}
+
+	#sendAlbumInfo = (data: AlbumInfo): Promise<Album> => {
+		// значит только что созданная форма
+		if (window.location.href.split('?').length <= 1) {
+			const sendData = <any>data;
+			sendData.trip_id = storage.getAlbumTripId();
+			return sendPostJSONRequest(backendEndpoint + albumURI, sendData)
+				.then(response => {
+					if (response.status !== 200) {
+						return Promise.reject(new Error('не отправлена информация об альбоме'));
+					}
+					return Promise.resolve(response);
+				})
+				.then(response => response.json());
+		}
+			return sendPostJSONRequest(backendEndpoint + albumURI + storage.getAlbum().id, data)
+				.then(response => {
+					if (response.status !== 200) {
+						return Promise.reject(new Error('не отправлена информация об альбоме'));
+					}
+					return Promise.resolve(response);
+				})
+				.then(response => response.json());
+	}
+
 
 	#getAlbum = (id: string): Promise<Album> =>
 		sendGetJSONRequest(backendEndpoint + albumURI + id)

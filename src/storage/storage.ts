@@ -25,6 +25,13 @@ class Storage {
 
 	#album: Album;
 
+	#albumTripId = '';
+
+	#searchSightsResult: {
+			type: string,
+			sights: Sight[]
+		}[];
+
 	constructor() {
 		this.#countryCards = <TemplateCards>{};
 		this.#country = <Country>{};
@@ -36,6 +43,7 @@ class Storage {
 		this.#lastTrips = [];
 		this.#cards = [];
 		this.#album = <Album>{};
+		this.#searchSightsResult = [];
 	}
 
 	addLastTripId = (id: number) => {
@@ -122,9 +130,45 @@ class Storage {
 
 	storeAlbum = (album: Album): void => {
 		this.#album = album;
+
+		// временное
+		// this.#album = {
+		// 	id: 42,
+		// 	title: 'test',
+		// 	description: 'lots of tests.... :)',
+		// 	photos: [
+		// 		'map.png',
+		// 		'moscow_city_1.jpeg'
+		// 	],
+		// 	user: <UserMetadata>{}
+		// };
 	};
 
 	getAlbum = (): Album => this.#album;
+
+	storeAlbumTripId = (id: string) => {
+		this.#albumTripId = id;
+	}
+
+	getAlbumTripId = ():string => this.#albumTripId;
+
+	storeSearchSightsResult = (type: string, sights: Sight[]): void => {
+		this.#searchSightsResult.push({
+			type,
+			sights
+		});
+	}
+
+	getSearchSightsResult = (type: string): Sight[]=> {
+		let result: Sight[] = [];
+		// eslint-disable-next-line consistent-return
+		this.#searchSightsResult.forEach((obj) => {
+			if (obj.type === type) {
+				result = obj.sights;
+			}
+		});
+		return result;
+	};
 }
 
 export const storage = new Storage();

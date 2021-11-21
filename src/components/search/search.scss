@@ -1,0 +1,21 @@
+@import "../../index";
+
+.search_area {
+  background: $my--input-fill;
+  border: 0.5px solid $my--input-border;
+  border-radius: 4px;
+  //width: 100%;
+  @include text-plain-no-wrap;
+  padding: 6px;
+  outline: none;
+
+  display: flex;
+  flex-direction: row;
+  &__input,
+  &__input:active,
+  &__input:focus,
+  &__input:hover {
+    border: none;
+    padding: 0;
+  }
+}

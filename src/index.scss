@@ -127,6 +127,7 @@ textarea:active {
   width: 100%;
   @include text-plain-no-wrap;
   padding: 6px;
+  outline: none;
 }
 
 .icon {
@@ -600,7 +601,7 @@ textarea:active {
     object-fit: cover;
 
     position: absolute;
-    top: -50%;
+    top: 0;
     left: 0;
     width: 100%;
   }
@@ -819,4 +820,18 @@ textarea:active {
     left: 0;
     width: 100%;
   }
+}
+
+.string-left {
+  display: flex;
+  flex-direction: row;
+  > * {
+    margin-right: $small-px;
+  }
+}
+
+.string-space {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

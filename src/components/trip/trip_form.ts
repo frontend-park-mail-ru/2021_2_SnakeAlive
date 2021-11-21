@@ -312,6 +312,7 @@ export const initTripForm = (isNew: boolean): void => {
 			'click',
 			event => {
 				event.preventDefault();
+				storage.storeAlbumTripId(storage.getCurrentTrip().id);
 				router.go(pathsURLfrontend.album);
 			},
 			false

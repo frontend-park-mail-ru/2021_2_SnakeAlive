@@ -143,8 +143,6 @@ export class TripInfoView extends BasicView {
 	};
 
 	showTrip = () => {
-		// router.go(frontEndEndPoint );// ckj;ysq gen
-
 		const trip = storage.getCurrentTrip();
 		this.setView(tripInfo(trip));
 

@@ -3,6 +3,8 @@ const HTMLWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+// const MockDevServer = require('webpack-mock-dev-server');
+
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = !isDev;
 
@@ -15,6 +17,7 @@ module.exports = {
 		static: './dist',
 		port: 2000,
 		historyApiFallback: true,
+		// before: MockDevServer(path.resolve(__dirname, 'mock-dev-server.config')),
 	},
 	stats: {
 		children:true,

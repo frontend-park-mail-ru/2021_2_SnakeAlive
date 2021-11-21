@@ -1,17 +1,21 @@
 import BasicView from './view';
 import { storage } from '@/storage';
 import { DataType, dispatcher, EventType, Token } from '@/dispatcher';
-import { UserMetadata } from '@/models';
 
 import { makeSimpleButton } from '@/components';
-import { pathsURLfrontend } from '@/constants';
+import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
 
 import { makeHeader } from '@/components/header/header';
 import { Profile } from '@/models/profile';
 import { IsTrue } from '@/dispatcher/metadata_types';
+import { initSearchView, SearchView } from '@/components/search/search';
+import { router } from '@/router';
+import { createFrontendQueryParams } from '@/router/router';
 
 export default class HeaderView extends BasicView {
 	#tokens: Token[];
+
+	#search: SearchView | null = null;
 
 	constructor() {
 		super('#header');
@@ -48,6 +52,20 @@ export default class HeaderView extends BasicView {
 		makeSimpleButton('logo-h', pathsURLfrontend.root);
 		makeSimpleButton('user-block', pathsURLfrontend.profile);
 		makeSimpleButton('trip-block', pathsURLfrontend.trip);
+
+		// поиск
+		const searchPlace = document.getElementById('header-search-place');
+		if (searchPlace !== null) {
+			searchPlace.innerHTML = initSearchView("header");
+			this.#search = new SearchView("header", (id:string) => {
+				router.go(createFrontendQueryParams(pathsURLfrontend.sight, [
+					{
+						key: paramsURLfrontend.id,
+						value: id
+					}
+				]))
+			});
+		}
 	};
 
 	setMainHeaderBasic = (metadata: DataType): void => {
@@ -60,10 +78,23 @@ export default class HeaderView extends BasicView {
 
 		makeSimpleButton('logo-h', pathsURLfrontend.root);
 		makeSimpleButton('user-block', pathsURLfrontend.login);
+
+		// поиск
+		const searchPlace = document.getElementById('header-search-place');
+		if (searchPlace !== null) {
+			searchPlace.innerHTML = initSearchView("header");
+			this.#search = new SearchView("header", (id:string) => {
+				router.go(createFrontendQueryParams(pathsURLfrontend.sight, [
+					{
+						key: paramsURLfrontend.id,
+						value: id
+					}
+				]))
+			});
+		}
 	};
 
 	setMainHeaderEmpty = (metadata: IsTrue): void => {
-		console.log(metadata.isTrue);
 		const dataTemplate = {
 			isNotEmpty: false,
 			isUser: metadata.isTrue,
@@ -72,5 +103,19 @@ export default class HeaderView extends BasicView {
 
 		makeSimpleButton('logo-h', pathsURLfrontend.root);
 		makeSimpleButton('trip-block', pathsURLfrontend.trip);
+
+		// поиск
+		// const searchPlace = document.getElementById('header-search-place');
+		// if (searchPlace !== null) {
+		// 	searchPlace.innerHTML = initSearchView("header");
+		// 	this.#search = new SearchView("header", (id:string) => {
+		// 		router.go(createFrontendQueryParams(pathsURLfrontend.sight, [
+		// 			{
+		// 				key: paramsURLfrontend.id,
+		// 				value: id
+		// 			}
+		// 		]))
+		// 	});
+		// }
 	};
 }

@@ -5,23 +5,27 @@
 	</div>
 
 	<div class="right">
-	{{#if isUser}}
-		<button class='usual_button usual_button_light' id='trip-block'>
-			Создать поездку
-		</button>
-	{{/if}}
+		{{#if isNotEmpty}}
+			<div id="header-search-place" class="header__search_place"></div>
+		{{/if}}
 
-	{{#if isNotEmpty}}
-	<div class='header__button' id='user-block'>
 		{{#if isUser}}
-			<div class="circle-img">
-				<img src="{{avatarPath}}"/>
-			</div>
-			<p>{{name}}</p>
-		{{else}}
-			<p>{{btnText}}</p>
+			<button class='usual_button usual_button_light' id='trip-block'>
+				Создать поездку
+			</button>
+		{{/if}}
+
+		{{#if isNotEmpty}}
+		<div class='header__button' id='user-block'>
+			{{#if isUser}}
+				<div class="circle-img">
+					<img src="{{avatarPath}}"/>
+				</div>
+				<p>{{name}}</p>
+			{{else}}
+				<p>{{btnText}}</p>
+			{{/if}}
+		</div>
 		{{/if}}
 	</div>
-	{{/if}}
-		</div>
 </div>

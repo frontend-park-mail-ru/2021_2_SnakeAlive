@@ -1,5 +1,5 @@
 import { UUID, IEvent, EventType, Empty } from '@/dispatcher';
-import { File, IDState, IsTrue } from '@/dispatcher/metadata_types';
+import { AlbumInfo, File, IDState, IsTrue } from '@/dispatcher/metadata_types';
 
 const newGetAlbumRequest = (tripID: string, isEdit: boolean): IEvent =>
 	<IEvent>{
@@ -34,7 +34,7 @@ const addPhotos = (files: FormData): IEvent =>
 		},
 	};
 
-const deletePhotos = (name: string): IEvent =>
+const deletePhoto = (name: string): IEvent =>
 	<IEvent>{
 		key: EventType.DELETE_ALBUM_PHOTOS,
 		metadata: <UUID>{
@@ -48,11 +48,28 @@ const createAlbumFormRequest = (): IEvent =>
 		metadata: <Empty>{},
 	};
 
+const updateAlbumInfoRequest = (title: string, description: string): IEvent =>
+	<IEvent>{
+		key: EventType.UPDATE_ALBUM_INFO,
+		metadata: <AlbumInfo>{
+			title,
+			description
+		},
+	};
+
+const deleteAlbum = (): IEvent =>
+	<IEvent>{
+		key: EventType.DELETE_ALBUM,
+		metadata: <Empty>{},
+	};
+
 export {
 	newGetAlbumRequest,
 	newGetAlbumResult,
 	renderPhotos,
 	addPhotos,
-	deletePhotos,
+	deletePhoto,
 	createAlbumFormRequest,
+	updateAlbumInfoRequest,
+	deleteAlbum
 };

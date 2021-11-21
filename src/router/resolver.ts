@@ -1,4 +1,4 @@
-import { dispatcher, IEvent } from '@/dispatcher';
+import { dispatcher, EventType, IEvent } from '@/dispatcher';
 import {
 	initAlbumPageRequest,
 	initErrorPageRequest,
