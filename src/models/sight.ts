@@ -9,3 +9,9 @@ export interface Sight {
 	tags: Array<string>;
 	photos: Array<string>;
 }
+
+export interface SightsCoord {
+	id: number;
+	lat: number;
+	lng: number;
+}

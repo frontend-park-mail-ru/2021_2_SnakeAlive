@@ -8,7 +8,7 @@ import {
 	CountryResponse,
 } from './country';
 import { UserMetadata } from './user';
-import { Sight } from './sight';
+import { Sight, SightsCoord } from './sight';
 import { Trip } from './trip';
 
 export {
@@ -20,6 +20,7 @@ export {
 	CountryCardTag,
 	UserMetadata,
 	Sight,
+	SightsCoord,
 	Trip,
 	CountryResponse,
 };

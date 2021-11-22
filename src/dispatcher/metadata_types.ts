@@ -126,7 +126,8 @@ export type DataType =
 	| CreateReviewForm
 	| SightToTrip
 	| IsTrue
-	// | SightData
+	| IDState
+	//| SightData
 	// | TripData
 	// | CountryData
 	| SubmitTripInfo

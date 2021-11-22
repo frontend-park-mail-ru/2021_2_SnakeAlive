@@ -7,6 +7,7 @@ const sightURI = '/sight/';
 const sightsURI = '/sights/';
 const tripURI = '/trip/';
 const postTripURI = '/trip';
+const tripCoord = '/trip/coord/';
 const reviewsURI = '/review/';
 const reviewURI = '/review';
 const upload = '/upload';
@@ -29,4 +30,5 @@ export {
 	upload,
 	postTripURI,
 	listOfCountries,
+	tripCoord,
 };

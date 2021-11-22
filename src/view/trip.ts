@@ -13,12 +13,13 @@ import {
 	pathsURLfrontend,
 	tripURI,
 	sightURI,
+	tripCoord,
 } from '@/constants';
-import { IsTrue, SightToTrip, SubmitTripInfo } from '@/dispatcher/metadata_types';
+import { IDState, IsTrue, SightToTrip, SubmitTripInfo } from '@/dispatcher/metadata_types';
 import { storage } from '@/storage';
 import { rerenderTripCards } from '@/actions';
 import { SightCardInTrip } from '@/view/sight_cards';
-import { Sight } from '@/models';
+import { Sight, SightsCoord } from '@/models';
 import defaultPicture from '@/../image/moscow_city_1.jpeg';
 import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
@@ -249,36 +250,65 @@ export class TripInfoView extends BasicView {
 
 export class TripView extends BasicView {
 	#tokens: Token[];
+	#coord: SightsCoord[]
 	#map!: google.maps.Map;
+	loader = new Loader({
+		apiKey: "AIzaSyAmfwtc-cyEkyrSqWaUfeRBRMV6dvOAnpg",
+		version: "weekly",
+	  });
+
 	constructor() {
 		super('#content');
-		this.#tokens = [];
-		const loader = new Loader({
-			apiKey: "AIzaSyAmfwtc-cyEkyrSqWaUfeRBRMV6dvOAnpg",
-			version: "weekly",
-		  });
-		  loader.load().then(() => {
+		this.loader.load().then(() => {
 			this.#map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
 				center: { lat: 55.75222, lng: 37.61556 },
 				zoom: 8,
 			  });
 		  });
-		
+		this.#tokens = [];
+		this.#coord = []		
 	}
 
 	init = (): void => {
 		this.#tokens = [
-			// dispatcher.register(EventType.GET_TRIP_REQUEST, this.setBasicTripPage),
+			dispatcher.register(EventType.GET_TRIP_REQUEST, this.setBasicTripPage),
 			// dispatcher.register(EventType.GET_TRIP_RESPONSE, this.setBasicTripPage),
-			dispatcher.register(EventType.ADD_CURRENT_TRIP_PLACE, this.addMarkerOnMap),
+			dispatcher.register(EventType.ADD_CURRENT_TRIP_PLACE, this.addMarker),
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.#destroy),
 		];
-		this.setBasicTripPage();
+		this.setBasicTripPageFirst();
 	};
 
-	addMarkerOnMap = (metadata: SightToTrip) =>{
-		console.log("add marker", metadata.sightId)
+	addMarker = (metadata: SightToTrip) =>{
+		console.log("add marker", metadata.sightId, this.#coord)
 		const countriesPromise = sendGetJSONRequest(backendEndpoint + sightURI + metadata.sightId)
+		.then(response => {
+			if (response.ok) {
+				return Promise.resolve(response);
+			}
+			return Promise.reject(new Error('wrong answer on list of countries'));
+		})
+		.then(response => response.json())
+		.then(response => {
+			this.#coord.push({id: metadata.sightId, lat: response.lat, lng: response.lng})
+		}).then(()=> {this.updateMap();});
+		
+	}
+
+	updateMap = () => {
+		for (let entry of this.#coord) {
+			const marker = new google.maps.Marker({
+				position: { lat: entry.lat, lng: entry.lng },
+				map: this.#map,
+			});
+			console.log("draw  marker", entry)
+		}
+		
+	}
+
+	setBasicTripPage = (metadata: IDState) => {
+		this.setView(tripPageTemplate({ mapPicturePath }));
+		const countriesPromise = sendGetJSONRequest(backendEndpoint + tripCoord + metadata.ID)
 			.then(response => {
 				if (response.ok) {
 					return Promise.resolve(response);
@@ -287,17 +317,16 @@ export class TripView extends BasicView {
 			})
 			.then(response => response.json())
 			.then(response => {
-				const marker = new google.maps.Marker({
-					position: { lat: response.lat, lng: response.lng },
-					map: this.#map,
-				});
-			});
-		
-		
-	}
+				this.#coord = response
+		 	});
+			this.loader.load().then(() => {
+				this.updateMap();
+			})
+			
 
-	setBasicTripPage = () => {
-		console.log('tripPageTemplate({})');
+	};
+
+	setBasicTripPageFirst = () => {
 		this.setView(tripPageTemplate({ mapPicturePath }));
 	};
 

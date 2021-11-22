@@ -14,6 +14,7 @@ import {
 	upload,
 	postTripURI,
 	listOfCountries,
+	tripCoord,
 } from './uris';
 import { russiaFormName, russiaUriName, nicaraguaFormName, nicaraguaUriName } from './defaults';
 import { pathsURLfrontend, paramsURLfrontend } from '@/constants/frontendURIs';
@@ -22,6 +23,7 @@ export {
 	sightURI,
 	sightsURI,
 	tripURI,
+	tripCoord,
 	backendEndpoint,
 	backendFileEndpoint,
 	loginURI,
