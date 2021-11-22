@@ -325,17 +325,4 @@ export const initTripForm = (isNew: boolean): void => {
 	if (askConfirmBtn !== null) {
 		askConfirmBtn.addEventListener('click', showConfirm, false);
 	}
-
-	const loader = new Loader({
-		apiKey: "AIzaSyAmfwtc-cyEkyrSqWaUfeRBRMV6dvOAnpg",
-		version: "weekly",
-		//...additionalOptions,
-	  });
-	  
-	  loader.load().then(() => {
-		let map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
-		  center: { lat: -34.397, lng: 150.644 },
-		  zoom: 8,
-		});
-	  });
 };

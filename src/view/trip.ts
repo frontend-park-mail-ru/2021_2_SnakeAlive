@@ -12,8 +12,9 @@ import {
 	paramsURLfrontend,
 	pathsURLfrontend,
 	tripURI,
+	sightURI,
 } from '@/constants';
-import { IsTrue, SubmitTripInfo } from '@/dispatcher/metadata_types';
+import { IsTrue, SightToTrip, SubmitTripInfo } from '@/dispatcher/metadata_types';
 import { storage } from '@/storage';
 import { rerenderTripCards } from '@/actions';
 import { SightCardInTrip } from '@/view/sight_cards';
@@ -22,6 +23,10 @@ import defaultPicture from '@/../image/moscow_city_1.jpeg';
 import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
 import mapPicturePath from '@/../image/map.png';
+import { Loader } from "@googlemaps/js-api-loader"
+import {
+	DataType,
+} from '@/dispatcher';
 
 export class CardSightsHolder extends BasicView {
 	#tokens: Token[];
@@ -101,11 +106,13 @@ export class TripInfoView extends BasicView {
 	#firstCreated = false;
 
 	#cardHolder: CardSightsHolder;
+	
 
 	constructor() {
 		super('#trip-info');
 		this.#tokens = [];
 		this.#cardHolder = new CardSightsHolder();
+		
 	}
 
 	init = (): void => {
@@ -242,20 +249,52 @@ export class TripInfoView extends BasicView {
 
 export class TripView extends BasicView {
 	#tokens: Token[];
-
+	#map!: google.maps.Map;
 	constructor() {
 		super('#content');
 		this.#tokens = [];
+		const loader = new Loader({
+			apiKey: "AIzaSyAmfwtc-cyEkyrSqWaUfeRBRMV6dvOAnpg",
+			version: "weekly",
+		  });
+		  loader.load().then(() => {
+			this.#map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
+				center: { lat: 55.75222, lng: 37.61556 },
+				zoom: 8,
+			  });
+		  });
+		
 	}
 
 	init = (): void => {
 		this.#tokens = [
 			// dispatcher.register(EventType.GET_TRIP_REQUEST, this.setBasicTripPage),
 			// dispatcher.register(EventType.GET_TRIP_RESPONSE, this.setBasicTripPage),
+			dispatcher.register(EventType.ADD_CURRENT_TRIP_PLACE, this.addMarkerOnMap),
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.#destroy),
 		];
 		this.setBasicTripPage();
 	};
+
+	addMarkerOnMap = (metadata: SightToTrip) =>{
+		console.log("add marker", metadata.sightId)
+		const countriesPromise = sendGetJSONRequest(backendEndpoint + sightURI + metadata.sightId)
+			.then(response => {
+				if (response.ok) {
+					return Promise.resolve(response);
+				}
+				return Promise.reject(new Error('wrong answer on list of countries'));
+			})
+			.then(response => response.json())
+			.then(response => {
+				const marker = new google.maps.Marker({
+					position: { lat: response.lat, lng: response.lng },
+					map: this.#map,
+				});
+			});
+		
+		
+	}
 
 	setBasicTripPage = () => {
 		console.log('tripPageTemplate({})');
