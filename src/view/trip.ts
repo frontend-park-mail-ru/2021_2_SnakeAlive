@@ -281,6 +281,8 @@ export class TripView extends BasicView {
 
 	addMarker = (metadata: SightToTrip) =>{
 		console.log("add marker", metadata.sightId, this.#coord)
+		let lat: number;
+		let lng: number
 		const countriesPromise = sendGetJSONRequest(backendEndpoint + sightURI + metadata.sightId)
 		.then(response => {
 			if (response.ok) {
@@ -291,7 +293,13 @@ export class TripView extends BasicView {
 		.then(response => response.json())
 		.then(response => {
 			this.#coord.push({id: metadata.sightId, lat: response.lat, lng: response.lng})
-		}).then(()=> {this.updateMap();});
+			lat = response.lat
+			lng = response.lng
+		})
+		.then(response => {
+			this.updateMap(); 
+			this.#map.setCenter({ lat: lat, lng: lng }
+		)});
 		
 	}
 
