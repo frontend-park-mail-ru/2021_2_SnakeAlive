@@ -51,12 +51,11 @@ export class CardSightsHolder extends BasicView {
 
 	rerenderCards = (metadata: IsTrue) => {
 		this.setEmpty();
-		this.#cards = [];
+		this.#cards = [];  
 
 		interface sightAdopted {
 			sight: Sight;
 			preview: string;
-			photosTemplate: string;
 			PP: number;
 		}
 		const sightsAdopted: Array<Array<sightAdopted>> = [[]];
@@ -70,7 +69,6 @@ export class CardSightsHolder extends BasicView {
 					sightsAdopted[0].push({
 						sight,
 						preview: sight.photos[0],
-						photosTemplate: horizontalScroll({ photos: sight.photos }),
 						PP: i,
 					});
 					i += 1;

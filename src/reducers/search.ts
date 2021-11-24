@@ -31,6 +31,8 @@ export default class SearchReducer {
 				rating: '7',
 				photos: [],
 				country: '1',
+				lat: "0",
+				lng: "0",
 				tags: [],
 			},
 			{
@@ -40,6 +42,8 @@ export default class SearchReducer {
 				rating: '7',
 				photos: [],
 				country: '1',
+				lat: "0",
+				lng: "0",
 				tags: [],
 			},
 		]);
