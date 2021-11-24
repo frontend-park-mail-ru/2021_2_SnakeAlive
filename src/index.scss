@@ -1,0 +1,842 @@
+$header_height: 7.5vh;
+
+// отступы
+$large-px: 24px;
+$small-px: 10px;
+
+/* Color styles */
+$my--main-background: #EDEEF0;
+$my--frame-border: #DCE0E5;
+// button_usual uses
+$my--button-text: rgba(85, 103, 125, 1);
+$my--button-fill: rgba(229, 235, 241, 1);
+$my--button-fill-hover: rgba(218, 226, 234, 1);
+$my--bright-btn: rgba(79, 130, 182, 1);
+$my--bright-btn-hover: rgba(100, 145, 190, 1);
+
+$my--input-border: rgba(213, 214, 215, 1);
+$my--input-fill: #F7F8FA;
+$my--input-border-active: rgba(57, 140, 221, 1);
+$my--error: rgba(231, 63, 70, 1);
+
+$my--small-text: rgba(153, 162, 172, 1);
+
+$my--button-header-hover: #EDEEF0;
+//
+$white: white;
+$black: black; // вдруг захочется поизголяться тут
+$green: #68B058;
+$logo-color: #0077FF;
+
+.input-error-red {
+  border-radius: 2px;
+  border-color: red;
+  border-style: solid;
+}
+
+// шрифты
+@mixin text-header {
+  font-size: 24px;
+  font-weight: 400;
+}
+
+;
+h2 {
+  @include text-header;
+}
+
+@mixin text-local-header {
+  font-size: 19px;
+  font-weight: 400;
+}
+
+;
+h4 {
+  @include text-local-header;
+}
+
+@mixin text-local-name {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+;
+@mixin text-plain {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 20px;
+  letter-spacing: -0.5px;
+}
+
+;
+p {
+  @include text-plain;
+}
+
+@mixin text-plain-no-wrap {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 20px;
+  letter-spacing: -0.5px;
+  // насчет этих строчек терзают смутные сомнения
+  //display: flex;
+  //align-items: flex-end;
+}
+
+;
+@mixin text-button {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+;
+@mixin text-small {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+;
+
+html, body {
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  background: $my--main-background;
+}
+
+.content {
+}
+
+.frame {
+  border-radius: 4px;
+  border: 1px solid $my--frame-border;
+  padding: $large-px;
+  background: $white;
+}
+
+input,
+input:focus,
+input:hover,
+input:active,
+textarea,
+textarea:focus,
+textarea:hover,
+textarea:active {
+  background: $my--input-fill;
+  border: 0.5px solid $my--input-border;
+  border-radius: 4px;
+  width: 100%;
+  @include text-plain-no-wrap;
+  padding: 6px;
+  outline: none;
+}
+
+.icon {
+  width: $large-px;
+  height: $large-px;
+}
+
+//<div class='error_page'>
+//<h2>Сожалеем, возникла ошибка</h2>
+//<<img src="{{logo}}" class="error_page__img"/>>
+
+.error_page {
+  flex-direction: column;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8vh;
+  padding: 8vh;
+
+  img {
+    height: 30vh;
+  }
+}
+
+
+.profile {
+  background-color: $white;
+  display: grid;
+
+  @media (max-width: 320px) {
+    height: 110px;
+    padding: 1px;
+    margin-top: 4px;
+
+    grid-template-areas: "photo metadata_holder"
+                          "btn_block btn_block";
+    grid-template-rows: 50px 50px;
+    grid-template-columns: 50px 1fr;
+    row-gap: 4px;
+  }
+
+  @media (min-width: 321px) and (max-width: 960px) {
+    height: 200px;
+    padding: 10px;
+    margin: 10px 60px 10px;
+    border-radius: 15px;
+
+    grid-template-areas: "photo metadata_holder btn_block";
+    grid-template-rows: 200px;
+    grid-template-columns: 200px 1fr 200px;
+    row-gap: 3px;
+  }
+
+  @media (min-width: 961px) {
+    border-radius: 15px;
+    height: 200px;
+    margin: 20px 100px 10px;
+
+    grid-template-areas: "photo metadata_holder btn_block";
+    grid-template-rows: 200px;
+    grid-template-columns: 200px 1fr 200px;
+    row-gap: 3px;
+  }
+
+  &__photo {
+    grid-area: photo;
+    justify-content: center;
+    align-items: center;
+
+    @media (max-width: 320px) {
+      max-height: 50px;
+      max-width: 50px;
+      border-radius: 3px;
+    }
+
+    @media (min-width: 321px) and (max-width: 960px) {
+      display: flex;
+      justify-content: center;
+    }
+
+    @media (min-width: 961px) {
+      display: flex;
+      justify-content: center;
+    }
+
+    img {
+      border-radius: 50%;
+
+      @media (max-width: 320px) {
+        max-height: 50px;
+        max-width: 50px;
+      }
+
+      @media (min-width: 321px) and (max-width: 960px) {
+        width: 60%;
+      }
+
+      @media (min-width: 961px) {
+        width: 60%;
+      }
+    }
+  }
+
+  &__metadata-holder {
+    grid-area: metadata_holder;
+    display: grid;
+
+    @media (max-width: 320px) {
+      grid-template-rows: 20px 15px;
+    }
+
+    @media (min-width: 321px) and (max-width: 960px) {
+      grid-template-rows: 30px 20px;
+      padding-top: 15%;
+      row-gap: 5px;
+    }
+
+    @media (min-width: 961px) {
+      grid-template-rows: 30px 20px;
+      padding-top: 10%;
+      row-gap: 5px;
+    }
+  }
+
+  &__data-holder {
+    text-align: left;
+    padding: 4px;
+
+    @media (max-width: 320px) {
+      padding-left: 10px;
+      @include text-small;
+    }
+
+    @media (min-width: 321px) and (max-width: 960px) {
+      padding-left: 15px;
+      @include text-local-header;
+
+      display: flex;
+      align-items: center;
+    }
+
+    @media (min-width: 961px) {
+      padding-left: 15px;
+      @include text-local-header;
+
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &__btn-block {
+    display: grid;
+    grid-area: btn_block;
+
+    @media (max-width: 320px) {
+      grid-template-areas: "edit-btn"
+                          "close-btn";
+      grid-template-rows: 25px 25px;
+      grid-template-columns: 1fr;
+      grid-gap: 2px;
+    }
+
+    @media (min-width: 321px) and (max-width: 960px) {
+      grid-template-areas:"edit-btn"
+                          "close-btn";
+      grid-template-rows: 100px 100px;
+      grid-template-columns: 150px;
+      grid-gap: 2px;
+    }
+
+    @media (min-width: 961px) {
+      grid-template-areas:"edit-btn"
+                          "close-btn";
+      grid-template-rows: 100px 100px;
+      grid-template-columns: 150px;
+      grid-gap: 2px;
+    }
+  }
+
+  &__edit-btn {
+    cursor: pointer;
+    background-color: $my--button-fill;
+    color: $my--button-text;
+    grid-area: edit-btn;
+
+    @media (max-width: 320px) {
+      @include text-small;
+      border-radius: 3px;
+    }
+
+    @media (min-width: 321px) and (max-width: 960px) {
+      height: 50px;
+      margin-top: 50px;
+      @include text-button;
+      border-radius: 5px;
+    }
+
+    @media (min-width: 961px) {
+      height: 30px;
+      margin-top: 70px;
+      @include text-button;
+      border-radius: 5px;
+    }
+
+    .btn:hover {
+      transition: 250ms;
+      background-color: $my--button-fill-hover;
+    }
+  }
+  &__edit-btn:hover {
+    cursor: pointer;
+    background-color: $my--button-fill-hover;
+  }
+
+  &__close-btn {
+    background-color: $my--button-fill;
+    color: $my--button-text;
+    grid-area: close-btn;
+
+    @media (max-width: 320px) {
+      @include text-small;
+      border-radius: 3px;
+    }
+
+    @media (min-width: 321px) and (max-width: 960px) {
+      height: 50px;
+      @include text-button;
+      border-radius: 5px;
+    }
+
+    @media (min-width: 961px) {
+      height: 30px;
+      margin-top: 10px;
+      @include text-button;
+      border-radius: 5px;
+    }
+
+    .btn:hover {
+      transition: 250ms;
+      background-color: $my--button-fill-hover;
+    }
+  }
+  &__close-btn:hover {
+    cursor: pointer;
+    background-color: $my--button-fill-hover;
+  }
+}
+
+.profile_edit {
+  background-color: $white;
+  display: grid;
+  justify-content: center;
+
+  @media (max-width: 320px) {
+    height: 525px;
+    padding: 1px;
+    margin-top: 4px;
+
+    grid-template-rows: 130px 310px 60px;
+    grid-template-columns: 300px;
+    row-gap: 3px;
+  }
+
+  @media (min-width: 321px) and (max-width: 960px) {
+    height: 300px;
+    padding: 10px;
+    margin-top: 5px;
+
+    grid-template-rows: 500px;
+    grid-template-columns: 200px 400px 170px;
+    row-gap: 3px;
+  }
+
+  @media (min-width: 961px) {
+    height: 300px;
+    padding: 10px;
+    margin-top: 5px;
+
+    grid-template-rows: 500px;
+    grid-template-columns: 200px 400px 170px;
+    row-gap: 3px;
+  }
+
+  &__photo_block {
+    display: grid;
+    justify-content: center;
+
+    @media (max-width: 320px) {
+      grid-template-rows: 100px 30px 0px;
+      grid-template-columns: 250px;
+      row-gap: 3px;
+    }
+
+    @media (min-width: 321px) and (max-width: 960px) {
+      grid-template-rows: 200px 0px 50px;
+      grid-template-columns: 170px;
+      row-gap: 5px;
+    }
+
+    @media (min-width: 961px) {
+      grid-template-rows: 200px 0px 50px;
+      grid-template-columns: 170px;
+      row-gap: 5px;
+    }
+  }
+
+  &__photo {
+    display: flex;
+    justify-content: center;
+
+    img {
+      border-radius: 50%;
+
+      @media (max-width: 320px) {
+        width: 43%;
+      }
+
+      @media (min-width: 321px) and (max-width: 960px) {
+        width: 70%;
+        height: 70%;
+
+        margin-top: 20%;
+      }
+
+      @media (min-width: 961px) {
+        width: 70%;
+        height: 70%;
+
+        margin-top: 20%;
+      }
+    }
+  }
+
+
+  &__button_block {
+    display: grid;
+    justify-content: center;
+
+    @media (max-width: 320px) {
+      grid-template-rows: 30px 30px;
+      grid-template-columns: 250px;
+      row-gap: 3px;
+    }
+
+    @media (min-width: 321px) and (max-width: 960px) {
+      margin-top: 27px;
+      grid-template-rows: 50px 50px;
+      grid-template-columns: 170px;
+      row-gap: 5px;
+    }
+
+    @media (min-width: 961px) {
+      margin-top: 27px;
+      grid-template-rows: 30px 30px;
+      grid-template-columns: 170px;
+      row-gap: 2px;
+    }
+  }
+
+  &__btn {
+    background-color: $my--button-fill;
+    color: $my--button-text;
+
+    @media (max-width: 320px) {
+      @include text-small;
+      border-radius: 3px;
+    }
+
+    @media (min-width: 321px) and (max-width: 960px) {
+      height: 50px;
+      @include text-button;
+      border-radius: 5px;
+    }
+
+    @media (min-width: 961px) {
+      height: 30px;
+      @include text-button;
+      border-radius: 5px;
+    }
+
+    .btn:hover {
+      transition: 250ms;
+      background-color: $my--button-fill-hover;
+    }
+  }
+  &__btn:hover {
+    cursor: pointer;
+    background-color: $my--button-fill-hover;
+  }
+
+  &__metadata {
+    display: grid;
+    justify-content: center;
+
+    @media (max-width: 320px) {
+      margin-top: 15px;
+
+      grid-template-rows: 50px 50px 50px 50px 50px;
+      grid-template-columns: 250px;
+      row-gap: 10px;
+    }
+
+    @media (min-width: 321px) and (max-width: 960px) {
+      margin-top: 15px;
+
+      grid-template-rows: 50px 50px 50px 50px 50px;
+      grid-template-columns: 250px;
+      row-gap: 10px;
+    }
+
+    @media (min-width: 961px) {
+      margin-top: 15px;
+
+      grid-template-rows: 50px 50px 50px 50px 50px;
+      grid-template-columns: 250px;
+      row-gap: 10px;
+    }
+  }
+
+  &__meta_holder {
+    @media (max-width: 320px) {
+      height: 30px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    &__input {
+      @media (max-width: 320px) {
+        margin-top: 2px;
+        background-color: $my--button-fill;
+        padding: 5px;
+      }
+    }
+  }
+
+  &__naming_holder {
+    @include text-small;
+
+    @media (max-width: 320px) {
+      height: 10px;
+      display: flex;
+      justify-content: left;
+      margin-bottom: 4px;
+    }
+  }
+
+  &__upload_box {
+    visibility: hidden;
+    width: 0;
+    height: 0;
+  }
+}
+
+//profile_show__photo временное, простити
+.profile_show__photo {
+  align-self: center;
+  justify-self: center;
+  width: 80%;
+  height: 80%;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+
+  img {
+    min-height: 100%;
+    min-width: 100%;
+    object-fit: cover;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+}
+
+/*cards__data*/
+
+
+
+.card__name__holder {
+	font-family: inherit;
+	font-size: 22px;
+	line-height: 20px;
+	overflow: hidden;
+}
+
+.card__data__holder {
+	margin-left: 5px;
+	margin-top: 10px;
+}
+
+.card__comment__holder {
+	margin-top: 10px;
+}
+
+.card__comment__data {
+	margin-top: 5px;
+	display: -webkit-box;
+	-webkit-line-clamp: 5;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	word-break: break-word;
+}
+
+.card__carousel__item {
+	position: relative;
+	width: 100%;
+	/*overflow: hidden;*/
+
+	aspect-ratio: initial;
+
+	display: none;
+}
+
+.card__carousel__item_main {
+	display: block;
+}
+
+.carousel {
+	margin-top: 10px;
+	transition: all 0.3s ease;
+	justify-content: center;
+	height: 300px;
+}
+
+.carousel img {
+	width: 100%;
+	height: 300px;
+	transition: all 0.3s ease;
+	justify-self: flex-start;
+}
+
+/*tags*/
+
+.tag__holder {
+	margin-top: 10px;
+	width: 100%;
+	text-align: left;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.tag {
+	//font-style: normal;
+@include text-small;
+	//display: inline-block;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.card__tag {
+	margin-right: 0;
+}
+
+.card__tag__font {
+	color: var(--color-green);
+	font-size: 12px;
+	line-height: 15px;
+	font-weight: var(--font-tag-weight);
+}
+
+.font__default {
+	font-size: 14px;
+	line-height: 17px;
+	color: var(--color-grey);
+}
+
+.font__link {
+	color: var(--color-black);
+	font-family: inherit;
+	font-size: inherit;
+	line-height: inherit;
+	font-weight: var(--font-header-weight);
+}
+
+.left-side-btn {
+	font-weight: 500;
+	font-size: var(--text-normal);
+
+	position: fixed;
+	transform: rotate(90deg);
+	left: -80px;
+	top: 240px;
+}
+.left-side-btn:hover {
+	cursor: pointer;
+	font-weight: 600;
+	text-decoration: underline;
+}
+
+.data__holder {
+	width: 100%;
+}
+
+.card__grid {
+  grid-area: content;
+  display: grid;
+
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+}
+
+.card_grid_wrapper {
+  display: grid;
+  grid-template: "ml content  mr"  / 1fr 4fr 1fr;
+}
+.card__grid__1 {
+	grid-template-columns: repeat(1, minmax(var(--photo-width), 1fr));
+}
+.card__grid__2 {
+	grid-template-columns: repeat(2, minmax(var(--photo-width), 1fr));
+}
+.card__grid__3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+.card {
+	//padding: 4px 4px 4px 4px;
+	max-width: var(--photo-width);
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	//min-height: 520px;
+}
+
+.header__default {
+	position: relative;
+	text-align: center;
+	font-family: var(--font-default);
+	font-weight: var(--font-header-weight);
+}
+
+.cardlist__header__main {
+	line-height: 110%;
+	font-size: 160%;
+	width: 100%;
+	margin: 0 auto;
+}
+
+.header_holder {
+	width: 100%;
+	min-width: 300px;
+	word-break: break-word;
+	display: block;
+	margin-top: 10px;
+	margin-bottom: 15px;
+}
+
+.span__font__large {
+    margin: 0 3px;
+	font-family: var(--font-default);
+	font-weight: var(--font-header-weight);
+	font-size: 18px;
+   &-blue {
+     color: $logo-color;
+   }
+  &-green {
+    color: $green;
+  }
+}
+
+.rating__tag {
+  span {
+    @include text-plain-no-wrap;
+  }
+
+}
+
+.card__photo_wrapper {
+  align-self: center;
+  justify-self: center;
+  width: 100%;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+
+  img {
+    min-height: 100%;
+    min-width: 100%;
+    object-fit: cover;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+}
+
+.card.frame:hover {
+  cursor: pointer;
+}
+.string-left {
+  display: flex;
+  flex-direction: row;
+  > * {
+    margin-right: $small-px;
+  }
+}
+
+.string-space {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

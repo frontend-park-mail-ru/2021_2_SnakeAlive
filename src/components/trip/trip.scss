@@ -1,0 +1,184 @@
+@import "src";
+
+.delete_trip__submit_holder {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: $small-px;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  &__answer {
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    gap: $small-px;
+    margin: 0;
+    &__text {
+      @include text-small;
+      color: $my--small-text;
+    }
+  }
+}
+
+.error_block {
+  visibility: hidden;
+  &__text {
+    @include text-small;
+    color: $my--error;
+  }
+}
+
+#button_select {
+  display: none;
+}
+
+.trip_page {
+  display: grid;
+  grid-template: "l map map"  / 1fr 1fr 1fr;
+  grid-column-gap: 10px;
+
+  &__left__info {
+    > div {
+      margin-top: 10px;
+    }
+    grid-area: l;
+    width: 100%;
+  }
+
+  &__map {
+    grid-area: map;
+     &__image_container {
+       position: sticky;
+       top: 0;
+        display: block;
+        width: 100%;
+        height: 100vh;
+       padding: 10px 0;
+
+       img {
+         object-fit: cover;
+         object-position: center;
+         width: 100%;
+         height: 100%;
+         //padding: 0 10px;
+       }
+    }
+  }
+}
+
+#map {
+  height: 740px;
+  margin-top: 10px;
+}
+
+
+.select_string, .string {
+  display: flex;
+  flex-direction: row;
+  height: min-content;
+  margin-right: $small-px;
+}
+
+.trip_form {
+  &__horizontal_holder {
+    display: flex;
+    flex-direction: row;
+    height: min-content;
+    margin-right: $small-px;
+    flex-wrap: wrap;
+  }
+  &__some_info {
+    @include text-small;
+    color: $my--small-text;
+  }
+}
+
+.buttons_holder {
+  margin-top: $small-px;
+  margin-right: $small-px;
+}
+
+.label-div {
+  margin-top: $large-px;
+  margin-bottom: $large-px /2;
+}
+
+// http://jsfiddle.net/NZKWH/
+
+.trip_form__input_holder__text {
+  @include text-plain-no-wrap;
+  width:100% !important;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  //height: 85px;
+
+  .textarea_behavior{
+    width:100%;
+    word-wrap: break-word;
+
+    div {
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      padding: 0;
+    }
+  }
+  textarea{
+    width: 100% !important;
+    overflow-y: hidden;
+    max-height: 400px;
+    resize: none;
+    @include text-plain-no-wrap;
+    font-family: inherit;
+    height: 85px;
+  }
+  .comment_text_hidden{
+    width: 100% !important;
+    position: relative;
+  }
+  #comment_text_hidden {
+    visibility:hidden;
+    @include text-plain-no-wrap;
+    position: absolute;
+  }
+}
+
+
+.select_string {
+  display: block;
+  > div {
+    padding-bottom: $small-px;
+  }
+}
+
+.trip_sight__preview_photo {
+  width: 100%;
+  height: 100px;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  margin-top: $small-px /2;
+  img {
+    min-height: 100%;
+    min-width: 100%;
+    object-fit: cover;
+
+    position: absolute;
+    top: -50%;
+    left: 0;
+    //position: center;
+    //top: 50%;
+    //top: 0;
+    //left: 0;
+    width: 100%;
+  }
+}
+
+.trip_sight__info_string {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

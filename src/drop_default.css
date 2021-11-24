@@ -61,6 +61,8 @@ caption,
 tbody,
 tfoot,
 thead,
+textarea,
+textarea:active,
 tr,
 th,
 td,
@@ -85,16 +87,28 @@ mark,
 audio,
 video,
 button,
-input {
+input,
+input:focus,
+input:hover,
+input:active,
+textarea,
+textarea:focus,
+textarea:hover,
+textarea:active,
+p {
 	margin: 0;
 	padding: 0;
 	border: 0;
 	font-size: 100%;
 	font: inherit;
+	font-family: inherit;
 	vertical-align: baseline;
 	background-color: transparent;
 	letter-spacing: inherit;
 	border-radius: 0px;
+	border: none;
+	border-color: transparent;
+	display: block;
 }
 /* HTML5 display-role reset for older browsers */
 article,
@@ -114,8 +128,9 @@ body {
 	line-height: 1;
 }
 ol,
-ul {
-	list-style: none;
+ul,
+li {
+	list-style-type: circle;
 }
 blockquote,
 q {

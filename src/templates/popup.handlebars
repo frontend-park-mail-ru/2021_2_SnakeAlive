@@ -1,24 +1,17 @@
-<div id="substrate">
-        <div id="popup">
-            <div id="closeLine">
-                <button class="btnHead" id="btnClose">
-                    <img src="image/020-close.png" class="cross">
-                </button>
-            </div>
-            <form method="post" class="{{cssClass}}" id="{{formId}}">
-							<div>
-							<h2 class="formName">{{formName}}</h2>
-							</div>
-							{{#each inputs}}
-							<div>
-								<p id='err-{{id}}' class="formErrorBlock">ошибок нет</p>
-								<input type="{{type}}" id="{{id}}" placeholder="{{name}}" class="startInput">
-							</div>
-							{{/each}}
-							<div>
-							<button id="{{button.id}}" class="{{button.cssClass}}">{{button.text}}</button>
-								</div>
-            </form>
-        </div>
+<div id='substrate'>
+	<div id='popup'>
+		<div id='closeLine'>
+			<button class='btnHead' id='btnClose'>
+				<img src='image/020-close.png' class='cross' />
+			</button>
+		</div>
+		<form method='post' class='{{cssClass}}' id='{{formId}}'>
+			<h2 class='formName'>{{formName}}</h2>
+			<p id='formErrorBlock' class='formErrorBlock'>ошибок нет</p>
+			{{#each inputs}}
+				<input type='{{type}}' id='{{id}}' placeholder='{{name}}' class='startInput' />
+			{{/each}}
+			<button id='{{button.id}}' class='{{button.cssClass}}'>{{button.text}}</button>
+		</form>
+	</div>
 </div>
-

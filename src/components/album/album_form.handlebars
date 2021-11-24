@@ -1,0 +1,52 @@
+<div class='frame'>
+<form id="album_form" class="album_form">
+
+		<div class="album_form__input_holder">
+			<div class='label-div'>
+				<label for="title">Название альбома</label>
+			</div>
+			<input type="text" id="title" name="title" class="form__input" value="{{title}}"/>
+		</div>
+
+	<div class="album_form__input_holder">
+		<div class='label-div'>
+			<label for="comment_text">Дополнительная информация</label>
+		</div>
+		<div class="album_form__input_holder__text">
+			<div class="comment_text_hidden">
+				<div class="textarea_behavior" id="comment_text_hidden">
+				</div>
+			</div>
+			<textarea class="textarea_behavior" rows="3" id="comment_text">{{description}}</textarea>
+		</div>
+	</div>
+
+	<div class="error_block" id="error_block">
+		<p class="error_block__text">Пожалуйста, введите как минимум название альбома</p>
+	</div>
+
+{{#if isNotNew}}
+	<div class="trip_form__horizontal_holder buttons_holder">
+        <button type="submit" id="btn_make_album" class="usual_button usual_button_light">Сохранить</button>
+	</div>
+	<button class="usual_button usual_button_light btn_make_and_finish">Сохранить и закончить редактирование</button>
+{{else}}
+    <button class="usual_button usual_button_dark" id="btn_make_album">Создать альбом</button>
+{{/if}}
+</form>
+
+</div>
+
+{{#if isNotNew}}
+
+<div class="album_form__horizontal_holder">
+	<div>
+		<button id="ask_confirm_button" class="usual_button usual_button_light">Удалить поездку</button>
+	</div>
+	<div class="album_form__submit_holder__answer" id="form__submit_holder__answer">
+		<p class="album_form__submit_holder__answer__text" >Вы уверены?</p>
+		<button id="delete_button" class="usual_button usual_button_light">Да</button>
+	</div>
+</div>
+
+{{/if}}
