@@ -3,12 +3,10 @@ import { DataType, dispatcher, EventType, Token } from '@/dispatcher';
 
 import picture from '@/../image/snake_error.svg';
 import errorPage from '@/components/errorPage.handlebars';
-import { newSetMainHeaderRequest } from '@/actions';
+import { newSetMainHeaderRequest } from '@/actions/header';
 
 export default class ErrorView extends BasicView {
 	#tokens: Token[];
-
-	// #formElement: HTMLElement;
 
 	constructor() {
 		super('#content');

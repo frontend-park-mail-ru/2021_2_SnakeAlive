@@ -62,14 +62,16 @@
 
 {{#if isNotNew}}
 	<div class="trip_form__horizontal_holder buttons_holder">
-		<button type="submit" id="trip_submit" class="usual_button usual_button_light">Сохранить</button>
-		<button class="usual_button usual_button_light">Закончить редактирование</button>
+        <button type="submit" id="trip_submit" class="usual_button usual_button_light">Сохранить</button>
+		<button class="usual_button usual_button_dark" id="btn-add-album">Добавить альбом</button>
 	</div>
+	<button class="usual_button usual_button_light">Сохранить и закончить редактирование</button>
 </form>
 {{/if}}
 </div>
 
 <div id="trip_cards_holder"></div>
+<div id="trip_albums_holder"></div>
 
 {{#if isNotNew}}
 

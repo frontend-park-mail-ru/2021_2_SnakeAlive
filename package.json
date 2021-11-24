@@ -28,6 +28,7 @@
     "html-webpack-plugin": "^5.5.0",
     "husky": "^7.0.4",
     "mini-css-extract-plugin": "^2.4.3",
+    "mocker-api": "^2.9.4",
     "node-sass": "^6.0.1",
     "prettier": "^2.4.1",
     "ruby": "^0.6.1",

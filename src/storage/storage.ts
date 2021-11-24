@@ -2,6 +2,7 @@ import { Country, CountryCard, Sight, TemplateCards, Trip, UserMetadata } from '
 import { Profile, ProfileMetadata } from '@/models/profile';
 import { Review } from '@/models/review';
 import { minCardInfo } from '@/models/country';
+import { Album } from '@/models/album';
 
 class Storage {
 	#countryCards: TemplateCards;
@@ -12,11 +13,7 @@ class Storage {
 
 	#sight: Sight;
 
-	#serverTripState: Trip;
-
-	#currentTripEditState: Trip;
-
-	#addedSights: number[];
+	#trip: Trip;
 
 	#profile: Profile;
 
@@ -26,19 +23,27 @@ class Storage {
 
 	#cards: minCardInfo[];
 
+	#album: Album;
+
+	#albumTripId = '';
+
+	#searchSightsResult: {
+		type: string;
+		sights: Sight[];
+	}[];
+
 	constructor() {
 		this.#countryCards = <TemplateCards>{};
 		this.#country = <Country>{};
 		this.#userMetadata = <UserMetadata>{};
 		this.#sight = <Sight>{};
-		// this.#trip = <Trip>{};
-		this.#serverTripState = <Trip>{};
-		this.#currentTripEditState = <Trip>{};
-		this.#addedSights = [];
+		this.#trip = <Trip>{};
 		this.#profile = <Profile>{};
 		this.#reviews = [];
 		this.#lastTrips = [];
 		this.#cards = [];
+		this.#album = <Album>{};
+		this.#searchSightsResult = [];
 	}
 
 	addLastTripId = (id: number) => {
@@ -89,10 +94,10 @@ class Storage {
 	getSight = (): Sight => this.#sight;
 
 	storeCurrentTrip = (trip: Trip): void => {
-		this.#currentTripEditState = trip;
+		this.#trip = trip;
 	};
 
-	getCurrentTrip = (): Trip => this.#currentTripEditState;
+	getCurrentTrip = (): Trip => this.#trip;
 
 	storeProfile = (profile: Profile): void => {
 		this.#profile = profile;
@@ -121,6 +126,48 @@ class Storage {
 		}
 
 		return this.#reviews[position];
+	};
+
+	storeAlbum = (album: Album): void => {
+		this.#album = album;
+
+		// временное
+		// this.#album = {
+		// 	id: 42,
+		// 	title: 'test',
+		// 	description: 'lots of tests.... :)',
+		// 	photos: [
+		// 		'map.png',
+		// 		'moscow_city_1.jpeg'
+		// 	],
+		// 	user: <UserMetadata>{}
+		// };
+	};
+
+	getAlbum = (): Album => this.#album;
+
+	storeAlbumTripId = (id: string) => {
+		this.#albumTripId = id;
+	};
+
+	getAlbumTripId = (): string => this.#albumTripId;
+
+	storeSearchSightsResult = (type: string, sights: Sight[]): void => {
+		this.#searchSightsResult.push({
+			type,
+			sights,
+		});
+	};
+
+	getSearchSightsResult = (type: string): Sight[] => {
+		let result: Sight[] = [];
+		// eslint-disable-next-line consistent-return
+		this.#searchSightsResult.forEach(obj => {
+			if (obj.type === type) {
+				result = obj.sights;
+			}
+		});
+		return result;
 	};
 }
 

@@ -1,8 +1,9 @@
 import BasicView from '@/view/view';
 import { dispatcher, EventType, Token } from '@/dispatcher';
-import { createReviewForm, newSetMainHeaderRequest } from '@/actions';
+import { createReviewForm } from '@/actions/review';
+import { newSetMainHeaderRequest } from '@/actions/header';
 import { storage } from '@/storage';
-import { createSightTemplate, initReviewForm } from '@/components';
+import { createSightTemplate } from '@/components';
 
 export default class SightView extends BasicView {
 	#tokens: Token[];
@@ -14,12 +15,12 @@ export default class SightView extends BasicView {
 
 	init = (): void => {
 		this.#tokens = [
-			dispatcher.register(EventType.GET_SIGHT_RESPONSE, this.#setSight),
-			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.#destroy),
+			dispatcher.register(EventType.GET_SIGHT_RESPONSE, this.setSight),
+			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
 		];
 	};
 
-	#setSight = (metadata: EventType): void => {
+	setSight = (metadata: EventType): void => {
 		dispatcher.notify(newSetMainHeaderRequest());
 		this.setView(createSightTemplate(storage.getSight()));
 		dispatcher.notify(createReviewForm());
@@ -27,7 +28,7 @@ export default class SightView extends BasicView {
 		// this.setView(`<div class='full-page'>${JSON.stringify(storage.getSight(), null, 4)}</div>`);
 	};
 
-	#destroy = (metadata: EventType): void => {
+	destroy = (metadata: EventType): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});

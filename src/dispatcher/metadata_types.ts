@@ -10,6 +10,11 @@ export interface UUID {
 	ID: string;
 }
 
+export interface Search {
+	type: string;
+	text: string;
+}
+
 export interface IDState {
 	ID: string;
 	state: boolean;
@@ -88,28 +93,10 @@ export interface SightToTrip {
 export interface IsTrue {
 	isTrue: boolean;
 }
-
-// export interface SightData {
-// 	id: string,
-// 	name: string,
-// 	description: string,
-// 	country: string,
-// 	rating: string,
-// 	tags: Array<string>
-// }
-//
-// export interface TripData {
-// 	id: string,
-// 	title: string,
-// 	description: string,
-// 	days: Array<Array<SightData>>,
-// }
-//
-// export interface CountryData {
-// 	name: string,
-// 	description: string,
-// 	sights: Array<SightData>,
-// }
+export interface AlbumInfo {
+	title: string;
+	description: string;
+}
 
 export type DataType =
 	| UUID
@@ -127,8 +114,7 @@ export type DataType =
 	| SightToTrip
 	| IsTrue
 	| IDState
-	//| SightData
-	// | TripData
-	// | CountryData
 	| SubmitTripInfo
-	| Empty;
+	| Empty
+	| AlbumInfo
+	| Search;

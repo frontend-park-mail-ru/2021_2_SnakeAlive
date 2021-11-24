@@ -1,9 +1,11 @@
 import { Sight } from './sight';
+import { Album } from '@/models/album';
 
 export interface Trip {
 	id: string;
 	title: string;
 	description: string;
+	albums: Array<Album>;
 	days: Array<Array<Sight>>;
 }
 

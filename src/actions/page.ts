@@ -56,6 +56,12 @@ const initProfilePageRequest = (): IEvent =>
 		metadata: <Empty>{},
 	};
 
+const initAlbumPageRequest = (): IEvent =>
+	<IEvent>{
+		key: EventType.INIT_ALBUM_PAGE_REQUEST,
+		metadata: <Empty>{},
+	};
+
 export {
 	newInitPageRequest,
 	initLoginPageRequest,
@@ -66,4 +72,5 @@ export {
 	initErrorPageRequest,
 	destroyCurrentPage,
 	initProfilePageRequest,
+	initAlbumPageRequest,
 };

@@ -2,8 +2,7 @@ import BasicView from './view';
 import { DataType, dispatcher, EventType, Token, ValidationErrData } from '@/dispatcher/';
 import { Form, makeSimpleButton, registerHTML } from '@/components';
 
-import { newSetEmptyHeaderResponse, submitRegisterData } from '../actions';
-import { formLoginConfig } from '@/components/simple_form/login_conf';
+import { submitRegisterData } from '@/actions/auth';
 import { pathsURLfrontend } from '@/constants';
 import { formRegisterConfig } from '@/components/simple_form/register_conf';
 import {

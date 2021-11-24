@@ -15,6 +15,8 @@ import {
 	postTripURI,
 	listOfCountries,
 	tripCoord,
+	albumURI,
+	searchURI,
 } from './uris';
 import { russiaFormName, russiaUriName, nicaraguaFormName, nicaraguaUriName } from './defaults';
 import { pathsURLfrontend, paramsURLfrontend } from '@/constants/frontendURIs';
@@ -44,4 +46,6 @@ export {
 	postTripURI,
 	frontEndEndPoint,
 	listOfCountries,
+	albumURI,
+	searchURI,
 };

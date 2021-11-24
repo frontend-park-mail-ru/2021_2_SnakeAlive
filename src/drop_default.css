@@ -91,6 +91,10 @@ input,
 input:focus,
 input:hover,
 input:active,
+textarea,
+textarea:focus,
+textarea:hover,
+textarea:active,
 p {
 	margin: 0;
 	padding: 0;

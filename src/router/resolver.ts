@@ -1,34 +1,26 @@
-import { dispatcher, IEvent } from '@/dispatcher';
+import { dispatcher, EventType, IEvent } from '@/dispatcher';
 import {
-	createTripFormRequest,
+	initAlbumPageRequest,
 	initErrorPageRequest,
 	initLoginPageRequest,
 	initProfilePageRequest,
 	initRegisterPageRequest,
 	initSightPageRequest,
 	initTripPageRequest,
-	newGetProfileRequest,
-	newGetReviewsRequest,
-	newGetSightRequest,
-	newGetTripRequest,
-	newInitCountryRequest,
 	newInitPageRequest,
-	showLoginForm,
-	showRegisterForm,
-} from '@/actions';
+} from '@/actions/page';
+import { createTripFormRequest, newGetTripRequest } from '@/actions/trip';
+import { newGetProfileRequest } from '@/actions/profile';
+import { showLoginForm, showRegisterForm } from '@/actions/auth';
+import { newGetReviewsRequest } from '@/actions/review';
+import { newGetSightRequest } from '@/actions/sight';
+import { newInitCountryRequest } from '@/actions/country';
 import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
-import { storage } from '@/storage';
+import { createAlbumFormRequest, newGetAlbumRequest } from '@/actions/album';
 
 const pathErrorEvent: IEvent = initErrorPageRequest(new Error('Неверная ссылка'));
 
-const tryGetParam = (
-	params: paramsURLfrontend[],
-	path: URL
-	// initEvent: () => IEvent,
-	// event: any // => IEvent
-): Record<string, string> /* IEvent */ => {
-	// const id = path.searchParams.get(param);
-
+const tryGetParam = (params: paramsURLfrontend[], path: URL): Record<string, string> => {
 	const res: Record<string, string> = {};
 
 	let gotParam: string | null;
@@ -40,14 +32,6 @@ const tryGetParam = (
 	});
 	console.log(res, 'res');
 	return res;
-	// костыль для обработки редактирования
-	// if (res.edit) {
-	// 	console.log(res.edit, 'herehere');
-	// }
-	//
-	// console.log(" ", res.edit, res.name, res.edit);
-	// dispatcher.notify(initEvent());
-	// dispatcher.notify(event(res.id, res.name, res.edit)); // второй раз это на самом деле name, для страны, не убирать
 };
 
 const getIDParam = (path: URL): number | null =>
@@ -126,6 +110,22 @@ export const notifier = (path: URL): void /* IEvent */ => {
 			dispatcher.notify(initSightPageRequest());
 			dispatcher.notify(newGetSightRequest(String(id)));
 			dispatcher.notify(newGetReviewsRequest(id));
+			break;
+		}
+		case pathsURLfrontend.album: {
+			const params = tryGetParam([paramsURLfrontend.id, paramsURLfrontend.edit], path);
+			console.log(params);
+
+			dispatcher.notify(initAlbumPageRequest());
+			if (params.id) {
+				if (params.edit === '1') {
+					dispatcher.notify(newGetAlbumRequest(params.id, true));
+				} else {
+					dispatcher.notify(newGetAlbumRequest(params.id, false));
+				}
+			} else {
+				dispatcher.notify(createAlbumFormRequest());
+			}
 			break;
 		}
 		default:

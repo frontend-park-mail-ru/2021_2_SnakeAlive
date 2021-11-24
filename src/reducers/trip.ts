@@ -15,12 +15,9 @@ import {
 	postTripURI,
 	tripURI,
 } from '@/constants';
-import {
-	initErrorPageRequest,
-	newGetTripResult,
-	newSetMainHeaderRequest,
-	rerenderTripCards,
-} from '@/actions';
+import { newGetTripResult, rerenderTripCards } from '@/actions/trip';
+import { initErrorPageRequest } from '@/actions/page';
+import { newSetMainHeaderRequest } from '@/actions/header';
 import { IDState, SightToTrip, TripInfo } from '@/dispatcher/metadata_types';
 import { adoptForSend } from '@/adapters';
 import { router } from '@/router';

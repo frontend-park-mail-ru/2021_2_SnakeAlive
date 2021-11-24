@@ -1,5 +1,5 @@
 import { dispatcher } from '@/dispatcher';
-import { newCreateReviewFormResponse, setValidationErrorLogin } from '@/actions';
+import { newCreateReviewFormResponse } from '@/actions/review';
 import imgRating from '../../../image/icon/rating.svg';
 import reviewFormTemplate from './review_form.handlebars';
 
@@ -11,7 +11,10 @@ export const setTextAreaResizeParams = (
 	const area = <HTMLTextAreaElement>document.getElementById(textId);
 	const areaHidden = document.getElementById(hiddenTextId);
 	if (area === null || areaHidden === null) {
-		return console.log;
+		console.log('null unexpected');
+		return () => {
+			console.log('no beautiful textarea');
+		};
 	}
 	const minHeight = 85; // Соответствует указанной в css
 	return () => {
@@ -26,6 +29,11 @@ export const setTextAreaResizeParams = (
 		let height = areaHidden.offsetHeight;
 		height = Math.max(minHeight, height);
 		height = Math.min(maxHeight, height);
+		if (height === maxHeight) {
+			area.style.overflow = 'scroll';
+		} else {
+			area.style.overflow = 'hidden';
+		}
 		area.style.height = `${height}px`;
 	};
 };
@@ -49,9 +57,8 @@ const titles: string[] = [
 	'Четыре звезды: неплохо',
 	'Пять звезд: прекрасно',
 ];
-const getTitleFromRating = (rating: number): string => {
-	return titles[rating - 1];
-};
+const getTitleFromRating = (rating: number): string => titles[rating - 1];
+
 const checkTitle = (rating: number, title: string): string => {
 	if (titles.includes(title)) {
 		return getTitleFromRating(rating);
@@ -166,6 +173,7 @@ export const initReviewForm = () => {
 			);
 		}
 		const textArea = document.querySelector('#comment_text');
+		console.log('#comment_text', textArea);
 		if (textArea !== null) {
 			textArea.addEventListener(
 				'input',

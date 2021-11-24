@@ -4,6 +4,7 @@ import { router } from './router';
 
 import './drop_default.css';
 import './index.scss';
+import SearchReducer from '@/reducers/search';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 // console.log = () => {}; // !!
@@ -35,6 +36,9 @@ const main = () => {
 	window.onpopstate = () => {
 		router.go(window.location.href);
 	};
+
+	const searchReducer = new SearchReducer();
+	searchReducer.init();
 };
 
 main();

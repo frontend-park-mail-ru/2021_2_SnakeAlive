@@ -127,6 +127,7 @@ textarea:active {
   width: 100%;
   @include text-plain-no-wrap;
   padding: 6px;
+  outline: none;
 }
 
 .icon {
@@ -825,4 +826,17 @@ textarea:active {
 
 .card.frame:hover {
   cursor: pointer;
+}
+.string-left {
+  display: flex;
+  flex-direction: row;
+  > * {
+    margin-right: $small-px;
+  }
+}
+
+.string-space {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

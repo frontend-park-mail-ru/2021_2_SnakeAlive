@@ -6,6 +6,7 @@ export const enum pathsURLfrontend {
 	profile = '/profile',
 	sight = '/sight',
 	trip = '/trip',
+	album = '/album',
 }
 
 export const enum paramsURLfrontend {

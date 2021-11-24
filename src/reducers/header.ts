@@ -4,7 +4,7 @@ import {
 	newSetEmptyHeaderResponse,
 	newSetMainHeaderBasicResponse,
 	newSetMainHeaderLoggedResponse,
-} from '@/actions/index';
+} from '@/actions/header';
 import { HttpError, sendGetJSONRequest } from '@/http/index';
 import { backendEndpoint, profile } from '@/constants/index';
 import { UserMetadata } from '@/models';

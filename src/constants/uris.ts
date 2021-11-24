@@ -12,6 +12,9 @@ const reviewsURI = '/review/';
 const reviewURI = '/review';
 const upload = '/upload';
 const listOfCountries = '/country/list';
+const albumURI = '/album/';
+const photoURI = '/photo/';
+const searchURI = '/search/';
 
 const queryParamsToGetReview = '?skip=0&limit=420';
 
@@ -31,4 +34,7 @@ export {
 	postTripURI,
 	listOfCountries,
 	tripCoord,
+	albumURI,
+	photoURI,
+	searchURI,
 };

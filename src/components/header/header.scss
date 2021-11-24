@@ -77,6 +77,11 @@ $logo_height: 6vh;
   }
 }
 
+.header__search_place {
+  height: min-content;
+  align-self: center;
+}
+
 .circle-img {
   width: $logo_height * 3/4;
   height: $logo_height * 3/4;

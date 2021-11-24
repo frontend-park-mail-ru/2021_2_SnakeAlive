@@ -29,7 +29,8 @@ module.exports = {
 		'src/templates/*',
 		'handlebars.min-v4.7.7.js',
 		'webpack.config.js',
-		'dist/'
+		'dist/',
+		'mocked.js'
 	],
 	rules: {
 		'prefer-const': 'error',
