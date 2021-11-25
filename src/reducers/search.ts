@@ -1,6 +1,6 @@
 import { dispatcher, EventType, Token } from '@/dispatcher';
 import { sendGetJSONRequest } from '@/http';
-import { backendEndpoint, searchURI } from '@/constants';
+import { backendEndpoint, searchURI, sightsURI } from '@/constants';
 import { Search } from '@/dispatcher/metadata_types';
 import { Sight } from '@/models';
 import { storage } from '@/storage';
@@ -18,8 +18,8 @@ export default class SearchReducer {
 	};
 
 	sendSearchRequest = (search: Search) => {
-		const searchURL = new URL(searchURI, backendEndpoint);
-		searchURL.searchParams.set('input', search.text);
+		const searchURL = new URL(searchURI, backendEndpoint + sightsURI);
+		searchURL.searchParams.set('search', search.text);
 		// this.#sendRequest(searchURL.toString())
 		// 	.then((sights: Sight[]) => {
 		// 		storage.storeSearchSightsResult(search.type, sights);

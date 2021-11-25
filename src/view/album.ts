@@ -13,7 +13,7 @@ import albumInfoTemplate from '@/components/album/album_info.handlebars';
 import albumPhotosTemplate from '@/components/album/album_photos.handlebars';
 import '@/components/album/album.scss';
 import { initAlbumForm } from '@/components/album/album_form';
-import { deletePhoto, renderPhotos } from '@/actions/album';
+import { deletePhoto, newGetAlbumResult, renderPhotos } from '@/actions/album';
 
 class AlbumPhoto {
 	#id = '';
@@ -61,10 +61,12 @@ export class PhotosView extends BasicView {
 		console.log('render photos ', photos, 'state', state.isTrue);
 		this.setView(albumPhotosTemplate({ isEdit: state.isTrue, photos }));
 		if (state.isTrue) {
-			photos.forEach(ph => {
-				const photo = new AlbumPhoto();
-				photo.createPhoto(ph);
-			});
+			if (photos !== null) {
+				photos.forEach(ph => {
+					const photo = new AlbumPhoto();
+					photo.createPhoto(ph);
+				});
+			}
 		}
 	};
 
@@ -100,7 +102,8 @@ export class AlbumView extends BasicView {
 
 	showAlbum = (state: IsTrue): void => {
 		dispatcher.notify(newSetMainHeaderRequest());
-		if (state) {
+		console.log(state);
+		if (state.isTrue) {
 			this.#showEditAlbum();
 		} else {
 			this.#showNotEditAlbum();
@@ -158,14 +161,13 @@ export class AlbumView extends BasicView {
 			formPlace.innerHTML = albumFormTemplate({
 				title,
 				description,
+				isNotNew: true
 			});
 		}
 		initAlbumForm(false);
 	};
 
 	#showNotEditAlbum = (): void => {
-		console.log('showNotEditAlbum');
-
 		const album = storage.getAlbum();
 		const { title, description } = album;
 		this.setView(albumPageTemplate());
@@ -178,5 +180,11 @@ export class AlbumView extends BasicView {
 			});
 		}
 		// go_edit кнопка
+		const editBtn = document.getElementById('go_edit');
+		if (editBtn !== null) {
+			editBtn.addEventListener('click', () => {
+				dispatcher.notify(newGetAlbumResult(true))
+			}, false);
+		}
 	};
 }

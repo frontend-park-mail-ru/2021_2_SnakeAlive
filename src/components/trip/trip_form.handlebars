@@ -21,6 +21,8 @@
 		</div>
 	</div>
 
+	<button class="usual_button usual_button_dark" id='trip_submit'>Создать</button>
+
 	<div class="error_block" id="error_block">
 		<p class="error_block__text">Ошибка. Обязательны название поездки и хотя бы одно место, которое вы собираетесь посетить</p>
 	</div>
@@ -31,33 +33,35 @@
 		</div>
 	{{/if}}
 
-	<div class="trip_form__horizontal_holder">
-		<div class="select_string">
-			<div id="country_select_container">
-				<label for="country_select"></label>
-				<select form="trip_form" id="country_select">
-					<option>cтрана</option>
-					{{#each countries}}
-						<option value='{{ this.id }}'>{{ this.name }}</option>
-					{{/each}}
-				</select>
-			</div>
+<!--	<div class="trip_form__horizontal_holder">-->
+<!--		<div class="select_string">-->
+<!--			<div id="country_select_container">-->
+<!--				<label for="country_select"></label>-->
+<!--				<select form="trip_form" id="country_select">-->
+<!--					<option>cтрана</option>-->
+<!--					{{#each countries}}-->
+<!--						<option value='{{ this.id }}'>{{ this.name }}</option>-->
+<!--					{{/each}}-->
+<!--				</select>-->
+<!--			</div>-->
 
-			<div id="sight_select_container" class="trip_form__horizontal_holder">
-			</div>
+<!--			<div id="sight_select_container" class="trip_form__horizontal_holder">-->
+<!--			</div>-->
 
-			<div id="button_select_container" class='trip_form__horizontal_holder'>
-				<button class="usual_button_dark usual_button" id="button_select">
+<!--			<div id="button_select_container" class='trip_form__horizontal_holder'>-->
+
+	<div id='trip-search-place'></div>
+	<button class="usual_button_dark usual_button" id="button_select">
 	{{#if isNotNew}}
 		Добавить
 	{{else}}
 		Создать
 	{{/if}}
 				</button>
-			</div>
+<!--			</div>-->
 
-		</div>
-	</div>
+<!--		</div>-->
+<!--	</div>-->
 
 
 {{#if isNotNew}}

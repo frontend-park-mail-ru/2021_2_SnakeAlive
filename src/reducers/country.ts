@@ -73,6 +73,7 @@ export default class CountryReducer {
 	};
 
 	#getCards = (countryID: string): Promise<CountryCardResponse[]> =>
+		// sendGetJSONRequest(backendEndpoint + sightsURI + GET_COUNTRY_NAME(countryID))
 		sendGetJSONRequest(backendEndpoint + sightsURI + GET_COUNTRY_NAME(countryID))
 			.then(response => {
 				if (response.status === 404) {

@@ -78,7 +78,11 @@ export default class TripReducer {
 	addCurrentTripPlace = (metadata: SightToTrip) => {
 		const trip = storage.getCurrentTrip();
 		const tripSend = adoptForSend(trip);
-		tripSend.days[metadata.day].push({ id: metadata.sightId });
+		// tripSend.days[metadata.day].push({ id: metadata.sightId });
+		tripSend.sights.push({
+			day: metadata.day,
+			id: metadata.sightId
+		});
 		// отправка обновления
 		this.#sendTrip(tripSend, trip.id).then(response => {
 			storage.storeCurrentTrip(response);
@@ -89,19 +93,19 @@ export default class TripReducer {
 	deleteCurrentTripPlace = (metadata: SightToTrip) => {
 		const trip = storage.getCurrentTrip();
 
-		const copiedDays: Sight[][] = [[]];
-		let found = false;
-
-		trip.days[metadata.day].forEach(sight => {
-			// eslint-disable-next-line eqeqeq
-			if (sight.id == String(metadata.sightId) && !found) {
-				found = true;
-			} else {
-				copiedDays[0].push(sight);
-			}
-		});
-
-		trip.days = copiedDays;
+		// const copiedDays: Sight[][] = [[]];
+		// let found = false;
+		//
+		// trip.days[metadata.day].forEach(sight => {
+		// 	// eslint-disable-next-line eqeqeq
+		// 	if (sight.id == String(metadata.sightId) && !found) {
+		// 		found = true;
+		// 	} else {
+		// 		copiedDays[0].push(sight);
+		// 	}
+		// });
+		//
+		// trip.days = copiedDays;
 
 		console.log(trip);
 

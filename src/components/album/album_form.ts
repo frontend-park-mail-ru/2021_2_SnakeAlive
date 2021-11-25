@@ -1,6 +1,6 @@
 import { dispatcher } from '@/dispatcher';
 import { AlbumInfo } from '@/dispatcher/metadata_types';
-import { deleteAlbum, updateAlbumInfoRequest } from '@/actions/album';
+import { deleteAlbum, newGetAlbumResult, updateAlbumInfoRequest } from '@/actions/album';
 import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
 import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
@@ -120,14 +120,16 @@ export const initAlbumForm = (isNew: boolean) => {
 					} else {
 						const { title, description } = isOk;
 						dispatcher.notify(updateAlbumInfoRequest(title, description));
-						router.go(
-							createFrontendQueryParams(pathsURLfrontend.album, [
-								{
-									key: paramsURLfrontend.id,
-									value: storage.getAlbum().id.toString(),
-								},
-							])
-						);
+						dispatcher.notify(newGetAlbumResult(false));
+						console.log("try go to right place!");
+						// router.go(
+						// 	createFrontendQueryParams(pathsURLfrontend.album, [
+						// 		{
+						// 			key: paramsURLfrontend.id,
+						// 			value: storage.getAlbum().id.toString(),
+						// 		},
+						// 	])
+						// );
 					}
 				},
 				false

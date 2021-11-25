@@ -1,7 +1,7 @@
 import { dispatcher, EventType, Token, UUID } from '@/dispatcher';
 import {
 	sendDeleteJSONRequest,
-	sendGetJSONRequest,
+	sendGetJSONRequest, sendPatchJSONRequest,
 	sendPostFileRequest,
 	sendPostJSONRequest,
 } from '@/http';
@@ -46,6 +46,7 @@ export default class AlbumReducer {
 		this.#getAlbum(ID)
 			.then((album: Album) => {
 				storage.storeAlbum(album);
+				console.log(album, state);
 				dispatcher.notify(newGetAlbumResult(state));
 			})
 			.catch((error: Error) => {
@@ -127,7 +128,7 @@ export default class AlbumReducer {
 				})
 				.then(response => response.json());
 		}
-		return sendPostJSONRequest(backendEndpoint + albumURI + storage.getAlbum().id, data)
+		return sendPatchJSONRequest(backendEndpoint + albumURI + storage.getAlbum().id, data)
 			.then(response => {
 				if (response.status !== 200) {
 					return Promise.reject(new Error('не отправлена информация об альбоме'));

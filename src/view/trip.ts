@@ -17,7 +17,7 @@ import {
 } from '@/constants';
 import { IDState, IsTrue, SightToTrip, SubmitTripInfo } from '@/dispatcher/metadata_types';
 import { storage } from '@/storage';
-import { rerenderTripCards } from '@/actions/trip';
+import { addCurrentTripPlace, rerenderTripCards } from '@/actions/trip';
 import { SightCardInTrip } from '@/view/sight_cards';
 import { Sight, SightsCoord } from '@/models';
 import defaultPicture from '@/../image/moscow_city_1.jpeg';
@@ -30,6 +30,7 @@ import {
 } from '@/dispatcher';
 
 import horizontalScroll from '@/components/horizontal_scroll/horisontal_scroll.handlebars';
+import { initSearchView, SearchView } from '@/components/search/search';
 
 export class CardSightsHolder extends BasicView {
 	#tokens: Token[];
@@ -65,14 +66,20 @@ export class CardSightsHolder extends BasicView {
 
 		if (days) {
 			days.forEach(day => {
-				day.forEach(sight => {
-					sightsAdopted[0].push({
-						sight,
-						preview: sight.photos[0],
-						PP: i,
-					});
+				sightsAdopted[0].push({
+					sight: day.sight,
+					preview: day.sight.photos[0],
+					PP: i,
+				})
+
+				// day.forEach(sight => {
+				// 	sightsAdopted[0].push({
+				// 		sight,
+				// 		preview: sight.photos[0],
+				// 		PP: i,
+				// 	});
 					i += 1;
-				});
+				// });
 			});
 		}
 
@@ -112,6 +119,8 @@ export class TripInfoView extends BasicView {
 	// #albums: albumListHolder;
 
 	#cardHolder: CardSightsHolder;
+
+	#search: SearchView | null = null;
 	
 
 	constructor() {
@@ -192,18 +201,35 @@ export class TripInfoView extends BasicView {
 				console.log(response);
 				this.setView(tripFormTemplate({ countries: response, isNotNew: false })); // ОТ info: TripFormCreation
 				initTripForm(true);
+
+				// поиск
+				const searchPlace = document.getElementById('trip-search-place');
+				console.log(searchPlace);
+				if (searchPlace !== null) {
+					searchPlace.innerHTML = initSearchView('trip');
+					this.#search = new SearchView('trip', (id: string) => {
+						// console.log("clicked trip " + id);
+
+						// lj,fdktybt d gjtplre
+
+						dispatcher.notify(addCurrentTripPlace(Number(id), 0));
+					});
+				}
+
 				// dispatcher.notify(rerenderTripCards(true));
 			});
 
 		this.#firstCreated = true;
 
 		storage.storeCurrentTrip({
-			days: [[]],
+			days: [],
 			title: '',
 			description: '',
 			albums: [],
 			id: '-1',
 		});
+
+
 	};
 
 	createFilledTripForm = () => {
@@ -228,6 +254,24 @@ export class TripInfoView extends BasicView {
 					})
 				); // ОТ info: TripFormCreation
 				initTripForm(false);
+
+				// поиск
+				const searchPlace = document.getElementById('trip-search-place');
+				console.log(searchPlace);
+				if (searchPlace !== null) {
+					searchPlace.innerHTML = initSearchView('header');
+					this.#search = new SearchView('header', (id: string) => {
+						router.go(
+							createFrontendQueryParams(pathsURLfrontend.sight, [
+								{
+									key: paramsURLfrontend.id,
+									value: id,
+								},
+							])
+						);
+					});
+				}
+
 				dispatcher.notify(rerenderTripCards(true));
 			});
 	};
@@ -245,8 +289,11 @@ export class TripInfoView extends BasicView {
 
 export class TripView extends BasicView {
 	#tokens: Token[];
+
 	#coord: SightsCoord[]
+
 	#map!: google.maps.Map;
+
 	loader = new Loader({
 		apiKey: "AIzaSyAmfwtc-cyEkyrSqWaUfeRBRMV6dvOAnpg",
 		version: "weekly",
