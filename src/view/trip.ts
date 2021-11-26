@@ -2,9 +2,9 @@ import BasicView from '@/view/view';
 import { dispatcher, EventType, Token } from '@/dispatcher';
 import tripPageTemplate from '@/components/trip/trip.handlebars';
 import tripFormTemplate from '@/components/trip/trip_form.handlebars';
-import tripInfo from '@/components/trip/trip_info.handlebars';
 import tripSights from '@/components/trip/trip_sights.handlebars';
-import { initTripForm } from '@/components/trip/trip_form';
+import { init, lockTripName } from '@/components/trip/trip_form';
+import { Map } from '@/components/map/map';
 import { sendGetJSONRequest, sendPostJSONRequest } from '@/http';
 import {
 	backendEndpoint,
@@ -17,7 +17,7 @@ import {
 } from '@/constants';
 import { IDState, IsTrue, SightToTrip, SubmitTripInfo } from '@/dispatcher/metadata_types';
 import { storage } from '@/storage';
-import { rerenderTripCards } from '@/actions/trip';
+import { rerenderTripCards, newGetTripRequest } from '@/actions/trip';
 import { SightCardInTrip } from '@/view/sight_cards';
 import { Sight, SightsCoord } from '@/models';
 import defaultPicture from '@/../image/moscow_city_1.jpeg';
@@ -27,6 +27,7 @@ import mapPicturePath from '@/../image/map.png';
 import { Loader } from "@googlemaps/js-api-loader"
 import {
 	DataType,
+	NumID
 } from '@/dispatcher';
 
 import horizontalScroll from '@/components/horizontal_scroll/horisontal_scroll.handlebars';
@@ -61,18 +62,16 @@ export class CardSightsHolder extends BasicView {
 		const sightsAdopted: Array<Array<sightAdopted>> = [[]];
 
 		let i = 0;
-		const { days } = storage.getCurrentTrip();
+		const { sights } = storage.getCurrentTrip();
 
-		if (days) {
-			days.forEach(day => {
-				day.forEach(sight => {
-					sightsAdopted[0].push({
-						sight,
-						preview: sight.photos[0],
-						PP: i,
-					});
-					i += 1;
-				});
+		if (sights) {
+			sights.forEach(day => {
+				console.log("day ",day)
+				// sightsAdopted[0].push({
+				// 	sight: day.sight,
+				// 	preview: day.sight.photos[0],
+				// 	PP: i,
+				// })
 			});
 		}
 
@@ -123,13 +122,16 @@ export class TripInfoView extends BasicView {
 
 	init = (): void => {
 		this.#tokens = [
-			dispatcher.register(EventType.GET_TRIP_RESPONSE, this.isEditedOrNot),
-			dispatcher.register(EventType.CREATE_TRIP_FORM_REQUEST, this.createEmptyTripForm),
+			dispatcher.register(EventType.CREATE_TRIP_EDIT, this.createTripEdit)
+			//dispatcher.register(EventType.GET_TRIP_RESPONSE, this.isEditedOrNot),
+			//dispatcher.register(EventType.CREATE_TRIP_FORM_REQUEST, this.createEmptyTripForm),
 			// dispatcher.register(EventType.CREATE_TRIP_FORM_SUBMIT, this.postTripFormInfo),
 		];
 
-		const cardsHolder = new CardSightsHolder();
-		cardsHolder.init();
+		//const cardsHolder = new CardSightsHolder();
+		//cardsHolder.init();
+		this.setView(tripFormTemplate());
+		//this.createEmptyTripForm();
 	};
 
 	destroy = (): void => {
@@ -140,74 +142,87 @@ export class TripInfoView extends BasicView {
 		this.setEmpty();
 	};
 
-	isEditedOrNot = (isEdited: IsTrue) => {
-		if (isEdited.isTrue) {
-			this.createFilledTripForm();
-		} else {
-			this.showTrip();
-		}
-	};
-
-	showTrip = () => {
+	createTripEdit = () => {
+		console.log("lock")
 		const trip = storage.getCurrentTrip();
-		this.setView(tripInfo(trip));
+		//console.log("getCurrentTrip = ", storage.getCurrentTrip())
+		this.setView(
+			tripFormTemplate({
+				tripCreated: true,
+				title: trip.title
+			})
+		)
+		//lockTripName()
+	}
 
-		const btnRed = document.querySelector('#btn-red-trip');
-		if (btnRed !== null) {
-			btnRed.addEventListener(
-				'click',
-				event => {
-					event.preventDefault();
-					router.go(
-						createFrontendQueryParams(pathsURLfrontend.trip, [
-							{
-								key: paramsURLfrontend.edit,
-								value: '1',
-							},
-							{
-								key: paramsURLfrontend.id,
-								value: storage.getCurrentTrip().id,
-							},
-						])
-					);
-					// dispatcher.notify(newGetTripResult(true));
-				},
-				false
-			);
-		}
+	// isEditedOrNot = (isEdited: IsTrue) => {
+	// 	if (isEdited.isTrue) {
+	// 		this.createFilledTripForm();
+	// 	} else {
+	// 		this.showTrip();
+	// 	}
+	// };
 
-		dispatcher.notify(rerenderTripCards(false));
-	};
+	// showTrip = () => {
+	// 	const trip = storage.getCurrentTrip();
+	// 	//this.setView(tripInfo(trip));
+
+	// 	const btnRed = document.querySelector('#btn-red-trip');
+	// 	if (btnRed !== null) {
+	// 		btnRed.addEventListener(
+	// 			'click',
+	// 			event => {
+	// 				event.preventDefault();
+	// 				router.go(
+	// 					createFrontendQueryParams(pathsURLfrontend.trip, [
+	// 						{
+	// 							key: paramsURLfrontend.edit,
+	// 							value: '1',
+	// 						},
+	// 						{
+	// 							key: paramsURLfrontend.id,
+	// 							value: storage.getCurrentTrip().id,
+	// 						},
+	// 					])
+	// 				);
+	// 				// dispatcher.notify(newGetTripResult(true));
+	// 			},
+	// 			false
+	// 		);
+	// 	}
+
+	// 	dispatcher.notify(rerenderTripCards(false));
+	// };
 
 	createEmptyTripForm = () => {
-		const countriesPromise = sendGetJSONRequest(backendEndpoint + listOfCountries)
-			.then(response => {
-				if (response.ok) {
-					return Promise.resolve(response);
-				}
-				return Promise.reject(new Error('wrong answer on list of countries'));
-			})
-			.then(response => response.json())
-			.then(response => {
-				console.log(response);
-				this.setView(tripFormTemplate({ countries: response, isNotNew: false })); // ОТ info: TripFormCreation
-				initTripForm(true);
-				// dispatcher.notify(rerenderTripCards(true));
-			});
+		// const countriesPromise = sendGetJSONRequest(backendEndpoint + listOfCountries)
+		// 	.then(response => {
+		// 		if (response.ok) {
+		// 			return Promise.resolve(response);
+		// 		}
+		// 		return Promise.reject(new Error('wrong answer on list of countries'));
+		// 	})
+		// 	.then(response => response.json())
+		// 	.then(response => {
+		// 		console.log(response);
+		// 		this.setView(tripFormTemplate({ countries: response, isNotNew: false })); // ОТ info: TripFormCreation
+		// 		//initTripForm(true);
+		// 		// dispatcher.notify(rerenderTripCards(true));
+		// 	});
+		//this.setView(tripFormTemplate());
+		// this.#firstCreated = true;
 
-		this.#firstCreated = true;
-
-		storage.storeCurrentTrip({
-			days: [[]],
-			title: '',
-			description: '',
-			albums: [],
-			id: '-1',
-		});
+		// storage.storeCurrentTrip({
+		// 	days: [],
+		// 	title: '',
+		// 	description: '',
+		// 	albums: [],
+		// 	id: '-1',
+		// });
 	};
 
 	createFilledTripForm = () => {
-		const { title, description, days } = storage.getCurrentTrip();
+		const { title, description, sights } = storage.getCurrentTrip();
 		const countriesPromise = sendGetJSONRequest(backendEndpoint + listOfCountries)
 			.then(response => {
 				if (response.ok) {
@@ -223,11 +238,11 @@ export class TripInfoView extends BasicView {
 						countries: response,
 						title,
 						description,
-						days,
+						sights,
 						isNotNew: true,
 					})
 				); // ОТ info: TripFormCreation
-				initTripForm(false);
+				//initTripForm(false);
 				dispatcher.notify(rerenderTripCards(true));
 			});
 	};
@@ -243,71 +258,27 @@ export class TripInfoView extends BasicView {
 	// };
 }
 
-export class TripView extends BasicView {
+export class TripMapView extends BasicView {
 	#tokens: Token[];
 	#coord: SightsCoord[]
-	#map!: google.maps.Map;
-	loader = new Loader({
-		apiKey: "AIzaSyAmfwtc-cyEkyrSqWaUfeRBRMV6dvOAnpg",
-		version: "weekly",
-	  });
+	#map: Map;
 
 	constructor() {
 		super('#content');
-		this.loader.load().then(() => {
-			this.#map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
-				center: { lat: 55.75222, lng: 37.61556 },
-				zoom: 8,
-			  });
-		  });
 		this.#tokens = [];
-		this.#coord = []		
+		this.#coord = [];
+		this.#map = new	Map;	
 	}
 
 	init = (): void => {
 		this.#tokens = [
 			dispatcher.register(EventType.GET_TRIP_REQUEST, this.setBasicTripPage),
 			// dispatcher.register(EventType.GET_TRIP_RESPONSE, this.setBasicTripPage),
-			dispatcher.register(EventType.ADD_CURRENT_TRIP_PLACE, this.addMarker),
+			dispatcher.register(EventType.ADD_CURRENT_TRIP_PLACE, this.#map.addMarker),
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.#destroy),
 		];
-		this.setBasicTripPageFirst();
 	};
 
-	addMarker = (metadata: SightToTrip) =>{
-		console.log("add marker", metadata.sightId, this.#coord)
-		let lat: number;
-		let lng: number
-		const countriesPromise = sendGetJSONRequest(backendEndpoint + sightURI + metadata.sightId)
-		.then(response => {
-			if (response.ok) {
-				return Promise.resolve(response);
-			}
-			return Promise.reject(new Error('wrong answer on list of countries'));
-		})
-		.then(response => response.json())
-		.then(response => {
-			this.#coord.push({id: metadata.sightId, lat: response.lat, lng: response.lng})
-			lat = response.lat
-			lng = response.lng
-		})
-		.then(response => {
-			this.updateMap(); 
-			this.#map.setCenter({ lat: lat, lng: lng }
-		)});
-		
-	}
-
-	updateMap = () => {
-		for (let entry of this.#coord) {
-			const marker = new google.maps.Marker({
-				position: { lat: entry.lat, lng: entry.lng },
-				map: this.#map,
-			});
-			console.log("draw  marker", entry)
-		}
-		
-	}
 
 	setBasicTripPage = (metadata: IDState) => {
 		this.setView(tripPageTemplate({ mapPicturePath }));
@@ -322,9 +293,7 @@ export class TripView extends BasicView {
 			.then(response => {
 				this.#coord = response
 		 	});
-			this.loader.load().then(() => {
-				this.updateMap();
-			})
+
 			
 
 	};
@@ -341,3 +310,39 @@ export class TripView extends BasicView {
 		this.setEmpty();
 	};
 }
+
+export class InitTripPage extends BasicView {
+
+	#TripInfo: TripInfoView;
+	#TripMap: TripMapView
+	#tokens: Token[];
+
+	constructor() {
+		super('#content');
+		this.#TripInfo = new TripInfoView();
+		this.#TripMap = new TripMapView();
+		this.#tokens = [];
+
+
+	}
+	
+
+	init = (): void => {
+		this.#tokens = [
+			dispatcher.register(EventType.GET_TRIP_RESPONSE, this.#TripInfo.createTripEdit),
+		];
+		this.setView(tripPageTemplate());
+		this.#TripMap.init()
+		this.#TripInfo.init() 
+		init(true);
+		console.log("INITIALIZE TRIP PAGE")
+	}
+
+	initEdit = (metadata: NumID): void => {
+		// need get and store trip with id in params
+		const {ID} = metadata
+		dispatcher.notify(newGetTripRequest(ID))
+		console.log("INITIALIZE EDIT TRIP PAGE")
+	}
+}
+

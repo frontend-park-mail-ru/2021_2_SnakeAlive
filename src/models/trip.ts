@@ -6,12 +6,16 @@ export interface Trip {
 	title: string;
 	description: string;
 	albums: Array<Album>;
-	days: Array<Array<Sight>>;
+	sights: Array<Sight>;
 }
 
 export interface TripFormInfo {
 	title: string;
 	description: string;
-	days: Array<Array<Record<string, number>>>;
-	// id: string;
+	sights: Array<TripSights>;
+}
+
+export interface TripSights {
+	id: number,
+	day: number
 }

@@ -2,10 +2,16 @@
 <form id="trip_form" class="trip_form">
 
 		<div class="form_form__input_holder">
+			{{#if tripCreated}}
+			<div class='label-div'>
+				<label for="title">Название поездки: {{title}}</label>
+			</div>
+			{{else}}	
 			<div class='label-div'>
 				<label for="title">Название поездки</label>
 			</div>
 			<input type="text" id="title" name="title" class="form__input" value="{{title}}"/>
+			{{/if}}
 		</div>
 
 	<div class="trip_form__input_holder">
@@ -20,61 +26,33 @@
 			<textarea class="textarea_behavior" rows="3" id="comment_text">{{description}}</textarea>
 		</div>
 	</div>
+	{{#if tripCreated}}
+	<div id='trip-search-place'></div>
+	<button class="usual_button usual_button_dark" id="button_add">Добавить</button>
+	{{else}}
+	<button class="usual_button usual_button_dark" id='trip_submit'>Создать</button>
+	{{/if}}
 
 	<div class="error_block" id="error_block">
 		<p class="error_block__text">Ошибка. Обязательны название поездки и хотя бы одно место, которое вы собираетесь посетить</p>
 	</div>
-	{{#if isNotNew}}
-	{{else}}
-		<div class='label-div'>
-			<label for="country_select" class='trip_form__some_info'>Прежде чем продолжить, пожалуйста, выберите одно место, которое хотите посетить:</label>
-		</div>
-	{{/if}}
-
-	<div class="trip_form__horizontal_holder">
-		<div class="select_string">
-			<div id="country_select_container">
-				<label for="country_select"></label>
-				<select form="trip_form" id="country_select">
-					<option>cтрана</option>
-					{{#each countries}}
-						<option value='{{ this.id }}'>{{ this.name }}</option>
-					{{/each}}
-				</select>
-			</div>
-
-			<div id="sight_select_container" class="trip_form__horizontal_holder">
-			</div>
-
-			<div id="button_select_container" class='trip_form__horizontal_holder'>
-				<button class="usual_button_dark usual_button" id="button_select">
-	{{#if isNotNew}}
-		Добавить
-	{{else}}
-		Создать
-	{{/if}}
-				</button>
-			</div>
-
-		</div>
-	</div>
 
 
-{{#if isNotNew}}
+{{#if tripCreated}}
 	<div class="trip_form__horizontal_holder buttons_holder">
-        <button type="submit" id="trip_submit" class="usual_button usual_button_light">Сохранить</button>
+        {{!-- <button type="submit" id="trip_submit" class="usual_button usual_button_light">Сохранить</button> --}}
 		<button class="usual_button usual_button_dark" id="btn-add-album">Добавить альбом</button>
 	</div>
 	<button class="usual_button usual_button_light">Сохранить и закончить редактирование</button>
 </form>
+{{else}}
 {{/if}}
 </div>
 
 <div id="trip_cards_holder"></div>
 <div id="trip_albums_holder"></div>
 
-{{#if isNotNew}}
-
+{{#if tripCreated}}
 <div class="trip_form__horizontal_holder ">
 	<div>
 		<button id="ask_confirm_button" class="usual_button usual_button_light">Удалить поездку</button>
@@ -84,5 +62,5 @@
 		<button id="delete_button" class="usual_button usual_button_light">Да</button>
 	</div>
 </div>
-
+{{else}}
 {{/if}}

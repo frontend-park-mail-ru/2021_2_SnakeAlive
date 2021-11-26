@@ -8,6 +8,7 @@ import {
 	initSightPageRequest,
 	initTripPageRequest,
 	newInitPageRequest,
+	initTripEditPageRequest,
 } from '@/actions/page';
 import { createTripFormRequest, newGetTripRequest } from '@/actions/trip';
 import { newGetProfileRequest } from '@/actions/profile';
@@ -73,16 +74,22 @@ export const notifier = (path: URL): void /* IEvent */ => {
 			const params = tryGetParam([paramsURLfrontend.id, paramsURLfrontend.edit], path);
 			console.log(params);
 
-			dispatcher.notify(initTripPageRequest());
+			
 			if (params.id) {
-				if (params.edit === '1') {
-					dispatcher.notify(newGetTripRequest(params.id, true));
-				} else {
-					dispatcher.notify(newGetTripRequest(params.id, false));
-				}
+				dispatcher.notify(initTripEditPageRequest(Number(params.id)));
 			} else {
-				dispatcher.notify(createTripFormRequest());
+				dispatcher.notify(initTripPageRequest());
 			}
+			// if (params.id) {
+			// 	if (params.edit === '1') {
+			// 		dispatcher.notify(newGetTripRequest(params.id, true));
+			// 	} else {
+			// 		dispatcher.notify(newGetTripRequest(params.id, false));
+			// 	}
+			// } else {
+			// 	dispatcher.notify(createTripFormRequest());
+			// }
+			//dispatcher.notify(createTripFormRequest())
 			break;
 		}
 		case pathsURLfrontend.login: {
