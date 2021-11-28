@@ -39,7 +39,7 @@ export class SightCardInTrip {
 					event.preventDefault();
 					router.go(
 						createFrontendQueryParams(
-							pathsURLfrontend.tag, [
+							pathsURLfrontend.sight, [
 							{
 								key: paramsURLfrontend.id,
 								value: String(this.#id),

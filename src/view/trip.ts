@@ -51,10 +51,10 @@ export class InitTripPage extends BasicView {
 
 	initEdit = (metadata: NumID): void => {
 		// need get and store trip with id in params
-		const {ID} = metadata
-		dispatcher.notify(newGetTripRequest(ID))
-		initEdit()
-		console.log("INITIALIZE EDIT TRIP PAGE")
+		const {ID} = metadata;
+		dispatcher.notify(newGetTripRequest(ID));
+		initEdit();
+		console.log("INITIALIZE EDIT TRIP PAGE");
 	}
 
 	destroy  = (): void => {
@@ -76,8 +76,6 @@ export class TripInfoView extends BasicView {
 	// #albums: albumListHolder;
 
 	#cardHolder: CardSightsHolder;
-
-	#search: SearchView | null = null;
 
 	constructor() {
 		super('#trip-info');
