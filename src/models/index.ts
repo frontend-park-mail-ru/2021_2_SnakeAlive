@@ -10,10 +10,7 @@ import {
 import { UserMetadata } from './user';
 import { Sight, SightsCoord } from './sight';
 import { Trip } from './trip';
-import {
-	Album,
-	GotAlbumInterface
-} from './album';
+import { Album, GotAlbumInterface } from './album';
 
 export {
 	Country,
@@ -28,5 +25,5 @@ export {
 	Trip,
 	CountryResponse,
 	Album,
-	GotAlbumInterface
+	GotAlbumInterface,
 };

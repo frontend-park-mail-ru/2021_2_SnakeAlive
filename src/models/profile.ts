@@ -19,7 +19,7 @@ export interface UpdateProfileMetadataResponse {
 	surname: string;
 	avatar: string;
 	email: string;
-	id: string
+	id: string;
 }
 
 export interface ProfileMetadata {

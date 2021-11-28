@@ -1,5 +1,13 @@
 import countryPageTemplate from '@/components/country_page/country_sights.handlebars';
-import { DataType, dispatcher, ErrorMsgData, EventType, NamedUUID, Token, UUID } from '@/dispatcher';
+import {
+	DataType,
+	dispatcher,
+	ErrorMsgData,
+	EventType,
+	NamedUUID,
+	Token,
+	UUID,
+} from '@/dispatcher';
 import BasicView from '@/view/view';
 import { storage } from '@/storage';
 import tripSights from '@/components/country_page/sights.handlebars';

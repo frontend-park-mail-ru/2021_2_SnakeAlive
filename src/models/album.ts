@@ -10,12 +10,12 @@ export interface Album {
 }
 
 export interface GotAlbumInterface {
-	id: number,
+	id: number;
 	// eslint-disable-next-line camelcase
-	trip_id: number,
+	trip_id: number;
 	// eslint-disable-next-line camelcase
-	user_id: number,
-	title: string,
-	description: string,
-	photos: string[]
+	user_id: number;
+	title: string;
+	description: string;
+	photos: string[];
 }

@@ -79,5 +79,5 @@ export {
 	destroyCurrentPage,
 	initProfilePageRequest,
 	initAlbumPageRequest,
-	initTagPageRequest
+	initTagPageRequest,
 };

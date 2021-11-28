@@ -48,14 +48,19 @@ const createAlbumFormRequest = (): IEvent =>
 		metadata: <Empty>{},
 	};
 
-const updateAlbumInfoRequest = (title: string, description: string, photos: string[], actionAfter?: (id: string) => void): IEvent =>
+const updateAlbumInfoRequest = (
+	title: string,
+	description: string,
+	photos: string[],
+	actionAfter?: (id: string) => void
+): IEvent =>
 	<IEvent>{
 		key: EventType.UPDATE_ALBUM_INFO,
 		metadata: <AlbumUpdateInfo>{
 			title,
 			description,
 			photos,
-			actionAfter
+			actionAfter,
 		},
 	};
 

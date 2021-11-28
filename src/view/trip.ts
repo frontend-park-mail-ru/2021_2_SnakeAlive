@@ -298,7 +298,7 @@ export class TripInfoView extends BasicView {
 				false
 			);
 		}
-	}
+	};
 }
 
 export class TripView extends BasicView {

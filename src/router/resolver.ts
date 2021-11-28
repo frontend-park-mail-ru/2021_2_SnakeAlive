@@ -5,7 +5,8 @@ import {
 	initLoginPageRequest,
 	initProfilePageRequest,
 	initRegisterPageRequest,
-	initSightPageRequest, initTagPageRequest,
+	initSightPageRequest,
+	initTagPageRequest,
 	initTripPageRequest,
 	newInitPageRequest,
 } from '@/actions/page';

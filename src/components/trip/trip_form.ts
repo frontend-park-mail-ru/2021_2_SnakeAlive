@@ -159,7 +159,7 @@ export const initTripForm = (isNew: boolean): void => {
 		);
 	}
 
-	if (! isNew) {
+	if (!isNew) {
 		// добавить удаление достопримечательности по нажатию на кнопку
 		const deleteSightBtns = document.getElementsByClassName('delete-button');
 		const limit = deleteSightBtns.length;

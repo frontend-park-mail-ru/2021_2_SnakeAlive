@@ -69,20 +69,20 @@ export const adoptGotReview = (gotReviews: ReviewGotInfo[]): Review[] => {
 		userId = currentUser.meta.id;
 	}
 
-	gotReviews.forEach((review) => {
+	gotReviews.forEach(review => {
 		let owner = false;
 		if (review.user_id === userId) {
 			owner = true;
 		}
-		console.log("OWNED ", owner, " user from review/from profile: ", review.user_id, ", ", userId);
+		console.log('OWNED ', owner, ' user from review/from profile: ', review.user_id, ', ', userId);
 		storeReviews.push({
 			id: review.id,
 			title: review.title,
 			text: review.text,
 			rating: review.rating,
 			owner,
-			user: <UserReview>{}
+			user: <UserReview>{},
 		});
 	});
 	return storeReviews;
-}
+};

@@ -38,8 +38,7 @@ export class SightCardInTrip {
 				event => {
 					event.preventDefault();
 					router.go(
-						createFrontendQueryParams(
-							pathsURLfrontend.tag, [
+						createFrontendQueryParams(pathsURLfrontend.tag, [
 							{
 								key: paramsURLfrontend.id,
 								value: String(this.#id),
@@ -52,18 +51,20 @@ export class SightCardInTrip {
 		}
 
 		// tag_{{this}}
-		tags.forEach((tag) => {
+		tags.forEach(tag => {
 			const tegElem = document.getElementById(`tag_${tag}`);
 			if (tegElem !== null) {
 				tegElem.addEventListener('click', () => {
-					router.go(createFrontendQueryParams(pathsURLfrontend.tag, [
-						{
-							key: paramsURLfrontend.tag,
-							value: tag
-						}
-					]));
-				})
+					router.go(
+						createFrontendQueryParams(pathsURLfrontend.tag, [
+							{
+								key: paramsURLfrontend.tag,
+								value: tag,
+							},
+						])
+					);
+				});
 			}
-		})
+		});
 	};
 }

@@ -1,8 +1,6 @@
 import { sendGetJSONRequest } from '@/http';
 import { backendEndpoint, countrySights, sightsURI } from '@/constants';
-import {
-
-} from '@/actions/country';
+import {} from '@/actions/country';
 import { newSetMainHeaderRequest } from '@/actions/header';
 import { storage } from '@/storage';
 import { DataType, dispatcher, EventType, UUID, NamedUUID, Token } from '@/dispatcher';
@@ -38,14 +36,13 @@ export default class TagReducer {
 	};
 
 	#getTagCards = (name: string): void => {
-		this.#getCards(name)
-			.then((cards: CountryCardResponse[]) => {
-				dispatcher.notify(newTagResponse(name));
-				console.log('tag reducer : ', cards);
-				storage.storeSightsCardsMin(minAdaptCountryCards(cards));
-				console.log(storage.getCountryCards());
-				dispatcher.notify(newGetTagCardsResult());
-			});
+		this.#getCards(name).then((cards: CountryCardResponse[]) => {
+			dispatcher.notify(newTagResponse(name));
+			console.log('tag reducer : ', cards);
+			storage.storeSightsCardsMin(minAdaptCountryCards(cards));
+			console.log(storage.getCountryCards());
+			dispatcher.notify(newGetTagCardsResult());
+		});
 	};
 
 	#getCards = (tagID: string): Promise<CountryCardResponse[]> => {
@@ -64,5 +61,5 @@ export default class TagReducer {
 				return Promise.resolve(response);
 			})
 			.then(response => response.json());
-	}
+	};
 }

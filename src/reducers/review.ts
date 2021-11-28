@@ -1,5 +1,11 @@
 import { HttpError, sendDeleteJSONRequest, sendGetJSONRequest, sendPostJSONRequest } from '@/http';
-import { backendEndpoint, profile, queryParamsToGetReview, reviewsURI, reviewURI } from '@/constants';
+import {
+	backendEndpoint,
+	profile,
+	queryParamsToGetReview,
+	reviewsURI,
+	reviewURI,
+} from '@/constants';
 import { createReviewForm, newGetReviewsRequest, newGetReviewsResponse } from '@/actions/review';
 import { initErrorPageRequest } from '@/actions/page';
 import { storage } from '@/storage';
@@ -7,8 +13,10 @@ import { CreateReview, DataType, dispatcher, EventType, NumID, Token } from '@/d
 import { CreateReviewRequest, CreateReviewResponse, Review } from '@/models/review';
 import {
 	adaptCreateReviewRequest,
-	adaptCreateReviewResponse, adoptGotReview,
-	adoptReviewBeforePost, ReviewGotInfo,
+	adaptCreateReviewResponse,
+	adoptGotReview,
+	adoptReviewBeforePost,
+	ReviewGotInfo,
 } from '@/adapters/review';
 import { CreateReviewForm } from '@/dispatcher/metadata_types';
 import { GotProfileResponse } from '@/adapters/header';
@@ -44,24 +52,23 @@ export default class ReviewReducer {
 		const event = <NumID>metadata;
 		this.#placeId = event.ID;
 
-		this.#putUserToStorage()
-			.then((data: GotProfileResponse | number) => {
-				if (typeof data !== 'number') {
-					storage.storeProfile(adaptGetProfileResponse(data));
-					dispatcher.notify(newSetMainHeaderLoggedResponse());
-				}
+		this.#putUserToStorage().then((data: GotProfileResponse | number) => {
+			if (typeof data !== 'number') {
+				storage.storeProfile(adaptGetProfileResponse(data));
+				dispatcher.notify(newSetMainHeaderLoggedResponse());
+			}
 
-				dispatcher.notify(newSetMainHeaderBasicResponse());
+			dispatcher.notify(newSetMainHeaderBasicResponse());
 
-				this.#sendGetReviews(event.ID)
-					.then((reviews: ReviewGotInfo[]) => {
-						storage.storeReviews(adoptGotReview(reviews));
-						dispatcher.notify(newGetReviewsResponse());
-					})
-					.catch((error: Error) => {
-						console.log(error);
-					});
-			})
+			this.#sendGetReviews(event.ID)
+				.then((reviews: ReviewGotInfo[]) => {
+					storage.storeReviews(adoptGotReview(reviews));
+					dispatcher.notify(newGetReviewsResponse());
+				})
+				.catch((error: Error) => {
+					console.log(error);
+				});
+		});
 	};
 
 	deleteReview = (metadata: DataType): void => {
@@ -132,11 +139,10 @@ export default class ReviewReducer {
 			.then(response => response.text());
 
 	#putUserToStorage = (): Promise<GotProfileResponse | number> =>
-		sendGetJSONRequest(backendEndpoint + profile)
-			.then(response => {
-				if (response.status === 401) {
-					return response.status;
-				}
-				return response.json();
-			});
+		sendGetJSONRequest(backendEndpoint + profile).then(response => {
+			if (response.status === 401) {
+				return response.status;
+			}
+			return response.json();
+		});
 }

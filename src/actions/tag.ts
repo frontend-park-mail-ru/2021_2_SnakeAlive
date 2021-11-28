@@ -4,7 +4,7 @@ const newTagResponse = (tagName: string): IEvent =>
 	<IEvent>{
 		key: EventType.INIT_TAG_RESULT,
 		metadata: <NamedUUID>{
-			ID: tagName
+			ID: tagName,
 		},
 	};
 
@@ -12,7 +12,7 @@ const newTagRequest = (tagName: string): IEvent =>
 	<IEvent>{
 		key: EventType.INIT_TAG_REQUEST,
 		metadata: <NamedUUID>{
-			ID: tagName
+			ID: tagName,
 		},
 	};
 
@@ -22,8 +22,4 @@ const newGetTagCardsResult = (): IEvent =>
 		metadata: <Empty>{},
 	};
 
-export {
-	newGetTagCardsResult,
-	newTagRequest,
-	newTagResponse
-};
+export { newGetTagCardsResult, newTagRequest, newTagResponse };

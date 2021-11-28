@@ -40,24 +40,24 @@ export class ReviewsView extends BasicView {
 			// значит свой отзыв и можно его удалить
 			if (reviewInfo.owner) {
 				const deleteBtn = document.getElementById(`delete_button_${String(reviewInfo.id)}`);
-					console.log(`delete_button_${String(reviewInfo.id)}`);
-					console.log(deleteBtn);
-					console.log(reviewInfo);
-					if (deleteBtn !== null) {
-						console.log('try to delete');
-						deleteBtn.addEventListener(
-							'click',
-							event => {
-								event.preventDefault();
-								console.log('clicked');
-								// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-								// @ts-ignore
-								dispatcher.notify(newDeleteReviewRequest(reviewInfo.id));
-							},
-							false
-						);
-					}
+				console.log(`delete_button_${String(reviewInfo.id)}`);
+				console.log(deleteBtn);
+				console.log(reviewInfo);
+				if (deleteBtn !== null) {
+					console.log('try to delete');
+					deleteBtn.addEventListener(
+						'click',
+						event => {
+							event.preventDefault();
+							console.log('clicked');
+							// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+							// @ts-ignore
+							dispatcher.notify(newDeleteReviewRequest(reviewInfo.id));
+						},
+						false
+					);
 				}
+			}
 
 			// created_at: ""
 			// id: 1
