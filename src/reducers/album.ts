@@ -59,7 +59,7 @@ export default class AlbumReducer {
 	addPhotos = (photo: File) => {
 		// здесь поменять: возвращается строка, которую потом засунуть в базу
 		this.#sendPhotos(photo.data).then((nameObj) => {
-			console.log(this.#addPhoto(storage.getAlbum(), nameObj.filename));
+			//console.log(this.#addPhoto(storage.getAlbum(), nameObj.filename));
 			this.#sendAlbumInfo(this.#addPhoto(storage.getAlbum(), nameObj.filename))
 				.then((album: GotAlbumInterface) => {
 					storage.storeAlbum(adoptGotAlbum(album));
