@@ -63,21 +63,6 @@ const alert  = () =>{
 }
 
 export const initEdit = (): void => {
-
-	const addAlbumBtn = document.getElementById('btn-add-album');
-	if (addAlbumBtn !== null) {
-		addAlbumBtn.addEventListener(
-			'click',
-			event => {
-				event.preventDefault();
-				storage.storeAlbumTripId(storage.getCurrentTrip().id);
-				router.go(pathsURLfrontend.album);
-			},
-			false
-		);
-	}else{
-		console.log("No button = ",addAlbumBtn)
-	}
 	// console.log("N==== = ",document.getElementById('btn-add-album'))
 	// console.log("N==== = ",document.getElementsByClassName('usual_button').item(1))
 

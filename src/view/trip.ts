@@ -8,7 +8,7 @@ import { Map } from '@/components/map/map';
 import { sendGetJSONRequest } from '@/http';
 import {
 	backendEndpoint,
-	listOfCountries,
+	listOfCountries, pathsURLfrontend,
 } from '@/constants';
 import { IsTrue} from '@/dispatcher/metadata_types';
 import { storage } from '@/storage';
@@ -20,6 +20,7 @@ import {
 	NumID
 } from '@/dispatcher';
 import { initSearchView, SearchView } from '@/components/search/search';
+import { router } from '@/router';
 
 
 export class InitTripPage extends BasicView {
@@ -34,17 +35,17 @@ export class InitTripPage extends BasicView {
 		this.#TripMap = new TripMapView();
 		this.#tokens = [];
 	}
-	
+
 
 	init = (): void => {
 		this.#tokens = [
 			dispatcher.register(EventType.GET_TRIP_RESPONSE, this.#TripInfo.createTripEdit),
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
-			
+
 		];
 		this.setView(tripPageTemplate());
 		this.#TripMap.init()
-		this.#TripInfo.init() 
+		this.#TripInfo.init()
 		init(true);
 		console.log("INITIALIZE TRIP PAGE")
 	}
@@ -120,6 +121,21 @@ export class TripInfoView extends BasicView {
 			this.#search = new SearchView('trip', (id: string) => {
 			});
 		}
+
+		const addAlbumBtn = document.getElementById('btn-add-album');
+		if (addAlbumBtn !== null) {
+			addAlbumBtn.addEventListener(
+				'click',
+				event => {
+					event.preventDefault();
+					storage.storeAlbumTripId(storage.getCurrentTrip().id);
+					router.go(pathsURLfrontend.album);
+				},
+				false
+			);
+		}else{
+			console.log("No button = ",addAlbumBtn)
+		}
 	}
 
 	addPlace = () => {
@@ -141,7 +157,7 @@ export class TripMapView extends BasicView {
 		super('#content');
 		this.#tokens = [];
 		this.#coord = [];
-		this.#map = new	Map;	
+		this.#map = new	Map;
 	}
 
 	init = (): void => {
@@ -183,7 +199,7 @@ export class CardSightsHolder extends BasicView {
 
 	rerenderCards = (metadata: IsTrue) => {
 		this.setEmpty();
-		this.#cards = [];  
+		this.#cards = [];
 
 		interface sightAdopted {
 			sight: Sight;
@@ -200,7 +216,7 @@ export class CardSightsHolder extends BasicView {
 				console.log("sight ",sight)
 				sightsAdopted[0].push({
 					sight: sight,
-					preview: sights[0].photos[0], 
+					preview: sights[0].photos[0],
 					PP: i,
 				})
 			});
