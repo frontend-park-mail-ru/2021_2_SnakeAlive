@@ -18,12 +18,10 @@ const gotSearchResults = (type: string): IEvent =>
 		},
 	};
 
-
 const searchSubmit = (): IEvent =>
 	<IEvent>{
 		key: EventType.SUBMIT_SEARCH_RESULTS,
-		metadata: <Empty>{}
+		metadata: <Empty>{},
 	};
-	
 
 export { searchRequest, gotSearchResults, searchSubmit };

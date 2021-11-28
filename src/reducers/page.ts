@@ -10,7 +10,7 @@ import ErrorView from '@/view/error';
 import SightReducer from '@/reducers/sight';
 import SightView from '@/view/sight';
 import TripReducer from '@/reducers/trip';
-import { InitTripPage} from '@/view/trip';
+import { InitTripPage } from '@/view/trip';
 import ProfileReducer from '@/reducers/profile';
 import ProfileView from '@/view/profile';
 import ReviewReducer from '@/reducers/review';
@@ -36,7 +36,7 @@ export default class PageReducer {
 		dispatcher.register(EventType.INIT_REGISTER_PAGE_REQUEST, this.createRegisterPage);
 		dispatcher.register(EventType.INIT_ERROR_PAGE_REQUEST, this.createErrorPage);
 		dispatcher.register(EventType.INIT_PROFILE_PAGE_REQUEST, this.createProfilePage);
-		
+
 		dispatcher.register(EventType.INIT_TAG_PAGE_REQUEST, this.createTagPage);
 	};
 
@@ -112,10 +112,9 @@ export default class PageReducer {
 
 		const tripPage: InitTripPage = new InitTripPage();
 		tripPage.init();
-		
 	};
 
-	createTripEditPage  = (metadata: NumID): void => {
+	createTripEditPage = (metadata: NumID): void => {
 		dispatcher.notify(destroyCurrentPage());
 		console.log('page reducer create edit trip');
 
@@ -124,7 +123,7 @@ export default class PageReducer {
 
 		const tripPage: InitTripPage = new InitTripPage();
 		tripPage.init();
-		tripPage.initEdit(metadata)
+		tripPage.initEdit(metadata);
 	};
 
 	createAlbumPage = (): void => {

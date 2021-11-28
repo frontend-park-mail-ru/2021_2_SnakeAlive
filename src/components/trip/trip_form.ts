@@ -1,6 +1,6 @@
 // import tripFormTemplate from '@/components/trip/trip_form.handlebars';
 import { dispatcher } from '@/dispatcher';
-import { deleteTrip, createTripFormRequest, updateCurrentTripInfo} from '@/actions/trip';
+import { deleteTrip, createTripFormRequest, updateCurrentTripInfo } from '@/actions/trip';
 import { newGetReviewsResponse } from '@/actions/review';
 import { sendGetJSONRequest } from '@/http';
 import { backendEndpoint, paramsURLfrontend, pathsURLfrontend, sightsURI } from '@/constants';
@@ -11,7 +11,7 @@ import './trip.scss';
 import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
 import { setTextAreaResizeParams } from '@/components/reviews/review_form';
-import { Loader } from "@googlemaps/js-api-loader"
+import { Loader } from '@googlemaps/js-api-loader';
 import { initSearchView, SearchView } from '@/components/search/search';
 
 export const GET_COUNTRY_NAME = (id: string) => {
@@ -33,48 +33,39 @@ export const GET_COUNTRY_NAME = (id: string) => {
 	}
 };
 
-const createTrip  = (event: Event) => {
+const createTrip = (event: Event) => {
 	event.preventDefault();
 
 	const { title, text } = getFormInfo();
-	
+
 	if (title === '') {
 		setError();
 	} else {
-		console.log("Создаем поездку", title, text)
-		dispatcher.notify(createTripFormRequest(title, text))
+		console.log('Создаем поездку', title, text);
+		dispatcher.notify(createTripFormRequest(title, text));
 	}
-}
+};
 export const init = (isNew: boolean): void => {
 	const submitBtn = document.querySelector('#trip_submit');
 
-		if (submitBtn !== null) {
-			submitBtn.addEventListener(
-				'click',
-				createTrip,
-				false
-			);
-		}
-				
-}
+	if (submitBtn !== null) {
+		submitBtn.addEventListener('click', createTrip, false);
+	}
+};
 
-const alert  = () =>{
+const alert = () => {
 	console.log('click');
-}
+};
 
 export const initEdit = (): void => {
 	// console.log("N==== = ",document.getElementById('btn-add-album'))
 	// console.log("N==== = ",document.getElementsByClassName('usual_button').item(1))
-
 	// const askConfirmBtn = document.getElementById('btn-add-place');
 	// if (askConfirmBtn !== null) {
 	// 	askConfirmBtn.addEventListener('click',alert , false);
 	// }
 	// console.log("askConfirmBtn = ",askConfirmBtn)
-}
-
- 
-
+};
 
 const getFormInfo = (): {
 	title: string;
@@ -108,52 +99,49 @@ const getFormInfo = (): {
 	};
 };
 
-
-
-
 const setError = () => {
 	const err = document.getElementById('error_block');
 	if (err !== null) {
 		err.style.visibility = 'visible';
-	const submitBtn = document.querySelector('#trip_submit');
-	if (submitBtn !== null) {
-		submitBtn.addEventListener(
-			'click',
-			event => {
-				event.preventDefault();
+		const submitBtn = document.querySelector('#trip_submit');
+		if (submitBtn !== null) {
+			submitBtn.addEventListener(
+				'click',
+				event => {
+					event.preventDefault();
 
-				const { title, text } = getFormInfo();
+					const { title, text } = getFormInfo();
 
-				if (title === '') {
-					setError();
-				} else {
-					dispatcher.notify(updateCurrentTripInfo(title, text));
-				}
-			},
-			false
-		);
+					if (title === '') {
+						setError();
+					} else {
+						dispatcher.notify(updateCurrentTripInfo(title, text));
+					}
+				},
+				false
+			);
+		}
+
+		// if (! isNew) {
+		// 	// добавить удаление достопримечательности по нажатию на кнопку
+		// 	const deleteSightBtns = document.getElementsByClassName('delete-button');
+		// 	const limit = deleteSightBtns.length;
+		// 	for (let i = 0; i < limit; i += 1) {
+		// 		deleteSightBtns[i].addEventListener(
+		// 			'click',
+		// 			event => {
+		// 				deleteSightBtnListener(event);
+		// 			},
+		// 			false
+		// 		);
+		// 		i += 1;
+		// 	}
+
+		// 	// удаление всей поездки
+		// 	const askConfirmBtn = document.getElementById('ask_confirm_button');
+		// 	if (askConfirmBtn !== null) {
+		// 		askConfirmBtn.addEventListener('click', showConfirm, false);
+		// 	}
+		// }
 	}
-
-	// if (! isNew) {
-	// 	// добавить удаление достопримечательности по нажатию на кнопку
-	// 	const deleteSightBtns = document.getElementsByClassName('delete-button');
-	// 	const limit = deleteSightBtns.length;
-	// 	for (let i = 0; i < limit; i += 1) {
-	// 		deleteSightBtns[i].addEventListener(
-	// 			'click',
-	// 			event => {
-	// 				deleteSightBtnListener(event);
-	// 			},
-	// 			false
-	// 		);
-	// 		i += 1;
-	// 	}
-
-	// 	// удаление всей поездки
-	// 	const askConfirmBtn = document.getElementById('ask_confirm_button');
-	// 	if (askConfirmBtn !== null) {
-	// 		askConfirmBtn.addEventListener('click', showConfirm, false);
-	// 	}
-	// }
 };
-}

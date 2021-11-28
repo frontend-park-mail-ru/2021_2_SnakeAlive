@@ -21,7 +21,6 @@ export interface Trip {
 	days: Array<TripSight>;
 }
 
-
 export interface TripFormInfo {
 	title: string;
 	description: string;
@@ -29,8 +28,8 @@ export interface TripFormInfo {
 }
 
 export interface TripSights {
-	id: number,
-	day: number
+	id: number;
+	day: number;
 	// days: Array<Array<Record<string, number>>>;
 	//sights: Array<TripSightId>;
 	// id: string;

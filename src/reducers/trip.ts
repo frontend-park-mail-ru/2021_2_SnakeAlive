@@ -39,7 +39,7 @@ export default class TripReducer {
 
 			dispatcher.register(EventType.CREATE_TRIP_FORM_REQUEST, this.createTrip),
 			dispatcher.register(EventType.UPDATE_CURRENT_TRIP_INFO, this.updateCurrentTripInfo),
-			
+
 			dispatcher.register(EventType.ADD_CURRENT_TRIP_PLACE, this.addCurrentTripPlace),
 			dispatcher.register(EventType.DELETE_CURRENT_TRIP_PLACE, this.deleteCurrentTripPlace),
 
@@ -80,12 +80,12 @@ export default class TripReducer {
 
 	addCurrentTripPlace = (metadata: SightDay) => {
 		const trip = storage.getCurrentTrip();
-		trip.sights.push(metadata.sight)
-		storage.storeCurrentTrip(trip)
+		trip.sights.push(metadata.sight);
+		storage.storeCurrentTrip(trip);
 		const tripSend = adoptForSend(trip);
-		console.log("tripSend = ", tripSend)
+		console.log('tripSend = ', tripSend);
 		this.#updateTrip(tripSend, trip.id).then(response => {
-			console.log("stored trip = ", storage.getCurrentTrip())
+			console.log('stored trip = ', storage.getCurrentTrip());
 			dispatcher.notify(rerenderTripCards(true));
 		});
 	};
@@ -139,9 +139,9 @@ export default class TripReducer {
 		});
 	};
 
-	createTrip  = (metadata: TripInfo) => {
+	createTrip = (metadata: TripInfo) => {
 		const trip = storage.getCurrentTrip();
-		console.log("trip=  ", trip)
+		console.log('trip=  ', trip);
 		const tripSend = adoptForSend(trip);
 		// const tripSend: TripFormInfo = {
 		// 	title: "",
@@ -150,11 +150,11 @@ export default class TripReducer {
 		// };
 		tripSend.title = metadata.title;
 		tripSend.description = metadata.description;
-		console.log("meta", metadata)
-		console.log("tripSend", tripSend)
+		console.log('meta', metadata);
+		console.log('tripSend', tripSend);
 		// отправка обновления
 		this.#addTrip(tripSend, trip.id).then(response => {
-			console.log("storeCurrentTrip = ", storage.getCurrentTrip())
+			console.log('storeCurrentTrip = ', storage.getCurrentTrip());
 			storage.addLastTripId(Number(response.id));
 			router.go(
 				createFrontendQueryParams(pathsURLfrontend.trip, [
@@ -164,10 +164,9 @@ export default class TripReducer {
 					},
 				])
 			);
-			dispatcher.notify(createTripEdit(response.id, true))
+			dispatcher.notify(createTripEdit(response.id, true));
 		});
 	};
-
 
 	deleteTrip = () => {
 		const { id } = storage.getCurrentTrip();
@@ -183,40 +182,40 @@ export default class TripReducer {
 			});
 	};
 
-
 	#addTrip = (data: TripFormInfo, tripId: string): Promise<Trip> => {
-		console.log("post data", data)
+		console.log('post data', data);
 		return sendPostJSONRequest(backendEndpoint + postTripURI, data)
-		.then(response => {
-			if (response.status === 400) {
-				return Promise.reject(new Error('Bad request'));
-			}
-			if (response.status === 401) {
-				return Promise.reject(new Error('Нужно войти в систему'));
-			}
-			return Promise.resolve(response);
-		})
-		.then(response => response.json())
-		.then(response => {
-			console.log("returning trip id = ", response)
-			return response;
-		});			
+			.then(response => {
+				if (response.status === 400) {
+					return Promise.reject(new Error('Bad request'));
+				}
+				if (response.status === 401) {
+					return Promise.reject(new Error('Нужно войти в систему'));
+				}
+				return Promise.resolve(response);
+			})
+			.then(response => response.json())
+			.then(response => {
+				console.log('returning trip id = ', response);
+				return response;
+			});
 	};
 
 	#updateTrip = (data: TripFormInfo, tripId: string): Promise<Trip> => {
 		return sendPatchJSONRequest(backendEndpoint + tripURI + tripId, data)
-		.then(response => {
-			if (response.status === 400) {
-				return Promise.reject(new Error('Bad request'));
-			}
-			if (response.status === 401) {
-				return Promise.reject(new Error('Нужно войти в систему'));
-			}
-			return Promise.resolve(response);
-		})
-		.then(response => {return response.json();});
-
-};
+			.then(response => {
+				if (response.status === 400) {
+					return Promise.reject(new Error('Bad request'));
+				}
+				if (response.status === 401) {
+					return Promise.reject(new Error('Нужно войти в систему'));
+				}
+				return Promise.resolve(response);
+			})
+			.then(response => {
+				return response.json();
+			});
+	};
 
 	#getTrip = (id: string): Promise<Trip> =>
 		sendGetJSONRequest(backendEndpoint + tripURI + id)

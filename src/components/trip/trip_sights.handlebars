@@ -1,51 +1,48 @@
-{{#if isEdit}}
+<!--{{#if isEdit}}-->
 
-{{#each sights}}
-	{{#each this}}
-		<div class='frame'>
-			<h2 id="go_button_{{ this.sight.id }}_{{this.PP}}">{{ this.sight.name }}</h2>
-			<div class="trip_sight__preview_photo">
-				<img src="{{this.preview}}">
-			</div>
-<!--			<p>✦ {{ this.sight.rating }}</p>-->
-<!--			<p>Тэги: {{ this.sight.tags }}</p>-->
-<!--			<p>{{ this.sight.photos }}</p>-->
-<!--			<p>{{ this.sight.description }}</p>-->
-{{!--             {{> horizontalScroll this.sight.photos }} --}}
-                {{this.photosTemplate}}
+<!--{{#each sights}}-->
+<!--	{{#each this}}-->
+<!--		<div class='frame'>-->
+<!--			<h2 id="go_button_{{ this.sight.id }}_{{this.PP}}">{{ this.sight.name }}</h2>-->
+<!--			<div class="trip_sight__preview_photo">-->
+<!--				<img src="{{this.preview}}">-->
+<!--			</div>-->
 
-            <div class="trip_sight__info_string">
+<!--                {{this.photosTemplate}}-->
 
-            			<div class="rating tag__holder">
-            				<!--				сложная верстка дробного значения рейтинга-->
-            				<span class="span__font__large span__font__large-green">✦</span><span class='rating__text'>{{sight.rating}}</span>
-            			</div>
+<!--            <div class="trip_sight__info_string">-->
 
-            			<div class="tag__holder">
-            				{{#each this.sight.tags}}
-            					<div class="tag card__tag card__tag__font" id='tag_{{this}}'>
-            						{{this}}
-            						{{#if @last}}
-            						{{else}}
-            							<span class="span__font__large span__font__large-blue">•</span>
-            						{{/if}}
-            					</div>
-            				{{/each}}
-            			</div>
+<!--            			<div class="rating tag__holder">-->
+<!--            				&lt;!&ndash;				сложная верстка дробного значения рейтинга&ndash;&gt;-->
+<!--            				<span class="span__font__large span__font__large-green">✦</span><span class='rating__text'>{{sight.rating}}</span>-->
+<!--            			</div>-->
 
-            </div>
+<!--            			<div class="tag__holder">-->
+<!--											{{#each this.sight.tagsAdopted}}-->
+<!--												<div class="tag card__tag card__tag__font" id='tag_{{this.name}}_{{this.sightPP}}'>-->
+<!--													{{this.name}}-->
+<!--													{{#if @last}}-->
+<!--													{{else}}-->
 
-			<p style='visibility: hidden'>no</p>
-			<button
-				id="delete_button_{{ this.sight.id }}_{{this.PP}}"
-				class='usual_button_light usual_button'
-			>удалить из поездки</button>
+<!--														<span class="span__font__large span__font__large-blue">•lo</span>-->
+<!--													{{/if}}-->
+<!--												</div>-->
+<!--											{{/each}}-->
+<!--            			</div>-->
 
-		</div>
-	{{/each}}
-{{/each}}
+<!--            </div>-->
 
-{{else}}
+<!--			<p style='visibility: hidden'>no</p>-->
+<!--			<button-->
+<!--				id="delete_button_{{ this.sight.id }}_{{this.PP}}"-->
+<!--				class='usual_button_light usual_button'-->
+<!--			>удалить из поездки</button>-->
+
+<!--		</div>-->
+<!--	{{/each}}-->
+<!--{{/each}}-->
+
+<!--{{else}}-->
 
 	{{#each sights}}
 		{{#each this}}
@@ -53,10 +50,22 @@
 				<h2 id="go_button_{{ this.sight.id }}_{{this.PP}}">{{ this.sight.name }}</h2>
 				<img src="{{defaultPicture}}">
 				<p>✦ {{ this.sight.rating }}</p>
-				<p>Тэги: {{ this.sight.tags }}</p>
+
+				<div class="tag__holder">
+					{{#each this.sight.tags}}
+						<div class="tag card__tag card__tag__font" id='tag_{{this.name}}_{{this.sightPP}}'>
+							{{this.name}}
+							{{#if @last}}
+							{{else}}
+
+								<span class="span__font__large span__font__large-blue">•</span>
+							{{/if}}
+						</div>
+					{{/each}}
+				</div>
 
 			</div>
 		{{/each}}
 	{{/each}}
 
-{{/if}}
+<!--{{/if}}-->

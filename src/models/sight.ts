@@ -20,3 +20,17 @@ export interface SightDay {
 	sight: Sight;
 	day: number;
 }
+
+export interface TagAdoptedForRender {
+	name: string;
+	sightPP: number;
+}
+
+export interface SightAdoptedForRender {
+	id: string;
+	name: string;
+	description: string;
+	rating: string;
+	tags: Array<TagAdoptedForRender>;
+	photos: Array<string>;
+}

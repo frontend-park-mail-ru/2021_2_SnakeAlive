@@ -35,3 +35,13 @@ export interface Profile {
 	meta: ProfileMetadata;
 	profileImage: string;
 }
+
+export interface ProfileTrip {
+	title: string;
+	description: string;
+}
+
+export interface ProfileAlbum {
+	meta: ProfileMetadata;
+	profileImage: string;
+}

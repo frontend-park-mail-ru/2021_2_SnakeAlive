@@ -31,7 +31,7 @@ const initSightPageRequest = (): IEvent =>
 		metadata: <Empty>{},
 	};
 
-const initTripEditPageRequest  = (tripID: number): IEvent =>
+const initTripEditPageRequest = (tripID: number): IEvent =>
 	<IEvent>{
 		key: EventType.INIT_TRIP_EDIT_PAGE_REQUEST,
 		metadata: <NumID>{
@@ -89,5 +89,5 @@ export {
 	initProfilePageRequest,
 	initAlbumPageRequest,
 	initTripEditPageRequest,
-	initTagPageRequest
+	initTagPageRequest,
 };
