@@ -1,6 +1,6 @@
 // import tripFormTemplate from '@/components/trip/trip_form.handlebars';
 import { dispatcher } from '@/dispatcher';
-import { addCurrentTripPlace, deleteTrip, createTripFormRequest } from '@/actions/trip';
+import { deleteTrip, createTripFormRequest} from '@/actions/trip';
 import { newGetReviewsResponse } from '@/actions/review';
 import { sendGetJSONRequest } from '@/http';
 import { backendEndpoint, paramsURLfrontend, pathsURLfrontend, sightsURI } from '@/constants';
@@ -32,33 +32,46 @@ export const GET_COUNTRY_NAME = (id: string) => {
 			return '';
 	}
 };
-export const init = (isNew: boolean): void => {
-	const submitBtn = document.querySelector('#trip_submit');
-	if (submitBtn !== null) {
-		submitBtn.addEventListener(
-			'click',
-			event => {
-				event.preventDefault();
 
-				const { title, text } = getFormInfo();
-				
-				if (title === '') {
-					setError();
-				} else {
-					console.log("Создаем поездку", title, text)
-					dispatcher.notify(createTripFormRequest(title, text))
-				}
-			},
-			false
-		);
+const createTrip  = (event: Event) => {
+	event.preventDefault();
+
+	const { title, text } = getFormInfo();
+	
+	if (title === '') {
+		setError();
+	} else {
+		console.log("Создаем поездку", title, text)
+		dispatcher.notify(createTripFormRequest(title, text))
 	}
 }
+export const init = (isNew: boolean): void => {
+	const submitBtn = document.querySelector('#trip_submit');
 
-export const lockTripName = (): void => {
-	const { title, text } = getFormInfo();
-	const tripTitle = document.getElementById('#title')
-	tripTitle?.ariaDisabled
+		if (submitBtn !== null) {
+			submitBtn.addEventListener(
+				'click',
+				createTrip,
+				false
+			);
+		}
+				
 }
+
+const alert  = () =>{
+	console.log('click');
+}
+
+export const initEdit = (): void => {
+	// const askConfirmBtn = document.getElementById('btn-add-place');
+	// if (askConfirmBtn !== null) {
+	// 	askConfirmBtn.addEventListener('click',alert , false);
+	// }
+	// console.log("askConfirmBtn = ",askConfirmBtn)
+}
+
+ 
+
 
 const getFormInfo = (): {
 	title: string;

@@ -5,8 +5,8 @@ export interface Trip {
 	id: string;
 	title: string;
 	description: string;
-	albums: Array<Album>;
 	sights: Array<Sight>;
+	//albums: Array<Album>;
 }
 
 export interface TripFormInfo {

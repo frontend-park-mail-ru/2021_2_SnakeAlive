@@ -1,5 +1,5 @@
 import { dispatcher, EventType, Token, UUID } from '@/dispatcher';
-import { Sight, Trip } from '@/models';
+import { Sight, SightDay, Trip } from '@/models';
 import { storage } from '@/storage';
 import {
 	sendDeleteJSONRequest,
@@ -23,6 +23,7 @@ import { adoptForSend } from '@/adapters';
 import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
 import { TripFormInfo } from '@/models/trip';
+import { TripInfoView } from '@/view/trip';
 
 export default class TripReducer {
 	#tokens: Token[];
@@ -69,8 +70,7 @@ export default class TripReducer {
 			.then((trip: Trip) => {
 				console.log('GET trip =  ', trip);
 				storage.storeCurrentTrip(trip);
-				console.log('Store trip =  ', storage.getCurrentTrip());
-				dispatcher.notify(newGetTripResult());
+				dispatcher.notify(newGetTripResult(ID));
 				// ?
 			})
 			.catch((error: Error) => {
@@ -78,13 +78,14 @@ export default class TripReducer {
 			});
 	};
 
-	addCurrentTripPlace = (metadata: SightToTrip) => {
+	addCurrentTripPlace = (metadata: SightDay) => {
 		const trip = storage.getCurrentTrip();
+		trip.sights.push(metadata.sight)
+		storage.storeCurrentTrip(trip)
 		const tripSend = adoptForSend(trip);
-		//tripSend.days[metadata.day].push({ id: metadata.sightId });
-		// отправка обновления
+		console.log("tripSend = ", tripSend)
 		this.#updateTrip(tripSend, trip.id).then(response => {
-			storage.storeCurrentTrip(response);
+			console.log("stored trip = ", storage.getCurrentTrip())
 			dispatcher.notify(rerenderTripCards(true));
 		});
 	};
@@ -135,22 +136,26 @@ export default class TripReducer {
 
 	createTrip  = (metadata: TripInfo) => {
 		const trip = storage.getCurrentTrip();
+		console.log("trip=  ", trip)
 		const tripSend = adoptForSend(trip);
-
+		// const tripSend: TripFormInfo = {
+		// 	title: "",
+		// 	description: "",
+		// 	sights: [{ id: 1, day: 0 }],
+		// };
 		tripSend.title = metadata.title;
 		tripSend.description = metadata.description;
 		console.log("meta", metadata)
 		console.log("tripSend", tripSend)
 		// отправка обновления
 		this.#addTrip(tripSend, trip.id).then(response => {
-			storage.storeCurrentTrip(response);
 			console.log("storeCurrentTrip = ", storage.getCurrentTrip())
 			storage.addLastTripId(Number(response.id));
 			router.go(
 				createFrontendQueryParams(pathsURLfrontend.trip, [
 					{
 						key: paramsURLfrontend.id,
-						value: storage.getCurrentTrip().id,
+						value: response.id,
 					},
 				])
 			);
@@ -173,35 +178,6 @@ export default class TripReducer {
 			});
 	};
 
-	// #sendTrip = (data: TripFormInfo, tripId: string): Promise<Trip> => {
-	// 	// значит только что созданная форма
-	// 	if (window.location.href.split('?').length <= 1) {
-	// 		sendPostJSONRequest(backendEndpoint + postTripURI, data)
-	// 			.then(response => Promise.resolve(response))
-	// 			.then(response => response.json())
-	// 			.then(response => {
-	// 				router.go(
-	// 					createFrontendQueryParams(pathsURLfrontend.trip, [
-	// 						{
-	// 							key: paramsURLfrontend.id,
-	// 							value: response.id,
-	// 						},
-	// 						{
-	// 							key: paramsURLfrontend.edit,
-	// 							value: '1',
-	// 						},
-	// 					])
-	// 				);
-	// 			});
-	// 	}
-	// 	return sendPatchJSONRequest(backendEndpoint + tripURI + tripId, data)
-	// 		.then(response => Promise.resolve(response))
-	// 		.then(response => response.json());
-	// 	// .then((response) => {
-	// 	// 	storage.addLastTripId(response.id);
-	// 	// 	return response;
-	// 	// })
-	// };
 
 	#addTrip = (data: TripFormInfo, tripId: string): Promise<Trip> => {
 		console.log("post data", data)
@@ -217,6 +193,7 @@ export default class TripReducer {
 		})
 		.then(response => response.json())
 		.then(response => {
+			console.log("returning trip id = ", response)
 			return response;
 		});			
 	};

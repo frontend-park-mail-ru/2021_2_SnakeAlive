@@ -5,9 +5,11 @@ import './search.scss';
 import { dispatcher, EventType } from '@/dispatcher';
 import { storage } from '@/storage';
 import { Search } from '@/dispatcher/metadata_types';
-import { searchRequest } from '@/actions/search';
+import { searchRequest, searchSubmit } from '@/actions/search';
+import { throttle } from 'throttle-typescript';
 
 export const initSearchView = (type: string): string => searchTemplate({ icon: imgSearch, type });
+
 
 export class SearchView {
 	#type = '';
@@ -27,7 +29,17 @@ export class SearchView {
 		}
 
 		const input = <HTMLInputElement>document.getElementById(`search_${type}`);
+		
 		if (input !== null) {
+			
+			input.addEventListener('keydown', (e) => {
+				if (e.key === "Enter") {
+				  //console.log("SearchSubmit =  ", storage.getSearchSightsResult(this.#type));
+				  dispatcher.notify(searchSubmit());
+				  e.preventDefault();
+				}
+			  });
+
 			input.addEventListener(
 				'input',
 				() => {
@@ -50,11 +62,14 @@ export class SearchView {
 					}
 				},
 				false
-			);
+			)
 		}
+
+		
 
 		dispatcher.register(EventType.GOT_SEARCH_RESULTS, this.showResults);
 	}
+	
 
 	showResults = (typeSearch: Search) => {
 		if (this.#type === typeSearch.type) {

@@ -1,5 +1,6 @@
 import { Empty, EventType, IEvent, NumID } from '@/dispatcher';
 import { SightToTrip, IsTrue, TripInfo, IDState } from '@/dispatcher/metadata_types';
+import { Sight, SightDay } from '@/models';
 
 const newGetTripRequest = (tripID: number): IEvent =>
 	<IEvent>{
@@ -9,10 +10,12 @@ const newGetTripRequest = (tripID: number): IEvent =>
 		},
 	};
 
-const newGetTripResult = (): IEvent =>
+const newGetTripResult = (id: number): IEvent =>
 	<IEvent>{
 		key: EventType.GET_TRIP_RESPONSE,
-		metadata: <Empty>{},
+		metadata: <NumID>{
+			ID: id,
+		},
 	};
 
 const createTripFormRequest = (title: string, description: string): IEvent =>
@@ -23,6 +26,7 @@ const createTripFormRequest = (title: string, description: string): IEvent =>
 			description,
 		},
 	};
+
 
 const createTripEdit = (tripID: string, isEdit: boolean): IEvent =>
 	<IEvent>{
@@ -50,13 +54,10 @@ const updateCurrentTripInfo = (title: string, description: string) =>
 		},
 	};
 
-const addCurrentTripPlace = (sightId: number, day: number) =>
+const addPlaceToTrip = (sight: Sight, day: number) =>
 	<IEvent>{
 		key: EventType.ADD_CURRENT_TRIP_PLACE,
-		metadata: <SightToTrip>{
-			sightId,
-			day,
-		},
+		metadata: <SightDay>{sight, day}
 	};
 
 const deleteCurrentTripPlace = (sightId: number, day: number) =>
@@ -80,14 +81,15 @@ const deleteTrip = () =>
 		metadata: <Empty>{},
 	};
 
+
 export {
 	newGetTripRequest,
 	newGetTripResult,
 	createTripFormRequest,
 	createTripEdit,
 	// tripFormSubmit,
-	//updateCurrentTripInfo,
-	addCurrentTripPlace,
+	updateCurrentTripInfo,
+	addPlaceToTrip,
 	//sendTrip,
 	// createFilledEditTrip,
 	deleteTrip,

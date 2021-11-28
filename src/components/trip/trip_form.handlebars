@@ -28,10 +28,14 @@
 	</div>
 	{{#if tripCreated}}
 	<div id='trip-search-place'></div>
-	<button class="usual_button usual_button_dark" id="button_add">Добавить</button>
+	{{!-- <div class="trip_form__horizontal_holder buttons_holder">
+		<button class="usual_button usual_button_dark" id="btn-add-place">ТЕСТ</button>
+	</div> --}}
 	{{else}}
 	<button class="usual_button usual_button_dark" id='trip_submit'>Создать</button>
 	{{/if}}
+	
+	
 
 	<div class="error_block" id="error_block">
 		<p class="error_block__text">Ошибка. Обязательны название поездки и хотя бы одно место, которое вы собираетесь посетить</p>
@@ -40,7 +44,6 @@
 
 {{#if tripCreated}}
 	<div class="trip_form__horizontal_holder buttons_holder">
-        {{!-- <button type="submit" id="trip_submit" class="usual_button usual_button_light">Сохранить</button> --}}
 		<button class="usual_button usual_button_dark" id="btn-add-album">Добавить альбом</button>
 	</div>
 	<button class="usual_button usual_button_light">Сохранить и закончить редактирование</button>
@@ -64,3 +67,4 @@
 </div>
 {{else}}
 {{/if}}
+		
