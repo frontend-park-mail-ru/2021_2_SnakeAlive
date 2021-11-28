@@ -15,22 +15,23 @@ export interface Trip {
 	id: string;
 	title: string;
 	description: string;
+	sights: Array<Sight>;
+	//albums: Array<Album>;
 	albums: Array<Album>;
 	days: Array<TripSight>;
 }
 
-export interface TripOLD {
-	id: string;
-	title: string;
-	description: string;
-	albums: Array<Album>;
-	days: Array<Array<Sight>>;
-}
 
 export interface TripFormInfo {
 	title: string;
 	description: string;
+	sights: Array<TripSights>;
+}
+
+export interface TripSights {
+	id: number,
+	day: number
 	// days: Array<Array<Record<string, number>>>;
-	sights: Array<TripSightId>;
+	//sights: Array<TripSightId>;
 	// id: string;
 }

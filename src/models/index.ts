@@ -8,7 +8,7 @@ import {
 	CountryResponse,
 } from './country';
 import { UserMetadata } from './user';
-import { Sight, SightsCoord } from './sight';
+import { Sight, SightsCoord, SightDay } from './sight';
 import { Trip } from './trip';
 import { Album, GotAlbumInterface } from './album';
 
@@ -22,6 +22,7 @@ export {
 	UserMetadata,
 	Sight,
 	SightsCoord,
+	SightDay,
 	Trip,
 	CountryResponse,
 	Album,

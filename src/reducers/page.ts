@@ -5,12 +5,12 @@ import RegisterReducer from './register';
 import { destroyCurrentPage } from '@/actions/page';
 import { CountryCardsHolderView, CountryHolderView, LoginView, RegisterView } from '@/view';
 
-import { DataType, dispatcher, ErrorMsgData, EventType, UUID } from '@/dispatcher';
+import { DataType, dispatcher, ErrorMsgData, EventType, NumID, UUID } from '@/dispatcher';
 import ErrorView from '@/view/error';
 import SightReducer from '@/reducers/sight';
 import SightView from '@/view/sight';
 import TripReducer from '@/reducers/trip';
-import { TripInfoView, TripView } from '@/view/trip';
+import { InitTripPage} from '@/view/trip';
 import ProfileReducer from '@/reducers/profile';
 import ProfileView from '@/view/profile';
 import ReviewReducer from '@/reducers/review';
@@ -29,12 +29,14 @@ export default class PageReducer {
 		dispatcher.register(EventType.INIT_COUNTRY_PAGE_REQUEST, this.createCountryPage);
 		dispatcher.register(EventType.INIT_SIGHT_PAGE_REQUEST, this.createSightPage);
 		dispatcher.register(EventType.INIT_TRIP_PAGE_REQUEST, this.createTripPage);
+		dispatcher.register(EventType.INIT_TRIP_EDIT_PAGE_REQUEST, this.createTripEditPage);
 		dispatcher.register(EventType.INIT_ALBUM_PAGE_REQUEST, this.createAlbumPage);
 		dispatcher.register(EventType.INIT_PAGE_REQUEST, this.createInitPage);
 		dispatcher.register(EventType.INIT_LOGIN_PAGE_REQUEST, this.createLoginPage);
 		dispatcher.register(EventType.INIT_REGISTER_PAGE_REQUEST, this.createRegisterPage);
 		dispatcher.register(EventType.INIT_ERROR_PAGE_REQUEST, this.createErrorPage);
 		dispatcher.register(EventType.INIT_PROFILE_PAGE_REQUEST, this.createProfilePage);
+		
 		dispatcher.register(EventType.INIT_TAG_PAGE_REQUEST, this.createTagPage);
 	};
 
@@ -108,11 +110,21 @@ export default class PageReducer {
 		const tripReducer: TripReducer = new TripReducer();
 		tripReducer.init();
 
-		const tripView: TripView = new TripView();
-		tripView.init();
+		const tripPage: InitTripPage = new InitTripPage();
+		tripPage.init();
+		
+	};
 
-		const tripInfoView: TripInfoView = new TripInfoView();
-		tripInfoView.init();
+	createTripEditPage  = (metadata: NumID): void => {
+		dispatcher.notify(destroyCurrentPage());
+		console.log('page reducer create edit trip');
+
+		const tripReducer: TripReducer = new TripReducer();
+		tripReducer.init();
+
+		const tripPage: InitTripPage = new InitTripPage();
+		tripPage.init();
+		tripPage.initEdit(metadata)
 	};
 
 	createAlbumPage = (): void => {

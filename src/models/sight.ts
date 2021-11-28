@@ -15,3 +15,8 @@ export interface SightsCoord {
 	lat: number;
 	lng: number;
 }
+
+export interface SightDay {
+	sight: Sight;
+	day: number;
+}

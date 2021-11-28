@@ -18,37 +18,23 @@ export default class SearchReducer {
 	};
 
 	sendSearchRequest = (search: Search) => {
-		const searchURL = new URL(searchURI, backendEndpoint + sightsURI);
-		searchURL.searchParams.set('search', search.text);
-		// this.#sendRequest(searchURL.toString())
-		// 	.then((sights: Sight[]) => {
-		// 		storage.storeSearchSightsResult(search.type, sights);
-		storage.storeSearchSightsResult(search.type, [
-			{
-				id: '1',
-				name: 'мама',
-				description: 'test',
-				rating: '7',
-				photos: [],
-				country: '1',
-				lat: '0',
-				lng: '0',
-				tags: [],
-			},
-			{
-				id: '2',
-				name: 'мапа',
-				description: 'test',
-				rating: '7',
-				photos: [],
-				country: '1',
-				lat: '0',
-				lng: '0',
-				tags: [],
-			},
-		]);
+		const url = new URL(backendEndpoint + sightsURI + searchURI);
+		url.searchParams.set('search', search.text);
+		url.searchParams.set('skip', "0");
+		url.searchParams.set('limit', "0");
+			const countriesPromise = sendGetJSONRequest(url.toString())
+			.then(response => {
+				if (response.ok) {
+					return Promise.resolve(response);
+				}
+				return Promise.reject(new Error('wrong answer on list of countries'));
+			})
+			.then(response => response.json())
+			.then(response => {
+				console.log('response search list', response,response.name);
+				storage.storeSearchSightsResult(search.type, response);
+			});
 		dispatcher.notify(gotSearchResults(search.type));
-		// });
 	};
 
 	#sendRequest = (url: string): Promise<Sight[]> =>

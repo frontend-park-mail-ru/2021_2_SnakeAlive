@@ -1,3 +1,4 @@
+import { NumID } from '@/dispatcher/metadata_types';
 import { Empty, ErrorMsgData, EventType, IEvent } from '../dispatcher';
 
 const newInitPageRequest = (): IEvent =>
@@ -28,6 +29,14 @@ const initSightPageRequest = (): IEvent =>
 	<IEvent>{
 		key: EventType.INIT_SIGHT_PAGE_REQUEST,
 		metadata: <Empty>{},
+	};
+
+const initTripEditPageRequest  = (tripID: number): IEvent =>
+	<IEvent>{
+		key: EventType.INIT_TRIP_EDIT_PAGE_REQUEST,
+		metadata: <NumID>{
+			ID: tripID,
+		},
 	};
 
 const initTripPageRequest = (): IEvent =>
@@ -79,5 +88,6 @@ export {
 	destroyCurrentPage,
 	initProfilePageRequest,
 	initAlbumPageRequest,
-	initTagPageRequest,
+	initTripEditPageRequest,
+	initTagPageRequest
 };
