@@ -9,7 +9,7 @@ export class SightCardInTrip {
 
 	#PP = -1;
 
-	createCard = (id: string, PP: number): void => {
+	createCard = (id: string, PP: number, tags: string[]): void => {
 		this.#id = Number(id);
 		this.#PP = PP;
 		if (Number.isNaN(this.#id)) {
@@ -38,7 +38,8 @@ export class SightCardInTrip {
 				event => {
 					event.preventDefault();
 					router.go(
-						createFrontendQueryParams(pathsURLfrontend.sight, [
+						createFrontendQueryParams(
+							pathsURLfrontend.tag, [
 							{
 								key: paramsURLfrontend.id,
 								value: String(this.#id),
@@ -49,5 +50,20 @@ export class SightCardInTrip {
 				false
 			);
 		}
+
+		// tag_{{this}}
+		tags.forEach((tag) => {
+			const tegElem = document.getElementById(`tag_${tag}`);
+			if (tegElem !== null) {
+				tegElem.addEventListener('click', () => {
+					router.go(createFrontendQueryParams(pathsURLfrontend.tag, [
+						{
+							key: paramsURLfrontend.tag,
+							value: tag
+						}
+					]));
+				})
+			}
+		})
 	};
 }

@@ -71,6 +71,12 @@ const initAlbumPageRequest = (): IEvent =>
 		metadata: <Empty>{},
 	};
 
+const initTagPageRequest = (): IEvent =>
+	<IEvent>{
+		key: EventType.INIT_TAG_PAGE_REQUEST,
+		metadata: <Empty>{},
+	};
+
 export {
 	newInitPageRequest,
 	initLoginPageRequest,
@@ -83,4 +89,5 @@ export {
 	initProfilePageRequest,
 	initAlbumPageRequest,
 	initTripEditPageRequest,
+	initTagPageRequest
 };

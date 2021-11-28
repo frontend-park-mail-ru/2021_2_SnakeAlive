@@ -17,7 +17,7 @@
 				<div class="textarea_behavior" id="comment_text_hidden">
 				</div>
 			</div>
-			<textarea class="textarea_behavior" rows="3" id="comment_text">{{description}}</textarea>
+			<textarea class="textarea_behavior" rows="3" id="description">{{description}}</textarea>
 		</div>
 	</div>
 
@@ -25,28 +25,28 @@
 		<p class="error_block__text">Пожалуйста, введите как минимум название альбома</p>
 	</div>
 
-{{#if isNotNew}}
 	<div class="trip_form__horizontal_holder buttons_holder">
+{{#if isNotNew}}
         <button type="submit" id="btn_make_album" class="usual_button usual_button_light">Сохранить</button>
-	</div>
-	<button class="usual_button usual_button_light btn_make_and_finish">Сохранить и закончить редактирование</button>
+	<button class="usual_button usual_button_light btn_make_and_finish" id='btn_make_and_finish'>Сохранить и закончить редактирование</button>
 {{else}}
     <button class="usual_button usual_button_dark" id="btn_make_album">Создать альбом</button>
 {{/if}}
+</div>
 </form>
 
+	{{#if isNotNew}}
+
+		<div class="album_form__horizontal_holder delete_album__submit_holder">
+			<div>
+				<button id="ask_confirm_button" class="usual_button usual_button_light">Удалить альбом</button>
+			</div>
+			<div class="delete_album__submit_holder__answer" id="form__submit_holder__answer">
+				<p class="delete_album__submit_holder__answer__text" >Вы уверены?</p>
+				<button id="delete_button" class="usual_button usual_button_light">Да</button>
+			</div>
+		</div>
+
+	{{/if}}
+
 </div>
-
-{{#if isNotNew}}
-
-<div class="album_form__horizontal_holder">
-	<div>
-		<button id="ask_confirm_button" class="usual_button usual_button_light">Удалить поездку</button>
-	</div>
-	<div class="album_form__submit_holder__answer" id="form__submit_holder__answer">
-		<p class="album_form__submit_holder__answer__text" >Вы уверены?</p>
-		<button id="delete_button" class="usual_button usual_button_light">Да</button>
-	</div>
-</div>
-
-{{/if}}

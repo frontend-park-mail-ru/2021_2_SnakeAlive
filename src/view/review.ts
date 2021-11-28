@@ -2,7 +2,7 @@ import BasicView from '@/view/view';
 import { DataType, dispatcher, EventType, NumID, Token } from '@/dispatcher';
 import { newDeleteReviewRequest } from '@/actions/review';
 import { storage } from '@/storage';
-import { Review } from '@/models/review';
+import { Review, UserReview } from '@/models/review';
 import { initReviewForm } from '@/components';
 import { createReviewForm } from '@/components/reviews/review_form';
 import reviewsListTemplate from '@/components/reviews/reviews.handlebars';
@@ -37,27 +37,66 @@ export class ReviewsView extends BasicView {
 		this.setView(reviewsListTemplate({ reviews }));
 
 		reviews.forEach(reviewInfo => {
+			// значит свой отзыв и можно его удалить
+			if (reviewInfo.owner) {
+				const deleteBtn = document.getElementById(`delete_button_${String(reviewInfo.id)}`);
+					console.log(`delete_button_${String(reviewInfo.id)}`);
+					console.log(deleteBtn);
+					console.log(reviewInfo);
+					if (deleteBtn !== null) {
+						console.log('try to delete');
+						deleteBtn.addEventListener(
+							'click',
+							event => {
+								event.preventDefault();
+								console.log('clicked');
+								// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+								// @ts-ignore
+								dispatcher.notify(newDeleteReviewRequest(reviewInfo.id));
+							},
+							false
+						);
+					}
+				}
+
+			// created_at: ""
+			// id: 1
+			// place_id: 0
+			// rating: 10
+			// text: "text"
+			// title: "title"
+			// user_id: 1
+
+			// export interface Review {
+			// 	id: number;
+			// 	title: string;
+			// 	text: string;
+			// 	owned: boolean;
+			// 	user: UserReview;
+			// }
+
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-ignore
-			const deleteBtn = document.getElementById(`delete_button_${String(reviewInfo.review.id)}`);
+
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-ignore
-			console.log(`delete_button_${String(reviewInfo.review.id)}`);
-			console.log(deleteBtn);
-			if (deleteBtn !== null) {
-				console.log('try to delete');
-				deleteBtn.addEventListener(
-					'click',
-					event => {
-						event.preventDefault();
-						console.log('clicked');
-						// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-						// @ts-ignore
-						dispatcher.notify(newDeleteReviewRequest(reviewInfo.review.id));
-					},
-					false
-				);
-			}
+			// console.log(`delete_button_${String(reviewInfo.id)}`);
+			// console.log(deleteBtn);
+			// console.log(reviewInfo);
+			// if (deleteBtn !== null) {
+			// 	console.log('try to delete');
+			// 	deleteBtn.addEventListener(
+			// 		'click',
+			// 		event => {
+			// 			event.preventDefault();
+			// 			console.log('clicked');
+			// 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// 			// @ts-ignore
+			// 			dispatcher.notify(newDeleteReviewRequest(reviewInfo.id));
+			// 		},
+			// 		false
+			// 	);
+			// }
 		});
 
 		// and fucking render
@@ -124,10 +163,4 @@ export class ReviewCreateView extends BasicView {
 		this.setView(createReviewForm());
 		initReviewForm();
 	};
-
-	// #createReview = (): void => {
-	// 	// как узнать про placeID ???
-	// 	// скорее всего взять из storage
-	// 	dispatcher.notify(newCreateReviewRequest('', '', 0, 0));
-	// };
 }

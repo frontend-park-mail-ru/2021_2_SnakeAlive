@@ -1,24 +1,10 @@
 import { dispatcher } from '@/dispatcher';
 import { AlbumInfo } from '@/dispatcher/metadata_types';
-import { deleteAlbum, updateAlbumInfoRequest } from '@/actions/album';
+import { deleteAlbum, newGetAlbumResult, updateAlbumInfoRequest } from '@/actions/album';
 import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
 import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
 import { storage } from '@/storage';
-
-const enableUploadPhotos = () => {
-	const addBtn = document.getElementById('add_photos_btn');
-	if (addBtn !== null) {
-		addBtn.addEventListener(
-			'click',
-			event => {
-				event.preventDefault();
-				console.log('i work');
-			},
-			false
-		);
-	}
-};
 
 const hideConfirm = (): void => {
 	console.log('hid confirm');
@@ -99,7 +85,20 @@ export const initAlbumForm = (isNew: boolean) => {
 					setError();
 				} else {
 					const { title, description } = isOk;
-					dispatcher.notify(updateAlbumInfoRequest(title, description));
+					dispatcher.notify(updateAlbumInfoRequest(title, description, storage.getAlbum().photos, (id: string) => {
+							router.go(
+								createFrontendQueryParams(pathsURLfrontend.album, [
+									{
+										key: paramsURLfrontend.id,
+										value: id,
+									},
+									{
+										key: paramsURLfrontend.edit,
+										value: '1',
+									},
+								])
+							);
+					}));
 				}
 			},
 			false
@@ -119,15 +118,15 @@ export const initAlbumForm = (isNew: boolean) => {
 						setError();
 					} else {
 						const { title, description } = isOk;
-						dispatcher.notify(updateAlbumInfoRequest(title, description));
-						router.go(
-							createFrontendQueryParams(pathsURLfrontend.album, [
+						dispatcher.notify(updateAlbumInfoRequest(title, description, storage.getAlbum().photos, (id: string) => {
+							dispatcher.notify(newGetAlbumResult(false));
+							router.pushHistoryState(createFrontendQueryParams(pathsURLfrontend.album, [
 								{
 									key: paramsURLfrontend.id,
-									value: storage.getAlbum().id.toString(),
-								},
-							])
-						);
+									value: id
+								}
+							]));
+						}));
 					}
 				},
 				false
@@ -139,7 +138,5 @@ export const initAlbumForm = (isNew: boolean) => {
 		if (askConfirmBtn !== null) {
 			askConfirmBtn.addEventListener('click', showConfirm, false);
 		}
-
-		enableUploadPhotos();
 	}
 };

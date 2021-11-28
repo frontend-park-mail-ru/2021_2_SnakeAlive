@@ -1,8 +1,21 @@
-{{#each photosRight}}
-    <div id="album_page__photo_holder_place_{{this}}" class="album_page__photo_holder_place">
-        {{#if isEdit}}
-            <button id="delete_photo_{{this}}" class="usual_button usual_button_light"></button>
-        {{/if}}
-        <img src='{{this}}' alt='photo'>
-    </div>
-{{/each}}
+{{#if isEdit}}
+
+	{{#each photos}}
+		<div id="album_page__photo_holder_place_{{this}}" class="album_page__photo_holder_place">
+			<img src='{{this}}' alt='photo'>
+			<div class='inner_delete_btn_wrapper'>
+				<button id="delete_photo_{{this}}" class="usual_button usual_button_light inner_delete_btn">🗑️</button>
+			</div>
+		</div>
+	{{/each}}
+
+{{else}}
+
+	{{#each photos}}
+		<div id="album_page__photo_holder_place_{{this}}" class="album_page__photo_holder_place">
+			<img src='{{this}}' alt='photo'>
+		</div>
+	{{/each}}
+
+{{/if}}
+

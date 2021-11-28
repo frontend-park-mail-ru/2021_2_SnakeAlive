@@ -5,7 +5,6 @@ import { storage } from '@/storage';
 import { initErrorPageRequest } from '@/actions/page';
 import { Sight } from '@/models';
 import { newGetSightResult } from '@/actions/sight';
-import { newSetMainHeaderRequest } from '@/actions/header';
 
 export default class SightReducer {
 	#tokens: Token[];
@@ -28,7 +27,7 @@ export default class SightReducer {
 	};
 
 	initSightPage = (metadata: UUID) => {
-		dispatcher.notify(newSetMainHeaderRequest());
+		// dispatcher.notify(newSetMainHeaderRequest());
 		const { ID } = metadata;
 		this.#getSight(ID)
 			.then((sight: Sight) => {
@@ -54,13 +53,13 @@ export default class SightReducer {
 			})
 			.then(response => response.json());
 
-	#getReviews = (id: string): Promise<Sight> =>
-		sendGetJSONRequest(backendEndpoint + sightURI + id)
-			.then(response => {
-				if (response.status !== 200) {
-					return Promise.reject(new Error('не удалось загрузить отзывы'));
-				}
-				return Promise.resolve(response);
-			})
-			.then(response => response.json());
+	// #getReviews = (id: string): Promise<Sight> =>
+	// 	sendGetJSONRequest(backendEndpoint + sightURI + id)
+	// 		.then(response => {
+	// 			if (response.status !== 200) {
+	// 				return Promise.reject(new Error('не удалось загрузить отзывы'));
+	// 			}
+	// 			return Promise.resolve(response);
+	// 		})
+	// 		.then(response => response.json());
 }

@@ -51,14 +51,11 @@
     > h2{
       @include text-local-header;
     }
-    > div {
-      margin-bottom: $small-px;
-    }
-    margin-bottom: - $small-px;
 
     &__info {
-
+      margin-bottom: $small-px;
     }
+
     &__description {
       &__title {
         @include text-small;
@@ -67,9 +64,27 @@
       }
     }
   }
+
+  &__photo_holder_place {
+    width: 100%;
+    height: auto;
+    margin-bottom: $small-px;
+    display: block;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+  }
 }
 
 .album_form {
+  > div {
+    padding-bottom: $small-px;
+  }
+
   &__horizontal_holder {
     display: flex;
     flex-direction: row;
@@ -135,6 +150,15 @@
 }
 
 #add_photos_btn {
+  padding-left: 0;
+  padding-right: 0;
   width: 100%;
+  margin-bottom: $small-px;
   //background-color: $white;
+}
+
+.album_info_block {
+  > div {
+    padding-bottom: $small-px;
+  }
 }

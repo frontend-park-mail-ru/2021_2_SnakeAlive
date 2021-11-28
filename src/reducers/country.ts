@@ -63,7 +63,7 @@ export default class CountryReducer {
 			.then((cards: CountryCardResponse[]) => {
 				console.log('country reducer : ', cards);
 				// storage.storeCountryCards(adaptGetCards(cards));
-				storage.storeCountryCardsMin(minAdaptCountryCards(cards));
+				storage.storeSightsCardsMin(minAdaptCountryCards(cards));
 				console.log(storage.getCountryCards());
 				dispatcher.notify(newGetCountryCardsResult());
 			})
@@ -73,6 +73,7 @@ export default class CountryReducer {
 	};
 
 	#getCards = (countryID: string): Promise<CountryCardResponse[]> =>
+		// sendGetJSONRequest(backendEndpoint + sightsURI + GET_COUNTRY_NAME(countryID))
 		sendGetJSONRequest(backendEndpoint + sightsURI + GET_COUNTRY_NAME(countryID))
 			.then(response => {
 				if (response.status === 404) {

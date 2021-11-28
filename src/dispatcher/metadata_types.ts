@@ -98,6 +98,14 @@ export interface AlbumInfo {
 	description: string;
 }
 
+export interface AlbumUpdateInfo {
+	title: string;
+	description: string;
+	photos: string[];
+	actionAfter?: (id: string) => void;
+}
+
+
 export type DataType =
 	| UUID
 	| NumID
@@ -117,4 +125,5 @@ export type DataType =
 	| SubmitTripInfo
 	| Empty
 	| AlbumInfo
+	| AlbumUpdateInfo
 	| Search;

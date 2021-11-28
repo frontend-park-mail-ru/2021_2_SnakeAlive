@@ -64,11 +64,11 @@ class Storage {
 		this.#countryCards = cards;
 	};
 
-	storeCountryCardsMin = (cards: minCardInfo[]): void => {
+	storeSightsCardsMin = (cards: minCardInfo[]): void => {
 		this.#cards = cards;
 	};
 
-	getCountryCardsMin = (): minCardInfo[] => this.#cards;
+	getSightsCardsMin = (): minCardInfo[] => this.#cards;
 
 	getCountryCards = (): TemplateCards => this.#countryCards;
 
@@ -130,18 +130,6 @@ class Storage {
 
 	storeAlbum = (album: Album): void => {
 		this.#album = album;
-
-		// временное
-		// this.#album = {
-		// 	id: 42,
-		// 	title: 'test',
-		// 	description: 'lots of tests.... :)',
-		// 	photos: [
-		// 		'map.png',
-		// 		'moscow_city_1.jpeg'
-		// 	],
-		// 	user: <UserMetadata>{}
-		// };
 	};
 
 	getAlbum = (): Album => this.#album;

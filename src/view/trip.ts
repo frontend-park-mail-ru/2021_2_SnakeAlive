@@ -76,13 +76,13 @@ export class TripInfoView extends BasicView {
 	// #albums: albumListHolder;
 
 	#cardHolder: CardSightsHolder;
-	
+
+	#search: SearchView | null = null;
 
 	constructor() {
 		super('#trip-info');
 		this.#tokens = [];
 		this.#cardHolder = new CardSightsHolder();
-		
 	}
 
 	init = (): void => {
@@ -219,7 +219,7 @@ export class CardSightsHolder extends BasicView {
 		sightsAdopted.forEach(day => {
 			day.forEach(sight => {
 				const card = new SightCardInTrip();
-				card.createCard(sight.sight.id, sight.PP);
+				card.createCard(sight.sight.id, sight.PP, sight.sight.tags);
 				this.#cards.push(card);
 			});
 		});
