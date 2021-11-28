@@ -45,7 +45,7 @@ export default class LoginView extends BasicView {
 
 	setErrors = (metadata: ValidationErrData) => {
 		const err: Error = new Error(metadata.data[0].error);
-		err.name = metadata.data[0].name
+		err.name = metadata.data[0].name;
 		this.#form?.setLoginError(err);
 	};
 
@@ -88,7 +88,10 @@ export default class LoginView extends BasicView {
 							) {
 								return true;
 							}
-							metadata.data.push({ error: 'Пароль должен содержать не менее 8 символов', name: 'wrong_password'});
+							metadata.data.push({
+								error: 'Пароль должен содержать не менее 8 символов',
+								name: 'wrong_password',
+							});
 							return false;
 						},
 					],

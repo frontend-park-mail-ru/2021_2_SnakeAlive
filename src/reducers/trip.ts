@@ -81,7 +81,7 @@ export default class TripReducer {
 		// tripSend.days[metadata.day].push({ id: metadata.sightId });
 		tripSend.sights.push({
 			day: metadata.day,
-			id: metadata.sightId
+			id: metadata.sightId,
 		});
 		// отправка обновления
 		this.#sendTrip(tripSend, trip.id).then(response => {

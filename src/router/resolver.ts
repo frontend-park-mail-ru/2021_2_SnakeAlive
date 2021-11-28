@@ -5,7 +5,7 @@ import {
 	initLoginPageRequest,
 	initProfilePageRequest,
 	initRegisterPageRequest,
-	initSightPageRequest,
+	initSightPageRequest, initTagPageRequest,
 	initTripPageRequest,
 	newInitPageRequest,
 } from '@/actions/page';
@@ -17,6 +17,7 @@ import { newGetSightRequest } from '@/actions/sight';
 import { newInitCountryRequest } from '@/actions/country';
 import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
 import { createAlbumFormRequest, newGetAlbumRequest } from '@/actions/album';
+import { newTagRequest } from '@/actions/tag';
 
 const pathErrorEvent: IEvent = initErrorPageRequest(new Error('Неверная ссылка'));
 
@@ -114,7 +115,6 @@ export const notifier = (path: URL): void /* IEvent */ => {
 		}
 		case pathsURLfrontend.album: {
 			const params = tryGetParam([paramsURLfrontend.id, paramsURLfrontend.edit], path);
-			console.log(params);
 
 			dispatcher.notify(initAlbumPageRequest());
 			if (params.id) {
@@ -125,6 +125,17 @@ export const notifier = (path: URL): void /* IEvent */ => {
 				}
 			} else {
 				dispatcher.notify(createAlbumFormRequest());
+			}
+			break;
+		}
+		case pathsURLfrontend.tag: {
+			const params = tryGetParam([paramsURLfrontend.tag], path);
+			if (params.tag) {
+				dispatcher.notify(initTagPageRequest());
+				console.log(params.tag);
+				dispatcher.notify(newTagRequest(params.tag));
+			} else {
+				dispatcher.notify(initErrorPageRequest(Error('эта страна не поддерживается')));
 			}
 			break;
 		}

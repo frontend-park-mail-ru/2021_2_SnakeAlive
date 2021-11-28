@@ -2,13 +2,13 @@ import { Sight } from './sight';
 import { Album } from '@/models/album';
 
 export interface TripSight {
-	day: number,
-	sight: Sight
+	day: number;
+	sight: Sight;
 }
 
 export interface TripSightId {
-	day: number,
-	id: number
+	day: number;
+	id: number;
 }
 
 export interface Trip {
@@ -26,8 +26,6 @@ export interface TripOLD {
 	albums: Array<Album>;
 	days: Array<Array<Sight>>;
 }
-
-
 
 export interface TripFormInfo {
 	title: string;

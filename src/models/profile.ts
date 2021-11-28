@@ -19,9 +19,11 @@ export interface UpdateProfileMetadataResponse {
 	surname: string;
 	avatar: string;
 	email: string;
+	id: string
 }
 
 export interface ProfileMetadata {
+	id: number;
 	name: string;
 	surname: string;
 	description: string;

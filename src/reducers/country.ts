@@ -63,7 +63,7 @@ export default class CountryReducer {
 			.then((cards: CountryCardResponse[]) => {
 				console.log('country reducer : ', cards);
 				// storage.storeCountryCards(adaptGetCards(cards));
-				storage.storeCountryCardsMin(minAdaptCountryCards(cards));
+				storage.storeSightsCardsMin(minAdaptCountryCards(cards));
 				console.log(storage.getCountryCards());
 				dispatcher.notify(newGetCountryCardsResult());
 			})

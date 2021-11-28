@@ -11,7 +11,7 @@ import './trip.scss';
 import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
 import { setTextAreaResizeParams } from '@/components/reviews/review_form';
-import { Loader } from "@googlemaps/js-api-loader"
+import { Loader } from '@googlemaps/js-api-loader';
 import { initSearchView, SearchView } from '@/components/search/search';
 
 export const GET_COUNTRY_NAME = (id: string) => {
@@ -159,10 +159,7 @@ export const initTripForm = (isNew: boolean): void => {
 		);
 	}
 
-	if (isNew) {
-		//
-	} else {
-
+	if (! isNew) {
 		// добавить удаление достопримечательности по нажатию на кнопку
 		const deleteSightBtns = document.getElementsByClassName('delete-button');
 		const limit = deleteSightBtns.length;
@@ -182,26 +179,10 @@ export const initTripForm = (isNew: boolean): void => {
 		if (askConfirmBtn !== null) {
 			askConfirmBtn.addEventListener('click', showConfirm, false);
 		}
-
-		// добавление альбома (переход на страницу)
-		const addAlbumBtn = document.getElementById('btn-add-album');
-		if (addAlbumBtn !== null) {
-			addAlbumBtn.addEventListener(
-				'click',
-				event => {
-					event.preventDefault();
-					storage.storeAlbumTripId(storage.getCurrentTrip().id);
-					router.go(pathsURLfrontend.album);
-				},
-				false
-			);
-		}
 	}
-}
+};
 
 export const initTripFormOLD = (isNew: boolean): void => {
-
-
 	// убирание стандартного поведения для кнопки "завершить"
 	// const formForPrevent = document.querySelector('form');
 	// if (formForPrevent !== null) {
@@ -253,8 +234,6 @@ export const initTripFormOLD = (isNew: boolean): void => {
 	}
 	// добавление двух инпутов - страны и ее достопримечательностей.
 	// результате сохраняется в переменную addedSight
-
-
 
 	// ??
 	// const countrySelect = <HTMLSelectElement>document.querySelector('#country_select');

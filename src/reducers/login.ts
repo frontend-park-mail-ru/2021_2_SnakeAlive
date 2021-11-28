@@ -20,7 +20,7 @@ export default class LoginReducer {
 		sendPostJSONRequest(backendEndpoint + loginURI, input)
 			.then(response => {
 				if (response.status === 400) {
-					result.data.push({ error: 'Неверный пароль', name: 'wrong_password'  });
+					result.data.push({ error: 'Неверный пароль', name: 'wrong_password' });
 					return Promise.reject();
 				}
 				if (response.status === 404) {
@@ -28,7 +28,7 @@ export default class LoginReducer {
 					return Promise.reject();
 				}
 				if (response.status === 400) {
-					result.data.push({ error: 'Некорректные данные', name: 'no_user'  });
+					result.data.push({ error: 'Некорректные данные', name: 'no_user' });
 					return Promise.reject(new Error('серверная валидация. сделать другую обработку ошибок'));
 				}
 				return Promise.resolve(response);

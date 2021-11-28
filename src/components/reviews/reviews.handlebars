@@ -1,14 +1,15 @@
+<h2>Отзывы других путешественников</h2>
 {{#each reviews}}
 	<div class='frame'>
-	<p class='header-review'>{{this.review.title}}</p>
-		<p>✦ {{this.review.rating}}</p>
-		<p>{{this.review.text}}</p>
+	<p class='header-review'>{{this.title}}</p>
+		<p>✦ {{this.rating}}</p>
+		<p>{{this.text}}</p>
 		{{#if this.owner}}
-			<button id="delete_button_{{this.review.id}}" class='usual_button_light usual_button'>
+			<button id="delete_button_{{this.id}}" class='usual_button_light usual_button'>
 				Ваш отзыв. Можете удалить
 			</button>
 		{{else}}
-		<p>{{this.user.name}}</p>
+		<p>{{this.user_id}}</p>
 		{{/if}}
 	</div>
 {{/each}}

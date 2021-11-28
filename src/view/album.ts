@@ -13,39 +13,18 @@ import albumInfoTemplate from '@/components/album/album_info.handlebars';
 import albumPhotosTemplate from '@/components/album/album_photos.handlebars';
 import '@/components/album/album.scss';
 import { initAlbumForm } from '@/components/album/album_form';
-import { deletePhoto, newGetAlbumResult, renderPhotos } from '@/actions/album';
+import { addAlbumPhoto, deletePhoto, newGetAlbumResult, renderAlbumPhotos } from '@/actions/album';
 
-class AlbumPhoto {
-	#id = '';
-
-	createPhoto = (id: string): void => {
-		this.#id = id;
-
-		// id="delete_button_{{ this.id }}_{{this.PP}}"
-		// навешивание обработчиков на внутри сего места (надо бы протестить)
-		const deleteBtn = document.getElementById(`delete_photo_${this.#id}`);
-		if (deleteBtn !== null) {
-			deleteBtn.addEventListener(
-				'click',
-				event => {
-					event.preventDefault();
-					dispatcher.notify(deletePhoto(this.#id)); // обработка того что подставляется доменное имя!
-					const photo = document.getElementById(`album_page__photo_holder_place_${this.#id}`);
-					if (photo !== null) {
-						photo.style.display = 'none';
-					}
-				},
-				false
-			);
-		}
-	};
-}
-
-export class PhotosView extends BasicView {
+export class PhotosView {
 	#tokens: Token[];
 
+	#rightPhotosHolder: HTMLElement | null = null;
+
+	#leftPhotosHolder: HTMLElement | null = null;
+
+	#isInited = false;
+
 	constructor() {
-		super('#album_page__photo_holder');
 		this.#tokens = [];
 	}
 
@@ -56,35 +35,138 @@ export class PhotosView extends BasicView {
 		];
 	};
 
-	renderPhotos = (state: IsTrue) => {
+	renderPhotos = (isEdit: IsTrue) => {
+		this.#leftPhotosHolder = document.getElementById("album_page__photo_holder_left");
+		if (this.#leftPhotosHolder === null) {
+			throw Error('not found in html "album_page__photo_holder_left');
+		}
+		this.#rightPhotosHolder = document.getElementById("album_page__photo_holder_right");
+		if (this.#rightPhotosHolder === null) {
+			throw Error('not found in html "album_page__photo_holder_right');
+		}
+
+		this.#initAddBtn();
+
 		const { photos } = storage.getAlbum();
-		console.log('render photos ', photos, 'state', state.isTrue);
-		this.setView(albumPhotosTemplate({ isEdit: state.isTrue, photos }));
-		if (state.isTrue) {
-			if (photos !== null) {
-				photos.forEach(ph => {
-					const photo = new AlbumPhoto();
-					photo.createPhoto(ph);
-				});
+		if (photos === null) {
+			return;
+		}
+
+		if (photos.length < 2) {
+			const rightPhotosHolder = document.getElementById("album_page__photo_holder_right");
+			if (rightPhotosHolder !== null) {
+				rightPhotosHolder.innerHTML = albumPhotosTemplate({ photos, isEdit: isEdit.isTrue });
+			}
+		} else {
+			const photosLeft = photos.slice(photos.length /2);
+			const photosRight = photos.slice(0, photos.length /2);
+			if (this.#rightPhotosHolder !== null) {
+				this.#rightPhotosHolder.innerHTML = albumPhotosTemplate({ photos: photosRight, isEdit: isEdit.isTrue });
+			}
+			if (this.#leftPhotosHolder !== null) {
+				this.#leftPhotosHolder.innerHTML = albumPhotosTemplate({ photos: photosLeft, isEdit: isEdit.isTrue });
 			}
 		}
+
+		console.log('render');
+		if (isEdit.isTrue) {
+			console.log('isEdit');
+			photos.forEach((photo) => {
+				console.log('photo!');
+				this.#initDeleteButton(photo);
+			})
+		}
 	};
+
+	#checkLoadedFile = (file: File): Error | null => {
+			// провераяем тип файла
+			if (!['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml'].includes(file.type)) {
+				return Error('Разрешены только изображения.');
+			}
+			// проверим размер файла (<2 Мб)
+			if (file.size > 2 * 1024 * 1024) {
+				return Error('Файл должен быть менее 2 МБ.');
+			}
+			return null;
+	}
+
+	#initAddBtn = () => {
+		if (this.#isInited) {
+			return;
+		}
+		this.#isInited = true;
+
+		const addBtn = document.getElementById("add_photos_btn");
+		const addInput = <HTMLInputElement>document.getElementById("add_photos_input");
+		if (addBtn !== null && addInput !== null) {
+			addBtn.addEventListener('click', () => {
+				addInput.click();
+			}, false);
+
+			addInput.addEventListener('change', (event)=>{
+				event.preventDefault();
+				if (addInput === null) {
+					return;
+				}
+				if (addInput.files === null) {
+					return;
+				}
+				const error = this.#checkLoadedFile(addInput.files[0]);
+				if (error !== null) {
+					// показать ошибку на странице
+					console.log(error);
+					return;
+				}
+
+				// отправка файла
+					const uploadFile = new FormData();
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+				// @ts-ignore
+					uploadFile.append("file", addInput.files[0]);
+					dispatcher.notify(addAlbumPhoto(uploadFile));
+			});
+		} else {
+			throw Error('не найдена кнопка инпута или сам инпут для добавления фото');
+		}
+	}
+
+	#initDeleteButton = (photoName: string) => {
+		console.log("deleteBtn");
+		const deleteBtn = document.getElementById(`delete_photo_${photoName}`);
+		console.log(deleteBtn);
+		if (deleteBtn !== null) {
+			deleteBtn.addEventListener(
+				'click',
+				event => {
+					event.preventDefault();
+					dispatcher.notify(deletePhoto(photoName));
+					const photo = document.getElementById(`album_page__photo_holder_place_${photoName}`);
+					if (photo !== null) {
+						photo.style.display = 'none';
+					}
+				},
+				false
+			);
+		}
+	}
 
 	destroy = (metadata: EventType): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});
-
-		this.setEmpty();
 	};
 }
 
 export class AlbumView extends BasicView {
 	#tokens: Token[];
 
+	#photosView: PhotosView;
+
 	constructor() {
 		super('#content');
 		this.#tokens = [];
+		this.#photosView = new PhotosView();
+		this.#photosView.init();
 	}
 
 	init = (): void => {
@@ -95,23 +177,20 @@ export class AlbumView extends BasicView {
 		];
 
 		dispatcher.notify(newSetMainHeaderRequest());
-
-		const photosView = new PhotosView();
-		photosView.init();
 	};
 
 	showAlbum = (state: IsTrue): void => {
 		dispatcher.notify(newSetMainHeaderRequest());
-		console.log(state);
 		if (state.isTrue) {
 			this.#showEditAlbum();
 		} else {
 			this.#showNotEditAlbum();
 		}
+
+		dispatcher.notify(renderAlbumPhotos(state.isTrue));
 	};
 
 	showEmptyForm = () => {
-		console.log('showedEmptyForm');
 		this.setView(albumPageTemplate());
 
 		const addBtn = document.getElementById('add_photos_btn');
@@ -150,18 +229,13 @@ export class AlbumView extends BasicView {
 	#showEditAlbum = (): void => {
 		const album = storage.getAlbum();
 		const { title, description } = album;
-		// console.log(albumPageTemplate({
-		// 	photosLeft: album.photos.slice(album.photos.length / 2 - 1),
-		// 	photosRight: album.photos.slice( - album.photos.length / 2 + 1)
-		// }));
 		this.setView(albumPageTemplate());
-		dispatcher.notify(renderPhotos(true));
 		const formPlace = document.getElementById('album_page__left_col__info');
 		if (formPlace !== null) {
 			formPlace.innerHTML = albumFormTemplate({
 				title,
 				description,
-				isNotNew: true
+				isNotNew: true,
 			});
 		}
 		initAlbumForm(false);
@@ -171,7 +245,6 @@ export class AlbumView extends BasicView {
 		const album = storage.getAlbum();
 		const { title, description } = album;
 		this.setView(albumPageTemplate());
-		dispatcher.notify(renderPhotos(false));
 		const infoPlace = document.getElementById('album_page__left_col__info');
 		if (infoPlace !== null) {
 			infoPlace.innerHTML = albumInfoTemplate({
@@ -182,9 +255,23 @@ export class AlbumView extends BasicView {
 		// go_edit кнопка
 		const editBtn = document.getElementById('go_edit');
 		if (editBtn !== null) {
-			editBtn.addEventListener('click', () => {
-				dispatcher.notify(newGetAlbumResult(true))
-			}, false);
+			editBtn.addEventListener(
+				'click',
+				() => {
+					dispatcher.notify(newGetAlbumResult(true));
+					router.pushHistoryState(createFrontendQueryParams(pathsURLfrontend.album, [
+						{
+							key: paramsURLfrontend.id,
+							value: storage.getAlbum().id.toString()
+						},
+						{
+							key: paramsURLfrontend.edit,
+							value: '1'
+						},
+					]));
+				},
+				false
+			);
 		}
 	};
 }

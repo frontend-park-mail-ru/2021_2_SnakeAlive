@@ -40,7 +40,7 @@ class CountryCardsHolderView extends BasicView {
 		this.setEmpty();
 		this.#cards = [];
 
-		const cardsArray = storage.getCountryCardsMin();
+		const cardsArray = storage.getSightsCardsMin();
 		console.log(cardsArray);
 		// ?
 
@@ -48,7 +48,7 @@ class CountryCardsHolderView extends BasicView {
 
 		cardsArray.forEach(sight => {
 			const card = new SightCardInTrip();
-			card.createCard(sight.sight.id, sight.PP);
+			card.createCard(sight.sight.id, sight.PP, sight.sight.tags);
 			this.#cards.push(card);
 		});
 		console.log(this.#cards);
@@ -93,9 +93,7 @@ class CountryHolderView extends BasicView {
 	renderCountry = (metadata: DataType): void => {
 		const { name, ID } = storage.getCountry();
 		console.log('renderCountry', name, ID);
-		this.setView(countryPageTemplate({ name }));
-
-		// dispatcher.notify(newGetCountryCardsRequest(name,ID));
+		this.setView(countryPageTemplate({ name: `по стране ${name}` }));
 	};
 }
 

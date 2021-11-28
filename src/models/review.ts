@@ -9,7 +9,8 @@ export interface Review {
 	id: number;
 	title: string;
 	text: string;
-	owned: boolean;
+	rating: number;
+	owner: boolean;
 	user: UserReview;
 }
 

@@ -17,6 +17,8 @@ import ReviewReducer from '@/reducers/review';
 import { ReviewCreateView, ReviewsView } from '@/view/review';
 import AlbumReducer from '@/reducers/album';
 import { AlbumView } from '@/view/album';
+import TagReducer from '@/reducers/tag';
+import { TagCardsHolderView, TagHolderView } from '@/view/tag';
 
 export default class PageReducer {
 	constructor() {
@@ -33,6 +35,7 @@ export default class PageReducer {
 		dispatcher.register(EventType.INIT_REGISTER_PAGE_REQUEST, this.createRegisterPage);
 		dispatcher.register(EventType.INIT_ERROR_PAGE_REQUEST, this.createErrorPage);
 		dispatcher.register(EventType.INIT_PROFILE_PAGE_REQUEST, this.createProfilePage);
+		dispatcher.register(EventType.INIT_TAG_PAGE_REQUEST, this.createTagPage);
 	};
 
 	createInitPage = (): void => {
@@ -114,16 +117,12 @@ export default class PageReducer {
 
 	createAlbumPage = (): void => {
 		dispatcher.notify(destroyCurrentPage());
-		console.log('page reducer create album');
 
 		const albumReducer: AlbumReducer = new AlbumReducer();
 		albumReducer.init();
 
 		const albumView: AlbumView = new AlbumView();
 		albumView.init();
-
-		// const tripInfoView: TripInfoView = new TripInfoView();
-		// tripInfoView.init();
 	};
 
 	createProfilePage = (metadata: DataType): void => {
@@ -134,5 +133,18 @@ export default class PageReducer {
 
 		const profileView: ProfileView = new ProfileView();
 		profileView.init();
+	};
+
+	createTagPage = (): void => {
+		dispatcher.notify(destroyCurrentPage());
+
+		const tagReducer: TagReducer = new TagReducer();
+		tagReducer.init();
+
+		const tagHolderView: TagHolderView = new TagHolderView();
+		tagHolderView.init();
+
+		const tagCardsHolderView: TagCardsHolderView = new TagCardsHolderView();
+		tagCardsHolderView.init();
 	};
 }

@@ -1,20 +1,22 @@
 import { dispatcher, EventType, Token, UUID } from '@/dispatcher';
 import {
 	sendDeleteJSONRequest,
-	sendGetJSONRequest, sendPatchJSONRequest,
+	sendGetJSONRequest,
+	sendPatchJSONRequest,
 	sendPostFileRequest,
 	sendPostJSONRequest,
 } from '@/http';
-import { albumURI, backendEndpoint, paramsURLfrontend, pathsURLfrontend } from '@/constants';
+import { albumURI, backendEndpoint, paramsURLfrontend, pathsURLfrontend, upload } from '@/constants';
 import { storage } from '@/storage';
 import { initErrorPageRequest } from '@/actions/page';
 import { newSetMainHeaderRequest } from '@/actions/header';
-import { newGetAlbumResult, renderPhotos } from '@/actions/album';
-import { Album } from '@/models/album';
+import { newGetAlbumResult, renderAlbumPhotos } from '@/actions/album';
+import { Album, GotAlbumInterface } from '@/models/album';
 import { photoURI } from '@/constants/uris';
-import { AlbumInfo, File, IDState } from '@/dispatcher/metadata_types';
+import { AlbumInfo, AlbumUpdateInfo, File, IDState } from '@/dispatcher/metadata_types';
 import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
+import { adoptGotAlbum } from '@/adapters/album';
 
 export default class AlbumReducer {
 	#tokens: Token[];
@@ -44,9 +46,9 @@ export default class AlbumReducer {
 		dispatcher.notify(newSetMainHeaderRequest());
 		const { ID, state } = metadata;
 		this.#getAlbum(ID)
-			.then((album: Album) => {
-				storage.storeAlbum(album);
-				console.log(album, state);
+			.then((album: GotAlbumInterface) => {
+				storage.storeAlbum(adoptGotAlbum(album));
+				console.log("HERE", album, state);
 				dispatcher.notify(newGetAlbumResult(state));
 			})
 			.catch((error: Error) => {
@@ -54,46 +56,38 @@ export default class AlbumReducer {
 			});
 	};
 
-	addPhotos = (photos: File) => {
-		this.#sendPhotos(photos.data).then((album: Album) => {
-			storage.storeAlbum(album);
-			dispatcher.notify(renderPhotos(true));
-			// считаем что фотки можно загрузить только в режиме редактирвоания
+	addPhotos = (photo: File) => {
+		// здесь поменять: возвращается строка, которую потом засунуть в базу
+		this.#sendPhotos(photo.data).then((nameObj) => {
+			console.log(this.#addPhoto(storage.getAlbum(), nameObj.filename));
+			this.#sendAlbumInfo(this.#addPhoto(storage.getAlbum(), nameObj.filename))
+				.then((album: GotAlbumInterface) => {
+					storage.storeAlbum(adoptGotAlbum(album));
+					dispatcher.notify(renderAlbumPhotos(true));
+				});
 		});
 	};
 
 	deletePhotos = (name: UUID) => {
-		// на delete не вызывать рендер, просто display: none в самой фотке
-		const urlDelete = new URL(backendEndpoint + photoURI);
-		urlDelete.searchParams.append('album_id', storage.getAlbum().id.toString());
-		urlDelete.searchParams.append('name', name.ID);
-		this.#sendDeletePhotos(urlDelete.toString()).then((album: Album) => {
-			storage.storeAlbum(album);
-		});
+		// на delete не вызывать рендер, ставится display: none в самой фотке
+		this.#sendAlbumInfo(this.#deletePhoto(storage.getAlbum(), name.ID))
+			.then((album: GotAlbumInterface) => {
+				storage.storeAlbum(adoptGotAlbum(album));
+			});
 	};
 
-	updateInfo = (data: AlbumInfo) => {
-		this.#sendAlbumInfo(data).then((album: Album) => {
-			storage.storeAlbum(album);
-
-			if (window.location.href.split('?').length <= 1) {
-				router.go(
-					createFrontendQueryParams(pathsURLfrontend.album, [
-						{
-							key: paramsURLfrontend.id,
-							value: storage.getAlbum().id.toString(),
-						},
-						{
-							key: paramsURLfrontend.edit,
-							value: '1',
-						},
-					])
-				);
+	updateInfo = (data: AlbumUpdateInfo) => {
+		this.#sendAlbumInfo(data).then((album: GotAlbumInterface) => {
+			storage.storeAlbum(adoptGotAlbum(album));
+			if (data.actionAfter) {
+				data.actionAfter(album.id.toString());
 			}
 		});
 	};
 
 	deleteAlbum = () => {
+		console.log(storage.getAlbum());
+		const { tripId } = storage.getAlbum();
 		sendDeleteJSONRequest(backendEndpoint + albumURI + storage.getAlbum().id)
 			.then(response => {
 				if (response.status !== 200) {
@@ -101,24 +95,47 @@ export default class AlbumReducer {
 				}
 				return Promise.resolve(response);
 			})
-			.then(response => response.json())
 			.then(() => {
 				router.go(
 					createFrontendQueryParams(pathsURLfrontend.trip, [
 						{
 							key: paramsURLfrontend.id,
-							value: storage.getAlbum().tripId.toString(),
+							value: tripId.toString(),
 						},
 					])
 				);
 			});
 	};
 
-	#sendAlbumInfo = (data: AlbumInfo): Promise<Album> => {
+	#addPhoto  = (album: Album, photoName: string): Album => {
+		const copiedAlbum = album;
+		console.log("ADD PHOTOS", album, photoName);
+		if (album.photos !== null) {
+			copiedAlbum.photos.push(photoName);
+			return copiedAlbum;
+		}
+		copiedAlbum.photos = [ photoName ];
+		console.log(copiedAlbum);
+		return copiedAlbum;
+	}
+
+	#deletePhoto  = (album: Album, photoName: string): Album => {
+		const indexPhoto = album.photos.indexOf(photoName);
+		if (indexPhoto !== -1) {
+			album.photos.splice(indexPhoto, 1);
+		}
+		return album;
+	}
+
+	#sendAlbumInfo = (data: AlbumInfo): Promise<GotAlbumInterface> => {
 		// значит только что созданная форма
 		if (window.location.href.split('?').length <= 1) {
 			const sendData = <any>data;
 			sendData.trip_id = storage.getAlbumTripId();
+			if (!sendData.trip_id) {
+				sendData.trip_id = 42;
+			}
+			sendData.user_id = storage.getProfile().meta.id;
 			return sendPostJSONRequest(backendEndpoint + albumURI, sendData)
 				.then(response => {
 					if (response.status !== 200) {
@@ -138,7 +155,7 @@ export default class AlbumReducer {
 			.then(response => response.json());
 	};
 
-	#getAlbum = (id: string): Promise<Album> =>
+	#getAlbum = (id: string): Promise<GotAlbumInterface> =>
 		sendGetJSONRequest(backendEndpoint + albumURI + id)
 			.then(response => {
 				if (response.status === 404) {
@@ -151,8 +168,14 @@ export default class AlbumReducer {
 			})
 			.then(response => response.json());
 
-	#sendPhotos = (photos: FormData): Promise<Album> =>
-		sendPostFileRequest(backendEndpoint + photoURI, photos)
+	#sendPhotos = (photos: FormData): Promise<{filename: string}> => {
+		const myHeaders = new Headers();
+		// myHeaders.append('Content-Type', 'image/jpeg');
+		// myHeaders.append('Host', 'localhost:8080');
+		// myHeaders.append('Cache-Control', 'no-cache');
+		myHeaders.append('Content-Disposition', `form-data; name="${photos.get('name')}"; filename="${photos.get('filename')}"`);
+		// myHeaders.append('Cache-Control', 'no-cache');
+		return sendPostFileRequest(backendEndpoint + upload, photos, myHeaders)
 			.then(response => {
 				if (response.status !== 200) {
 					return Promise.reject(new Error('не загружены фотографии'));
@@ -160,14 +183,5 @@ export default class AlbumReducer {
 				return Promise.resolve(response);
 			})
 			.then(response => response.json());
-
-	#sendDeletePhotos = (url: string): Promise<Album> =>
-		sendDeleteJSONRequest(url)
-			.then(response => {
-				if (response.status !== 200) {
-					return Promise.reject(new Error('не удалены фотографии'));
-				}
-				return Promise.resolve(response);
-			})
-			.then(response => response.json());
+	}
 }

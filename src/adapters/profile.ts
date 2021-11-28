@@ -16,9 +16,8 @@ export function adaptGetProfileResponse(response: GetProfileResponse): Profile {
 			surname: response.surname,
 			description: response.description,
 			email: response.email,
-			// avatar: backendFileEndpoint + response.avatar
 		},
-		profileImage: backendFileEndpoint + response.avatar,
+		profileImage: response.avatar,
 	};
 }
 
@@ -38,8 +37,11 @@ export function adaptUpdateProfileMetadataResponse(
 	response: UpdateProfileMetadataResponse
 ): ProfileMetadata {
 	return <ProfileMetadata>{
+		email: response.email,
+		avatar: "",
 		name: response.name,
 		surname: response.surname,
 		description: '',
+		id: Number(response.id)
 	};
 }

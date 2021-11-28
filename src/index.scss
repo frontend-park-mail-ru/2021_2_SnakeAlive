@@ -840,3 +840,12 @@ textarea:active {
   flex-direction: row;
   justify-content: space-between;
 }
+
+.inner_delete_btn {
+  font-size: $small-px * 2;
+  color: green;
+
+  position: relative;
+  bottom: $small-px * 4;
+  right: - $small-px * 2;
+}

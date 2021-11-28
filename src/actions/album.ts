@@ -1,5 +1,5 @@
 import { UUID, IEvent, EventType, Empty } from '@/dispatcher';
-import { AlbumInfo, File, IDState, IsTrue } from '@/dispatcher/metadata_types';
+import { AlbumInfo, AlbumUpdateInfo, File, IDState, IsTrue } from '@/dispatcher/metadata_types';
 
 const newGetAlbumRequest = (tripID: string, isEdit: boolean): IEvent =>
 	<IEvent>{
@@ -18,7 +18,7 @@ const newGetAlbumResult = (isEdit: boolean): IEvent =>
 		},
 	};
 
-const renderPhotos = (isEdit: boolean): IEvent =>
+const renderAlbumPhotos = (isEdit: boolean): IEvent =>
 	<IEvent>{
 		key: EventType.RENDER_ALBUM_PHOTOS,
 		metadata: <IsTrue>{
@@ -26,11 +26,11 @@ const renderPhotos = (isEdit: boolean): IEvent =>
 		},
 	};
 
-const addPhotos = (files: FormData): IEvent =>
+const addAlbumPhoto = (file: FormData): IEvent =>
 	<IEvent>{
 		key: EventType.ADD_ALBUM_PHOTOS,
 		metadata: <File>{
-			data: files,
+			data: file,
 		},
 	};
 
@@ -48,12 +48,14 @@ const createAlbumFormRequest = (): IEvent =>
 		metadata: <Empty>{},
 	};
 
-const updateAlbumInfoRequest = (title: string, description: string): IEvent =>
+const updateAlbumInfoRequest = (title: string, description: string, photos: string[], actionAfter?: (id: string) => void): IEvent =>
 	<IEvent>{
 		key: EventType.UPDATE_ALBUM_INFO,
-		metadata: <AlbumInfo>{
+		metadata: <AlbumUpdateInfo>{
 			title,
 			description,
+			photos,
+			actionAfter
 		},
 	};
 
@@ -66,8 +68,8 @@ const deleteAlbum = (): IEvent =>
 export {
 	newGetAlbumRequest,
 	newGetAlbumResult,
-	renderPhotos,
-	addPhotos,
+	renderAlbumPhotos,
+	addAlbumPhoto,
 	deletePhoto,
 	createAlbumFormRequest,
 	updateAlbumInfoRequest,

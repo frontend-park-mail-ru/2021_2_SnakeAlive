@@ -1,6 +1,6 @@
 {{#each cards}}
-<div class="card frame" id="go_button_{{sight.id}}_{{PP}}">
-    <div class="carousel card__photo_wrapper">
+<div class="card frame" >
+    <div class="carousel card__photo_wrapper" id="go_button_{{sight.id}}_{{PP}}">
 			<img src="{{sight.photo}}" alt="" class='photo'>
 <!--        {{#each imgs}} -->
 <!--            {{#if @first}} -->
@@ -25,7 +25,7 @@
 
         <div class="tag__holder">
             {{#each sight.tags}}
-                <div class="tag card__tag card__tag__font">
+                <div class="tag card__tag card__tag__font" id='tag_{{this}}'>
                     {{this}}
                     {{#if @last}}
                     {{else}}

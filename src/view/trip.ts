@@ -24,10 +24,8 @@ import defaultPicture from '@/../image/moscow_city_1.jpeg';
 import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
 import mapPicturePath from '@/../image/map.png';
-import { Loader } from "@googlemaps/js-api-loader"
-import {
-	DataType,
-} from '@/dispatcher';
+import { Loader } from '@googlemaps/js-api-loader';
+import { DataType } from '@/dispatcher';
 
 import horizontalScroll from '@/components/horizontal_scroll/horisontal_scroll.handlebars';
 import { initSearchView, SearchView } from '@/components/search/search';
@@ -52,7 +50,7 @@ export class CardSightsHolder extends BasicView {
 
 	rerenderCards = (metadata: IsTrue) => {
 		this.setEmpty();
-		this.#cards = [];  
+		this.#cards = [];
 
 		interface sightAdopted {
 			sight: Sight;
@@ -70,7 +68,7 @@ export class CardSightsHolder extends BasicView {
 					sight: day.sight,
 					preview: day.sight.photos[0],
 					PP: i,
-				})
+				});
 
 				// day.forEach(sight => {
 				// 	sightsAdopted[0].push({
@@ -78,7 +76,7 @@ export class CardSightsHolder extends BasicView {
 				// 		preview: sight.photos[0],
 				// 		PP: i,
 				// 	});
-					i += 1;
+				i += 1;
 				// });
 			});
 		}
@@ -94,7 +92,7 @@ export class CardSightsHolder extends BasicView {
 		sightsAdopted.forEach(day => {
 			day.forEach(sight => {
 				const card = new SightCardInTrip();
-				card.createCard(sight.sight.id, sight.PP);
+				card.createCard(sight.sight.id, sight.PP, sight.sight.tags);
 				this.#cards.push(card);
 			});
 		});
@@ -121,13 +119,11 @@ export class TripInfoView extends BasicView {
 	#cardHolder: CardSightsHolder;
 
 	#search: SearchView | null = null;
-	
 
 	constructor() {
 		super('#trip-info');
 		this.#tokens = [];
 		this.#cardHolder = new CardSightsHolder();
-		
 	}
 
 	init = (): void => {
@@ -185,6 +181,8 @@ export class TripInfoView extends BasicView {
 			);
 		}
 
+		this.#initAlbumButton();
+
 		dispatcher.notify(rerenderTripCards(false));
 	};
 
@@ -228,8 +226,6 @@ export class TripInfoView extends BasicView {
 			albums: [],
 			id: '-1',
 		});
-
-
 	};
 
 	createFilledTripForm = () => {
@@ -254,6 +250,8 @@ export class TripInfoView extends BasicView {
 					})
 				); // ОТ info: TripFormCreation
 				initTripForm(false);
+
+				this.#initAlbumButton();
 
 				// поиск
 				const searchPlace = document.getElementById('trip-search-place');
@@ -285,30 +283,46 @@ export class TripInfoView extends BasicView {
 	// 		});
 	// 	}
 	// };
+
+	#initAlbumButton = () => {
+		// добавление альбома (переход на страницу)
+		const addAlbumBtn = document.getElementById('btn-add-album');
+		if (addAlbumBtn !== null) {
+			addAlbumBtn.addEventListener(
+				'click',
+				event => {
+					event.preventDefault();
+					storage.storeAlbumTripId(storage.getCurrentTrip().id);
+					router.go(pathsURLfrontend.album);
+				},
+				false
+			);
+		}
+	}
 }
 
 export class TripView extends BasicView {
 	#tokens: Token[];
 
-	#coord: SightsCoord[]
+	#coord: SightsCoord[];
 
 	#map!: google.maps.Map;
 
 	loader = new Loader({
-		apiKey: "AIzaSyAmfwtc-cyEkyrSqWaUfeRBRMV6dvOAnpg",
-		version: "weekly",
-	  });
+		apiKey: 'AIzaSyAmfwtc-cyEkyrSqWaUfeRBRMV6dvOAnpg',
+		version: 'weekly',
+	});
 
 	constructor() {
 		super('#content');
 		this.loader.load().then(() => {
-			this.#map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
+			this.#map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
 				center: { lat: 55.75222, lng: 37.61556 },
 				zoom: 8,
-			  });
-		  });
+			});
+		});
 		this.#tokens = [];
-		this.#coord = []		
+		this.#coord = [];
 	}
 
 	init = (): void => {
@@ -321,29 +335,28 @@ export class TripView extends BasicView {
 		this.setBasicTripPageFirst();
 	};
 
-	addMarker = (metadata: SightToTrip) =>{
-		console.log("add marker", metadata.sightId, this.#coord)
+	addMarker = (metadata: SightToTrip) => {
+		console.log('add marker', metadata.sightId, this.#coord);
 		let lat: number;
-		let lng: number
+		let lng: number;
 		const countriesPromise = sendGetJSONRequest(backendEndpoint + sightURI + metadata.sightId)
-		.then(response => {
-			if (response.ok) {
-				return Promise.resolve(response);
-			}
-			return Promise.reject(new Error('wrong answer on list of countries'));
-		})
-		.then(response => response.json())
-		.then(response => {
-			this.#coord.push({id: metadata.sightId, lat: response.lat, lng: response.lng})
-			lat = response.lat
-			lng = response.lng
-		})
-		.then(response => {
-			this.updateMap(); 
-			this.#map.setCenter({ lat: lat, lng: lng }
-		)});
-		
-	}
+			.then(response => {
+				if (response.ok) {
+					return Promise.resolve(response);
+				}
+				return Promise.reject(new Error('wrong answer on list of countries'));
+			})
+			.then(response => response.json())
+			.then(response => {
+				this.#coord.push({ id: metadata.sightId, lat: response.lat, lng: response.lng });
+				lat = response.lat;
+				lng = response.lng;
+			})
+			.then(response => {
+				this.updateMap();
+				this.#map.setCenter({ lat: lat, lng: lng });
+			});
+	};
 
 	updateMap = () => {
 		for (let entry of this.#coord) {
@@ -351,10 +364,9 @@ export class TripView extends BasicView {
 				position: { lat: entry.lat, lng: entry.lng },
 				map: this.#map,
 			});
-			console.log("draw  marker", entry)
+			console.log('draw  marker', entry);
 		}
-		
-	}
+	};
 
 	setBasicTripPage = (metadata: IDState) => {
 		this.setView(tripPageTemplate({ mapPicturePath }));
@@ -367,13 +379,11 @@ export class TripView extends BasicView {
 			})
 			.then(response => response.json())
 			.then(response => {
-				this.#coord = response
-		 	});
-			this.loader.load().then(() => {
-				this.updateMap();
-			})
-			
-
+				this.#coord = response;
+			});
+		this.loader.load().then(() => {
+			this.updateMap();
+		});
 	};
 
 	setBasicTripPageFirst = () => {
