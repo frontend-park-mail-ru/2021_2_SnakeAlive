@@ -13,7 +13,15 @@ import albumInfoTemplate from '@/components/album/album_info.handlebars';
 import albumPhotosTemplate from '@/components/album/album_photos.handlebars';
 import '@/components/album/album.scss';
 import { initAlbumForm } from '@/components/album/album_form';
-import { addAlbumPhoto, deletePhoto, newGetAlbumResult, renderAlbumPhotos } from '@/actions/album';
+import {
+	addAlbumPhoto,
+	deletePhoto,
+	newGetAlbumResult,
+	renderAlbumPhotos,
+	updateAlbumInfoRequest,
+} from '@/actions/album';
+
+import defaultPhoto from '../../image/test.jpeg';
 
 export class PhotosView {
 	#tokens: Token[];
@@ -103,8 +111,11 @@ export class PhotosView {
 		this.#isInited = true;
 
 		const addBtn = document.getElementById('add_photos_btn');
+		console.log("addBtn ", addBtn);
+
 		const addInput = <HTMLInputElement>document.getElementById('add_photos_input');
 		if (addBtn !== null && addInput !== null) {
+			console.log("addListener");
 			addBtn.addEventListener(
 				'click',
 				() => {
@@ -114,6 +125,7 @@ export class PhotosView {
 			);
 
 			addInput.addEventListener('change', event => {
+				console.log("changed");
 				event.preventDefault();
 				if (addInput === null) {
 					return;
@@ -148,6 +160,7 @@ export class PhotosView {
 			deleteBtn.addEventListener(
 				'click',
 				event => {
+					console.log("isClicked");
 					event.preventDefault();
 					dispatcher.notify(deletePhoto(photoName));
 					const photo = document.getElementById(`album_page__photo_holder_place_${photoName}`);
@@ -201,7 +214,7 @@ export class AlbumView extends BasicView {
 	};
 
 	showEmptyForm = () => {
-		this.setView(albumPageTemplate());
+		this.setView(albumPageTemplate(defaultPhoto));
 
 		const addBtn = document.getElementById('add_photos_btn');
 		if (addBtn !== null) {
@@ -285,5 +298,27 @@ export class AlbumView extends BasicView {
 				false
 			);
 		}
+
+		// кнопка сохранить и завершить btn_make_and_go_trip
+		const createFinishAndGoBtn = document.getElementById('btn_make_and_go_trip');
+		if (createFinishAndGoBtn !== null) {
+			createFinishAndGoBtn.addEventListener(
+				'click',
+				event => {
+					event.preventDefault();
+						router.go(
+							createFrontendQueryParams(pathsURLfrontend.trip, [
+								{
+									key: paramsURLfrontend.id,
+									value: storage.getAlbum().tripId.toString(),
+								},
+							])
+						);
+					},
+				false
+			);
+		}
 	};
+
+
 }

@@ -1,3 +1,5 @@
+import { Trip } from '@/models/trip';
+
 export interface Sight {
 	id: string;
 	name: string;
@@ -33,4 +35,6 @@ export interface SightAdoptedForRender {
 	rating: string;
 	tags: Array<TagAdoptedForRender>;
 	photos: Array<string>;
+	// isUser: boolean;
+	// trips?: Trip[];
 }

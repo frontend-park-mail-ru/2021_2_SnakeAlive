@@ -39,8 +39,19 @@
 
 .trip_page {
   display: grid;
-  grid-template: "l map map"  / 1fr 1fr 1fr;
+
   grid-column-gap: 10px;
+
+  @media (min-width: 960px) {
+    grid-template: "l map map"  / 1fr 1fr 1fr;
+    grid-column-gap: $small-px;
+    grid-row-gap: $small-px;
+  }
+
+  @media (max-width: 961px) {
+    grid-template: "l" "map";
+    row-gap: $small-px;
+  }
 
   &__left__info {
     > div {

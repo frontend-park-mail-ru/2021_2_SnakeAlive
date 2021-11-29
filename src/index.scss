@@ -1,8 +1,8 @@
 $header_height: 7.5vh;
 
 // отступы
-$large-px: 24px;
-$small-px: 10px;
+$large-px: 12px;
+$small-px: 6px;
 
 /* Color styles */
 $my--main-background: #EDEEF0;
@@ -126,7 +126,7 @@ textarea:active {
   border-radius: 4px;
   width: 100%;
   @include text-plain-no-wrap;
-  padding: 6px;
+  padding: 6px 0;
   outline: none;
 }
 
@@ -158,7 +158,7 @@ textarea:active {
   background-color: $white;
   display: grid;
 
-  @media (max-width: 320px) {
+  @media (max-width: 960px) {
     height: 110px;
     padding: 1px;
     margin-top: 4px;
@@ -170,17 +170,18 @@ textarea:active {
     row-gap: 4px;
   }
 
-  @media (min-width: 321px) and (max-width: 960px) {
-    height: 200px;
-    padding: 10px;
-    margin: 10px 60px 10px;
-    border-radius: 15px;
-
-    grid-template-areas: "photo metadata_holder btn_block";
-    grid-template-rows: 200px;
-    grid-template-columns: 200px 1fr 200px;
-    row-gap: 3px;
-  }
+  //@media (min-width: 321px) and (max-width: 960px) {
+  //  padding: 10px;
+  //  margin: 10px 60px 10px;
+  //  border-radius: 15px;
+  //  background: green;
+  //
+  //  grid-template-areas: "photo photo"
+  //                       "metadata_holder btn_block";
+  //  grid-template-rows: 1fr 1fr;
+  //  grid-template-columns: 1fr 1fr;
+  //  row-gap: 3px;
+  //}
 
   @media (min-width: 961px) {
     border-radius: 15px;
@@ -197,17 +198,18 @@ textarea:active {
     grid-area: photo;
     justify-content: center;
     align-items: center;
+    height: 200px;
 
-    @media (max-width: 320px) {
+    @media (max-width: 960px) {
       max-height: 50px;
       max-width: 50px;
       border-radius: 3px;
     }
 
-    @media (min-width: 321px) and (max-width: 960px) {
-      display: flex;
-      justify-content: center;
-    }
+    //@media (min-width: 321px) and (max-width: 960px) {
+    //  display: flex;
+    //  justify-content: center;
+    //}
 
     @media (min-width: 961px) {
       display: flex;
@@ -217,14 +219,14 @@ textarea:active {
     img {
       border-radius: 50%;
 
-      @media (max-width: 320px) {
+      @media (max-width: 960px) {
         max-height: 50px;
         max-width: 50px;
       }
 
-      @media (min-width: 321px) and (max-width: 960px) {
-        width: 60%;
-      }
+      //@media (min-width: 321px) and (max-width: 960px) {
+      //  width: 60%;
+      //}
 
       @media (min-width: 961px) {
         width: 60%;
@@ -236,15 +238,15 @@ textarea:active {
     grid-area: metadata_holder;
     display: grid;
 
-    @media (max-width: 320px) {
+    @media (max-width: 960px) {
       grid-template-rows: 20px 15px;
     }
 
-    @media (min-width: 321px) and (max-width: 960px) {
-      grid-template-rows: 30px 20px;
-      padding-top: 15%;
-      row-gap: 5px;
-    }
+    //@media (min-width: 321px) and (max-width: 960px) {
+    //  grid-template-rows: 30px 20px;
+    //  padding-top: 15%;
+    //  row-gap: 5px;
+    //}
 
     @media (min-width: 961px) {
       grid-template-rows: 30px 20px;
@@ -257,18 +259,18 @@ textarea:active {
     text-align: left;
     padding: 4px;
 
-    @media (max-width: 320px) {
+    @media (max-width: 960px) {
       padding-left: 10px;
       @include text-small;
     }
 
-    @media (min-width: 321px) and (max-width: 960px) {
-      padding-left: 15px;
-      @include text-local-header;
-
-      display: flex;
-      align-items: center;
-    }
+    //@media (min-width: 321px) and (max-width: 960px) {
+    //  padding-left: 15px;
+    //  @include text-local-header;
+    //
+    //  display: flex;
+    //  align-items: center;
+    //}
 
     @media (min-width: 961px) {
       padding-left: 15px;
@@ -279,11 +281,15 @@ textarea:active {
     }
   }
 
+  &__edit-btn, &__close-btn {
+    width: 100%;
+  }
+
   &__btn-block {
     display: grid;
     grid-area: btn_block;
 
-    @media (max-width: 320px) {
+    @media (max-width: 960px) {
       grid-template-areas: "edit-btn"
                           "close-btn";
       grid-template-rows: 25px 25px;
@@ -291,13 +297,13 @@ textarea:active {
       grid-gap: 2px;
     }
 
-    @media (min-width: 321px) and (max-width: 960px) {
-      grid-template-areas:"edit-btn"
-                          "close-btn";
-      grid-template-rows: 100px 100px;
-      grid-template-columns: 150px;
-      grid-gap: 2px;
-    }
+    //@media (min-width: 321px) and (max-width: 960px) {
+    //  grid-template-areas:"edit-btn"
+    //                      "close-btn";
+    //  grid-template-rows: 100px 100px;
+    //  grid-template-columns: 150px;
+    //  grid-gap: 2px;
+    //}
 
     @media (min-width: 961px) {
       grid-template-areas:"edit-btn"
@@ -314,17 +320,17 @@ textarea:active {
     color: $my--button-text;
     grid-area: edit-btn;
 
-    @media (max-width: 320px) {
+    @media (max-width: 960px) {
       @include text-small;
       border-radius: 3px;
     }
 
-    @media (min-width: 321px) and (max-width: 960px) {
-      height: 50px;
-      margin-top: 50px;
-      @include text-button;
-      border-radius: 5px;
-    }
+    //@media (min-width: 321px) and (max-width: 960px) {
+    //  height: 50px;
+    //  margin-top: 50px;
+    //  @include text-button;
+    //  border-radius: 5px;
+    //}
 
     @media (min-width: 961px) {
       height: 30px;
@@ -348,16 +354,16 @@ textarea:active {
     color: $my--button-text;
     grid-area: close-btn;
 
-    @media (max-width: 320px) {
+    @media (max-width: 960px) {
       @include text-small;
       border-radius: 3px;
     }
 
-    @media (min-width: 321px) and (max-width: 960px) {
-      height: 50px;
-      @include text-button;
-      border-radius: 5px;
-    }
+    //@media (min-width: 321px) and (max-width: 960px) {
+    //  height: 50px;
+    //  @include text-button;
+    //  border-radius: 5px;
+    //}
 
     @media (min-width: 961px) {
       height: 30px;
@@ -380,56 +386,64 @@ textarea:active {
 .profile_edit {
   background-color: $white;
   display: grid;
-  justify-content: center;
+  //justify-content: center;
 
-  @media (max-width: 320px) {
-    height: 525px;
+  @media (min-width: 960px) {
+    //height: 525px;
     padding: 1px;
     margin-top: 4px;
 
-    grid-template-rows: 130px 310px 60px;
-    grid-template-columns: 300px;
+    display: grid;
+    grid-template-areas: "padding-l photo-edit-block content-edit-block buttons-edit-block padding-r";
+
+    grid-template-columns: 1fr 2fr 3fr 2fr 1fr;
+    //grid-template-rows: 900px;
     row-gap: 3px;
   }
 
-  @media (min-width: 321px) and (max-width: 960px) {
-    height: 300px;
+  //@media (min-width: 321px) and (max-width: 960px) {
+  //  height: 300px;
+  //  padding: 10px;
+  //  margin-top: 5px;
+  //
+  //  grid-template-rows: 500px;
+  //  grid-template-columns: 200px 400px 170px;
+  //  row-gap: 3px;
+  //}
+
+  @media (max-width: 961px) {
+    //height: 300px;
     padding: 10px;
     margin-top: 5px;
+    display: grid;
 
-    grid-template-rows: 500px;
-    grid-template-columns: 200px 400px 170px;
-    row-gap: 3px;
-  }
+    grid-template-areas: "photo-edit-block"
+                        "content-edit-block"
+                          "buttons-edit-block";
 
-  @media (min-width: 961px) {
-    height: 300px;
-    padding: 10px;
-    margin-top: 5px;
-
-    grid-template-rows: 500px;
-    grid-template-columns: 200px 400px 170px;
+    grid-template-rows: 200px 400px 170px;
     row-gap: 3px;
   }
 
   &__photo_block {
     display: grid;
-    justify-content: center;
+    //justify-content: center;
+    grid-area: photo-edit-block;
 
-    @media (max-width: 320px) {
-      grid-template-rows: 100px 30px 0px;
+    @media (max-width: 960px) {
+      grid-template-rows: 100px 30px 0;
       grid-template-columns: 250px;
       row-gap: 3px;
     }
 
-    @media (min-width: 321px) and (max-width: 960px) {
-      grid-template-rows: 200px 0px 50px;
-      grid-template-columns: 170px;
-      row-gap: 5px;
-    }
+    //@media (min-width: 321px) and (max-width: 960px) {
+    //  grid-template-rows: 200px 0 50px;
+    //  grid-template-columns: 170px;
+    //  row-gap: 5px;
+    //}
 
     @media (min-width: 961px) {
-      grid-template-rows: 200px 0px 50px;
+      grid-template-rows: 200px 0 50px;
       grid-template-columns: 170px;
       row-gap: 5px;
     }
@@ -442,16 +456,16 @@ textarea:active {
     img {
       border-radius: 50%;
 
-      @media (max-width: 320px) {
+      @media (max-width: 960px) {
         width: 43%;
       }
 
-      @media (min-width: 321px) and (max-width: 960px) {
-        width: 70%;
-        height: 70%;
-
-        margin-top: 20%;
-      }
+      //@media (min-width: 321px) and (max-width: 960px) {
+      //  width: 70%;
+      //  height: 70%;
+      //
+      //  margin-top: 20%;
+      //}
 
       @media (min-width: 961px) {
         width: 70%;
@@ -466,19 +480,20 @@ textarea:active {
   &__button_block {
     display: grid;
     justify-content: center;
+    grid-area: buttons-edit-block;
 
-    @media (max-width: 320px) {
+    @media (max-width: 960px) {
       grid-template-rows: 30px 30px;
       grid-template-columns: 250px;
       row-gap: 3px;
     }
 
-    @media (min-width: 321px) and (max-width: 960px) {
-      margin-top: 27px;
-      grid-template-rows: 50px 50px;
-      grid-template-columns: 170px;
-      row-gap: 5px;
-    }
+    //@media (min-width: 321px) and (max-width: 960px) {
+    //  margin-top: 27px;
+    //  grid-template-rows: 50px 50px;
+    //  grid-template-columns: 170px;
+    //  row-gap: 5px;
+    //}
 
     @media (min-width: 961px) {
       margin-top: 27px;
@@ -492,16 +507,16 @@ textarea:active {
     background-color: $my--button-fill;
     color: $my--button-text;
 
-    @media (max-width: 320px) {
+    @media (max-width: 960px) {
       @include text-small;
       border-radius: 3px;
     }
 
-    @media (min-width: 321px) and (max-width: 960px) {
-      height: 50px;
-      @include text-button;
-      border-radius: 5px;
-    }
+    //@media (min-width: 321px) and (max-width: 960px) {
+    //  height: 50px;
+    //  @include text-button;
+    //  border-radius: 5px;
+    //}
 
     @media (min-width: 961px) {
       height: 30px;
@@ -522,8 +537,9 @@ textarea:active {
   &__metadata {
     display: grid;
     justify-content: center;
+    grid-area: content-edit-block;
 
-    @media (max-width: 320px) {
+    @media (max-width: 960px) {
       margin-top: 15px;
 
       grid-template-rows: 50px 50px 50px 50px 50px;
@@ -531,13 +547,13 @@ textarea:active {
       row-gap: 10px;
     }
 
-    @media (min-width: 321px) and (max-width: 960px) {
-      margin-top: 15px;
-
-      grid-template-rows: 50px 50px 50px 50px 50px;
-      grid-template-columns: 250px;
-      row-gap: 10px;
-    }
+    //@media (min-width: 321px) and (max-width: 960px) {
+    //  margin-top: 15px;
+    //
+    //  grid-template-rows: 50px 50px 50px 50px 50px;
+    //  grid-template-columns: 250px;
+    //  row-gap: 10px;
+    //}
 
     @media (min-width: 961px) {
       margin-top: 15px;
@@ -586,6 +602,7 @@ textarea:active {
 
 //profile_show__photo временное, простити
 .profile_show__photo {
+  grid-area: photo;
   align-self: center;
   justify-self: center;
   width: 80%;
@@ -740,24 +757,34 @@ textarea:active {
 
 .card_grid_wrapper {
   display: grid;
-  grid-template: "ml content  mr"  / 1fr 4fr 1fr;
+  @media (max-width: 380px) {
+    grid-template: "content"  / 1fr;
+  }
+
+  @media (min-width: 381px) {
+    grid-template: "ml content  mr"  / 1fr 4fr 1fr;
+  }
 }
-.card__grid__1 {
-	grid-template-columns: repeat(1, minmax(var(--photo-width), 1fr));
-}
-.card__grid__2 {
-	grid-template-columns: repeat(2, minmax(var(--photo-width), 1fr));
-}
+
 .card__grid__3 {
+  grid-area: content;
+  @media (max-width: 380px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  @media (min-width: 380px) and (max-width: 960px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 961px) {
     grid-template-columns: repeat(3, 1fr);
+  }
 }
+
 .card {
-	//padding: 4px 4px 4px 4px;
-	max-width: var(--photo-width);
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
-	//min-height: 520px;
 }
 
 .header__default {

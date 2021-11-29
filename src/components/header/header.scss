@@ -4,17 +4,25 @@ $logo_height: 6vh;
 //$logo_height: 48px;
 
 .header {
-  grid-column-start: 1;
-  grid-column-end: 19;
-  grid-row-start: 1;
-  grid-row-end: 2;
   border-bottom: 1px solid $my--frame-border;
 
   display: grid;
-  grid-template: "ml c c c c mr"  / 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-column-gap: 10px;
 
   background: white;
+  padding: $small-px /2 0;
+
+  @media (max-width: 380px) {
+    padding: $small-px /2 $small-px;
+    grid-template: "c"  / 1fr;
+    * {
+      margin: 0 $small-px /5;
+    }
+  }
+
+  @media (min-width: 381px) {
+    grid-template: "ml c c c c mr"  / 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
 
   h2 {
     font-size: 30px;
@@ -43,6 +51,9 @@ $logo_height: 6vh;
     padding: ($header_height - $logo_height)/2 0;
     &__text {
       @include text-header;
+      @media (max-width: 960px) {
+        display: none;
+      }
     }
     &__img {
       height: $logo_height;
@@ -67,9 +78,16 @@ $logo_height: 6vh;
     justify-content: center;
     align-items: center;
     gap: $small-px;
+
     > p {
       @include text-small;
-    }
+    };
+
+    &__username {
+      @media (max-width: 960px) {
+        display: none;
+      };
+    };
   }
   &__button:hover {
     background: $my--button-header-hover;

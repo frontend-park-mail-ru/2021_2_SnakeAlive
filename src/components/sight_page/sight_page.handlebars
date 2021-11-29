@@ -31,23 +31,24 @@
 			<p>Войдите, чтобы оставить отзыв</p>
 		</div>
 
+		<div id="reviews__content" class="sight_page__reviews_place">
+			<p style="text-align: center;">✦ Здесь будут отзывы ✦</p>
+		</div>
+
+	</div>
+
+	<div class='sight_page__right_col'>
 		<div class="frame sight_page__left_col__description">
 
 			<p class="sight_page__left_col__description__title">О месте</p>
 			<p>{{description}}</p>
 		</div>
 
-	</div>
-
-	<div class='sight_page__right_col'>
 		{{#each photos}}
 			<div id="sight_page__photo_holder_place" class="sight_page__photo_holder_place">
 				<img src='{{this}}' alt='photo'>
 			</div>
 		{{/each}}
-		<div id="reviews__content" class="sight_page__reviews_place">
-			<p style="text-align: center;">✦ Здесь будут отзывы ✦</p>
-		</div>
 	</div>
 
 </div>
