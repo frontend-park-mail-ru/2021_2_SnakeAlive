@@ -32,11 +32,18 @@
 .album_page {
   width: 100%;
   display: grid;
-  grid-template: "ml l-t l-t r-b r-b  mr"  / 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
   padding: 10px 0;
   align-items: flex-start;
+
+  @media (min-width: 960px) {
+    grid-template: "ml l-t l-t r-b r-b  mr"  / 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+  }
+
+  @media (max-width: 961px) {
+    grid-template: "l-t" "r-b";
+  }
 
   &__right_col {
     grid-area: r-b;

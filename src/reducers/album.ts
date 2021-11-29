@@ -63,9 +63,7 @@ export default class AlbumReducer {
 	};
 
 	addPhotos = (photo: File) => {
-		// здесь поменять: возвращается строка, которую потом засунуть в базу
 		this.#sendPhotos(photo.data).then(nameObj => {
-			console.log(this.#addPhoto(storage.getAlbum(), nameObj.filename));
 			this.#sendAlbumInfo(this.#addPhoto(storage.getAlbum(), nameObj.filename)).then(
 				(album: GotAlbumInterface) => {
 					storage.storeAlbum(adoptGotAlbum(album));
@@ -177,16 +175,7 @@ export default class AlbumReducer {
 			.then(response => response.json());
 
 	#sendPhotos = (photos: FormData): Promise<{ filename: string }> => {
-		const myHeaders = new Headers();
-		// myHeaders.append('Content-Type', 'image/jpeg');
-		// myHeaders.append('Host', 'localhost:8080');
-		// myHeaders.append('Cache-Control', 'no-cache');
-		myHeaders.append(
-			'Content-Disposition',
-			`form-data; name="${photos.get('name')}"; filename="${photos.get('filename')}"`
-		);
-		// myHeaders.append('Cache-Control', 'no-cache');
-		return sendPostFileRequest(backendEndpoint + upload, photos, myHeaders)
+		return sendPostFileRequest(backendEndpoint + upload, photos)
 			.then(response => {
 				if (response.status !== 200) {
 					return Promise.reject(new Error('не загружены фотографии'));

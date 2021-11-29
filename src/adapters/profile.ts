@@ -9,6 +9,8 @@ import { UpdateProfile } from '@/dispatcher';
 import { backendFileEndpoint } from '@/constants';
 import { storage } from '@/storage';
 
+import avatarPath from '../../image/test.jpeg';
+
 export function adaptGetProfileResponse(response: GetProfileResponse): Profile {
 	return <Profile>{
 		meta: <ProfileMetadata>{
@@ -17,7 +19,7 @@ export function adaptGetProfileResponse(response: GetProfileResponse): Profile {
 			description: response.description,
 			email: response.email,
 		},
-		profileImage: response.avatar,
+		profileImage: avatarPath,
 	};
 }
 

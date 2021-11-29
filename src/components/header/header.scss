@@ -78,12 +78,16 @@ $logo_height: 6vh;
     justify-content: center;
     align-items: center;
     gap: $small-px;
+
     > p {
       @include text-small;
+    };
+
+    &__username {
       @media (max-width: 960px) {
         display: none;
-      }
-    }
+      };
+    };
   }
   &__button:hover {
     background: $my--button-header-hover;
