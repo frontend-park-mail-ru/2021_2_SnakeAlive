@@ -6,6 +6,11 @@ export interface NumID {
 	ID: number;
 }
 
+export interface CardOrderAndDay {
+	cardId: number;
+	day: number;
+}
+
 export interface UUID {
 	ID: string;
 }

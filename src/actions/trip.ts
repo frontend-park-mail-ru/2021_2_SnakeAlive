@@ -1,5 +1,5 @@
 import { Empty, EventType, IEvent, NumID } from '@/dispatcher';
-import { SightToTrip, IsTrue, TripInfo, IDState } from '@/dispatcher/metadata_types';
+import { SightToTrip, IsTrue, TripInfo, IDState, CardOrderAndDay } from '@/dispatcher/metadata_types';
 import { Sight, SightDay } from '@/models';
 
 const newGetTripRequest = (tripID: number): IEvent =>
@@ -59,14 +59,15 @@ const addPlaceToTrip = (sight: Sight, day: number) =>
 		metadata: <SightDay>{ sight, day },
 	};
 
-const deleteCurrentTripPlace = (sightId: number, day: number) =>
+const delPlaceFromTrip = (CardId: number, day: number) =>
 	<IEvent>{
-		key: EventType.DELETE_CURRENT_TRIP_PLACE,
-		metadata: <SightToTrip>{
-			sightId,
-			day,
-		},
+		key: EventType.DEL_CURRENT_TRIP_PLACE,
+		metadata: <CardOrderAndDay>{
+			cardId: CardId,
+			day: day,
+		}
 	};
+	
 
 const sendTrip = () =>
 	<IEvent>{
@@ -85,12 +86,9 @@ export {
 	newGetTripResult,
 	createTripFormRequest,
 	createTripEdit,
-	// tripFormSubmit,
 	updateCurrentTripInfo,
 	addPlaceToTrip,
-	//sendTrip,
-	// createFilledEditTrip,
+	delPlaceFromTrip,
 	deleteTrip,
-	deleteCurrentTripPlace,
 	rerenderTripCards,
 };

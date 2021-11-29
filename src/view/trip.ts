@@ -3,15 +3,15 @@ import { dispatcher, EventType, Token } from '@/dispatcher';
 import tripPageTemplate from '@/components/trip/trip.handlebars';
 import tripFormTemplate from '@/components/trip/trip_form.handlebars';
 import tripSights from '@/components/trip/trip_sights.handlebars';
-import { init, initEdit } from '@/components/trip/trip_form';
+import { init, initEdit, initDelSightsBtns } from '@/components/trip/trip_form';
 import { loader, Map } from '@/components/map/map';
 import { sendGetJSONRequest } from '@/http';
 import { backendEndpoint, listOfCountries, pathsURLfrontend } from '@/constants';
-import { IsTrue } from '@/dispatcher/metadata_types';
+import { IsTrue, SightToTrip,  } from '@/dispatcher/metadata_types';
 import { storage } from '@/storage';
-import { rerenderTripCards, newGetTripRequest, addPlaceToTrip } from '@/actions/trip';
+import { rerenderTripCards, newGetTripRequest, addPlaceToTrip, delPlaceFromTrip } from '@/actions/trip';
 import { SightCardInTrip } from '@/view/sight_cards';
-import { Sight, SightsCoord } from '@/models';
+import { Sight, SightsCoord , SightDay} from '@/models';
 import defaultPicture from '@/../image/moscow_city_1.jpeg';
 import { NumID } from '@/dispatcher';
 import { initSearchView, SearchView } from '@/components/search/search';
@@ -83,6 +83,7 @@ export class TripInfoView extends BasicView {
 			dispatcher.register(EventType.CREATE_TRIP_EDIT, this.createTripEdit),
 			dispatcher.register(EventType.SUBMIT_SEARCH_RESULTS, this.addPlace),
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
+			dispatcher.register(EventType.DELETE_CURRENT_TRIP_PLACE, this.delPlace),
 		];
 
 		const cardsHolder = new CardSightsHolder();
@@ -101,7 +102,6 @@ export class TripInfoView extends BasicView {
 	createTripEdit = () => {
 		console.log('lock');
 		const trip = storage.getCurrentTrip();
-		//console.log("getCurrentTrip = ", storage.getCurrentTrip())
 		this.setView(
 			tripFormTemplate({
 				tripCreated: true,
@@ -128,7 +128,7 @@ export class TripInfoView extends BasicView {
 			);
 		} else {
 			console.log('No button = ', addAlbumBtn);
-		}
+		}	
 	};
 
 	addPlace = () => {
@@ -138,6 +138,14 @@ export class TripInfoView extends BasicView {
 		const day = 0;
 		dispatcher.notify(addPlaceToTrip(place, day));
 		// rerender cards
+	};
+
+	delPlace = (metadata: SightToTrip) => {
+		//update trip - del place
+		console.log('del place from view');
+		const sight = metadata.sightId;
+		const day = 0;
+		dispatcher.notify(delPlaceFromTrip(sight, day));
 	};
 }
 
@@ -157,6 +165,7 @@ export class TripMapView extends BasicView {
 		this.#tokens = [
 			dispatcher.register(EventType.GET_TRIP_RESPONSE, this.#map.restoreMap),
 			dispatcher.register(EventType.ADD_CURRENT_TRIP_PLACE, this.#map.addMarker),
+			dispatcher.register(EventType.DEL_CURRENT_TRIP_PLACE, this.#map.delMarker),
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.#destroy),
 		];
 	};
@@ -188,6 +197,7 @@ export class CardSightsHolder extends BasicView {
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.#destroy),
 		];
 	};
+
 
 	rerenderCards = (metadata: IsTrue) => {
 		this.setEmpty();
@@ -248,6 +258,9 @@ export class CardSightsHolder extends BasicView {
 				defaultPicture,
 			})
 		);
+		initDelSightsBtns()
+	
+		
 	};
 
 	#destroy = (): void => {

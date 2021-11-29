@@ -1,6 +1,6 @@
 // import tripFormTemplate from '@/components/trip/trip_form.handlebars';
 import { dispatcher } from '@/dispatcher';
-import { deleteTrip, createTripFormRequest, updateCurrentTripInfo } from '@/actions/trip';
+import { deleteTrip, createTripFormRequest, updateCurrentTripInfo, delPlaceFromTrip } from '@/actions/trip';
 import { newGetReviewsResponse } from '@/actions/review';
 import { sendGetJSONRequest } from '@/http';
 import { backendEndpoint, paramsURLfrontend, pathsURLfrontend, sightsURI } from '@/constants';
@@ -58,14 +58,32 @@ const alert = () => {
 };
 
 export const initEdit = (): void => {
-	// console.log("N==== = ",document.getElementById('btn-add-album'))
-	// console.log("N==== = ",document.getElementsByClassName('usual_button').item(1))
-	// const askConfirmBtn = document.getElementById('btn-add-place');
-	// if (askConfirmBtn !== null) {
-	// 	askConfirmBtn.addEventListener('click',alert , false);
-	// }
-	// console.log("askConfirmBtn = ",askConfirmBtn)
+
+	
 };
+
+export const initDelSightsBtns = (): void => {
+	// добавить удаление достопримечательности по нажатию на кнопку
+	const deleteSightBtns = document.getElementsByClassName('delite_btn');
+	const limit = deleteSightBtns.length;
+	for (let i = 0; i < limit; i += 1) {
+		deleteSightBtns[i].addEventListener(
+			'click',
+			event => {
+				console.log("delite sight")
+				dispatcher.notify(delPlaceFromTrip(i,0))
+			},
+			false
+		);
+	}
+	// удаление всей поездки
+	const askConfirmBtn = document.getElementById('ask_confirm_button');
+	if (askConfirmBtn !== null) {
+		//console.log("delite trip")
+		//askConfirmBtn.addEventListener('click', showConfirm, false);
+	}
+}
+
 
 const getFormInfo = (): {
 	title: string;

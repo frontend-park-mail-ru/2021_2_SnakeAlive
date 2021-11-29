@@ -18,7 +18,7 @@ import {
 import { newGetTripResult, rerenderTripCards, createTripEdit } from '@/actions/trip';
 import { initErrorPageRequest } from '@/actions/page';
 import { newSetMainHeaderRequest } from '@/actions/header';
-import { NumID, SightToTrip, TripInfo } from '@/dispatcher/metadata_types';
+import { NumID, CardOrderAndDay, TripInfo } from '@/dispatcher/metadata_types';
 import { adoptForSend, adoptForCreate } from '@/adapters';
 import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
@@ -41,7 +41,7 @@ export default class TripReducer {
 			dispatcher.register(EventType.UPDATE_CURRENT_TRIP_INFO, this.updateCurrentTripInfo),
 
 			dispatcher.register(EventType.ADD_CURRENT_TRIP_PLACE, this.addCurrentTripPlace),
-			dispatcher.register(EventType.DELETE_CURRENT_TRIP_PLACE, this.deleteCurrentTripPlace),
+			dispatcher.register(EventType.DEL_CURRENT_TRIP_PLACE, this.deleteCurrentTripPlace),
 
 			dispatcher.register(EventType.DELETE_TRIP, this.deleteTrip),
 		];
@@ -64,7 +64,6 @@ export default class TripReducer {
 				storage.storeCurrentTrip(trip);
 				console.log("stored trip = ", storage.getCurrentTrip())
 				dispatcher.notify(newGetTripResult(ID));
-				// ?
 			})
 			.catch((error: Error) => {
 				dispatcher.notify(initErrorPageRequest(error));
@@ -78,42 +77,17 @@ export default class TripReducer {
 		const tripSend = adoptForSend(trip);
 		console.log('tripSend = ', tripSend);
 		this.#updateTrip(tripSend, trip.id).then(response => {
-			console.log('stored trip = ', storage.getCurrentTrip());
 			dispatcher.notify(rerenderTripCards(true));
 		});
 	};
 
-	deleteCurrentTripPlace = (metadata: SightToTrip) => {
+	deleteCurrentTripPlace = (metadata: CardOrderAndDay) => {
 		const trip = storage.getCurrentTrip();
-
-		const copiedDays: Sight[][] = [[]];
-		let found = false;
-
-		// trip.sights[metadata.day].forEach(sight => {
-		// const copiedDays: Sight[][] = [[]];
-		// let found = false;
-		//
-		// trip.days[metadata.day].forEach(sight => {
-		// 	// eslint-disable-next-line eqeqeq
-		// 	if (sight.id == String(metadata.sightId) && !found) {
-		// 		found = true;
-		// 	} else {
-		// 		copiedDays[0].push(sight);
-		// 	}
-		// });
-
-		//
-		// trip.days = copiedDays;
-
-		console.log(trip);
-
+		trip.sights.splice(metadata.cardId+1,1); // +1 becuse of fake data
+		storage.storeCurrentTrip(trip);
 		const tripSend = adoptForSend(trip);
-
-		console.log(tripSend);
-
-		// отправка обновления
+		console.log('tripSend = ', tripSend);
 		this.#updateTrip(tripSend, trip.id).then(response => {
-			storage.storeCurrentTrip(response);
 			dispatcher.notify(rerenderTripCards(true));
 		});
 	};
@@ -134,15 +108,11 @@ export default class TripReducer {
 
 	createTrip = (metadata: TripInfo) => {
 		const trip = storage.getCurrentTrip();
-		console.log('trip=  ', trip);
 		const tripSend = adoptForCreate(trip);
 		tripSend.title = metadata.title;
 		tripSend.description = metadata.description;
-		console.log('meta', metadata);
-		console.log('tripSend', tripSend);
 		// отправка обновления
 		this.#addTrip(tripSend, trip.id).then(response => {
-			console.log('storeCurrentTrip = ', storage.getCurrentTrip());
 			storage.addLastTripId(Number(response.id));
 			router.go(
 				createFrontendQueryParams(pathsURLfrontend.trip, [

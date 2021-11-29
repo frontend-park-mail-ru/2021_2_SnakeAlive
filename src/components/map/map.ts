@@ -1,7 +1,7 @@
 import BasicView from '@/view/view';
 import { sendGetJSONRequest, sendPostJSONRequest } from '@/http';
 import { backendEndpoint, sightURI, tripCoord, sightsURI, searchURI } from '@/constants';
-import { NumID, IsTrue, SightToTrip, SubmitTripInfo } from '@/dispatcher/metadata_types';
+import { NumID, CardOrderAndDay, SightToTrip, SubmitTripInfo } from '@/dispatcher/metadata_types';
 import { SightDay, SightsCoord } from '@/models';
 import { Loader } from '@googlemaps/js-api-loader';
 import { storage } from '@/storage';
@@ -14,6 +14,7 @@ export const loader = new Loader({
 
 export class Map extends BasicView {
 	#map!: google.maps.Map;
+	#markers!: google.maps.Marker[];
 	#coord: SightsCoord[];
 	#loader = new Loader({
 		apiKey: 'AIzaSyAmfwtc-cyEkyrSqWaUfeRBRMV6dvOAnpg',
@@ -28,6 +29,7 @@ export class Map extends BasicView {
 				center: { lat: 55.75222, lng: 37.61556 },
 				zoom: 8,
 			});
+			this.#markers = []
 		});
 	}
 
@@ -52,11 +54,23 @@ export class Map extends BasicView {
 			.then(response => {
 				this.updateMap();
 				this.#map.setCenter({ lat: lat, lng: lng });
+				const marker = new google.maps.Marker({
+					position: { lat: Number(storage.getSearchSightsResult('trip')[0].lat), lng:  Number(storage.getSearchSightsResult('trip')[0].lng)},
+					map: this.#map,
+				});
+				this.#markers.push(marker)
+				this.updateMap();
 			});
+		console.log(this.#markers)
 	};
 
+	delMarker = (metadata: CardOrderAndDay) => {		
+		this.#coord.splice(metadata.cardId,1)
+		this.#markers[metadata.cardId].setMap(null)
+		this.#markers.splice(metadata.cardId,1)
+	}
+
 	restoreMap = (metadata: NumID) => {
-		console.log("restore map trip =", storage.getCurrentTrip())
 		let i = 0
 		storage.getCurrentTrip().sights.forEach(sight => {
 			if (i!=0){
@@ -73,12 +87,16 @@ export class Map extends BasicView {
 					})
 					.then(response => response.json())
 					.then(response => {
-						console.log('response search list', response, response.name);
 						storage.storeSearchSightsResult('trip', response);
 					})
 					.then(() =>{
 						this.#coord.push({id: Number(sight.id), lng: Number(storage.getSearchSightsResult('trip')[0].lng), lat: Number(storage.getSearchSightsResult('trip')[0].lat)})
 						console.log(this.#coord)
+						const marker = new google.maps.Marker({
+							position: { lat: Number(storage.getSearchSightsResult('trip')[0].lat), lng:  Number(storage.getSearchSightsResult('trip')[0].lng)},
+							map: this.#map,
+						});
+						this.#markers.push(marker)
 						this.updateMap();
 					});
 			}
@@ -88,13 +106,8 @@ export class Map extends BasicView {
 	};
 
 	updateMap = () => {
-		console.log('this.#coord = ', this.#coord);
-		for (let entry of this.#coord) {
-			const marker = new google.maps.Marker({
-				position: { lat: entry.lat, lng: entry.lng },
-				map: this.#map,
-			});
-			console.log('draw  marker', entry);
-		}
+		this.#markers.forEach(marker => {
+			marker.setMap(this.#map)
+		})
 	};
 }
