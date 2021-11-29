@@ -1,54 +1,8 @@
-<!--{{#if isEdit}}-->
-
-<!--{{#each sights}}-->
-<!--	{{#each this}}-->
-<!--		<div class='frame'>-->
-<!--			<h2 id="go_button_{{ this.sight.id }}_{{this.PP}}">{{ this.sight.name }}</h2>-->
-<!--			<div class="trip_sight__preview_photo">-->
-<!--				<img src="{{this.preview}}">-->
-<!--			</div>-->
-
-<!--                {{this.photosTemplate}}-->
-
-<!--            <div class="trip_sight__info_string">-->
-
-<!--            			<div class="rating tag__holder">-->
-<!--            				&lt;!&ndash;				сложная верстка дробного значения рейтинга&ndash;&gt;-->
-<!--            				<span class="span__font__large span__font__large-green">✦</span><span class='rating__text'>{{sight.rating}}</span>-->
-<!--            			</div>-->
-
-<!--            			<div class="tag__holder">-->
-<!--											{{#each this.sight.tagsAdopted}}-->
-<!--												<div class="tag card__tag card__tag__font" id='tag_{{this.name}}_{{this.sightPP}}'>-->
-<!--													{{this.name}}-->
-<!--													{{#if @last}}-->
-<!--													{{else}}-->
-
-<!--														<span class="span__font__large span__font__large-blue">•lo</span>-->
-<!--													{{/if}}-->
-<!--												</div>-->
-<!--											{{/each}}-->
-<!--            			</div>-->
-
-<!--            </div>-->
-
-<!--			<p style='visibility: hidden'>no</p>-->
-<!--			<button-->
-<!--				id="delete_button_{{ this.sight.id }}_{{this.PP}}"-->
-<!--				class='usual_button_light usual_button'-->
-<!--			>удалить из поездки</button>-->
-
-<!--		</div>-->
-<!--	{{/each}}-->
-<!--{{/each}}-->
-
-<!--{{else}}-->
-
 	{{#each sights}}
 		{{#each this}}
 			<div class='frame'>
 				<h2 id="go_button_{{ this.sight.id }}_{{this.PP}}">{{ this.sight.name }}</h2>
-				<img src="{{defaultPicture}}">
+				<img src="{{this.preview}}">
 				<p>✦ {{ this.sight.rating }}</p>
 
 				<div class="tag__holder">
@@ -64,8 +18,11 @@
 					{{/each}}
 				</div>
 
+			<p style='visibility: hidden'>no</p>
+			<button
+				id="delete_button_{{ this.sight.id }}_{{this.PP}}"
+				class='usual_button_light usual_button'>Удалить</button>
+
 			</div>
 		{{/each}}
 	{{/each}}
-
-<!--{{/if}}-->

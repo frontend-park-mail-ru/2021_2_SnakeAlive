@@ -4,7 +4,7 @@ import tripPageTemplate from '@/components/trip/trip.handlebars';
 import tripFormTemplate from '@/components/trip/trip_form.handlebars';
 import tripSights from '@/components/trip/trip_sights.handlebars';
 import { init, initEdit } from '@/components/trip/trip_form';
-import { Map } from '@/components/map/map';
+import { loader, Map } from '@/components/map/map';
 import { sendGetJSONRequest } from '@/http';
 import { backendEndpoint, listOfCountries, pathsURLfrontend } from '@/constants';
 import { IsTrue } from '@/dispatcher/metadata_types';
@@ -31,15 +31,17 @@ export class InitTripPage extends BasicView {
 	}
 
 	init = (): void => {
-		this.#tokens = [
-			dispatcher.register(EventType.GET_TRIP_RESPONSE, this.#TripInfo.createTripEdit),
-			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
-		];
-		this.setView(tripPageTemplate());
-		this.#TripMap.init();
-		this.#TripInfo.init();
-		init(true);
-		console.log('INITIALIZE TRIP PAGE');
+			this.#tokens = [
+				dispatcher.register(EventType.GET_TRIP_RESPONSE, this.#TripInfo.createTripEdit),
+				dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
+			];
+			this.setView(tripPageTemplate());
+			this.#TripMap.init();
+			this.#TripInfo.init();
+			init(true);
+			console.log('INITIALIZE TRIP PAGE');
+	
+		
 	};
 
 	initEdit = (metadata: NumID): void => {
@@ -203,39 +205,34 @@ export class CardSightsHolder extends BasicView {
 		console.log('sights = ', sights);
 		if (sights) {
 			sights.forEach(sight => {
-				console.log('sight ', sight);
-
-				const adoptedTags: Array<TagAdoptedForRender> = [];
-				sight.tags.forEach(tag => {
-					adoptedTags.push({
-						name: tag,
-						sightPP: i,
+				if(i!=0){
+					console.log('sight ', sight);
+					const adoptedTags: Array<TagAdoptedForRender> = [];
+					sight.tags.forEach(tag => {
+						adoptedTags.push({
+							name: tag,
+							sightPP: i,
+						});
 					});
-				});
-
-				sightsAdopted[0].push({
-					sight: {
-						id: sight.id,
-						tags: adoptedTags,
-						description: sight.description,
-						name: sight.name,
-						photos: sight.photos,
-						rating: sight.rating,
-					},
-					preview: sights[0].photos[0],
-					PP: i,
-				});
+					sightsAdopted[0].push({
+						sight: {
+							id: sight.id,
+							tags: adoptedTags,
+							description: sight.description,
+							name: sight.name,
+							photos: sight.photos,
+							rating: sight.rating,
+						},
+						preview: sight.photos[0],
+						PP: i,
+					});
+					
+				}
+				i += 1;
 			});
-			i += 1;
+			
 		}
-		this.setView(
-			tripSights({
-				sights: sightsAdopted,
-				isEdit: metadata.isTrue,
-				defaultPicture,
-			})
-		);
-
+		console.log("sightsAdopted = ", sightsAdopted)
 		sightsAdopted.forEach(day => {
 			day.forEach(sight => {
 				const card = new SightCardInTrip();
@@ -243,6 +240,14 @@ export class CardSightsHolder extends BasicView {
 				this.#cards.push(card);
 			});
 		});
+
+		this.setView(
+			tripSights({
+				sights: sightsAdopted,
+				isEdit: metadata.isTrue,
+				defaultPicture,
+			})
+		);
 	};
 
 	#destroy = (): void => {

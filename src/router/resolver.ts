@@ -20,6 +20,10 @@ import { newInitCountryRequest } from '@/actions/country';
 import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
 import { createAlbumFormRequest, newGetAlbumRequest } from '@/actions/album';
 import { newTagRequest } from '@/actions/tag';
+import { storage } from '@/storage';
+import { Loader } from '@googlemaps/js-api-loader';
+
+
 
 const pathErrorEvent: IEvent = initErrorPageRequest(new Error('Неверная ссылка'));
 
@@ -76,21 +80,11 @@ export const notifier = (path: URL): void /* IEvent */ => {
 			const params = tryGetParam([paramsURLfrontend.id, paramsURLfrontend.edit], path);
 			console.log(params);
 
-			if (params.id) {
-				dispatcher.notify(initTripEditPageRequest(Number(params.id)));
-			} else {
-				dispatcher.notify(initTripPageRequest());
-			}
-			// if (params.id) {
-			// 	if (params.edit === '1') {
-			// 		dispatcher.notify(newGetTripRequest(params.id, true));
-			// 	} else {
-			// 		dispatcher.notify(newGetTripRequest(params.id, false));
-			// 	}
-			// } else {
-			// 	dispatcher.notify(createTripFormRequest());
-			// }
-			//dispatcher.notify(createTripFormRequest())
+				if (params.id) {
+					dispatcher.notify(initTripEditPageRequest(Number(params.id)));
+				} else {
+					dispatcher.notify(initTripPageRequest());
+				}
 			break;
 		}
 		case pathsURLfrontend.login: {

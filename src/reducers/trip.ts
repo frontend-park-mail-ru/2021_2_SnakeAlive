@@ -19,7 +19,7 @@ import { newGetTripResult, rerenderTripCards, createTripEdit } from '@/actions/t
 import { initErrorPageRequest } from '@/actions/page';
 import { newSetMainHeaderRequest } from '@/actions/header';
 import { NumID, SightToTrip, TripInfo } from '@/dispatcher/metadata_types';
-import { adoptForSend } from '@/adapters';
+import { adoptForSend, adoptForCreate } from '@/adapters';
 import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
 import { TripFormInfo } from '@/models/trip';
@@ -43,7 +43,6 @@ export default class TripReducer {
 			dispatcher.register(EventType.ADD_CURRENT_TRIP_PLACE, this.addCurrentTripPlace),
 			dispatcher.register(EventType.DELETE_CURRENT_TRIP_PLACE, this.deleteCurrentTripPlace),
 
-			//dispatcher.register(EventType.SEND_TRIP, this.sendTrip),
 			dispatcher.register(EventType.DELETE_TRIP, this.deleteTrip),
 		];
 
@@ -56,13 +55,6 @@ export default class TripReducer {
 		});
 	};
 
-	// sendTrip = () => {
-	// 	const trip = storage.getCurrentTrip();
-	// 	const tripSend = adoptForSend(trip);
-	// 	// отправка обновления
-	// 	this.#updateTrip(tripSend, trip.id);
-	// };
-
 	initTripEditPage = (metadata: NumID) => {
 		const { ID } = metadata;
 		console.log('ID', ID);
@@ -70,6 +62,7 @@ export default class TripReducer {
 			.then((trip: Trip) => {
 				console.log('GET trip =  ', trip);
 				storage.storeCurrentTrip(trip);
+				console.log("stored trip = ", storage.getCurrentTrip())
 				dispatcher.notify(newGetTripResult(ID));
 				// ?
 			})
@@ -142,12 +135,7 @@ export default class TripReducer {
 	createTrip = (metadata: TripInfo) => {
 		const trip = storage.getCurrentTrip();
 		console.log('trip=  ', trip);
-		const tripSend = adoptForSend(trip);
-		// const tripSend: TripFormInfo = {
-		// 	title: "",
-		// 	description: "",
-		// 	sights: [{ id: 1, day: 0 }],
-		// };
+		const tripSend = adoptForCreate(trip);
 		tripSend.title = metadata.title;
 		tripSend.description = metadata.description;
 		console.log('meta', metadata);

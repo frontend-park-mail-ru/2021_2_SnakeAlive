@@ -16,7 +16,6 @@ export interface Trip {
 	title: string;
 	description: string;
 	sights: Array<Sight>;
-	//albums: Array<Album>;
 	albums: Array<Album>;
 	days: Array<TripSight>;
 }

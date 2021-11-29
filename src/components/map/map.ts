@@ -1,9 +1,16 @@
 import BasicView from '@/view/view';
 import { sendGetJSONRequest, sendPostJSONRequest } from '@/http';
-import { backendEndpoint, sightURI, tripCoord } from '@/constants';
+import { backendEndpoint, sightURI, tripCoord, sightsURI, searchURI } from '@/constants';
 import { NumID, IsTrue, SightToTrip, SubmitTripInfo } from '@/dispatcher/metadata_types';
 import { SightDay, SightsCoord } from '@/models';
 import { Loader } from '@googlemaps/js-api-loader';
+import { storage } from '@/storage';
+//import { loader } from '@/storage';
+
+export const loader = new Loader({
+	apiKey: 'AIzaSyAmfwtc-cyEkyrSqWaUfeRBRMV6dvOAnpg',
+	version: 'weekly',
+});
 
 export class Map extends BasicView {
 	#map!: google.maps.Map;
@@ -16,7 +23,7 @@ export class Map extends BasicView {
 	constructor() {
 		super('#content');
 		this.#coord = [];
-		this.#loader.load().then(() => {
+		loader.load().then(() => {
 			this.#map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
 				center: { lat: 55.75222, lng: 37.61556 },
 				zoom: 8,
@@ -27,7 +34,6 @@ export class Map extends BasicView {
 	init() {}
 
 	addMarker = (metadata: SightDay) => {
-		//console.log("add marker", metadata.sightId, this.#coord)
 		let lat: number;
 		let lng: number;
 		const countriesPromise = sendGetJSONRequest(backendEndpoint + sightURI + metadata.sight.id)
@@ -50,20 +56,35 @@ export class Map extends BasicView {
 	};
 
 	restoreMap = (metadata: NumID) => {
-		const countriesPromise = sendGetJSONRequest(backendEndpoint + tripCoord + metadata.ID)
-			.then(response => {
-				if (response.ok) {
-					console.log('response = ', backendEndpoint + tripCoord + metadata.ID, response);
-					return Promise.resolve(response);
-				}
-				return Promise.reject(new Error('wrong answer on list of countries'));
-			})
-			.then(response => response.json())
-			.then(response => {
-				this.#coord = response;
-				//console.log("this.#coord = ", this.#coord)
-				this.updateMap();
-			});
+		console.log("restore map trip =", storage.getCurrentTrip())
+		let i = 0
+		storage.getCurrentTrip().sights.forEach(sight => {
+			if (i!=0){
+				const url = new URL(backendEndpoint + sightsURI + searchURI);
+				url.searchParams.set('search', sight.name);
+				url.searchParams.set('skip', '0');
+				url.searchParams.set('limit', '0');
+				const countriesPromise = sendGetJSONRequest(url.toString())
+					.then(response => {
+						if (response.ok) {
+							return Promise.resolve(response);
+						}
+						return Promise.reject(new Error('wrong answer on list of countries'));
+					})
+					.then(response => response.json())
+					.then(response => {
+						console.log('response search list', response, response.name);
+						storage.storeSearchSightsResult('trip', response);
+					})
+					.then(() =>{
+						this.#coord.push({id: Number(sight.id), lng: Number(storage.getSearchSightsResult('trip')[0].lng), lat: Number(storage.getSearchSightsResult('trip')[0].lat)})
+						console.log(this.#coord)
+						this.updateMap();
+					});
+			}
+			i+=1
+
+		})
 	};
 
 	updateMap = () => {

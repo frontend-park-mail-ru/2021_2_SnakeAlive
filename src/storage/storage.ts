@@ -97,6 +97,10 @@ class Storage {
 		this.#trip = trip;
 	};
 
+	clearCurrentTrip = (): void => {
+		this.#trip = <Trip>{};;
+	};
+
 	getCurrentTrip = (): Trip => this.#trip;
 
 	storeProfile = (profile: Profile): void => {
