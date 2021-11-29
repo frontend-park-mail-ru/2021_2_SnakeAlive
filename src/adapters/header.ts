@@ -9,4 +9,3 @@ export interface GotProfileResponse {
 	description: string;
 	email: string;
 }
-

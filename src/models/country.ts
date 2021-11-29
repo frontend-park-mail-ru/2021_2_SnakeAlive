@@ -1,3 +1,5 @@
+import { TagAdoptedForRender } from '@/models/sight';
+
 interface Country {
 	name: string;
 	ID: string;
@@ -46,6 +48,7 @@ export interface minCardInfo {
 		name: string;
 		rating: number;
 		tags: string[];
+		adoptedTags: TagAdoptedForRender[];
 		photo: string;
 	};
 	PP: number;

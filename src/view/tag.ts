@@ -1,10 +1,19 @@
 import countryPageTemplate from '@/components/country_page/country_sights.handlebars';
-import { DataType, dispatcher, ErrorMsgData, EventType, NamedUUID, Token, UUID } from '@/dispatcher';
+import {
+	DataType,
+	dispatcher,
+	ErrorMsgData,
+	EventType,
+	NamedUUID,
+	Token,
+	UUID,
+} from '@/dispatcher';
 import BasicView from '@/view/view';
 import { storage } from '@/storage';
 import tripSights from '@/components/country_page/sights.handlebars';
 import { SightCardInTrip } from '@/view/sight_cards';
 import { newGetTagCardsResult } from '@/actions/tag';
+import { TagAdoptedForRender } from '@/models/sight';
 
 class TagCardsHolderView extends BasicView {
 	#tokens: Token[];
@@ -38,12 +47,23 @@ class TagCardsHolderView extends BasicView {
 		this.#cards = [];
 
 		const cardsArray = storage.getSightsCardsMin();
+		cardsArray.forEach(sight => {
+			const tagsAdopted: Array<TagAdoptedForRender> = [];
+			sight.sight.tags.forEach(tag => {
+				tagsAdopted.push({
+					name: tag,
+					sightPP: sight.PP,
+				});
+			});
+			// eslint-disable-next-line no-param-reassign
+			sight.sight.adoptedTags = tagsAdopted;
+		});
 
 		this.setView(tripSights({ cards: cardsArray }));
 
 		cardsArray.forEach(sight => {
 			const card = new SightCardInTrip();
-			card.createCard(sight.sight.id, sight.PP, sight.sight.tags);
+			card.createCard(sight.sight.id, sight.PP, sight.sight.adoptedTags);
 			this.#cards.push(card);
 		});
 	};

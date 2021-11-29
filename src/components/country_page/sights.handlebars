@@ -24,9 +24,9 @@
 			</div>
 
         <div class="tag__holder">
-            {{#each sight.tags}}
-                <div class="tag card__tag card__tag__font" id='tag_{{this}}'>
-                    {{this}}
+            {{#each sight.adoptedTags  }}
+                <div class="tag card__tag card__tag__font" id='tag_{{this.name}}_{{this.sightPP}}'>
+                    {{this.name}}
                     {{#if @last}}
                     {{else}}
                         <span class="span__font__large span__font__large-blue">•</span>

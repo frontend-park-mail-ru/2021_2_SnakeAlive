@@ -6,26 +6,21 @@ import tripSights from '@/components/trip/trip_sights.handlebars';
 import { init, initEdit } from '@/components/trip/trip_form';
 import { Map } from '@/components/map/map';
 import { sendGetJSONRequest } from '@/http';
-import {
-	backendEndpoint,
-	listOfCountries,
-} from '@/constants';
-import { IsTrue} from '@/dispatcher/metadata_types';
+import { backendEndpoint, listOfCountries, pathsURLfrontend } from '@/constants';
+import { IsTrue } from '@/dispatcher/metadata_types';
 import { storage } from '@/storage';
 import { rerenderTripCards, newGetTripRequest, addPlaceToTrip } from '@/actions/trip';
 import { SightCardInTrip } from '@/view/sight_cards';
 import { Sight, SightsCoord } from '@/models';
 import defaultPicture from '@/../image/moscow_city_1.jpeg';
-import {
-	NumID
-} from '@/dispatcher';
+import { NumID } from '@/dispatcher';
 import { initSearchView, SearchView } from '@/components/search/search';
-
+import { router } from '@/router';
+import { SightAdoptedForRender, TagAdoptedForRender } from '@/models/sight';
 
 export class InitTripPage extends BasicView {
-
 	#TripInfo: TripInfoView;
-	#TripMap: TripMapView
+	#TripMap: TripMapView;
 	#tokens: Token[];
 
 	constructor() {
@@ -34,30 +29,28 @@ export class InitTripPage extends BasicView {
 		this.#TripMap = new TripMapView();
 		this.#tokens = [];
 	}
-	
 
 	init = (): void => {
 		this.#tokens = [
 			dispatcher.register(EventType.GET_TRIP_RESPONSE, this.#TripInfo.createTripEdit),
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
-			
 		];
 		this.setView(tripPageTemplate());
-		this.#TripMap.init()
-		this.#TripInfo.init() 
+		this.#TripMap.init();
+		this.#TripInfo.init();
 		init(true);
-		console.log("INITIALIZE TRIP PAGE")
-	}
+		console.log('INITIALIZE TRIP PAGE');
+	};
 
 	initEdit = (metadata: NumID): void => {
 		// need get and store trip with id in params
-		const {ID} = metadata;
+		const { ID } = metadata;
 		dispatcher.notify(newGetTripRequest(ID));
 		initEdit();
-		console.log("INITIALIZE EDIT TRIP PAGE");
-	}
+		console.log('INITIALIZE EDIT TRIP PAGE');
+	};
 
-	destroy  = (): void => {
+	destroy = (): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});
@@ -104,44 +97,58 @@ export class TripInfoView extends BasicView {
 	};
 
 	createTripEdit = () => {
-		console.log("lock")
+		console.log('lock');
 		const trip = storage.getCurrentTrip();
 		//console.log("getCurrentTrip = ", storage.getCurrentTrip())
 		this.setView(
 			tripFormTemplate({
 				tripCreated: true,
 				title: trip.title,
-				description: trip.description
+				description: trip.description,
 			})
-		)
+		);
 		const searchPlace = document.getElementById('trip-search-place');
 		if (searchPlace !== null) {
 			searchPlace.innerHTML = initSearchView('trip');
-			this.#search = new SearchView('trip', (id: string) => {
-			});
+			this.#search = new SearchView('trip', (id: string) => {});
 		}
-	}
+
+		const addAlbumBtn = document.getElementById('btn-add-album');
+		if (addAlbumBtn !== null) {
+			addAlbumBtn.addEventListener(
+				'click',
+				event => {
+					event.preventDefault();
+					storage.storeAlbumTripId(storage.getCurrentTrip().id);
+					router.go(pathsURLfrontend.album);
+				},
+				false
+			);
+		} else {
+			console.log('No button = ', addAlbumBtn);
+		}
+	};
 
 	addPlace = () => {
-        //update trip - add place
-		console.log("Add place in view")
-		const place = storage.getSearchSightsResult('trip')[0]
-		const day = 0
-		dispatcher.notify(addPlaceToTrip(place, day))
-        // rerender cards
-    }
+		//update trip - add place
+		console.log('Add place in view');
+		const place = storage.getSearchSightsResult('trip')[0];
+		const day = 0;
+		dispatcher.notify(addPlaceToTrip(place, day));
+		// rerender cards
+	};
 }
 
 export class TripMapView extends BasicView {
 	#tokens: Token[];
-	#coord: SightsCoord[]
+	#coord: SightsCoord[];
 	#map: Map;
 
 	constructor() {
 		super('#content');
 		this.#tokens = [];
 		this.#coord = [];
-		this.#map = new	Map;	
+		this.#map = new Map();
 	}
 
 	init = (): void => {
@@ -160,7 +167,6 @@ export class TripMapView extends BasicView {
 		this.setEmpty();
 	};
 }
-
 
 export class CardSightsHolder extends BasicView {
 	#tokens: Token[];
@@ -183,10 +189,10 @@ export class CardSightsHolder extends BasicView {
 
 	rerenderCards = (metadata: IsTrue) => {
 		this.setEmpty();
-		this.#cards = [];  
+		this.#cards = [];
 
 		interface sightAdopted {
-			sight: Sight;
+			sight: SightAdoptedForRender;
 			preview: string;
 			PP: number;
 		}
@@ -194,18 +200,34 @@ export class CardSightsHolder extends BasicView {
 
 		let i = 0;
 		const { sights } = storage.getCurrentTrip();
-		console.log("sights = ", sights)
+		console.log('sights = ', sights);
 		if (sights) {
 			sights.forEach(sight => {
-				console.log("sight ",sight)
+				console.log('sight ', sight);
+
+				const adoptedTags: Array<TagAdoptedForRender> = [];
+				sight.tags.forEach(tag => {
+					adoptedTags.push({
+						name: tag,
+						sightPP: i,
+					});
+				});
+
 				sightsAdopted[0].push({
-					sight: sight,
-					preview: sights[0].photos[0], 
+					sight: {
+						id: sight.id,
+						tags: adoptedTags,
+						description: sight.description,
+						name: sight.name,
+						photos: sight.photos,
+						rating: sight.rating,
+					},
+					preview: sights[0].photos[0],
 					PP: i,
-				})
+				});
 			});
+			i += 1;
 		}
-		console.log("sightsAdopted = ", sightsAdopted)
 		this.setView(
 			tripSights({
 				sights: sightsAdopted,
@@ -233,5 +255,3 @@ export class CardSightsHolder extends BasicView {
 		this.setEmpty();
 	};
 }
-
-

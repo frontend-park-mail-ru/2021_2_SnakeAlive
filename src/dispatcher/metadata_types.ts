@@ -105,7 +105,6 @@ export interface AlbumUpdateInfo {
 	actionAfter?: (id: string) => void;
 }
 
-
 export type DataType =
 	| UUID
 	| NumID

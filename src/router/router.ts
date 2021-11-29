@@ -27,7 +27,7 @@ class Router {
 		const testQ = new URL(window.location.href);
 		if (window.location.pathname === _path && testQ.searchParams.toString() === '') return;
 		const url = new URL(_path, window.location.href);
-		console.log("router go - data ", _data);
+		console.log('router go - data ', _data);
 		if (_data) {
 			url.searchParams.append('id', _data);
 		}

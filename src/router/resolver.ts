@@ -5,7 +5,8 @@ import {
 	initLoginPageRequest,
 	initProfilePageRequest,
 	initRegisterPageRequest,
-	initSightPageRequest, initTagPageRequest,
+	initSightPageRequest,
+	initTagPageRequest,
 	initTripPageRequest,
 	newInitPageRequest,
 	initTripEditPageRequest,
@@ -75,7 +76,6 @@ export const notifier = (path: URL): void /* IEvent */ => {
 			const params = tryGetParam([paramsURLfrontend.id, paramsURLfrontend.edit], path);
 			console.log(params);
 
-			
 			if (params.id) {
 				dispatcher.notify(initTripEditPageRequest(Number(params.id)));
 			} else {

@@ -1,7 +1,9 @@
 import {
 	GetProfileResponse,
 	Profile,
+	ProfileAlbum,
 	ProfileMetadata,
+	ProfileTrip,
 	UpdateProfileMetadataRequest,
 	UpdateProfileMetadataResponse,
 } from '@/models/profile';
@@ -30,6 +32,8 @@ import { newGetProfileRequest, newGetProfileResponse } from '@/actions/profile';
 import { initErrorPageRequest } from '@/actions/page';
 import { newSetEmptyHeaderRequest } from '@/actions/header';
 import { router } from '@/router';
+import { Album } from '@/models';
+import { TripInfo } from '@/dispatcher/metadata_types';
 
 export default class ProfileReducer {
 	#tokens: Token[];
@@ -133,4 +137,12 @@ export default class ProfileReducer {
 			}
 			return Promise.resolve(response);
 		});
+
+	// #getProfileTrips = (): Promise<ProfileTrip[]> => {
+	//
+	// }
+	//
+	// #getProfileAlbums = (): Promise<ProfileAlbum[]> => {
+	//
+	// }
 }

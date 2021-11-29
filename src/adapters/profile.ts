@@ -38,10 +38,10 @@ export function adaptUpdateProfileMetadataResponse(
 ): ProfileMetadata {
 	return <ProfileMetadata>{
 		email: response.email,
-		avatar: "",
+		avatar: '',
 		name: response.name,
 		surname: response.surname,
 		description: '',
-		id: Number(response.id)
+		id: Number(response.id),
 	};
 }

@@ -38,5 +38,5 @@ export {
 	albumURI,
 	photoURI,
 	searchURI,
-	tagsURI
+	tagsURI,
 };

@@ -27,7 +27,6 @@ const createTripFormRequest = (title: string, description: string): IEvent =>
 		},
 	};
 
-
 const createTripEdit = (tripID: string, isEdit: boolean): IEvent =>
 	<IEvent>{
 		key: EventType.CREATE_TRIP_EDIT,
@@ -57,7 +56,7 @@ const updateCurrentTripInfo = (title: string, description: string) =>
 const addPlaceToTrip = (sight: Sight, day: number) =>
 	<IEvent>{
 		key: EventType.ADD_CURRENT_TRIP_PLACE,
-		metadata: <SightDay>{sight, day}
+		metadata: <SightDay>{ sight, day },
 	};
 
 const deleteCurrentTripPlace = (sightId: number, day: number) =>
@@ -80,7 +79,6 @@ const deleteTrip = () =>
 		key: EventType.DELETE_TRIP,
 		metadata: <Empty>{},
 	};
-
 
 export {
 	newGetTripRequest,

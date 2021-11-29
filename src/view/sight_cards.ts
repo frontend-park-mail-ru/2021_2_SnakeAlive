@@ -3,13 +3,14 @@ import { deleteCurrentTripPlace } from '@/actions/trip';
 import { router } from '@/router';
 import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
 import { createFrontendQueryParams } from '@/router/router';
+import { TagAdoptedForRender } from '@/models/sight';
 
 export class SightCardInTrip {
 	#id = -1;
 
 	#PP = -1;
 
-	createCard = (id: string, PP: number, tags: string[]): void => {
+	createCard = (id: string, PP: number, tags: TagAdoptedForRender[]): void => {
 		this.#id = Number(id);
 		this.#PP = PP;
 		if (Number.isNaN(this.#id)) {
@@ -38,8 +39,7 @@ export class SightCardInTrip {
 				event => {
 					event.preventDefault();
 					router.go(
-						createFrontendQueryParams(
-							pathsURLfrontend.sight, [
+						createFrontendQueryParams(pathsURLfrontend.sight, [
 							{
 								key: paramsURLfrontend.id,
 								value: String(this.#id),
@@ -51,19 +51,20 @@ export class SightCardInTrip {
 			);
 		}
 
-		// tag_{{this}}
-		tags.forEach((tag) => {
-			const tegElem = document.getElementById(`tag_${tag}`);
+		tags.forEach(tag => {
+			const tegElem = document.getElementById(`tag_${tag.name}_${tag.sightPP}`);
 			if (tegElem !== null) {
 				tegElem.addEventListener('click', () => {
-					router.go(createFrontendQueryParams(pathsURLfrontend.tag, [
-						{
-							key: paramsURLfrontend.tag,
-							value: tag
-						}
-					]));
-				})
+					router.go(
+						createFrontendQueryParams(pathsURLfrontend.tag, [
+							{
+								key: paramsURLfrontend.tag,
+								value: tag.name,
+							},
+						])
+					);
+				});
 			}
-		})
+		});
 	};
 }

@@ -19,7 +19,7 @@ export interface UpdateProfileMetadataResponse {
 	surname: string;
 	avatar: string;
 	email: string;
-	id: string
+	id: string;
 }
 
 export interface ProfileMetadata {
@@ -32,6 +32,16 @@ export interface ProfileMetadata {
 }
 
 export interface Profile {
+	meta: ProfileMetadata;
+	profileImage: string;
+}
+
+export interface ProfileTrip {
+	title: string;
+	description: string;
+}
+
+export interface ProfileAlbum {
 	meta: ProfileMetadata;
 	profileImage: string;
 }

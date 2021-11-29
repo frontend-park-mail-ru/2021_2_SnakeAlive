@@ -10,7 +10,7 @@ export const adoptForSend = (trip: Trip): TripFormInfo => {
 			responseDays.push({ id: Number(sight.id), day: 0 });
 			i += 1;
 		});
-	}else{
+	} else {
 		responseDays.push({ id: 1, day: 0 });
 	}
 	return {

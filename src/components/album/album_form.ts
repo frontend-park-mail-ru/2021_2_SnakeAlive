@@ -85,7 +85,8 @@ export const initAlbumForm = (isNew: boolean) => {
 					setError();
 				} else {
 					const { title, description } = isOk;
-					dispatcher.notify(updateAlbumInfoRequest(title, description, storage.getAlbum().photos, (id: string) => {
+					dispatcher.notify(
+						updateAlbumInfoRequest(title, description, storage.getAlbum().photos, (id: string) => {
 							router.go(
 								createFrontendQueryParams(pathsURLfrontend.album, [
 									{
@@ -98,7 +99,8 @@ export const initAlbumForm = (isNew: boolean) => {
 									},
 								])
 							);
-					}));
+						})
+					);
 				}
 			},
 			false
@@ -118,15 +120,24 @@ export const initAlbumForm = (isNew: boolean) => {
 						setError();
 					} else {
 						const { title, description } = isOk;
-						dispatcher.notify(updateAlbumInfoRequest(title, description, storage.getAlbum().photos, (id: string) => {
-							dispatcher.notify(newGetAlbumResult(false));
-							router.pushHistoryState(createFrontendQueryParams(pathsURLfrontend.album, [
-								{
-									key: paramsURLfrontend.id,
-									value: id
+						dispatcher.notify(
+							updateAlbumInfoRequest(
+								title,
+								description,
+								storage.getAlbum().photos,
+								(id: string) => {
+									dispatcher.notify(newGetAlbumResult(false));
+									router.pushHistoryState(
+										createFrontendQueryParams(pathsURLfrontend.album, [
+											{
+												key: paramsURLfrontend.id,
+												value: id,
+											},
+										])
+									);
 								}
-							]));
-						}));
+							)
+						);
 					}
 				},
 				false

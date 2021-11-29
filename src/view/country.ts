@@ -7,6 +7,7 @@ import { storage } from '@/storage';
 import tripSights from '@/components/country_page/sights.handlebars';
 import { SightCardInTrip } from '@/view/sight_cards';
 import { minCardInfo } from '@/models/country';
+import { TagAdoptedForRender } from '@/models/sight';
 
 class CountryCardsHolderView extends BasicView {
 	#tokens: Token[];
@@ -41,14 +42,24 @@ class CountryCardsHolderView extends BasicView {
 		this.#cards = [];
 
 		const cardsArray = storage.getSightsCardsMin();
-		console.log(cardsArray);
-		// ?
+
+		cardsArray.forEach(sight => {
+			const tagsAdopted: Array<TagAdoptedForRender> = [];
+			sight.sight.tags.forEach(tag => {
+				tagsAdopted.push({
+					name: tag,
+					sightPP: sight.PP,
+				});
+			});
+			// eslint-disable-next-line no-param-reassign
+			sight.sight.adoptedTags = tagsAdopted;
+		});
 
 		this.setView(tripSights({ cards: cardsArray }));
 
 		cardsArray.forEach(sight => {
 			const card = new SightCardInTrip();
-			card.createCard(sight.sight.id, sight.PP, sight.sight.tags);
+			card.createCard(sight.sight.id, sight.PP, sight.sight.adoptedTags);
 			this.#cards.push(card);
 		});
 		console.log(this.#cards);

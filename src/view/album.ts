@@ -36,11 +36,11 @@ export class PhotosView {
 	};
 
 	renderPhotos = (isEdit: IsTrue) => {
-		this.#leftPhotosHolder = document.getElementById("album_page__photo_holder_left");
+		this.#leftPhotosHolder = document.getElementById('album_page__photo_holder_left');
 		if (this.#leftPhotosHolder === null) {
 			throw Error('not found in html "album_page__photo_holder_left');
 		}
-		this.#rightPhotosHolder = document.getElementById("album_page__photo_holder_right");
+		this.#rightPhotosHolder = document.getElementById('album_page__photo_holder_right');
 		if (this.#rightPhotosHolder === null) {
 			throw Error('not found in html "album_page__photo_holder_right');
 		}
@@ -53,42 +53,48 @@ export class PhotosView {
 		}
 
 		if (photos.length < 2) {
-			const rightPhotosHolder = document.getElementById("album_page__photo_holder_right");
+			const rightPhotosHolder = document.getElementById('album_page__photo_holder_right');
 			if (rightPhotosHolder !== null) {
 				rightPhotosHolder.innerHTML = albumPhotosTemplate({ photos, isEdit: isEdit.isTrue });
 			}
 		} else {
-			const photosLeft = photos.slice(photos.length /2);
-			const photosRight = photos.slice(0, photos.length /2);
+			const photosLeft = photos.slice(photos.length / 2);
+			const photosRight = photos.slice(0, photos.length / 2);
 			if (this.#rightPhotosHolder !== null) {
-				this.#rightPhotosHolder.innerHTML = albumPhotosTemplate({ photos: photosRight, isEdit: isEdit.isTrue });
+				this.#rightPhotosHolder.innerHTML = albumPhotosTemplate({
+					photos: photosRight,
+					isEdit: isEdit.isTrue,
+				});
 			}
 			if (this.#leftPhotosHolder !== null) {
-				this.#leftPhotosHolder.innerHTML = albumPhotosTemplate({ photos: photosLeft, isEdit: isEdit.isTrue });
+				this.#leftPhotosHolder.innerHTML = albumPhotosTemplate({
+					photos: photosLeft,
+					isEdit: isEdit.isTrue,
+				});
 			}
 		}
 
 		console.log('render');
 		if (isEdit.isTrue) {
 			console.log('isEdit');
-			photos.forEach((photo) => {
+			photos.forEach(photo => {
 				console.log('photo!');
 				this.#initDeleteButton(photo);
-			})
+			});
 		}
 	};
 
 	#checkLoadedFile = (file: File): Error | null => {
-			// провераяем тип файла
-			if (!['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml'].includes(file.type)) {
-				return Error('Разрешены только изображения.');
-			}
-			// проверим размер файла (<2 Мб)
-			if (file.size > 2 * 1024 * 1024) {
-				return Error('Файл должен быть менее 2 МБ.');
-			}
-			return null;
-	}
+		// провераяем тип файла
+		if (!['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml'].includes(file.type)) {
+			return Error('Разрешены только изображения.');
+		}
+		// проверим размер файла (<2 Мб)
+		if (file.size > 2 * 1024 * 1024) {
+			return Error('Файл должен быть менее 2 МБ.');
+		}
+		return null;
+	};
 
 	#initAddBtn = () => {
 		if (this.#isInited) {
@@ -96,14 +102,18 @@ export class PhotosView {
 		}
 		this.#isInited = true;
 
-		const addBtn = document.getElementById("add_photos_btn");
-		const addInput = <HTMLInputElement>document.getElementById("add_photos_input");
+		const addBtn = document.getElementById('add_photos_btn');
+		const addInput = <HTMLInputElement>document.getElementById('add_photos_input');
 		if (addBtn !== null && addInput !== null) {
-			addBtn.addEventListener('click', () => {
-				addInput.click();
-			}, false);
+			addBtn.addEventListener(
+				'click',
+				() => {
+					addInput.click();
+				},
+				false
+			);
 
-			addInput.addEventListener('change', (event)=>{
+			addInput.addEventListener('change', event => {
 				event.preventDefault();
 				if (addInput === null) {
 					return;
@@ -119,19 +129,19 @@ export class PhotosView {
 				}
 
 				// отправка файла
-					const uploadFile = new FormData();
+				const uploadFile = new FormData();
 				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 				// @ts-ignore
-					uploadFile.append("file", addInput.files[0]);
-					dispatcher.notify(addAlbumPhoto(uploadFile));
+				uploadFile.append('file', addInput.files[0]);
+				dispatcher.notify(addAlbumPhoto(uploadFile));
 			});
 		} else {
 			throw Error('не найдена кнопка инпута или сам инпут для добавления фото');
 		}
-	}
+	};
 
 	#initDeleteButton = (photoName: string) => {
-		console.log("deleteBtn");
+		console.log('deleteBtn');
 		const deleteBtn = document.getElementById(`delete_photo_${photoName}`);
 		console.log(deleteBtn);
 		if (deleteBtn !== null) {
@@ -148,7 +158,7 @@ export class PhotosView {
 				false
 			);
 		}
-	}
+	};
 
 	destroy = (metadata: EventType): void => {
 		this.#tokens.forEach(element => {
@@ -259,16 +269,18 @@ export class AlbumView extends BasicView {
 				'click',
 				() => {
 					dispatcher.notify(newGetAlbumResult(true));
-					router.pushHistoryState(createFrontendQueryParams(pathsURLfrontend.album, [
-						{
-							key: paramsURLfrontend.id,
-							value: storage.getAlbum().id.toString()
-						},
-						{
-							key: paramsURLfrontend.edit,
-							value: '1'
-						},
-					]));
+					router.pushHistoryState(
+						createFrontendQueryParams(pathsURLfrontend.album, [
+							{
+								key: paramsURLfrontend.id,
+								value: storage.getAlbum().id.toString(),
+							},
+							{
+								key: paramsURLfrontend.edit,
+								value: '1',
+							},
+						])
+					);
 				},
 				false
 			);
