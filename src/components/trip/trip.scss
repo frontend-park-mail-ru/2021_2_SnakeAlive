@@ -72,8 +72,15 @@
 }
 
 #map {
-  height: 740px;
+  height: 1140px;
+  width: 1700px;
   margin-top: 10px;
+}
+
+.trip_preview{
+  width: 100%; /* Ширина изображений */
+  height: 100%; /* Высота изображении */
+  object-fit: cover; /* Вписываем фотографию в область */
 }
 
 

@@ -3,13 +3,13 @@ import { dispatcher, EventType, Token } from '@/dispatcher';
 import tripPageTemplate from '@/components/trip/trip.handlebars';
 import tripFormTemplate from '@/components/trip/trip_form.handlebars';
 import tripSights from '@/components/trip/trip_sights.handlebars';
-import { init, initEdit, initDelSightsBtns } from '@/components/trip/trip_form';
+import { init, initEdit, initDelSightsBtns, initDelTripBtn, initSubmitTripBtn, initDescription } from '@/components/trip/trip_form';
 import { loader, Map } from '@/components/map/map';
 import { sendGetJSONRequest } from '@/http';
 import { backendEndpoint, listOfCountries, pathsURLfrontend } from '@/constants';
 import { IsTrue, SightToTrip,  } from '@/dispatcher/metadata_types';
 import { storage } from '@/storage';
-import { rerenderTripCards, newGetTripRequest, addPlaceToTrip, delPlaceFromTrip } from '@/actions/trip';
+import { rerenderTripCards, newGetTripRequest, addPlaceToTrip, delPlaceFromTrip, deleteTrip } from '@/actions/trip';
 import { SightCardInTrip } from '@/view/sight_cards';
 import { Sight, SightsCoord , SightDay} from '@/models';
 import defaultPicture from '@/../image/moscow_city_1.jpeg';
@@ -128,7 +128,10 @@ export class TripInfoView extends BasicView {
 			);
 		} else {
 			console.log('No button = ', addAlbumBtn);
-		}	
+		}
+		initDescription()	
+		initDelTripBtn()
+		initSubmitTripBtn()
 	};
 
 	addPlace = () => {
@@ -151,13 +154,11 @@ export class TripInfoView extends BasicView {
 
 export class TripMapView extends BasicView {
 	#tokens: Token[];
-	#coord: SightsCoord[];
 	#map: Map;
 
 	constructor() {
 		super('#content');
 		this.#tokens = [];
-		this.#coord = [];
 		this.#map = new Map();
 	}
 

@@ -94,15 +94,12 @@ export default class TripReducer {
 
 	updateCurrentTripInfo = (metadata: TripInfo) => {
 		const trip = storage.getCurrentTrip();
+		trip.description  = metadata.description
+		storage.storeCurrentTrip(trip)
 		const tripSend = adoptForSend(trip);
-
-		tripSend.title = metadata.title;
-		tripSend.description = metadata.description;
-
-		// отправка обновления
+		console.log('tripSend = ', tripSend);
 		this.#updateTrip(tripSend, trip.id).then(response => {
-			storage.storeCurrentTrip(response);
-			// dispatcher.notify( ??
+			router.go(pathsURLfrontend.root);
 		});
 	};
 
@@ -128,6 +125,7 @@ export default class TripReducer {
 
 	deleteTrip = () => {
 		const { id } = storage.getCurrentTrip();
+		storage.clearCurrentTrip()
 		sendDeleteJSONRequest(backendEndpoint + tripURI + id)
 			.then(response => {
 				if (response.status === 200) {
@@ -136,7 +134,7 @@ export default class TripReducer {
 				return Promise.reject(new Error(String(`response ended with, ${response.status}`)));
 			})
 			.then(() => {
-				router.go(pathsURLfrontend.profile);
+				router.go(pathsURLfrontend.root);
 			});
 	};
 
