@@ -4,6 +4,9 @@ import { router } from './router';
 
 import './drop_default.css';
 import './index.scss';
+
+import './components/horizontal_scroll/horizontal_scroll.scss';
+
 import SearchReducer from '@/reducers/search';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function

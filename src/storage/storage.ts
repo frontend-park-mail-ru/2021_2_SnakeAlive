@@ -1,5 +1,5 @@
 import { Country, CountryCard, Sight, TemplateCards, Trip, UserMetadata } from '@/models';
-import { Profile, ProfileMetadata } from '@/models/profile';
+import { Profile, ProfileAlbum, ProfileMetadata, ProfileTrip } from '@/models/profile';
 import { Review } from '@/models/review';
 import { minCardInfo } from '@/models/country';
 import { Album } from '@/models/album';
@@ -32,6 +32,10 @@ class Storage {
 		sights: Sight[];
 	}[];
 
+	#profileTrips: ProfileTrip[];
+
+	#profileAlbums: ProfileAlbum[];
+
 	constructor() {
 		this.#countryCards = <TemplateCards>{};
 		this.#country = <Country>{};
@@ -44,6 +48,8 @@ class Storage {
 		this.#cards = [];
 		this.#album = <Album>{};
 		this.#searchSightsResult = [];
+		this.#profileTrips = <ProfileTrip[]>{};
+		this.#profileAlbums = <ProfileAlbum[]>{};
 	}
 
 	addLastTripId = (id: number) => {
@@ -157,6 +163,18 @@ class Storage {
 		});
 		return result;
 	};
+
+	storeProfileTrips = (trips: ProfileTrip[]) => {
+		this.#profileTrips = trips;
+	}
+
+	getProfileTrips = (): ProfileTrip[] => this.#profileTrips;
+
+	storeProfileAlbums = (albums: ProfileAlbum[]) => {
+		this.#profileAlbums = albums;
+	}
+
+	getProfileAlbums = () : ProfileAlbum[] => this.#profileAlbums;
 }
 
 export const storage = new Storage();

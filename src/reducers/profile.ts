@@ -14,17 +14,18 @@ import {
 	sendPostFileRequest,
 } from '@/http';
 import {
+	albumURI,
 	backendEndpoint,
 	backendFileEndpoint,
 	logout,
 	pathsURLfrontend,
-	profile,
+	profile, tripURI,
 	upload,
 } from '@/constants';
 import {
 	adaptGetProfileResponse,
 	adaptUpdateProfileMetadataRequest,
-	adaptUpdateProfileMetadataResponse,
+	adaptUpdateProfileMetadataResponse, adoptProfileAlbums, adoptProfileTrips,
 } from '@/adapters/profile';
 import { storage } from '@/storage';
 import { DataType, dispatcher, EventType, File, Token, UpdateProfile } from '@/dispatcher';
@@ -34,6 +35,7 @@ import { newSetEmptyHeaderRequest } from '@/actions/header';
 import { router } from '@/router';
 import { Album } from '@/models';
 import { TripInfo } from '@/dispatcher/metadata_types';
+import { user } from '@/constants/uris';
 
 export default class ProfileReducer {
 	#tokens: Token[];
@@ -62,7 +64,15 @@ export default class ProfileReducer {
 		this.#sendGetProfile()
 			.then((response: GetProfileResponse) => {
 				storage.storeProfile(adaptGetProfileResponse(response));
-				dispatcher.notify(newGetProfileResponse());
+
+				this.#getProfileTrips().then((trips: ProfileTrip[]) => {
+					storage.storeProfileTrips(adoptProfileTrips(trips));
+					this.#getProfileAlbums().then((albums: ProfileAlbum[]) => {
+						storage.storeProfileAlbums(adoptProfileAlbums(albums));
+
+						dispatcher.notify(newGetProfileResponse());
+					})
+				});
 			})
 			.catch((error: Error) => {
 				dispatcher.notify(initErrorPageRequest(error));
@@ -138,11 +148,25 @@ export default class ProfileReducer {
 			return Promise.resolve(response);
 		});
 
-	// #getProfileTrips = (): Promise<ProfileTrip[]> => {
-	//
-	// }
-	//
-	// #getProfileAlbums = (): Promise<ProfileAlbum[]> => {
-	//
-	// }
+	#getProfileTrips = (): Promise<ProfileTrip[]> =>
+		sendGetJSONRequest(backendEndpoint + tripURI + user)
+		.then(response => {
+			if (response.status !== 200) {
+				// return Promise.reject(new Error('На сайте нет такой страницы'));
+				console.log("не получены поездки пользователя");
+			}
+			return Promise.resolve(response);
+		})
+		.then(response => response.json());
+
+	#getProfileAlbums = (): Promise<ProfileAlbum[]> =>
+		sendGetJSONRequest(backendEndpoint + albumURI + user)
+			.then(response => {
+				if (response.status !== 200) {
+					// return Promise.reject(new Error('На сайте нет такой страницы'));
+					console.log("не получены альбомы пользователя");
+				}
+				return Promise.resolve(response);
+			})
+			.then(response => response.json());
 }

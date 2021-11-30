@@ -37,11 +37,16 @@ export interface Profile {
 }
 
 export interface ProfileTrip {
+	htmlId: string;
+	id: number;
 	title: string;
 	description: string;
 }
 
 export interface ProfileAlbum {
-	meta: ProfileMetadata;
-	profileImage: string;
+	htmlId: string;
+	id: number;
+	title: string;
+	description: string;
+	photos: string[];
 }
