@@ -103,6 +103,10 @@ class Storage {
 		this.#trip = trip;
 	};
 
+	clearCurrentTrip = (): void => {
+		this.#trip = <Trip>{};
+	};
+
 	getCurrentTrip = (): Trip => this.#trip;
 
 	storeProfile = (profile: Profile): void => {
@@ -166,15 +170,15 @@ class Storage {
 
 	storeProfileTrips = (trips: ProfileTrip[]) => {
 		this.#profileTrips = trips;
-	}
+	};
 
 	getProfileTrips = (): ProfileTrip[] => this.#profileTrips;
 
 	storeProfileAlbums = (albums: ProfileAlbum[]) => {
 		this.#profileAlbums = albums;
-	}
+	};
 
-	getProfileAlbums = () : ProfileAlbum[] => this.#profileAlbums;
+	getProfileAlbums = (): ProfileAlbum[] => this.#profileAlbums;
 }
 
 export const storage = new Storage();

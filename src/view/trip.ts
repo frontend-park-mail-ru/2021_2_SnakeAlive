@@ -3,15 +3,28 @@ import { dispatcher, EventType, Token } from '@/dispatcher';
 import tripPageTemplate from '@/components/trip/trip.handlebars';
 import tripFormTemplate from '@/components/trip/trip_form.handlebars';
 import tripSights from '@/components/trip/trip_sights.handlebars';
-import { init, initEdit } from '@/components/trip/trip_form';
-import { Map } from '@/components/map/map';
+import {
+	init,
+	initEdit,
+	initDelSightsBtns,
+	initDelTripBtn,
+	initSubmitTripBtn,
+	initDescription,
+} from '@/components/trip/trip_form';
+import { loader, Map } from '@/components/map/map';
 import { sendGetJSONRequest } from '@/http';
 import { backendEndpoint, listOfCountries, pathsURLfrontend } from '@/constants';
-import { IsTrue } from '@/dispatcher/metadata_types';
+import { IsTrue, SightToTrip } from '@/dispatcher/metadata_types';
 import { storage } from '@/storage';
-import { rerenderTripCards, newGetTripRequest, addPlaceToTrip } from '@/actions/trip';
+import {
+	rerenderTripCards,
+	newGetTripRequest,
+	addPlaceToTrip,
+	delPlaceFromTrip,
+	deleteTrip,
+} from '@/actions/trip';
 import { SightCardInTrip } from '@/view/sight_cards';
-import { Sight, SightsCoord } from '@/models';
+import { Sight, SightsCoord, SightDay } from '@/models';
 import defaultPicture from '@/../image/moscow_city_1.jpeg';
 import { NumID } from '@/dispatcher';
 import { initSearchView, SearchView } from '@/components/search/search';
@@ -70,6 +83,8 @@ export class TripInfoView extends BasicView {
 
 	#search: SearchView | null = null;
 
+	// #albums: albumListHolder;
+
 	#cardHolder: CardSightsHolder;
 
 	constructor() {
@@ -83,6 +98,7 @@ export class TripInfoView extends BasicView {
 			dispatcher.register(EventType.CREATE_TRIP_EDIT, this.createTripEdit),
 			dispatcher.register(EventType.SUBMIT_SEARCH_RESULTS, this.addPlace),
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
+			dispatcher.register(EventType.DELETE_CURRENT_TRIP_PLACE, this.delPlace),
 		];
 
 		const cardsHolder = new CardSightsHolder();
@@ -140,28 +156,31 @@ export class TripInfoView extends BasicView {
 						id: album.id,
 						description: album.description,
 						title: album.title,
-						htmlId: `album_go_${album.id}`
+						htmlId: `album_go_${album.id}`,
 					});
 				});
 			}
 
-			albumPlace.innerHTML = typicalCollection({ albums: shownAlbums, header: "Альбомы" });
+			albumPlace.innerHTML = typicalCollection({ albums: shownAlbums, header: 'Альбомы' });
 			shownAlbums.forEach(album => {
-					const place = document.getElementById(`photo_scroll_${album.htmlId}`);
-					if (place !== null) {
-						const pages: Array<{
-							picture: string
-						}> = [];
-						album.photos.forEach(photo => {
-							pages.push({
-								picture: photo
-							});
+				const place = document.getElementById(`photo_scroll_${album.htmlId}`);
+				if (place !== null) {
+					const pages: Array<{
+						picture: string;
+					}> = [];
+					album.photos.forEach(photo => {
+						pages.push({
+							picture: photo,
 						});
-						place.innerHTML = horisontalScroll({pages});
-					}
-				});
-			setListenersOnCards("album", shownAlbums, pathsURLfrontend.album);
+					});
+					place.innerHTML = horisontalScroll({ pages });
+				}
+			});
+			setListenersOnCards('album', shownAlbums, pathsURLfrontend.album);
 		}
+		initDescription();
+		initDelTripBtn();
+		initSubmitTripBtn();
 	};
 
 	addPlace = () => {
@@ -171,6 +190,14 @@ export class TripInfoView extends BasicView {
 		const day = 0;
 		dispatcher.notify(addPlaceToTrip(place, day));
 		// rerender cards
+	};
+
+	delPlace = (metadata: SightToTrip) => {
+		//update trip - del place
+		console.log('del place from view');
+		const sight = metadata.sightId;
+		const day = 0;
+		dispatcher.notify(delPlaceFromTrip(sight, day));
 	};
 }
 
@@ -190,6 +217,7 @@ export class TripMapView extends BasicView {
 		this.#tokens = [
 			dispatcher.register(EventType.GET_TRIP_RESPONSE, this.#map.restoreMap),
 			dispatcher.register(EventType.ADD_CURRENT_TRIP_PLACE, this.#map.addMarker),
+			dispatcher.register(EventType.DEL_CURRENT_TRIP_PLACE, this.#map.delMarker),
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.#destroy),
 		];
 	};
@@ -238,40 +266,35 @@ export class CardSightsHolder extends BasicView {
 		console.log('sights = ', sights);
 		if (sights) {
 			sights.forEach(sight => {
-				console.log('sight ', sight);
+				if (i != 0) {
+					console.log('sight ', sight);
 
-				const adoptedTags: Array<TagAdoptedForRender> = [];
-				sight.tags.forEach(tag => {
-					adoptedTags.push({
-						name: tag,
-						sightPP: i,
+					const adoptedTags: Array<TagAdoptedForRender> = [];
+					sight.tags.forEach(tag => {
+						adoptedTags.push({
+							name: tag,
+							sightPP: i,
+						});
 					});
-				});
 
-				sightsAdopted[0].push({
-					sight: {
-						id: sight.id,
-						tags: adoptedTags,
-						description: sight.description,
-						name: sight.name,
-						photos: sight.photos,
-						rating: sight.rating,
-						photo: sight.photos[0]
-					},
-					preview: sights[0].photos[0],
-					PP: i,
-				});
+					sightsAdopted[0].push({
+						sight: {
+							id: sight.id,
+							tags: adoptedTags,
+							description: sight.description,
+							name: sight.name,
+							photos: sight.photos,
+							rating: sight.rating,
+							photo: sight.photos[0],
+						},
+						preview: sights[0].photos[0],
+						PP: i,
+					});
+				}
+				i += 1;
 			});
-			i += 1;
 		}
-		this.setView(
-			tripSights({
-				sights: sightsAdopted,
-				isEdit: metadata.isTrue,
-				defaultPicture,
-			})
-		);
-
+		console.log('sightsAdopted = ', sightsAdopted);
 		sightsAdopted.forEach(day => {
 			day.forEach(sight => {
 				const card = new SightCardInTrip();
@@ -279,6 +302,15 @@ export class CardSightsHolder extends BasicView {
 				this.#cards.push(card);
 			});
 		});
+
+		this.setView(
+			tripSights({
+				sights: sightsAdopted,
+				isEdit: metadata.isTrue,
+				defaultPicture,
+			})
+		);
+		initDelSightsBtns();
 	};
 
 	#destroy = (): void => {

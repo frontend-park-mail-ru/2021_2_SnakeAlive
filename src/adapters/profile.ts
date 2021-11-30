@@ -1,7 +1,9 @@
 import {
 	GetProfileResponse,
-	Profile, ProfileAlbum,
-	ProfileMetadata, ProfileTrip,
+	Profile,
+	ProfileAlbum,
+	ProfileMetadata,
+	ProfileTrip,
 	UpdateProfileMetadataRequest,
 	UpdateProfileMetadataResponse,
 } from '@/models/profile';
@@ -50,20 +52,20 @@ export function adaptUpdateProfileMetadataResponse(
 }
 
 export const adoptProfileTrips = (trips: ProfileTrip[]): ProfileTrip[] => {
-	trips.forEach((trip) => {
+	trips.forEach(trip => {
 		// eslint-disable-next-line no-param-reassign
-		trip.htmlId = `go_trip_${trip.id}`
+		trip.htmlId = `go_trip_${trip.id}`;
 	});
 	return trips;
-}
+};
 
 export const adoptProfileAlbums = (albums: ProfileAlbum[]): ProfileAlbum[] => {
 	if (albums !== null) {
-		albums.forEach((album) => {
+		albums.forEach(album => {
 			// eslint-disable-next-line no-param-reassign
-			album.htmlId = `go_album_${album.id}`
+			album.htmlId = `go_album_${album.id}`;
 		});
 		return albums;
 	}
 	return [];
-}
+};

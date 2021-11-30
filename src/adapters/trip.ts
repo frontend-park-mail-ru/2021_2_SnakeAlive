@@ -19,3 +19,14 @@ export const adoptForSend = (trip: Trip): TripFormInfo => {
 		sights: responseDays,
 	};
 };
+
+export const adoptForCreate = (trip: Trip): TripFormInfo => {
+	const { title, description, sights } = trip;
+	const responseDays: Array<TripSights> = [];
+	let i = 0;
+	return {
+		title,
+		description,
+		sights: [{ id: 1, day: -1 }], //fake data, not rendering
+	};
+};
