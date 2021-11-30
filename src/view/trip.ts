@@ -135,38 +135,38 @@ export class TripInfoView extends BasicView {
 		initDelTripBtn()
 		initSubmitTripBtn()
 
-		//const albumPlace = document.getElementById('trip_albums_holder');
-		// if (albumPlace !== null) {
-		// 	const shownAlbums: ProfileAlbum[] = [];
-		// 	if (trip.albums !== null) {
-		// 		trip.albums.forEach(album => {
-		// 			shownAlbums.push({
-		// 				photos: album.photos,
-		// 				id: album.id,
-		// 				description: album.description,
-		// 				title: album.title,
-		// 				htmlId: `album_go_${album.id}`
-		// 			});
-		// 		});
-		// 	}
+		const albumPlace = document.getElementById('trip_albums_holder');
+		if (albumPlace !== null) {
+			const shownAlbums: ProfileAlbum[] = [];
+			if (trip.albums !== null) {
+				trip.albums.forEach(album => {
+					shownAlbums.push({
+						photos: album.photos,
+						id: album.id,
+						description: album.description,
+						title: album.title,
+						htmlId: `album_go_${album.id}`
+					});
+				});
+			}
 
-			// albumPlace.innerHTML = typicalCollection({ albums: shownAlbums, header: "Альбомы" });
-			// shownAlbums.forEach(album => {
-			// 		const place = document.getElementById(`photo_scroll_${album.htmlId}`);
-			// 		if (place !== null) {
-			// 			const pages: Array<{
-			// 				picture: string
-			// 			}> = [];
-			// 			// album.photos.forEach(photo => {
-			// 			// 	pages.push({
-			// 			// 		picture: photo
-			// 			// 	});
-			// 			// });
-			// 			place.innerHTML = horisontalScroll({pages});
-			// 		}
-			// 	});
-			//setListenersOnCards("album", shownAlbums, pathsURLfrontend.album);
-		//}
+			albumPlace.innerHTML = typicalCollection({ albums: shownAlbums, header: "Альбомы" });
+			shownAlbums.forEach(album => {
+					const place = document.getElementById(`photo_scroll_${album.htmlId}`);
+					if (place !== null) {
+						const pages: Array<{
+							picture: string
+						}> = [];
+						album.photos.forEach(photo => {
+							pages.push({
+								picture: photo
+							});
+						});
+						place.innerHTML = horisontalScroll({pages});
+					}
+				});
+			setListenersOnCards("album", shownAlbums, pathsURLfrontend.album);
+		}
 	};
 
 	addPlace = () => {

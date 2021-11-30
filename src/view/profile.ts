@@ -215,11 +215,13 @@ export default class ProfileView extends BasicView {
 				const pages: Array<{
 					picture: string
 				}> = [];
-				// album.photos.forEach(photo => {
-				// 	pages.push({
-				// 		picture: photo
-				// 	});
-				// });
+				if (album.photos) {
+					album.photos.forEach(photo => {
+						pages.push({
+							picture: photo
+						});
+					});
+				}
 				place.innerHTML = horisontalScroll({pages});
 			}
 		})

@@ -188,7 +188,7 @@
 
 .trip_sight__preview_photo {
   width: 100%;
-  height: 100px;
+  height: 50px;
   display: block;
   position: relative;
   overflow: hidden;
@@ -216,14 +216,23 @@
   justify-content: space-between;
 }
 
-.trip_sight_photo_wrapper {
+#trip_sight_photo_wrapper {
   //height: 250px;
   //min-height: 250px;
   width: 100%;
-  min-height: 150px;
-  padding: 10px;
+  //min-height: 150px;
+  //padding: 10px;
+  margin: 0;
+  padding: 0;
 
   display: flex;
   align-content: center;
   justify-content: center;
+}
+
+.trip_sight_photo {
+  height: 10px;
+  > img {
+    overflow-x: hidden;
+  }
 }
