@@ -73,9 +73,9 @@ export default class TripReducer {
 				dispatcher.notify(newGetTripResult(ID));
 				// ?
 			})
-			.catch((error: Error) => {
-				dispatcher.notify(initErrorPageRequest(error));
-			});
+			// .catch((error: Error) => {
+			// 	dispatcher.notify(initErrorPageRequest(error));
+			// });
 	};
 
 	addCurrentTripPlace = (metadata: SightDay) => {

@@ -58,9 +58,12 @@ export const adoptProfileTrips = (trips: ProfileTrip[]): ProfileTrip[] => {
 }
 
 export const adoptProfileAlbums = (albums: ProfileAlbum[]): ProfileAlbum[] => {
-	albums.forEach((album) => {
-		// eslint-disable-next-line no-param-reassign
-		album.htmlId = `go_album_${album.id}`
-	});
-	return albums;
+	if (albums !== null) {
+		albums.forEach((album) => {
+			// eslint-disable-next-line no-param-reassign
+			album.htmlId = `go_album_${album.id}`
+		});
+		return albums;
+	}
+	return [];
 }

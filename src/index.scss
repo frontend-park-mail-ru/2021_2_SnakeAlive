@@ -110,8 +110,11 @@ html, body {
 .frame {
   border-radius: 4px;
   border: 1px solid $my--frame-border;
-  padding: $large-px;
+
   background: $white;
+  > * {
+    padding: $large-px;
+  }
 }
 
 input,
@@ -161,7 +164,6 @@ textarea:active {
 
 .profile {
   grid-area: content;
-  background-color: $white;
   display: grid;
 
   @media (max-width: 960px) {
@@ -170,9 +172,7 @@ textarea:active {
     margin-top: 4px;
 
 
-    grid-template-areas: "photo"
-                        "metadata_holder"
-                        "btn_block"
+    grid-template-areas: "info"
                         "trips"
                         "albums";
 
@@ -202,7 +202,7 @@ textarea:active {
     row-gap: $small-px;
     column-gap: $small-px;
 
-    grid-template-areas: "photo metadata_holder metadata_holder btn_block"
+    grid-template-areas: "info info info info"
                          "trips trips albums albums";
     grid-template-rows: 200px;
     grid-template-columns: 200px 1fr 3fr 200px;
@@ -451,6 +451,7 @@ textarea:active {
     display: grid;
     //justify-content: center;
     grid-area: photo-edit-block;
+    max-width: 100%;
 
     @media (max-width: 960px) {
       grid-template-rows: 100px 30px 0;
@@ -555,11 +556,12 @@ textarea:active {
     cursor: pointer;
     background-color: $my--button-fill-hover;
   }
-
+F
   &__metadata {
     display: grid;
     justify-content: center;
     grid-area: content-edit-block;
+    max-width: 100%;
 
     @media (max-width: 960px) {
       margin-top: 15px;
@@ -624,13 +626,40 @@ textarea:active {
 
 //profile_show__photo временное, простити
 .profile_show {
+  &__info {
+    grid-area: info;
+    display: grid;
+
+    @media (max-width: 960px) {
+      grid-template-areas: "photo"
+                        "metadata_holder"
+                        "btn_block";
+      row-gap: 4px;
+    }
+
+    @media (min-width: 961px) {
+      row-gap: $small-px;
+      column-gap: $small-px;
+
+      grid-template-areas: "photo metadata_holder btn_block";
+      //grid-template-rows: 200px;
+      grid-template-columns: 200px 1fr 200px;
+
+      padding: 0;
+    }
+  }
+
   &__trips {
     grid-area: trips;
+    width: 100%;
+    max-width: 100%;
     background: $white;
   }
 
   &__albums {
     grid-area: albums;
+    width: 100%;
+    max-width: 100%;
     background: $white;
   }
 
@@ -643,18 +672,26 @@ textarea:active {
   overflow: hidden;
   border-radius: 50%;
 
-    height: 180px;
-    width: 180px;
+    height: 150px;
+    width: 150px;
 
     img {
-      height: 180px;
-      width: 180px;
+      height: 100%;
+      width: 100%;
       object-fit: cover;
 
       position: absolute;
       top: 0;
       left: 0;
     }
+  }
+
+  &__data {
+    grid-area: metadata_holder;
+  }
+
+  &__btns {
+    grid-area: btn_block;
   }
 }
 
@@ -709,7 +746,7 @@ textarea:active {
 }
 
 .carousel img {
-	width: 100%;
+	width: 90%;
 	height: 300px;
 	transition: all 0.3s ease;
 	justify-self: flex-start;
@@ -868,20 +905,29 @@ textarea:active {
   align-self: center;
   justify-self: center;
   width: 100%;
-  display: block;
-  position: relative;
+  //display: block;
+  //text-align: center;
+  //position: relative;
   overflow: hidden;
   border-radius: 4px;
+  padding: $large-px;
+
+  display: flex;
+  align-content: center;
+  justify-content: center;
 
   img {
+    text-align: center;
     min-height: 100%;
-    min-width: 100%;
     object-fit: cover;
+    border-radius: 4px;
+    overflow: hidden;
 
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+    //margin: $large-px;
+    //position: absolute;
+    //top: 0;
+    //left: 2* $large-px;
+    //width: 100%;
   }
 }
 
@@ -917,7 +963,7 @@ textarea:active {
 
   background: $white;
   height: max-content;
-  padding: $large-px;
+  //padding: $large-px;
 
   &__header {
     padding: $large-px;
@@ -936,9 +982,13 @@ textarea:active {
     //border-bottom: 1px solid $my--frame-border;
     //border-top: 1px solid $my--frame-border;
     border-radius: 4px;
-    padding: $large-px;
+    //padding: $large-px;
     margin-top: $small-px;
+    margin-right: $large-px;
+    margin-left: $large-px;
     background: $my--frame-collection;
+
+    padding: $large-px;
 
     > * {
       margin-bottom: $small-px;
@@ -947,6 +997,7 @@ textarea:active {
     &_inline {
       display: flex;
       flex-direction: row;
+      justify-content: space-between;
       gap: $large-px * 2;
     }
 
@@ -959,7 +1010,9 @@ textarea:active {
       @include text-plain-no-wrap();
       white-space: nowrap; /* Текст не переносится */
       overflow: hidden; /* Обрезаем всё за пределами блока */
+      max-width: 200px;
       text-overflow: ellipsis; /* Добавляем многоточие */
+      position: relative;
 
       &_right {
         text-align: right;

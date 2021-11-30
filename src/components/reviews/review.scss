@@ -32,6 +32,9 @@
     display: flex;
     flex-direction: row;
     margin-bottom: $small-px;
+    > img {
+      height: $large-px * 2;
+    }
   }
   &__input_holder {
     > div {
@@ -41,7 +44,7 @@
   }
   input, textarea {
     @include text-plain-no-wrap;
-    padding: 6px;
+    //padding: 6px;
   }
   label {
     @include text-plain-no-wrap;
@@ -97,17 +100,19 @@
   overflow: hidden;
   width: max-content;
   margin: 0 $small-px;
+  font-size: $large-px *2;
+  height: $large-px *2;
 }
 .rating-area:not(:checked) > input {
   display: none;
 }
 .rating-area:not(:checked) > label {
   float: right;
-  width: $large-px;
+  width: $large-px *2;
   padding: 0;
   cursor: pointer;
-  font-size: $large-px;
-  line-height: $large-px;
+  font-size: $large-px *2;
+  line-height: $large-px * 2;
   color: $my--input-border;
 }
 .rating-area:not(:checked) > label:before {
@@ -128,5 +133,14 @@
   color: $green;
 }
 .rate-area > label:active {
+  position: relative;
+}
+
+#review_text {
+  width: 100%;
+  @include text-plain-no-wrap();
+  white-space: pre-line; /* Текст не переносится */
+  overflow: hidden; /* Обрезаем всё за пределами блока */
+  text-overflow: ellipsis; /* Добавляем многоточие */
   position: relative;
 }

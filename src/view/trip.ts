@@ -17,6 +17,10 @@ import { NumID } from '@/dispatcher';
 import { initSearchView, SearchView } from '@/components/search/search';
 import { router } from '@/router';
 import { SightAdoptedForRender, TagAdoptedForRender } from '@/models/sight';
+import { ProfileAlbum } from '@/models/profile';
+import typicalCollection from '../components/frame_collection.handlebars';
+import horisontalScroll from '@/components/horizontal_scroll/horisontal_scroll.handlebars';
+import { setListenersOnCards } from '@/view/profile';
 
 export class InitTripPage extends BasicView {
 	#TripInfo: TripInfoView;
@@ -65,8 +69,6 @@ export class TripInfoView extends BasicView {
 	#firstCreated = false;
 
 	#search: SearchView | null = null;
-
-	// #albums: albumListHolder;
 
 	#cardHolder: CardSightsHolder;
 
@@ -126,6 +128,39 @@ export class TripInfoView extends BasicView {
 			);
 		} else {
 			console.log('No button = ', addAlbumBtn);
+		}
+
+		const albumPlace = document.getElementById('trip_albums_holder');
+		if (albumPlace !== null) {
+			const shownAlbums: ProfileAlbum[] = [];
+			if (trip.albums !== null) {
+				trip.albums.forEach(album => {
+					shownAlbums.push({
+						photos: album.photos,
+						id: album.id,
+						description: album.description,
+						title: album.title,
+						htmlId: `album_go_${album.id}`
+					});
+				});
+			}
+
+			albumPlace.innerHTML = typicalCollection({ albums: shownAlbums, header: "Альбомы" });
+			shownAlbums.forEach(album => {
+					const place = document.getElementById(`photo_scroll_${album.htmlId}`);
+					if (place !== null) {
+						const pages: Array<{
+							picture: string
+						}> = [];
+						album.photos.forEach(photo => {
+							pages.push({
+								picture: photo
+							});
+						});
+						place.innerHTML = horisontalScroll({pages});
+					}
+				});
+			setListenersOnCards("album", shownAlbums, pathsURLfrontend.album);
 		}
 	};
 
@@ -221,6 +256,7 @@ export class CardSightsHolder extends BasicView {
 						name: sight.name,
 						photos: sight.photos,
 						rating: sight.rating,
+						photo: sight.photos[0]
 					},
 					preview: sights[0].photos[0],
 					PP: i,

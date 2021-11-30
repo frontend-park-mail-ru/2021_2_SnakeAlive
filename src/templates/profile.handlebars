@@ -1,17 +1,20 @@
 <div class='profile_wrapper'>
-<div id='profile' class="profile frame">
 
+<div id='profile' class="profile">
+
+	<div class='profile_show__info frame'>
     <div class="profile_show__photo" id="profile__photo">
         <img src="{{profile.profileImage}}" alt="avatar">
     </div>
-    <div id="profile__metadata-holder" class="profile__metadata-holder">
+    <div id="profile__metadata-holder " class="profile_show__data">
         <div class="profile__data-holder">{{profile.meta.name}} {{profile.meta.surname}} </div>
         <div class="profile__data-holder profile__data-holder__email">{{profile.meta.email}} </div>
     </div>
-    <div id="btn_block" class="profile__btn-block">
-        <button id="profile__edit_btn" class="profile__edit-btn">Редактировать</button>
+    <div id="btn_block" class="profile_show__btns">
+        <button id="profile__edit_btn" class="profile__edit-btn ">Редактировать</button>
         <button id="profile__logout_btn" class="profile__close-btn">Выйти</button>
     </div>
+	</div>
 
 
 	{{#if trips}}
@@ -31,6 +34,7 @@
 	{{#if albums}}
 		<div class='profile_show__albums frame_collection'>
 			<div class='frame_collection__header'><p>Мои альбомы</p></div>
+			<div class='frame_collection__wrapper'>
 			{{#each albums}}
 			<div id="{{this.htmlId}}" class='frame_collection__card'>
 				<div class='frame_collection__card__header'>{{this.title}}</div>
@@ -38,7 +42,10 @@
 				<div class='profile_show__trips__photo_scroll' id='photo_scroll_{{this.htmlId}}'></div>
 			</div>
 			{{/each}}
+			</div>
 		</div>
 	{{/if}}
+
 </div>
+
 </div>

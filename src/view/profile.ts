@@ -13,7 +13,7 @@ import { createFrontendQueryParams } from '@/router/router';
 import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
 import horisontalScroll from '../components/horizontal_scroll/horisontal_scroll.handlebars'
 
-const setListenersOnCards = (name: string, cards: ProfileTrip[] | ProfileAlbum[], pathToGo: pathsURLfrontend) => {
+export const setListenersOnCards = (name: string, cards: ProfileTrip[] | ProfileAlbum[], pathToGo: pathsURLfrontend) => {
 	cards.forEach(trip => {
 
 		// trip="go_trip_{{this}}
