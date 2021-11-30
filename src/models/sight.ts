@@ -35,6 +35,7 @@ export interface SightAdoptedForRender {
 	rating: string;
 	tags: Array<TagAdoptedForRender>;
 	photos: Array<string>;
+	photo: string;
 	// isUser: boolean;
 	// trips?: Trip[];
 }

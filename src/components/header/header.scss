@@ -7,10 +7,10 @@ $logo_height: 6vh;
   border-bottom: 1px solid $my--frame-border;
 
   display: grid;
-  grid-column-gap: 10px;
+  grid-column-gap: $small-px;
 
   background: white;
-  padding: $small-px /2 0;
+  //padding: $small-px /2 0;
 
   @media (max-width: 380px) {
     padding: $small-px /2 $small-px;
@@ -47,7 +47,6 @@ $logo_height: 6vh;
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: $small-px;
     padding: ($header_height - $logo_height)/2 0;
     &__text {
       @include text-header;
@@ -57,6 +56,7 @@ $logo_height: 6vh;
     }
     &__img {
       height: $logo_height;
+      margin-right: $small-px;
     }
   }
   &__logo:hover {

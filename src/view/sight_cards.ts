@@ -4,6 +4,7 @@ import { router } from '@/router';
 import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
 import { createFrontendQueryParams } from '@/router/router';
 import { TagAdoptedForRender } from '@/models/sight';
+import photoSlider from '@/components/photo_slider/photo_slider';
 
 export class SightCardInTrip {
 	#id = -1;
@@ -67,5 +68,6 @@ export class SightCardInTrip {
 				});
 			}
 		});
+
 	};
 }

@@ -65,9 +65,9 @@ export default class TripReducer {
 				console.log("stored trip = ", storage.getCurrentTrip())
 				dispatcher.notify(newGetTripResult(ID));
 			})
-			.catch((error: Error) => {
-				dispatcher.notify(initErrorPageRequest(error));
-			});
+			// .catch((error: Error) => {
+			// 	dispatcher.notify(initErrorPageRequest(error));
+			// });
 	};
 
 	addCurrentTripPlace = (metadata: SightDay) => {

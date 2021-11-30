@@ -10,6 +10,7 @@ import {
 import { UserMetadata } from './user';
 import { Sight, SightsCoord, SightDay } from './sight';
 import { Trip } from './trip';
+import { ProfileAlbum } from './profile';
 import { Album, GotAlbumInterface } from './album';
 
 export {
@@ -27,4 +28,5 @@ export {
 	CountryResponse,
 	Album,
 	GotAlbumInterface,
+	ProfileAlbum,
 };

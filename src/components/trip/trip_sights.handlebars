@@ -2,7 +2,12 @@
 		{{#each this}}
 			<div class='frame'>
 				<h2 id="go_button_{{ this.sight.id }}_{{this.PP}}">{{ this.sight.name }}</h2>
-				<img src="{{this.preview}}" class= "trip_preview">
+				<div class='trip_sight_photo_wrapper'>
+				<div class='card__photo_wrapper carousel'>
+					<img src="{{this.sight.photo}}">
+				</div>
+				</div>
+
 				<p>✦ {{ this.sight.rating }}</p>
 
 				<div class="tag__holder">
