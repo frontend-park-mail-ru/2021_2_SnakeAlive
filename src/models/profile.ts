@@ -9,9 +9,10 @@ export interface GetProfileResponse {
 export interface UpdateProfileMetadataRequest {
 	name: string;
 	surname: string;
-	password: string;
+	password?: string;
 	email: string;
 	description: string;
+	avatar?: string;
 }
 
 export interface UpdateProfileMetadataResponse {

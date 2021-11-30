@@ -126,7 +126,7 @@ export default class ProfileView extends BasicView {
 			const uploadFile = new FormData();
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-ignore
-			uploadFile.append('avatar', fileInput.files[0]);
+			uploadFile.append('file', fileInput.files[0]);
 
 			dispatcher.notify(newUpdateProfilePhotoRequest(uploadFile));
 		});

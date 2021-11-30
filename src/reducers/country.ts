@@ -13,6 +13,7 @@ import { DataType, dispatcher, EventType, UUID, NamedUUID, Token } from '@/dispa
 import { CountryCardResponse, CountryResponse } from '@/models';
 import { minAdaptCountryCards } from '@/adapters/country_cards_2';
 import { GET_COUNTRY_NAME } from '@/components/trip/trip_form';
+import { adoptGotCountry } from '@/adapters/country';
 
 export default class CountryReducer {
 	#tokens: Token[];
@@ -43,10 +44,7 @@ export default class CountryReducer {
 		this.#getCountry(country.ID)
 			.then((info: CountryResponse) => {
 				console.log(info);
-				storage.storeCountry({
-					name: info.name,
-					ID: String(country.name),
-				});
+				storage.storeCountry(adoptGotCountry(info));
 				dispatcher.notify(newInitCountryResponse());
 				dispatcher.notify(newGetCountryCardsRequest(country.name, <string>country.ID));
 			})

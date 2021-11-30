@@ -110,6 +110,7 @@
 }
 
 .trip_form {
+  padding: 0;
   &__horizontal_holder {
     display: flex;
     flex-direction: row;
@@ -124,6 +125,7 @@
 }
 
 .buttons_holder {
+  gap: $large-px;
   margin-top: $small-px;
   margin-right: $small-px;
 }
@@ -223,7 +225,7 @@
   //min-height: 150px;
   //padding: 10px;
   margin: 0;
-  padding: 0;
+  padding: $large-px 0;
 
   display: flex;
   align-content: center;

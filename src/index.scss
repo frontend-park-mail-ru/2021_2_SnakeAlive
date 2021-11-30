@@ -110,13 +110,15 @@ html, body {
 .frame {
   border-radius: 4px;
   border: 1px solid $my--frame-border;
+  padding: $large-px;
+  box-sizing: border-box;
 
   background: $white;
-  > * {
-    padding: $large-px;
-  }
+  //> * {
+  //  padding: $large-px;
+  //}
   margin: 0;
-  padding: 0;
+
 }
 
 input,
@@ -727,7 +729,9 @@ textarea:active {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-content: center;
     gap: $large-px;
+    padding: $large-px;
 
     > button {
       padding: $small-px;
@@ -749,6 +753,9 @@ textarea:active {
 .card__data__holder {
 	margin-left: 5px;
 	margin-top: 10px;
+
+  display: flex;
+  flex-direction: column;
 }
 
 .card__comment__holder {
@@ -779,10 +786,10 @@ textarea:active {
 }
 
 .carousel {
-	margin-top: 10px;
-	transition: all 0.3s ease;
+  transition: all 0.3s ease;
 	justify-content: center;
 	height: 300px;
+  margin: 0;
 }
 
 .carousel img {
@@ -795,13 +802,15 @@ textarea:active {
 /*tags*/
 
 .tag__holder {
-	margin-top: 10px;
 	width: 100%;
-	text-align: left;
+	//text-align: left;
+  padding: 0;
 
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+
+    align-self: end;
 }
 
 .tag {
@@ -895,7 +904,15 @@ textarea:active {
 .card {
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-start;
+	justify-content: space-between;
+
+
+  &__top {
+    padding: 0;
+    > div {
+    padding-bottom: $small-px;
+    }
+  }
 }
 
 .header__default {
@@ -950,7 +967,8 @@ textarea:active {
   //position: relative;
 
   border-radius: 4px;
-  padding: $large-px;
+  padding: 0;
+  margin: 0;
 
   display: flex;
   align-content: center;
@@ -962,6 +980,7 @@ textarea:active {
     object-fit: cover;
     border-radius: 4px;
     overflow: hidden;
+    width: 100%;
 
     //margin: $large-px;
     //position: absolute;
@@ -1033,7 +1052,8 @@ textarea:active {
     margin-right: 0;
     background: $my--frame-collection;
 
-    padding: $large-px 0;
+    padding: $large-px;
+    box-sizing: border-box;
 
     > * {
       margin-bottom: $small-px;
@@ -1055,11 +1075,12 @@ textarea:active {
       @include text-plain-no-wrap();
       white-space: nowrap; /* Текст не переносится */
       overflow: hidden; /* Обрезаем всё за пределами блока */
-      max-width: 200px;
+
       text-overflow: ellipsis; /* Добавляем многоточие */
       position: relative;
 
       &_right {
+        max-width: 200px;
         text-align: right;
         width: 100%;
       }

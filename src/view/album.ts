@@ -185,6 +185,8 @@ export class AlbumView extends BasicView {
 
 	#photosView: PhotosView;
 
+	#defaultPhoto = defaultPhoto;
+
 	constructor() {
 		super('#content');
 		this.#tokens = [];
@@ -214,7 +216,7 @@ export class AlbumView extends BasicView {
 	};
 
 	showEmptyForm = () => {
-		this.setView(albumPageTemplate(defaultPhoto));
+		this.setView(albumPageTemplate({ pic: this.#defaultPhoto }));
 
 		const addBtn = document.getElementById('add_photos_btn');
 		if (addBtn !== null) {

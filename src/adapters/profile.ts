@@ -9,7 +9,7 @@ import { UpdateProfile } from '@/dispatcher';
 import { backendFileEndpoint } from '@/constants';
 import { storage } from '@/storage';
 
-import avatarPath from '../../image/test.jpeg';
+// import avatarPath from '../../image/test.jpeg';
 import { destroyCurrentPage } from '@/actions/page';
 
 export function adaptGetProfileResponse(response: GetProfileResponse): Profile {
@@ -20,7 +20,7 @@ export function adaptGetProfileResponse(response: GetProfileResponse): Profile {
 			description: response.description,
 			email: response.email,
 		},
-		profileImage: avatarPath,
+		profileImage: response.avatar,
 	};
 }
 

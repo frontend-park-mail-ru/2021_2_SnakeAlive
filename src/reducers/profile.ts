@@ -90,10 +90,16 @@ export default class ProfileReducer {
 			});
 	};
 
-	updateProfilePhoto = (metadata: DataType): void => {
-		const photo = <File>metadata;
-		this.#sendUpdateProfilePhoto(photo.data)
-			.then(response => dispatcher.notify(newGetProfileRequest()))
+	updateProfilePhoto = (metadata: File): void => {
+		this.#sendUpdateProfilePhoto(metadata.data)
+			.then((obj) => {
+				const updatedProfile = storage.getProfile().meta;
+				updatedProfile.avatar = obj.filename;
+				this.#sendUpdateProfileMetadata(updatedProfile)
+					.then(() => {
+						dispatcher.notify(newGetProfileRequest());
+					});
+			})
 			.catch((error: Error) => {
 				dispatcher.notify(initErrorPageRequest(error));
 			});
@@ -137,7 +143,7 @@ export default class ProfileReducer {
 			})
 			.then(response => response.json());
 
-	#sendUpdateProfilePhoto = (request: FormData): Promise<Response> =>
+	#sendUpdateProfilePhoto = (request: FormData): Promise<{ filename: string }> =>
 		sendPostFileRequest(backendEndpoint + upload, request).then(response => {
 			if (response.status === 404) {
 				return Promise.reject(new Error('На сайте нет такой страницы'));
@@ -146,7 +152,8 @@ export default class ProfileReducer {
 				return Promise.reject(new Error('Нужно войти в систему'));
 			}
 			return Promise.resolve(response);
-		});
+		})
+			.then((response) => response.json());
 
 	#getProfileTrips = (): Promise<ProfileTrip[]> =>
 		sendGetJSONRequest(backendEndpoint + tripURI + user)

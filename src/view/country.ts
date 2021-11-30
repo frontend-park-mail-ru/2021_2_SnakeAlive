@@ -102,9 +102,8 @@ class CountryHolderView extends BasicView {
 	};
 
 	renderCountry = (metadata: DataType): void => {
-		const { name, ID } = storage.getCountry();
-		console.log('renderCountry', name, ID);
-		this.setView(countryPageTemplate({ name: `по стране ${name}` }));
+		const { translation, name, ID } = storage.getCountry();
+		this.setView(countryPageTemplate({ name: `по стране ${translation}` }));
 	};
 }
 

@@ -1,7 +1,7 @@
 	{{#each sights}}
 		{{#each this}}
 			<div class='frame'>
-				<h2 id="go_button_{{ this.sight.id }}_{{this.PP}}">{{ this.sight.name }}</h2>
+				<div><h2 id="go_button_{{ this.sight.id }}_{{this.PP}}">{{ this.sight.name }}</h2></div>
 				<div id='trip_sight_photo_wrapper'>
 				<div class='card__photo_wrapper carousel trip_sight_photo'>
 					<img src="{{this.sight.photo}}">

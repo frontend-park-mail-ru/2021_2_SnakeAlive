@@ -3,6 +3,7 @@ import { TagAdoptedForRender } from '@/models/sight';
 interface Country {
 	name: string;
 	ID: string;
+	translation: string;
 }
 
 interface CountryResponse {

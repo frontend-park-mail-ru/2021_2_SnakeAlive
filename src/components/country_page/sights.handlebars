@@ -1,6 +1,7 @@
 {{#each cards}}
 <div class="card frame" >
-    <div class="carousel card__photo_wrapper" id="go_button_{{sight.id}}_{{PP}}">
+	<div class="card__top" id="go_button_{{sight.id}}_{{PP}}">
+    <div class="carousel card__photo_wrapper">
 			<img src="{{sight.photo}}" alt="" class='photo'>
 <!--        {{#each imgs}} -->
 <!--            {{#if @first}}-->
@@ -14,7 +15,7 @@
 <!--			<div id='photo_{{sight.id}}_{{PP}}'></div>-->
     </div>
 
-    <div class="card__data__holder" >
+<!--    <div class="card__data__holder" >-->
         <div class="card__name__holder">
             {{sight.name}}
         </div>
@@ -24,6 +25,7 @@
 				<span class="span__font__large span__font__large-green">✦</span><span class='rating__text'>{{sight.rating}}</span>
 			</div>
 
+		</div>
         <div class="tag__holder">
             {{#each sight.adoptedTags  }}
                 <div class="tag card__tag card__tag__font" id='tag_{{this.name}}_{{this.sightPP}}'>
@@ -34,8 +36,7 @@
                     {{/if}}
                 </div>
             {{/each}}
-        </div>
-
+				 </div>
 <!--			<div id='trip-add-block'>-->
 <!--				<button class='usual_button usual_button_light' id='trip-add-btn'>Добавить в поездку</button>-->
 <!--				{{#each userTrips }}-->
@@ -43,6 +44,6 @@
 <!--				{{/each}}-->
 <!--			</div>-->
 
-    </div>
+<!--    </div>-->
 </div>
 {{/each}}
