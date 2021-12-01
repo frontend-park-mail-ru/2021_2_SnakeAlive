@@ -21,7 +21,7 @@ import {
 	updateAlbumInfoRequest,
 } from '@/actions/album';
 
-import defaultPhoto from '../../image/test.jpeg';
+import defaultPhoto from '../../image/defaultAlbum.png';
 
 export class PhotosView {
 	#tokens: Token[];
@@ -85,10 +85,12 @@ export class PhotosView {
 		console.log('render');
 		if (isEdit.isTrue) {
 			console.log('isEdit');
-			photos.forEach(photo => {
-				console.log('photo!');
-				this.#initDeleteButton(photo);
-			});
+			if (photos) {
+				photos.forEach(photo => {
+					console.log('photo!');
+					this.#initDeleteButton(photo);
+				});
+			}
 		}
 	};
 
@@ -111,11 +113,11 @@ export class PhotosView {
 		this.#isInited = true;
 
 		const addBtn = document.getElementById('add_photos_btn');
-		console.log("addBtn ", addBtn);
+		console.log('addBtn ', addBtn);
 
 		const addInput = <HTMLInputElement>document.getElementById('add_photos_input');
 		if (addBtn !== null && addInput !== null) {
-			console.log("addListener");
+			console.log('addListener');
 			addBtn.addEventListener(
 				'click',
 				() => {
@@ -125,7 +127,7 @@ export class PhotosView {
 			);
 
 			addInput.addEventListener('change', event => {
-				console.log("changed");
+				console.log('changed');
 				event.preventDefault();
 				if (addInput === null) {
 					return;
@@ -160,7 +162,7 @@ export class PhotosView {
 			deleteBtn.addEventListener(
 				'click',
 				event => {
-					console.log("isClicked");
+					console.log('isClicked');
 					event.preventDefault();
 					dispatcher.notify(deletePhoto(photoName));
 					const photo = document.getElementById(`album_page__photo_holder_place_${photoName}`);
@@ -254,7 +256,7 @@ export class AlbumView extends BasicView {
 	#showEditAlbum = (): void => {
 		const album = storage.getAlbum();
 		const { title, description } = album;
-		this.setView(albumPageTemplate());
+		this.setView(albumPageTemplate({ pic: this.#defaultPhoto }));
 		const formPlace = document.getElementById('album_page__left_col__info');
 		if (formPlace !== null) {
 			formPlace.innerHTML = albumFormTemplate({
@@ -269,7 +271,7 @@ export class AlbumView extends BasicView {
 	#showNotEditAlbum = (): void => {
 		const album = storage.getAlbum();
 		const { title, description } = album;
-		this.setView(albumPageTemplate());
+		this.setView(albumPageTemplate({ pic: this.#defaultPhoto }));
 		const infoPlace = document.getElementById('album_page__left_col__info');
 		if (infoPlace !== null) {
 			infoPlace.innerHTML = albumInfoTemplate({
@@ -308,19 +310,17 @@ export class AlbumView extends BasicView {
 				'click',
 				event => {
 					event.preventDefault();
-						router.go(
-							createFrontendQueryParams(pathsURLfrontend.trip, [
-								{
-									key: paramsURLfrontend.id,
-									value: storage.getAlbum().tripId.toString(),
-								},
-							])
-						);
-					},
+					router.go(
+						createFrontendQueryParams(pathsURLfrontend.trip, [
+							{
+								key: paramsURLfrontend.id,
+								value: storage.getAlbum().tripId.toString(),
+							},
+						])
+					);
+				},
 				false
 			);
 		}
 	};
-
-
 }

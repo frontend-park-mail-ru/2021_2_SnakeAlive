@@ -12,7 +12,7 @@ export default class RegisterReducer {
 	};
 
 	register = (input: RegisterData) => {
-		let result: ValidationErrData = {
+		const result: ValidationErrData = {
 			data: [],
 		};
 

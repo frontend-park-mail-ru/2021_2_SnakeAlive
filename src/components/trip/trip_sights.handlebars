@@ -1,14 +1,16 @@
 	{{#each sights}}
 		{{#each this}}
 			<div class='frame'>
-				<div><h2 id="go_button_{{ this.sight.id }}_{{this.PP}}">{{ this.sight.name }}</h2></div>
-				<div id='trip_sight_photo_wrapper'>
-				<div class='card__photo_wrapper carousel trip_sight_photo'>
-					<img src="{{this.sight.photo}}">
-				</div>
-				</div>
+				<div id="go_button_{{ this.sight.id }}_{{this.PP}}" class='trip_sight_clickable'>
+					<div><h2>{{ this.sight.name }}</h2></div>
+					<div id='trip_sight_photo_wrapper'>
+						<div class='card__photo_wrapper carousel trip_sight_photo'>
+							<img src="{{this.sight.photo}}">
+						</div>
+					</div>
 
-				<p>✦ {{ this.sight.rating }}</p>
+					<div><p>✦ {{ this.sight.rating }}</p></div>
+				</div>
 
 				<div class="tag__holder">
 					{{#each this.sight.tags}}

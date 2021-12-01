@@ -29,7 +29,7 @@ export class Map extends BasicView {
 				center: { lat: 55.75222, lng: 37.61556 },
 				zoom: 8,
 			});
-			this.#markers = []
+			this.#markers = [];
 		});
 	}
 
@@ -55,25 +55,28 @@ export class Map extends BasicView {
 				this.updateMap();
 				this.#map.setCenter({ lat: lat, lng: lng });
 				const marker = new google.maps.Marker({
-					position: { lat: Number(storage.getSearchSightsResult('trip')[0].lat), lng:  Number(storage.getSearchSightsResult('trip')[0].lng)},
+					position: {
+						lat: Number(storage.getSearchSightsResult('trip')[0].lat),
+						lng: Number(storage.getSearchSightsResult('trip')[0].lng),
+					},
 					map: this.#map,
 				});
-				this.#markers.push(marker)
+				this.#markers.push(marker);
 				this.updateMap();
 			});
-		console.log(this.#markers)
+		console.log(this.#markers);
 	};
 
-	delMarker = (metadata: CardOrderAndDay) => {		
-		this.#coord.splice(metadata.cardId,1)
-		this.#markers[metadata.cardId].setMap(null)
-		this.#markers.splice(metadata.cardId,1)
-	}
+	delMarker = (metadata: CardOrderAndDay) => {
+		this.#coord.splice(metadata.cardId, 1);
+		this.#markers[metadata.cardId].setMap(null);
+		this.#markers.splice(metadata.cardId, 1);
+	};
 
 	restoreMap = (metadata: NumID) => {
-		let i = 0
+		let i = 0;
 		storage.getCurrentTrip().sights.forEach(sight => {
-			if (i!=0){
+			if (i != 0) {
 				const url = new URL(backendEndpoint + sightsURI + searchURI);
 				url.searchParams.set('search', sight.name);
 				url.searchParams.set('skip', '0');
@@ -89,25 +92,31 @@ export class Map extends BasicView {
 					.then(response => {
 						storage.storeSearchSightsResult('trip', response);
 					})
-					.then(() =>{
-						this.#coord.push({id: Number(sight.id), lng: Number(storage.getSearchSightsResult('trip')[0].lng), lat: Number(storage.getSearchSightsResult('trip')[0].lat)})
-						console.log(this.#coord)
+					.then(() => {
+						this.#coord.push({
+							id: Number(sight.id),
+							lng: Number(storage.getSearchSightsResult('trip')[0].lng),
+							lat: Number(storage.getSearchSightsResult('trip')[0].lat),
+						});
+						console.log(this.#coord);
 						const marker = new google.maps.Marker({
-							position: { lat: Number(storage.getSearchSightsResult('trip')[0].lat), lng:  Number(storage.getSearchSightsResult('trip')[0].lng)},
+							position: {
+								lat: Number(storage.getSearchSightsResult('trip')[0].lat),
+								lng: Number(storage.getSearchSightsResult('trip')[0].lng),
+							},
 							map: this.#map,
 						});
-						this.#markers.push(marker)
+						this.#markers.push(marker);
 						this.updateMap();
 					});
 			}
-			i+=1
-
-		})
+			i += 1;
+		});
 	};
 
 	updateMap = () => {
 		this.#markers.forEach(marker => {
-			marker.setMap(this.#map)
-		})
+			marker.setMap(this.#map);
+		});
 	};
 }

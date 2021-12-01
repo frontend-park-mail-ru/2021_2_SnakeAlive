@@ -21,6 +21,12 @@
   }
 }
 
+.trip_cards_holder {
+  > frame {
+    margin-bottom: 10px;
+  }
+}
+
 .error_block {
   visibility: hidden;
   &__text {
@@ -121,6 +127,10 @@
   &__some_info {
     @include text-small;
     color: $my--small-text;
+  }
+
+  > div {
+    margin-top: $small-px;
   }
 }
 
@@ -237,4 +247,8 @@
   > img {
     overflow-x: hidden;
   }
+}
+
+.trip_sight_clickable {
+  cursor: pointer;
 }

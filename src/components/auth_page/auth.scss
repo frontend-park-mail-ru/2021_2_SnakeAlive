@@ -15,6 +15,7 @@
   @media (max-width: 961px) {
     grid-template: "f" "t";
     row-gap: $small-px;
+    gap: 10px;
   }
 }
 

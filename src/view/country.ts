@@ -1,6 +1,7 @@
 import sights from '@/components/country_page/sights.handlebars';
 
 import countryPageTemplate from '@/components/country_page/country_sights.handlebars';
+import Template from '@/components/country_page/categories.handlebars';
 import { DataType, dispatcher, ErrorMsgData, EventType, Token } from '@/dispatcher';
 import BasicView from '@/view/view';
 import { storage } from '@/storage';
@@ -8,6 +9,9 @@ import tripSights from '@/components/country_page/sights.handlebars';
 import { SightCardInTrip } from '@/view/sight_cards';
 import { minCardInfo } from '@/models/country';
 import { TagAdoptedForRender } from '@/models/sight';
+import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
+import { createFrontendQueryParams, router } from '@/router/router';
+import { allTags, initTagsBtns, tags } from './tag';
 
 class CountryCardsHolderView extends BasicView {
 	#tokens: Token[];
@@ -104,6 +108,16 @@ class CountryHolderView extends BasicView {
 	renderCountry = (metadata: DataType): void => {
 		const { translation, name, ID } = storage.getCountry();
 		this.setView(countryPageTemplate({ name: `по стране ${translation}` }));
+		console.log('renderCountry', name, ID);
+
+		this.setView(
+			countryPageTemplate({
+				name: `по стране ${name}`,
+				tags,
+				allTags,
+			})
+		);
+		initTagsBtns();
 	};
 }
 

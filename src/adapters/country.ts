@@ -2,32 +2,31 @@ import { Country, CountryResponse } from '@/models';
 
 export const adoptGotCountry = (info: CountryResponse): Country => {
 	const result: Country = {
-			name: info.name,
-			ID: String(info.name),
-			translation: "Лимпопо"
+		name: info.name,
+		ID: String(info.name),
+		translation: 'Лимпопо',
 	};
 	switch (info.name) {
-		case 'Russia' :
+		case 'Russia':
 			result.translation = 'Россия';
 			break;
-		case 'UK' :
+		case 'UK':
 			result.translation = 'Великобритания';
 			break;
-		case 'Germany' :
+		case 'Germany':
 			result.translation = 'Германия';
 			break;
-		case 'USA' :
+		case 'USA':
 			result.translation = 'США';
 			break;
-		case 'Chile' :
+		case 'Chile':
 			result.translation = 'Чили';
 			break;
-		case 'Nicaragua' :
+		case 'Nicaragua':
 			result.translation = 'Никарагуа';
 			break;
-		default :
+		default:
 	}
 
 	return result;
-}
-
+};

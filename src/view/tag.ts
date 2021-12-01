@@ -14,6 +14,69 @@ import tripSights from '@/components/country_page/sights.handlebars';
 import { SightCardInTrip } from '@/view/sight_cards';
 import { newGetTagCardsResult } from '@/actions/tag';
 import { TagAdoptedForRender } from '@/models/sight';
+import { createFrontendQueryParams, router } from '@/router/router';
+import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
+
+export const tags = [
+	{ name: 'Природа', PP: 0 },
+	{ name: 'Виды', PP: 1 },
+	{ name: 'Современные здания', PP: 2 },
+	{ name: 'Архитектура', PP: 3 },
+	{ name: 'Историческое место', PP: 4 },
+];
+
+export const allTags = [
+	{ name: 'Природа', PP: 0 },
+	{ name: 'Виды', PP: 1 },
+	{ name: 'Современные здания', PP: 2 },
+	{ name: 'Архитектура', PP: 3 },
+	{ name: 'Историческое место', PP: 4 },
+	{ name: 'Дворец', PP: 4 },
+];
+
+export const initTagsBtns = () => {
+	tags.forEach(tag => {
+		const tegElem = document.getElementById(`tag_${tag.name}`);
+		if (tegElem !== null) {
+			tegElem.addEventListener('click', () => {
+				router.go(
+					createFrontendQueryParams(pathsURLfrontend.tag, [
+						{
+							key: paramsURLfrontend.tag,
+							value: tag.name,
+						},
+					])
+				);
+			});
+		}
+	});
+	tags.forEach(tag => {
+		const tegElem = document.getElementById(`dropdown_tag_${tag.name}`);
+		if (tegElem !== null) {
+			tegElem.addEventListener('click', () => {
+				router.go(
+					createFrontendQueryParams(pathsURLfrontend.tag, [
+						{
+							key: paramsURLfrontend.tag,
+							value: tag.name,
+						},
+					])
+				);
+			});
+		}
+	});
+	const moreBtn = document.getElementById('more-tags-btn');
+	if (moreBtn !== null) {
+		moreBtn.addEventListener('click', () => {
+			console.log(document.getElementById('myDropdown')?.classList.contains('show'));
+			if (document.getElementById('myDropdown')?.classList.contains('show')) {
+				document.getElementById('myDropdown')?.classList.remove('show');
+			} else {
+				document.getElementById('myDropdown')?.classList.toggle('show');
+			}
+		});
+	}
+};
 
 class TagCardsHolderView extends BasicView {
 	#tokens: Token[];
@@ -66,6 +129,7 @@ class TagCardsHolderView extends BasicView {
 			card.createCard(sight.sight.id, sight.PP, sight.sight.adoptedTags);
 			this.#cards.push(card);
 		});
+		initTagsBtns();
 	};
 }
 
@@ -94,7 +158,14 @@ class TagHolderView extends BasicView {
 	};
 
 	renderCountry = (metadata: UUID): void => {
-		this.setView(countryPageTemplate({ name: `по тегу ${metadata.ID}` }));
+		this.setView(
+			countryPageTemplate({
+				name: `по тегу ${metadata.ID}`,
+				tags,
+				allTags,
+			})
+		);
+		initTagsBtns();
 		dispatcher.notify(newGetTagCardsResult());
 	};
 }

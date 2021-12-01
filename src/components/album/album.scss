@@ -43,6 +43,7 @@
 
   @media (max-width: 961px) {
     grid-template: "l-t" "r-b";
+    gap: 10px;
   }
 
   &__right_col {

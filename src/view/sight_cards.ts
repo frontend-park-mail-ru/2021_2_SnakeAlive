@@ -1,5 +1,5 @@
 import { dispatcher } from '@/dispatcher';
-import {  } from '@/actions/trip';
+import {} from '@/actions/trip';
 import { router } from '@/router';
 import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
 import { createFrontendQueryParams } from '@/router/router';
@@ -33,7 +33,9 @@ export class SightCardInTrip {
 		// 	);
 		// }
 
+		// const goBtn = document.getElementById(`go_button_${this.#id}_${this.#PP}`);
 		const goBtn = document.getElementById(`go_button_${this.#id}_${this.#PP}`);
+		console.log(`go_button_${this.#id}_${this.#PP}`);
 		if (goBtn !== null) {
 			console.log(goBtn.id);
 			goBtn.addEventListener(
@@ -68,6 +70,5 @@ export class SightCardInTrip {
 				});
 			}
 		});
-
 	};
 }

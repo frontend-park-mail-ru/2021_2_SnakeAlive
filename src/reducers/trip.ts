@@ -58,16 +58,15 @@ export default class TripReducer {
 	initTripEditPage = (metadata: NumID) => {
 		const { ID } = metadata;
 		console.log('ID', ID);
-		this.#getTrip(ID.toString())
-			.then((trip: Trip) => {
-				console.log('GET trip =  ', trip);
-				storage.storeCurrentTrip(trip);
-				console.log("stored trip = ", storage.getCurrentTrip())
-				dispatcher.notify(newGetTripResult(ID));
-			})
-			// .catch((error: Error) => {
-			// 	dispatcher.notify(initErrorPageRequest(error));
-			// });
+		this.#getTrip(ID.toString()).then((trip: Trip) => {
+			console.log('GET trip =  ', trip);
+			storage.storeCurrentTrip(trip);
+			console.log('stored trip = ', storage.getCurrentTrip());
+			dispatcher.notify(newGetTripResult(ID));
+		});
+		// .catch((error: Error) => {
+		// 	dispatcher.notify(initErrorPageRequest(error));
+		// });
 	};
 
 	addCurrentTripPlace = (metadata: SightDay) => {
@@ -83,7 +82,7 @@ export default class TripReducer {
 
 	deleteCurrentTripPlace = (metadata: CardOrderAndDay) => {
 		const trip = storage.getCurrentTrip();
-		trip.sights.splice(metadata.cardId+1,1); // +1 becuse of fake data
+		trip.sights.splice(metadata.cardId + 1, 1); // +1 becuse of fake data
 		storage.storeCurrentTrip(trip);
 		const tripSend = adoptForSend(trip);
 		console.log('tripSend = ', tripSend);
@@ -94,8 +93,8 @@ export default class TripReducer {
 
 	updateCurrentTripInfo = (metadata: TripInfo) => {
 		const trip = storage.getCurrentTrip();
-		trip.description  = metadata.description
-		storage.storeCurrentTrip(trip)
+		trip.description = metadata.description;
+		storage.storeCurrentTrip(trip);
 		const tripSend = adoptForSend(trip);
 		console.log('tripSend = ', tripSend);
 		this.#updateTrip(tripSend, trip.id).then(response => {
@@ -125,7 +124,7 @@ export default class TripReducer {
 
 	deleteTrip = () => {
 		const { id } = storage.getCurrentTrip();
-		storage.clearCurrentTrip()
+		storage.clearCurrentTrip();
 		sendDeleteJSONRequest(backendEndpoint + tripURI + id)
 			.then(response => {
 				if (response.status === 200) {
@@ -157,8 +156,7 @@ export default class TripReducer {
 			});
 	};
 
-	#updateTrip = (data: TripFormInfo, tripId: string): Promise<Trip> => {
-		return sendPatchJSONRequest(backendEndpoint + tripURI + tripId, data)
+	#updateTrip = (data: TripFormInfo, tripId: string): Promise<Trip> => sendPatchJSONRequest(backendEndpoint + tripURI + tripId, data)
 			.then(response => {
 				if (response.status === 400) {
 					return Promise.reject(new Error('Bad request'));
@@ -168,10 +166,7 @@ export default class TripReducer {
 				}
 				return Promise.resolve(response);
 			})
-			.then(response => {
-				return response.json();
-			});
-	};
+			.then(response => response.json());
 
 	#getTrip = (id: string): Promise<Trip> =>
 		sendGetJSONRequest(backendEndpoint + tripURI + id)

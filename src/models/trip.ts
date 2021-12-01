@@ -30,6 +30,6 @@ export interface TripSights {
 	id: number;
 	day: number;
 	// days: Array<Array<Record<string, number>>>;
-	//sights: Array<TripSightId>;
+	// sights: Array<TripSightId>;
 	// id: string;
 }

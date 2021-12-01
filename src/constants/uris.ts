@@ -40,5 +40,5 @@ export {
 	photoURI,
 	searchURI,
 	tagsURI,
-	user
+	user,
 };

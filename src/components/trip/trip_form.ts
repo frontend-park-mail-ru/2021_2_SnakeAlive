@@ -1,6 +1,11 @@
 // import tripFormTemplate from '@/components/trip/trip_form.handlebars';
 import { dispatcher } from '@/dispatcher';
-import { deleteTrip, createTripFormRequest, updateCurrentTripInfo, delPlaceFromTrip } from '@/actions/trip';
+import {
+	deleteTrip,
+	createTripFormRequest,
+	updateCurrentTripInfo,
+	delPlaceFromTrip,
+} from '@/actions/trip';
 import { newGetReviewsResponse } from '@/actions/review';
 import { sendGetJSONRequest } from '@/http';
 import { backendEndpoint, paramsURLfrontend, pathsURLfrontend, sightsURI } from '@/constants';
@@ -57,30 +62,26 @@ const alert = () => {
 	console.log('click');
 };
 
-export const initEdit = (): void => {
-	
-};
+export const initEdit = (): void => {};
 
 export const initSubmitTripBtn = (): void => {
 	const askConfirmBtn = document.getElementById('trip-submit');
 	if (askConfirmBtn !== null) {
-		console.log("HAVE SUBMIT BTN ")
+		console.log('HAVE SUBMIT BTN ');
 		askConfirmBtn.addEventListener(
 			'click',
 			event => {
 				event.preventDefault();
-				console.log("submit trip")
-				const trip = storage.getCurrentTrip()
-				dispatcher.notify(updateCurrentTripInfo(trip.title, trip.description))
+				console.log('submit trip');
+				const trip = storage.getCurrentTrip();
+				dispatcher.notify(updateCurrentTripInfo(trip.title, trip.description));
 			},
 			false
 		);
-
-	}else{
-		console.log("NO SUBMIT BTN ")
+	} else {
+		console.log('NO SUBMIT BTN ');
 	}
-}
-
+};
 
 export const initDelSightsBtns = (): void => {
 	// добавить удаление достопримечательности по нажатию на кнопку
@@ -90,13 +91,13 @@ export const initDelSightsBtns = (): void => {
 		deleteSightBtns[i].addEventListener(
 			'click',
 			event => {
-				console.log("delite sight")
-				dispatcher.notify(delPlaceFromTrip(i,0))
+				console.log('delite sight');
+				dispatcher.notify(delPlaceFromTrip(i, 0));
 			},
 			false
 		);
 	}
-}
+};
 
 export const initDelTripBtn = (): void => {
 	const askConfirmBtn = document.getElementById('ask_confirm_button');
@@ -105,16 +106,15 @@ export const initDelTripBtn = (): void => {
 			'click',
 			event => {
 				event.preventDefault();
-				console.log("delite trip")
-				dispatcher.notify(deleteTrip())
+				console.log('delite trip');
+				dispatcher.notify(deleteTrip());
 			},
 			false
 		);
-
-	}else{
-		console.log("NO DEL BTN ")
+	} else {
+		console.log('NO DEL BTN ');
 	}
-}
+};
 
 export const initDescription = (): void => {
 	const askConfirmBtn = document.getElementById('comment_text');
@@ -123,23 +123,17 @@ export const initDescription = (): void => {
 			'input',
 			event => {
 				event.preventDefault();
-				console.log("store new decription")
-				const curtrip = storage.getCurrentTrip()
-				curtrip.description = getFormInfo().text
-				storage.storeCurrentTrip(curtrip)
+				console.log('store new decription');
+				const curtrip = storage.getCurrentTrip();
+				curtrip.description = getFormInfo().text;
+				storage.storeCurrentTrip(curtrip);
 			},
 			false
 		);
-
-	}else{
-		console.log("NO DEL BTN ")
+	} else {
+		console.log('NO DEL BTN ');
 	}
-}
-
-
-
-
-
+};
 
 const getFormInfo = (): {
 	title: string;

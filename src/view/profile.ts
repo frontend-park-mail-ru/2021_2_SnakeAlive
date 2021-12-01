@@ -1,24 +1,38 @@
 import BasicView from '@/view/view';
 import { DataType, dispatcher, EventType, Token } from '@/dispatcher';
-import { logoutRequest, newUpdateProfileMetadataRequest, newUpdateProfilePhotoRequest } from '@/actions/profile';
+import {
+	logoutRequest,
+	newUpdateProfileMetadataRequest,
+	newUpdateProfilePhotoRequest,
+} from '@/actions/profile';
 import { storage } from '@/storage';
 import { Profile, ProfileAlbum, ProfileTrip } from '@/models/profile';
 import profileTemplate from '@/templates/profile.handlebars';
 import profileEditTemplate from '@/templates/profile_edit.handlebars';
 import Button from '@/components/minified/button/button';
 import Input from '@/components/minified/input/input';
-import { validateElements, validateEqual, validateLength, validateNotEmpty } from '@/validators/common';
+import {
+	validateElements,
+	validateEqual,
+	validateLength,
+	validateNotEmpty,
+} from '@/validators/common';
 import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
 import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
-import horisontalScroll from '../components/horizontal_scroll/horisontal_scroll.handlebars'
+import horisontalScroll from '../components/horizontal_scroll/horisontal_scroll.handlebars';
 
-export const setListenersOnCards = (name: string, cards: ProfileTrip[] | ProfileAlbum[], pathToGo: pathsURLfrontend) => {
+export const setListenersOnCards = (
+	name: string,
+	cards: ProfileTrip[] | ProfileAlbum[],
+	pathToGo: pathsURLfrontend
+) => {
 	cards.forEach(trip => {
-
 		// trip="go_trip_{{this}}
-		const btn = document.getElementById(`go_${name}_${trip.id}`);
+		// const btn = document.getElementById(`go_${name}_${trip.id}`);
+		const btn = document.getElementById(trip.htmlId);
 		if (btn !== null) {
+			console.log(btn);
 			btn.addEventListener('click', event => {
 				event.preventDefault();
 				router.go(
@@ -76,8 +90,8 @@ export default class ProfileView extends BasicView {
 
 		this.#createScrolls(albums);
 
-		setListenersOnCards("trip", trips, pathsURLfrontend.trip); // поездки
-		setListenersOnCards("album", albums, pathsURLfrontend.album); // поездки
+		setListenersOnCards('trip', trips, pathsURLfrontend.trip); // поездки
+		setListenersOnCards('album', albums, pathsURLfrontend.album); // поездки
 
 		const editBtn: Button = new Button('#profile__edit_btn');
 		editBtn.setOnClick(this.#renderEdit);
@@ -213,18 +227,17 @@ export default class ProfileView extends BasicView {
 			const place = document.getElementById(`photo_scroll_${album.htmlId}`);
 			if (place !== null) {
 				const pages: Array<{
-					picture: string
+					picture: string;
 				}> = [];
 				if (album.photos) {
 					album.photos.forEach(photo => {
 						pages.push({
-							picture: photo
+							picture: photo,
 						});
 					});
 				}
-				place.innerHTML = horisontalScroll({pages});
+				place.innerHTML = horisontalScroll({ pages });
 			}
-		})
-
+		});
 	};
 }
