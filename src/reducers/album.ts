@@ -174,7 +174,8 @@ export default class AlbumReducer {
 			})
 			.then(response => response.json());
 
-	#sendPhotos = (photos: FormData): Promise<{ filename: string }> => sendPostFileRequest(backendEndpoint + upload, photos)
+	#sendPhotos = (photos: FormData): Promise<{ filename: string }> =>
+		sendPostFileRequest(backendEndpoint + upload, photos)
 			.then(response => {
 				if (response.status !== 200) {
 					return Promise.reject(new Error('не загружены фотографии'));

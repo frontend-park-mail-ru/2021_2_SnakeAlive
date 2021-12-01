@@ -4,6 +4,10 @@ import { createReviewForm } from '@/actions/review';
 import { newSetMainHeaderRequest } from '@/actions/header';
 import { storage } from '@/storage';
 import { createSightTemplate } from '@/components';
+import { TagAdoptedForRender } from '@/models/sight';
+import { router } from '@/router';
+import { createFrontendQueryParams } from '@/router/router';
+import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
 
 export default class SightView extends BasicView {
 	#tokens: Token[];
@@ -22,9 +26,36 @@ export default class SightView extends BasicView {
 
 	setSight = (metadata: EventType): void => {
 		dispatcher.notify(newSetMainHeaderRequest());
-		this.setView(createSightTemplate(storage.getSight()));
-		dispatcher.notify(createReviewForm());
+		const sight = storage.getSight();
 
+		const adoptedTags: Array<TagAdoptedForRender> = [];
+		sight.tags.forEach(tag => {
+			adoptedTags.push({
+				name: tag,
+				sightPP: 0,
+			});
+		});
+		// @ts-ignore
+		sight.tags = adoptedTags;
+		this.setView(createSightTemplate(sight));
+
+		adoptedTags.forEach(tag => {
+			const tegElem = document.getElementById(`tag_${tag.name}_0`);
+			if (tegElem !== null) {
+				tegElem.addEventListener('click', () => {
+					router.go(
+						createFrontendQueryParams(pathsURLfrontend.tag, [
+							{
+								key: paramsURLfrontend.tag,
+								value: tag.name,
+							},
+						])
+					);
+				});
+			}
+		});
+
+		dispatcher.notify(createReviewForm());
 		// this.setView(`<div class='full-page'>${JSON.stringify(storage.getSight(), null, 4)}</div>`);
 	};
 

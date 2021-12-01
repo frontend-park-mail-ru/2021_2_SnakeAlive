@@ -156,7 +156,8 @@ export default class TripReducer {
 			});
 	};
 
-	#updateTrip = (data: TripFormInfo, tripId: string): Promise<Trip> => sendPatchJSONRequest(backendEndpoint + tripURI + tripId, data)
+	#updateTrip = (data: TripFormInfo, tripId: string): Promise<Trip> =>
+		sendPatchJSONRequest(backendEndpoint + tripURI + tripId, data)
 			.then(response => {
 				if (response.status === 400) {
 					return Promise.reject(new Error('Bad request'));

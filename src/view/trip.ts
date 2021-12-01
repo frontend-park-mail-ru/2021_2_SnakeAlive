@@ -1,5 +1,5 @@
 import BasicView from '@/view/view';
-import { dispatcher, EventType, Token , NumID } from '@/dispatcher';
+import { dispatcher, EventType, Token, NumID } from '@/dispatcher';
 import tripPageTemplate from '@/components/trip/trip.handlebars';
 import tripFormTemplate from '@/components/trip/trip_form.handlebars';
 import tripSights from '@/components/trip/trip_sights.handlebars';

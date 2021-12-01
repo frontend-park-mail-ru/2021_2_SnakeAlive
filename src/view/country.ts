@@ -110,9 +110,10 @@ class CountryHolderView extends BasicView {
 		this.setView(countryPageTemplate({ name: `по стране ${translation}` }));
 		console.log('renderCountry', name, ID);
 
+		console.log(storage.getCountry());
 		this.setView(
 			countryPageTemplate({
-				name: `по стране ${name}`,
+				name: `по стране ${translation}`,
 				tags,
 				allTags,
 			})

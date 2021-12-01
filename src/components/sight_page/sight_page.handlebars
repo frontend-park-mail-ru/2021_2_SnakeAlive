@@ -15,8 +15,8 @@
 
 			<div class="tag__holder">
 				{{#each tags}}
-					<div class="tag card__tag card__tag__font">
-						{{this}}
+					<div class="tag card__tag card__tag__font" id="tag_{{this.name}}_{{this.sightPP}}">
+						{{this.name}}
 						{{#if @last}}
 						{{else}}
 							<span class="span__font__large span__font__large-blue">•</span>
