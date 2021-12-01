@@ -17,7 +17,6 @@ import '../reviews/review.scss';
 import './sight_page.scss';
 
 export const createSightTemplate = (data: Sight): string => {
-
 	const parent = document.createElement('div');
 	parent.innerHTML = sightTemplate(data);
 	return parent.innerHTML;

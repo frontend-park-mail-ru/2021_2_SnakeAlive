@@ -65,7 +65,7 @@ export default class TripReducer {
 		trip.sights.push(metadata.sight);
 		storage.storeCurrentTrip(trip);
 		const tripSend = adoptForSend(trip);
-		this.#updateTrip(tripSend, trip.id).then(()=> {
+		this.#updateTrip(tripSend, trip.id).then(() => {
 			dispatcher.notify(rerenderTripCards(true));
 		});
 	};
@@ -125,7 +125,8 @@ export default class TripReducer {
 			});
 	};
 
-	#addTrip = (data: TripFormInfo): Promise<Trip> => sendPostJSONRequest(backendEndpoint + postTripURI, data)
+	#addTrip = (data: TripFormInfo): Promise<Trip> =>
+		sendPostJSONRequest(backendEndpoint + postTripURI, data)
 			.then(response => {
 				if (response.status === 400) {
 					return Promise.reject(new Error('Bad request'));

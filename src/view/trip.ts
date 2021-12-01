@@ -15,11 +15,7 @@ import { Map } from '@/components/map/map';
 import { pathsURLfrontend } from '@/constants';
 import { IsTrue, SightToTrip } from '@/dispatcher/metadata_types';
 import { storage } from '@/storage';
-import {
-	newGetTripRequest,
-	addPlaceToTrip,
-	delPlaceFromTrip,
-} from '@/actions/trip';
+import { newGetTripRequest, addPlaceToTrip, delPlaceFromTrip } from '@/actions/trip';
 import { SightCardInTrip } from '@/view/sight_cards';
 import defaultPicture from '@/../image/moscow_city_1.jpeg';
 import { initSearchView, SearchView } from '@/components/search/search';
@@ -309,4 +305,3 @@ export class InitTripPage extends BasicView {
 		this.setEmpty();
 	};
 }
-

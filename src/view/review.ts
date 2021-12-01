@@ -85,7 +85,7 @@ export class ReviewCreateView extends BasicView {
 		this.#tokens = [
 			dispatcher.register(EventType.CREATE_REVIEW_FORM, this.createFormIfLogged),
 			dispatcher.register(EventType.SET_MAIN_HEADER_LOGGED_RESPONSE, this.createFormIfLogged),
-			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy), 
+			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
 		];
 	};
 

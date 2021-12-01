@@ -57,8 +57,7 @@ export const init = (isNew: boolean): void => {
 	}
 };
 
-const alert = () => {
-};
+const alert = () => {};
 
 export const initEdit = (): void => {};
 

@@ -13,12 +13,7 @@ import albumInfoTemplate from '@/components/album/album_info.handlebars';
 import albumPhotosTemplate from '@/components/album/album_photos.handlebars';
 import '@/components/album/album.scss';
 import { initAlbumForm } from '@/components/album/album_form';
-import {
-	addAlbumPhoto,
-	deletePhoto,
-	newGetAlbumResult,
-	renderAlbumPhotos,
-} from '@/actions/album';
+import { addAlbumPhoto, deletePhoto, newGetAlbumResult, renderAlbumPhotos } from '@/actions/album';
 
 import defaultPhoto from '../../image/defaultAlbum.png';
 

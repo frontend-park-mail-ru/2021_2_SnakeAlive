@@ -75,8 +75,7 @@ export default class ProfileView extends BasicView {
 		this.setEmpty();
 	};
 
-	render = (): void =>
-		this.#isProfile ? this.#renderProfile() : this.#renderEdit();
+	render = (): void => (this.#isProfile ? this.#renderProfile() : this.#renderEdit());
 
 	#renderProfile = (): void => {
 		this.#isProfile = true;

@@ -51,7 +51,6 @@ const getIDParamDispatchError = (path: URL): number | null => {
 };
 
 export const notifier = (path: URL): void /* IEvent */ => {
-
 	switch (path.pathname) {
 		case pathsURLfrontend.root: {
 			dispatcher.notify(newInitPageRequest());

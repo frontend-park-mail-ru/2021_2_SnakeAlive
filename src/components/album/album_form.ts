@@ -19,7 +19,6 @@ const hideConfirm = (): void => {
 };
 
 const showConfirm = () => {
-
 	const answerPlace = document.getElementById('form__submit_holder__answer');
 	if (answerPlace !== null) {
 		answerPlace.style.display = 'flex';

@@ -1,10 +1,5 @@
 import { Empty, EventType, IEvent, NumID } from '@/dispatcher';
-import {
-	IsTrue,
-	TripInfo,
-	IDState,
-	CardOrderAndDay,
-} from '@/dispatcher/metadata_types';
+import { IsTrue, TripInfo, IDState, CardOrderAndDay } from '@/dispatcher/metadata_types';
 import { Sight, SightDay } from '@/models';
 
 const newGetTripRequest = (tripID: number): IEvent =>

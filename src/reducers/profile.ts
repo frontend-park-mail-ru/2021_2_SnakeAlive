@@ -155,7 +155,7 @@ export default class ProfileReducer {
 
 	#getProfileTrips = (): Promise<ProfileTrip[]> =>
 		sendGetJSONRequest(backendEndpoint + tripURI + user)
-			.then(response =>  Promise.resolve(response))
+			.then(response => Promise.resolve(response))
 			.then(response => response.json());
 
 	#getProfileAlbums = (): Promise<ProfileAlbum[]> =>

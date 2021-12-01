@@ -53,11 +53,10 @@ export default class ReviewReducer {
 			if (typeof gotProfile !== 'number') {
 				storage.storeProfile(adaptGetProfileResponse(gotProfile));
 			}
-			this.#sendGetReviews(event.ID)
-				.then((reviews: ReviewGotInfo[]) => {
-					storage.storeReviews(adoptGotReview(reviews));
-					dispatcher.notify(newGetReviewsResponse());
-				});
+			this.#sendGetReviews(event.ID).then((reviews: ReviewGotInfo[]) => {
+				storage.storeReviews(adoptGotReview(reviews));
+				dispatcher.notify(newGetReviewsResponse());
+			});
 		});
 	};
 

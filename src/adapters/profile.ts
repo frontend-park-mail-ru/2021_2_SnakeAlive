@@ -13,7 +13,11 @@ import { storage } from '@/storage';
 import avatarPath from '../../image/test.jpeg';
 
 export function adaptGetProfileResponse(response: GetProfileResponse): Profile {
-	if (response.avatar === 'default.jpg' || response.avatar.slice(-9) === 'test.jpeg' || response.avatar.slice(-12) === 'default.jpeg') {
+	if (
+		response.avatar === 'default.jpg' ||
+		response.avatar.slice(-9) === 'test.jpeg' ||
+		response.avatar.slice(-12) === 'default.jpeg'
+	) {
 		response.avatar = avatarPath;
 	}
 

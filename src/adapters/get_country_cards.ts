@@ -1,6 +1,13 @@
-import { CountryCard, CountryCardPhoto, CountryCardResponse, CountryCardTag, TemplateCards } from '../models/index';
+import {
+	CountryCard,
+	CountryCardPhoto,
+	CountryCardResponse,
+	CountryCardTag,
+	TemplateCards,
+} from '../models/index';
 
-export const adaptGetCards = (cards: CountryCardResponse[]): TemplateCards => <TemplateCards>{
+export const adaptGetCards = (cards: CountryCardResponse[]): TemplateCards =>
+	<TemplateCards>{
 		cards: cards.map<CountryCard>(
 			(card, cardIndex) =>
 				<CountryCard>{
@@ -21,4 +28,4 @@ export const adaptGetCards = (cards: CountryCardResponse[]): TemplateCards => <T
 					),
 				}
 		),
-};
+	};
