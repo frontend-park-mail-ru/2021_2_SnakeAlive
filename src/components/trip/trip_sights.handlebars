@@ -1,0 +1,36 @@
+	{{#each sights}}
+		{{#each this}}
+			<div class='frame'>
+				<div id="go_button_{{ this.sight.id }}_{{this.PP}}" class='trip_sight_clickable'>
+					<div><h2>{{ this.sight.name }}</h2></div>
+					<div id='trip_sight_photo_wrapper'>
+						<div class='card__photo_wrapper carousel trip_sight_photo'>
+							<img src="{{this.sight.photo}}">
+						</div>
+					</div>
+
+					<div><p>✦ {{ this.sight.rating }}</p></div>
+				</div>
+
+				<div class="tag__holder">
+					{{#each this.sight.tags}}
+						<div class="tag card__tag card__tag__font" id='tag_{{this.name}}_{{this.sightPP}}'>
+							{{this.name}}
+							{{#if @last}}
+							{{else}}
+
+								<span class="span__font__large span__font__large-blue">•</span>
+							{{/if}}
+						</div>
+					{{/each}}
+				</div>
+
+			<p style='visibility: hidden'>no</p>
+				<div>
+					<button
+						id="delete_button_{{ this.sight.id }}"
+						class='usual_button_light usual_button delite_btn pp_{{ this.PP }}'>Удалить</button>
+			</div>
+			</div>
+		{{/each}}
+	{{/each}}

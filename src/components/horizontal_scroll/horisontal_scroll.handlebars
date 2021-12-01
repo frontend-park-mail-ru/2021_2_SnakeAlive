@@ -1,0 +1,9 @@
+<div class='scroll__wrapper'>
+	{{#each pages}}
+		<div class='scroll__card {{#if @last}} scroll__card_last{{/if}}' id='{{this.htmlId}}'>
+			<div class='scroll__card__text_wrapper'><p class='scroll__card__text'>{{this.name}}</p></div>
+			<img src="{{this.picture}}" class='scroll__card__image' alt='picture'>
+<!--			"go_album_{{this.id}}"-->
+		</div>
+	{{/each}}
+</div>

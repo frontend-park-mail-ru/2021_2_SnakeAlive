@@ -1,0 +1,26 @@
+<div class="trip_page">
+	<div class="trip_page__left">
+		<div class="trip_page__left__info" id="trip-info">
+			<div id="trip_info_holder" class='frame'>
+    <h2>{{title}}</h2>
+    <p>{{description}}</p>
+    <div class="string">
+        <button name ='btn-add-album' class="usual_button usual_button_light" id="btn-red-trip">Редактировать</button>
+        {{!-- <button class="usual_button usual_button_dark" id="btn-add-album">Добавить альбом</button> --}}
+    </div>
+</div>
+
+<div id="trip_albums_holder"></div>
+<div id="trip_cards_holder" class="trip_cards_holder"></div>
+
+		</div>
+	</div>
+	<div class="trip_page__map">
+		 <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmfwtc-cyEkyrSqWaUfeRBRMV6dvOAnpg&callback=initMap&v=weekly"
+      async
+    ></script>
+		<div class='trip_page__map' id='map'></div>
+	</div>
+
+</div>

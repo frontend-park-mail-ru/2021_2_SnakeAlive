@@ -1,0 +1,31 @@
+<div class='header__wrapper'>
+<div class='header__logo' id='logo-h'>
+		<img src="{{logo}}" class="header__logo__img"/>
+		<h2 class="header__logo__text">путешествия</h2>
+	</div>
+
+	<div class="right">
+		{{#if isNotEmpty}}
+			<div id="header-search-place" class="header__search_place"></div>
+		{{/if}}
+
+		{{#if isUser}}
+			<button class='usual_button usual_button_light' id='trip-block'>
+				Создать поездку
+			</button>
+		{{/if}}
+
+		{{#if isNotEmpty}}
+		<div class='header__button' id='user-block'>
+			{{#if isUser}}
+				<div class="circle-img">
+					<img src="{{avatarPath}}"/>
+				</div>
+				<p class='header__button__username'>{{name}}</p>
+			{{else}}
+				<p class='header__button__login'>{{btnText}}</p>
+			{{/if}}
+		</div>
+		{{/if}}
+	</div>
+</div>

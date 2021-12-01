@@ -1,0 +1,14 @@
+	{{#if albums}}
+		<div class='profile_show__albums frame_collection'>
+			<div class='frame_collection__header'><p>{{header}}</p></div>
+			<div class='frame_collection__wrapper'>
+				{{#each albums}}
+			<div id="{{this.htmlId}}" class='frame_collection__card'>
+				<div class='frame_collection__card__header'>{{this.title}}</div>
+				<div class='frame_collection__card__text'>{{this.description}}</div>
+				<div class='profile_show__trips__photo_scroll' id='photo_scroll_{{this.htmlId}}'></div>
+			</div>
+				{{/each}}
+			</div>
+		</div>
+	{{/if}}

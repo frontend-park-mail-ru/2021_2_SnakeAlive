@@ -1,0 +1,57 @@
+@import "../../index";
+
+.auth_page {
+  width: 100%;
+  display: grid;
+  padding: 10px 0;
+  align-items: flex-start;
+
+  @media (min-width: 960px) {
+    grid-template: "ml f f t t mr"  / 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-column-gap: $small-px;
+    grid-row-gap: $small-px;
+  }
+
+  @media (max-width: 961px) {
+    grid-template: "f" "t";
+    row-gap: $small-px;
+    gap: 10px;
+  }
+}
+
+.form_place {
+  grid-area: f;
+}
+
+.text_place {
+  grid-area: t;
+  h2 {
+    @include text-local-header;
+    padding-bottom: $small-px;
+  }
+  p, li {
+    @include text-plain-no-wrap;
+    padding-bottom: $small-px;
+  }
+}
+
+.auth_form {
+  &__error_block {
+
+    //margin-bottom: $small-px;
+    &__text {
+      visibility: hidden;
+      @include text-small;
+      color: $my--error;
+    }
+  }
+  > div {
+    margin-bottom: $small-px;
+    > button {
+      margin-top: $large-px;
+    }
+  }
+}
+
+
+

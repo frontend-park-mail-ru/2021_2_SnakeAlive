@@ -1,0 +1,254 @@
+@import "src";
+
+.delete_trip__submit_holder {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: $small-px;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  &__answer {
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    gap: $small-px;
+    margin: 0;
+    &__text {
+      @include text-small;
+      color: $my--small-text;
+    }
+  }
+}
+
+.trip_cards_holder {
+  > frame {
+    margin-bottom: 10px;
+  }
+}
+
+.error_block {
+  visibility: hidden;
+  &__text {
+    @include text-small;
+    color: $my--error;
+  }
+}
+
+#trip-search-place{
+  margin-top: 15px;
+}
+
+#button_select {
+  display: none;
+}
+
+.trip_page {
+  display: grid;
+
+  grid-column-gap: 10px;
+
+  @media (min-width: 960px) {
+    grid-template: "l map"  / 2fr 6fr;
+    grid-column-gap: $small-px;
+    grid-row-gap: $small-px;
+  }
+
+  @media (max-width: 961px) {
+    grid-template: "l" "map";
+    row-gap: $small-px;
+  }
+
+  &__left__info {
+    > div {
+      width: 100%;
+      max-width: 100%;
+      margin-top: 10px;
+    }
+    grid-area: l;
+    width: 100%;
+    max-width: 500px;
+
+  }
+
+  &__map {
+    grid-area: map;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+     &__image_container {
+       position: sticky;
+
+       //display: block;
+       width: 100%;
+       height: 100vh;
+       padding: 10px 0;
+
+       img {
+         object-fit: cover;
+         object-position: center;
+         width: 100%;
+         height: 100%;
+         //padding: 0 10px;
+       }
+    }
+  }
+}
+
+#map {
+  height: 740px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.trip_preview{
+  width: 100%; /* Ширина изображений */
+  height: 100%; /* Высота изображении */
+  object-fit: cover; /* Вписываем фотографию в область */
+}
+
+
+.select_string, .string {
+  display: flex;
+  flex-direction: row;
+  height: min-content;
+  margin-right: $small-px;
+}
+
+.trip_form {
+  padding: 0;
+  &__horizontal_holder {
+    display: flex;
+    flex-direction: row;
+    height: min-content;
+    margin-right: $small-px;
+    flex-wrap: wrap;
+  }
+  &__some_info {
+    @include text-small;
+    color: $my--small-text;
+  }
+
+  > div {
+    margin-top: $small-px;
+  }
+}
+
+.buttons_holder {
+  gap: $large-px;
+  margin-top: $small-px;
+  margin-right: $small-px;
+}
+
+.label-div {
+  margin-top: $large-px;
+  margin-bottom: $large-px /2;
+}
+
+// http://jsfiddle.net/NZKWH/
+
+.trip_form__input_holder__text {
+  @include text-plain-no-wrap;
+  width:100% !important;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  //height: 85px;
+
+  .textarea_behavior{
+    width:100%;
+    word-wrap: break-word;
+
+    div {
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      padding: 0;
+    }
+  }
+  textarea{
+    width: 100% !important;
+    overflow-y: hidden;
+    max-height: 400px;
+    resize: none;
+    @include text-plain-no-wrap;
+    font-family: inherit;
+    height: 85px;
+  }
+  .comment_text_hidden{
+    width: 100% !important;
+    position: relative;
+  }
+  #comment_text_hidden {
+    visibility:hidden;
+    @include text-plain-no-wrap;
+    position: absolute;
+  }
+}
+
+.tag {
+  cursor: pointer;
+}
+
+
+.select_string {
+  display: block;
+  > div {
+    padding-bottom: $small-px;
+  }
+}
+
+.trip_sight__preview_photo {
+  width: 100%;
+  height: 50px;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  margin-top: $small-px /2;
+  img {
+    min-height: 100%;
+    min-width: 100%;
+    object-fit: cover;
+
+    position: absolute;
+    top: -50%;
+    left: 0;
+    //position: center;
+    //top: 50%;
+    //top: 0;
+    //left: 0;
+    width: 100%;
+  }
+}
+
+.trip_sight__info_string {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#trip_sight_photo_wrapper {
+  //height: 250px;
+  //min-height: 250px;
+  width: 100%;
+  //min-height: 150px;
+  //padding: 10px;
+  margin: 0;
+  padding: $large-px 0;
+
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+.trip_sight_photo {
+  height: 10px;
+  > img {
+    overflow-x: hidden;
+  }
+}
+
+.trip_sight_clickable {
+  cursor: pointer;
+}

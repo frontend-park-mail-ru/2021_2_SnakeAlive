@@ -1,0 +1,146 @@
+@import "../../index";
+
+.form_review {
+  display: flex;
+  flex-direction: column;
+  &__error {
+    @include text-small;
+    visibility: hidden;
+    color: $my--error;
+  }
+  &__submit_holder {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: $small-px;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    &__answer {
+      display: none;
+      flex-direction: row;
+      align-items: center;
+      gap: $small-px;
+      margin: 0;
+      &__text {
+        @include text-small;
+        color: $my--small-text;
+      }
+    }
+  }
+  &__string {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: $small-px;
+    > img {
+      height: $large-px * 2;
+    }
+  }
+  &__input_holder {
+    > div {
+      padding-bottom: $small-px / 2;
+    }
+    margin-bottom: $small-px;
+  }
+  input, textarea {
+    @include text-plain-no-wrap;
+    //padding: 6px;
+  }
+  label {
+    @include text-plain-no-wrap;
+  }
+  h2 {
+    @include text-small;
+    margin-bottom: $small-px;
+    color: $my--small-text;
+  }
+}
+
+// http://jsfiddle.net/NZKWH/
+
+.form__input_holder__text {
+  @include text-plain-no-wrap;
+  width:100% !important;
+  display: flex;
+  flex-direction: column;
+
+  .textarea_behavior{
+    width:100%;
+    word-wrap: break-word;
+
+    div {
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      padding: 0;
+    }
+  }
+  textarea{
+    overflow-y: hidden;
+    width: 100% !important;
+    max-height: 400px;
+    resize: none;
+    @include text-plain-no-wrap;
+    font-family: inherit;
+    height: 85px;
+  }
+  .comment_text_hidden{
+    width: 100% !important;
+    position: relative;
+  }
+  #comment_text_hidden {
+     visibility:hidden;
+    @include text-plain-no-wrap;
+     position: absolute;
+   }
+}
+
+  // https://snipp.ru/html-css/rating-css
+.rating-area {
+  overflow: hidden;
+  width: max-content;
+  margin: 0 $small-px;
+  font-size: $large-px *2;
+  height: $large-px *2;
+}
+.rating-area:not(:checked) > input {
+  display: none;
+}
+.rating-area:not(:checked) > label {
+  float: right;
+  width: $large-px *2;
+  padding: 0;
+  cursor: pointer;
+  font-size: $large-px *2;
+  line-height: $large-px * 2;
+  color: $my--input-border;
+}
+.rating-area:not(:checked) > label:before {
+  content: '✦';
+}
+.rating-area > input:checked ~ label {
+  color: $green;
+}
+.rating-area:not(:checked) > label:hover,
+.rating-area:not(:checked) > label:hover ~ label {
+  color: $green;
+}
+.rating-area > input:checked + label:hover,
+.rating-area > input:checked + label:hover ~ label,
+.rating-area > input:checked ~ label:hover,
+.rating-area > input:checked ~ label:hover ~ label,
+.rating-area > label:hover ~ input:checked ~ label {
+  color: $green;
+}
+.rate-area > label:active {
+  position: relative;
+}
+
+#review_text {
+  width: 100%;
+  @include text-plain-no-wrap();
+  white-space: pre-line; /* Текст не переносится */
+  overflow: hidden; /* Обрезаем всё за пределами блока */
+  text-overflow: ellipsis; /* Добавляем многоточие */
+  position: relative;
+}

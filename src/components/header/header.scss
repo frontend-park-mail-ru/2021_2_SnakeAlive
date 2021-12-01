@@ -1,0 +1,121 @@
+@import "../../index";
+
+$logo_height: 5vh;
+//$logo_height: 48px;
+
+.header {
+  border-bottom: 1px solid $my--frame-border;
+
+  display: grid;
+  grid-column-gap: $small-px;
+
+  background: white;
+  //padding: $small-px /2 0;
+
+  @media (max-width: 380px) {
+    padding: $small-px /2 $small-px;
+    grid-template: "c"  / 1fr;
+    * {
+      margin: 0 $small-px /5;
+    }
+  }
+
+  @media (min-width: 381px) {
+    grid-template: "ml c c c c mr"  / 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+
+  h2 {
+    font-size: 30px;
+    font-weight: 400;
+  }
+
+  .right {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    gap: $small-px;
+    .header__button {
+      height: 100%;
+    }
+    button {
+      height: min-content;
+      align-self: center;
+    }
+  }
+
+  &__logo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: ($header_height - $logo_height)/2 0;
+    &__text {
+      @include text-header;
+      @media (max-width: 960px) {
+        display: none;
+      }
+    }
+    &__img {
+      height: $logo_height;
+      margin-right: $small-px;
+    }
+  }
+  &__logo:hover {
+    // указатель мыши
+    cursor: pointer;
+  }
+  &__wrapper {
+    grid-area: c;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__button {
+    height: 100%;
+    padding: 0 $small-px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: $small-px;
+
+    > p {
+      @include text-small;
+    };
+
+    &__username {
+      @media (max-width: 960px) {
+        display: none;
+      };
+    };
+  }
+  &__button:hover {
+    background: $my--button-header-hover;
+    cursor: pointer;
+  }
+}
+
+.header__search_place {
+  height: min-content;
+  align-self: center;
+}
+
+.circle-img {
+  width: $logo_height * 3/4;
+  height: $logo_height * 3/4;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+
+  img {
+    min-height: 100%;
+    min-width: 100%;
+    object-fit: cover;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+}

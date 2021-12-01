@@ -1,0 +1,19 @@
+<div class='frame_collection'>
+	<div class='frame_collection__header'><h2>Отзывы других путешественников</h2></div>
+	<div class='frame_collection__wrapper'>
+		{{#each reviews}}
+			<div class='frame_collection__card'>
+				<div class='frame_collection__card__header'>{{this.title}}</div>
+				<div><p>✦ {{this.rating}}</p></div>
+				<div class='frame_collection__card__text review_text' id='review_text'>{{this.text}}</div>
+				{{#if this.owner}}
+					<button id="delete_button_{{this.id}}" class='usual_button_light usual_button'>
+						🗑️
+					</button>
+				{{else}}
+					<p>{{this.user_id}}</p>
+				{{/if}}
+			</div>
+		{{/each}}
+	</div>
+</div>

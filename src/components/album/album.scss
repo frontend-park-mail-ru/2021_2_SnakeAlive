@@ -1,0 +1,172 @@
+@import "src";
+
+.delete_album__submit_holder {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: $small-px;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  &__answer {
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    gap: $small-px;
+    margin: 0;
+    &__text {
+      @include text-small;
+      color: $my--small-text;
+    }
+  }
+}
+
+.error_block {
+  visibility: hidden;
+  &__text {
+    @include text-small;
+    color: $my--error;
+  }
+}
+
+.album_page {
+  width: 100%;
+  display: grid;
+  padding: 10px 0;
+  align-items: flex-start;
+
+  @media (min-width: 960px) {
+    grid-template: "ml l-t l-t r-b r-b  mr"  / 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+  }
+
+  @media (max-width: 961px) {
+    grid-template: "l-t" "r-b";
+    gap: 10px;
+  }
+
+  &__right_col {
+    grid-area: r-b;
+    &__upload_box {
+      display: none;
+    }
+  }
+
+  &__left_col {
+    grid-area: l-t;
+
+    > h2{
+      @include text-local-header;
+    }
+
+    &__info {
+      margin-bottom: $small-px;
+    }
+
+    &__description {
+      &__title {
+        @include text-small;
+        color: $my--small-text;
+        margin-bottom: $small-px;
+      }
+    }
+  }
+
+  &__photo_holder_place {
+    width: 100%;
+    height: auto;
+    margin-bottom: $small-px;
+    display: block;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+  }
+}
+
+.album_form {
+  > div {
+    padding-bottom: $small-px;
+  }
+
+  &__horizontal_holder {
+    display: flex;
+    flex-direction: row;
+    height: min-content;
+    margin-right: $small-px;
+    flex-wrap: wrap;
+  }
+  &__some_info {
+    @include text-small;
+    color: $my--small-text;
+  }
+}
+
+.buttons_holder {
+  margin-top: $small-px;
+  margin-right: $small-px;
+}
+
+.label-div {
+  margin-top: $large-px;
+  margin-bottom: $large-px /2;
+}
+
+// http://jsfiddle.net/NZKWH/
+
+.album_form__input_holder__text {
+  @include text-plain-no-wrap;
+  width:100% !important;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  //height: 85px;
+
+  .textarea_behavior{
+    width:100%;
+    word-wrap: break-word;
+
+    div {
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      padding: 0;
+    }
+  }
+  textarea{
+    width: 100% !important;
+    overflow-y: hidden;
+    max-height: 400px;
+    resize: none;
+    @include text-plain-no-wrap;
+    font-family: inherit;
+    height: 85px;
+  }
+  .comment_text_hidden{
+    width: 100% !important;
+    position: relative;
+  }
+  #comment_text_hidden {
+    visibility:hidden;
+    @include text-plain-no-wrap;
+    position: absolute;
+  }
+}
+
+#add_photos_btn {
+  padding-left: 0;
+  padding-right: 0;
+  width: 100%;
+  margin-bottom: $small-px;
+  //background-color: $white;
+}
+
+.album_info_block {
+  > div {
+    padding-bottom: $small-px;
+  }
+}

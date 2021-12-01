@@ -1,0 +1,16 @@
+{
+	"id": 0,
+	"trip_id": 0,
+	"user": {
+		"id": 0,
+		"name": "string",
+		"surname": "string",
+		"avatar": "string"
+	},
+	"title": "string",
+	"description": "string",
+	"photos": [
+		"map.png",
+		"moscow_city_1.jpeg"
+	]
+}
