@@ -9,6 +9,7 @@
   @include text-plain-no-wrap;
   padding: 6px 0;
   outline: none;
+  padding: 1px 5px;
 
   display: flex;
   flex-direction: row;
@@ -17,6 +18,6 @@
   &__input:focus,
   &__input:hover {
     border: none;
-    padding: 0;
+    padding: 0 5px;
   }
 }
