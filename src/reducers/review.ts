@@ -53,16 +53,11 @@ export default class ReviewReducer {
 		this.#placeId = event.ID;
 
 		this.#putUserToStorage().then((data: GotProfileResponse | number) => {
-			dispatcher.notify(newSetMainHeaderBasicResponse());
 
 			this.#sendGetReviews(event.ID)
 				.then((reviews: ReviewGotInfo[]) => {
 					storage.storeReviews(adoptGotReview(reviews));
 					dispatcher.notify(newGetReviewsResponse());
-					if (typeof data !== 'number') {
-						storage.storeProfile(adaptGetProfileResponse(data));
-						dispatcher.notify(newSetMainHeaderLoggedResponse()); 
-					}
 				})
 				.catch((error: Error) => {
 					console.log(error);
