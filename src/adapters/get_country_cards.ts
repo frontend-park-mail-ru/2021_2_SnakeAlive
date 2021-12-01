@@ -1,34 +1,6 @@
-import {
-	CountryCard,
-	CountryCardResponse,
-	TemplateCards,
-	CountryCardTag,
-	CountryCardPhoto,
-} from '../models/index';
+import { CountryCard, CountryCardPhoto, CountryCardResponse, CountryCardTag, TemplateCards } from '../models/index';
 
-export const adaptGetCards = (cards: CountryCardResponse[]): TemplateCards => {
-	console.log(
-		'adaptGetCards',
-		cards.map<CountryCard>(
-			(name, i) =>
-				<CountryCard>{
-					name: '',
-					author: '',
-					comment: '',
-					tags: [
-						<CountryCardTag>{
-							name: '',
-						},
-					],
-					imgs: [
-						<CountryCardPhoto>{
-							source: '',
-						},
-					],
-				}
-		)
-	);
-	const convertedCards = <TemplateCards>{
+export const adaptGetCards = (cards: CountryCardResponse[]): TemplateCards => <TemplateCards>{
 		cards: cards.map<CountryCard>(
 			(card, cardIndex) =>
 				<CountryCard>{
@@ -49,7 +21,4 @@ export const adaptGetCards = (cards: CountryCardResponse[]): TemplateCards => {
 					),
 				}
 		),
-	};
-	console.log('convertedCards ', convertedCards);
-	return convertedCards;
 };

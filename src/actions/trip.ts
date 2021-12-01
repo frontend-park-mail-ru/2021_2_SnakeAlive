@@ -1,6 +1,5 @@
 import { Empty, EventType, IEvent, NumID } from '@/dispatcher';
 import {
-	SightToTrip,
 	IsTrue,
 	TripInfo,
 	IDState,
@@ -72,12 +71,6 @@ const delPlaceFromTrip = (CardId: number, day: number) =>
 			cardId: CardId,
 			day,
 		},
-	};
-
-const sendTrip = () =>
-	<IEvent>{
-		key: EventType.SEND_TRIP,
-		metadata: <Empty>{},
 	};
 
 const deleteTrip = () =>

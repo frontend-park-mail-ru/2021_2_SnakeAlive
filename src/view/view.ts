@@ -1,5 +1,3 @@
-import errorPage from '@/components/errorPage.handlebars';
-
 export default class BasicView {
 	#component: string;
 

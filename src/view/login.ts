@@ -1,5 +1,5 @@
 import BasicView from './view';
-import { DataType, dispatcher, EventType, Token, ValidationErrData } from '@/dispatcher';
+import { dispatcher, EventType, Token, ValidationErrData } from '@/dispatcher';
 import { Form, loginHTML, makeSimpleButton } from '@/components';
 
 import { submitLoginData } from '@/actions/auth';
@@ -33,7 +33,7 @@ export default class LoginView extends BasicView {
 		];
 	};
 
-	createPage = (metadata: DataType) => {
+	createPage = () => {
 		this.setView(loginHTML());
 		const formPlaceElement = document.querySelector('#form_place');
 		if (formPlaceElement !== null) {
@@ -49,7 +49,7 @@ export default class LoginView extends BasicView {
 		this.#form?.setLoginError(err);
 	};
 
-	destroy = (metadata: DataType): void => {
+	destroy = (): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});
@@ -65,12 +65,11 @@ export default class LoginView extends BasicView {
 		const metadata: ValidationErrData = {
 			data: [],
 		};
-		console.log(submitLoginData(emailHolder, passwordHolder));
 		if (
 			!validateElements([
 				{
 					validators: [
-						function (): boolean {
+						(): boolean => {
 							if (!validateEmail(emailInput.getValue())) {
 								metadata.data.push({ error: 'Некорректная элетронная почта', name: 'wrong_email' });
 							}
@@ -81,7 +80,7 @@ export default class LoginView extends BasicView {
 				},
 				{
 					validators: [
-						function (): boolean {
+						(): boolean => {
 							if (
 								validateNotEmpty(passInput.getValue()) &&
 								validateLength(passInput.getValue(), 8)

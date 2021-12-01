@@ -4,11 +4,9 @@ import { TripFormInfo, TripSights } from '@/models/trip';
 export const adoptForSend = (trip: Trip): TripFormInfo => {
 	const { title, description, sights } = trip;
 	const responseDays: Array<TripSights> = [];
-	let i = 0;
 	if (sights) {
 		sights.forEach(sight => {
 			responseDays.push({ id: Number(sight.id), day: 0 });
-			i += 1;
 		});
 	} else {
 		responseDays.push({ id: 1, day: 0 });
@@ -21,9 +19,7 @@ export const adoptForSend = (trip: Trip): TripFormInfo => {
 };
 
 export const adoptForCreate = (trip: Trip): TripFormInfo => {
-	const { title, description, sights } = trip;
-	const responseDays: Array<TripSights> = [];
-	const i = 0;
+	const { title, description } = trip;
 	return {
 		title,
 		description,

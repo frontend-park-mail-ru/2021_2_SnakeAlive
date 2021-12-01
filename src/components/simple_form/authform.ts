@@ -57,7 +57,6 @@ class Form {
 		this.#button = new Button(btn);
 
 		parent.appendChild(formHTML);
-		console.log(parent);
 	}
 
 	/**

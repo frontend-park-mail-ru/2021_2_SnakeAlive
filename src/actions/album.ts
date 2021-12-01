@@ -1,5 +1,5 @@
 import { UUID, IEvent, EventType, Empty } from '@/dispatcher';
-import { AlbumInfo, AlbumUpdateInfo, File, IDState, IsTrue } from '@/dispatcher/metadata_types';
+import { AlbumUpdateInfo, File, IDState, IsTrue } from '@/dispatcher/metadata_types';
 
 const newGetAlbumRequest = (tripID: string, isEdit: boolean): IEvent =>
 	<IEvent>{

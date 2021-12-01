@@ -11,9 +11,9 @@ export const setTextAreaResizeParams = (
 	const area = <HTMLTextAreaElement>document.getElementById(textId);
 	const areaHidden = document.getElementById(hiddenTextId);
 	if (area === null || areaHidden === null) {
-		console.log('null unexpected');
+		// console.log('null unexpected');
 		return () => {
-			console.log('no beautiful textarea');
+			// console.log('no beautiful textarea');
 		};
 	}
 	const minHeight = 85; // Соответствует указанной в css
@@ -111,7 +111,6 @@ const validate = (
 
 	let textSend = '';
 	const textArea = <HTMLTextAreaElement>document.getElementById('comment_text');
-	console.log(textArea);
 	if (textArea !== null) {
 		const text = textArea.value;
 		if (text) {
@@ -173,7 +172,6 @@ export const initReviewForm = () => {
 			);
 		}
 		const textArea = document.querySelector('#comment_text');
-		console.log('#comment_text', textArea);
 		if (textArea !== null) {
 			textArea.addEventListener(
 				'input',

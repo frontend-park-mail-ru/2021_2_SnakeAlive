@@ -1,8 +1,6 @@
 import { CreateReview } from '@/dispatcher';
 import { CreateReviewRequest, CreateReviewResponse, Review, UserReview } from '@/models/review';
 import { UserMetadata } from '@/models';
-import { sendPostJSONRequest } from '@/http';
-import { backendEndpoint, reviewURI } from '@/constants';
 import { storage } from '@/storage';
 
 export function adaptCreateReviewRequest(event: CreateReview): CreateReviewRequest {
@@ -61,7 +59,6 @@ export interface ReviewGotInfo {
 }
 
 export const adoptGotReview = (gotReviews: ReviewGotInfo[]): Review[] => {
-	console.log(gotReviews);
 	const storeReviews: Review[] = [];
 	const currentUser = storage.getProfile();
 	let userId: number | null = null;
@@ -74,7 +71,6 @@ export const adoptGotReview = (gotReviews: ReviewGotInfo[]): Review[] => {
 		if (review.user_id === userId) {
 			owner = true;
 		}
-		console.log('OWNED ', owner, ' user from review/from profile: ', review.user_id, ', ', userId);
 		storeReviews.push({
 			id: review.id,
 			title: review.title,

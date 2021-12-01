@@ -4,6 +4,7 @@ export interface GetProfileResponse {
 	avatar: string;
 	description: string;
 	email: string;
+	id: number;
 }
 
 export interface UpdateProfileMetadataRequest {

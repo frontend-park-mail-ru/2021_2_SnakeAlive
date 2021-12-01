@@ -1,4 +1,4 @@
-import { DataType, dispatcher, EventType, LoginData, ValidationErrData } from '@/dispatcher';
+import { dispatcher, EventType, LoginData, ValidationErrData } from '@/dispatcher';
 import { newSetEmptyHeaderRequest, newSetMainHeaderStrongRequest } from '@/actions/header';
 import { setValidationErrorLogin } from '@/actions/auth';
 import { sendPostJSONRequest } from '@/http';
@@ -7,7 +7,6 @@ import { router } from '@/router';
 
 export default class LoginReducer {
 	init = () => {
-		console.log('login reducer inited');
 		dispatcher.register(EventType.SUBMIT_LOGIN_DATA, this.login);
 		dispatcher.notify(newSetEmptyHeaderRequest(false));
 	};
@@ -39,7 +38,6 @@ export default class LoginReducer {
 				router.go(pathsURLfrontend.root);
 			})
 			.catch(() => {
-				console.log('rejected');
 				dispatcher.notify(setValidationErrorLogin(result.data));
 			});
 	};

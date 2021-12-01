@@ -1,8 +1,6 @@
 import {
 	GetProfileResponse,
-	Profile,
 	ProfileAlbum,
-	ProfileMetadata,
 	ProfileTrip,
 	UpdateProfileMetadataRequest,
 	UpdateProfileMetadataResponse,
@@ -16,7 +14,6 @@ import {
 import {
 	albumURI,
 	backendEndpoint,
-	backendFileEndpoint,
 	logout,
 	pathsURLfrontend,
 	profile,
@@ -31,13 +28,11 @@ import {
 	adoptProfileTrips,
 } from '@/adapters/profile';
 import { storage } from '@/storage';
-import { DataType, dispatcher, EventType, File, Token, UpdateProfile } from '@/dispatcher';
+import { dispatcher, EventType, File, Token, UpdateProfile } from '@/dispatcher';
 import { newGetProfileRequest, newGetProfileResponse } from '@/actions/profile';
 import { initErrorPageRequest } from '@/actions/page';
 import { newSetEmptyHeaderRequest } from '@/actions/header';
 import { router } from '@/router';
-import { Album } from '@/models';
-import { TripInfo } from '@/dispatcher/metadata_types';
 import { user } from '@/constants/uris';
 
 export default class ProfileReducer {
@@ -56,13 +51,13 @@ export default class ProfileReducer {
 	// eslint-disable-next-line @typescript-eslint/no-empty-function
 	init = (): void => {};
 
-	destroy = (metadata: DataType): void => {
+	destroy = (): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});
 	};
 
-	getProfile = (metadata: DataType): void => {
+	getProfile = (): void => {
 		dispatcher.notify(newSetEmptyHeaderRequest(true)); // ???
 		this.#sendGetProfile()
 			.then((response: GetProfileResponse) => {
@@ -112,7 +107,7 @@ export default class ProfileReducer {
 			if (request.ok) {
 				router.go(pathsURLfrontend.root);
 			} else {
-				console.log('problems in logout');
+				// console.log('problems in logout');
 			}
 		});
 	};
@@ -160,23 +155,11 @@ export default class ProfileReducer {
 
 	#getProfileTrips = (): Promise<ProfileTrip[]> =>
 		sendGetJSONRequest(backendEndpoint + tripURI + user)
-			.then(response => {
-				if (response.status !== 200) {
-					// return Promise.reject(new Error('На сайте нет такой страницы'));
-					console.log('не получены поездки пользователя');
-				}
-				return Promise.resolve(response);
-			})
+			.then(response =>  Promise.resolve(response))
 			.then(response => response.json());
 
 	#getProfileAlbums = (): Promise<ProfileAlbum[]> =>
 		sendGetJSONRequest(backendEndpoint + albumURI + user)
-			.then(response => {
-				if (response.status !== 200) {
-					// return Promise.reject(new Error('На сайте нет такой страницы'));
-					console.log('не получены альбомы пользователя');
-				}
-				return Promise.resolve(response);
-			})
+			.then(response => Promise.resolve(response))
 			.then(response => response.json());
 }

@@ -91,6 +91,6 @@ export const makeSimpleButton = (elementId: string, pathToGo: pathsURLfrontend, 
 		});
 		profileBtn.setActive();
 	} else {
-		console.log(`not found ${elementId} while creating simple button`);
+		// console.log(`not found ${elementId} while creating simple button`);
 	}
 };

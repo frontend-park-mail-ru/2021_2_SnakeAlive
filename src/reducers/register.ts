@@ -33,7 +33,6 @@ export default class RegisterReducer {
 				router.go(pathsURLfrontend.profile);
 			})
 			.catch(() => {
-				console.log('rejected');
 				dispatcher.notify(setValidationErrorRegister(result.data));
 			});
 	};

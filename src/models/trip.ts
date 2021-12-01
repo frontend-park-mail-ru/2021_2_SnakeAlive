@@ -20,16 +20,13 @@ export interface Trip {
 	days: Array<TripSight>;
 }
 
+export interface TripSights {
+	id: number;
+	day: number;
+}
+
 export interface TripFormInfo {
 	title: string;
 	description: string;
 	sights: Array<TripSights>;
-}
-
-export interface TripSights {
-	id: number;
-	day: number;
-	// days: Array<Array<Record<string, number>>>;
-	// sights: Array<TripSightId>;
-	// id: string;
 }

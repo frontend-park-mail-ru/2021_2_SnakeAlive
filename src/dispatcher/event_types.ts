@@ -1,7 +1,5 @@
 // значения нужны только для отладки через console.log, когда выводятся присвоенные цифры це неудобно
 
-import { dispatcher } from '@/dispatcher/dispatcher';
-
 export const enum EventType {
 	// page
 	INIT_PAGE_REQUEST = 'INIT_PAGE_REQUEST',

@@ -1,4 +1,4 @@
-import { Country, CountryCard, Sight, TemplateCards, Trip, UserMetadata } from '@/models';
+import { Country, Sight, TemplateCards, Trip, UserMetadata } from '@/models';
 import { Profile, ProfileAlbum, ProfileMetadata, ProfileTrip } from '@/models/profile';
 import { Review } from '@/models/review';
 import { minCardInfo } from '@/models/country';
@@ -60,38 +60,17 @@ class Storage {
 		});
 	};
 
-	getLastTrips = () => this.#lastTrips;
-
-	dropLastTrips = () => {
-		this.#lastTrips = [];
-	};
-
-	storeCountryCards = (cards: TemplateCards): void => {
-		this.#countryCards = cards;
-	};
-
 	storeSightsCardsMin = (cards: minCardInfo[]): void => {
 		this.#cards = cards;
 	};
 
 	getSightsCardsMin = (): minCardInfo[] => this.#cards;
 
-	getCountryCards = (): TemplateCards => this.#countryCards;
-
 	storeCountry = (country: Country): void => {
-		console.log(country);
 		this.#country = country;
 	};
 
 	getCountry = (): Country => this.#country;
-
-	setUserMetadata = (user: UserMetadata): void => {
-		this.#userMetadata = user;
-	};
-
-	getUserMetadata(): UserMetadata {
-		return this.#userMetadata;
-	}
 
 	storeSight = (sight: Sight): void => {
 		this.#sight = sight;
@@ -124,11 +103,6 @@ class Storage {
 	};
 
 	getReviews = (): Review[] => this.#reviews;
-
-	appendReview = (review: Review): number => {
-		this.#reviews.push(review);
-		return this.#reviews.length;
-	};
 
 	getReview = (position: number): Review | null => {
 		if (this.#reviews.length < position) {

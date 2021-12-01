@@ -46,7 +46,6 @@ const createTrip = (event: Event) => {
 	if (title === '') {
 		setError();
 	} else {
-		console.log('Создаем поездку', title, text);
 		dispatcher.notify(createTripFormRequest(title, text));
 	}
 };
@@ -59,7 +58,6 @@ export const init = (isNew: boolean): void => {
 };
 
 const alert = () => {
-	console.log('click');
 };
 
 export const initEdit = (): void => {};
@@ -67,19 +65,16 @@ export const initEdit = (): void => {};
 export const initSubmitTripBtn = (): void => {
 	const askConfirmBtn = document.getElementById('trip-submit');
 	if (askConfirmBtn !== null) {
-		console.log('HAVE SUBMIT BTN ');
 		askConfirmBtn.addEventListener(
 			'click',
 			event => {
 				event.preventDefault();
-				console.log('submit trip');
 				const trip = storage.getCurrentTrip();
 				dispatcher.notify(updateCurrentTripInfo(trip.title, trip.description));
 			},
 			false
 		);
 	} else {
-		console.log('NO SUBMIT BTN ');
 	}
 };
 
@@ -91,7 +86,6 @@ export const initDelSightsBtns = (): void => {
 		deleteSightBtns[i].addEventListener(
 			'click',
 			event => {
-				console.log('delite sight');
 				dispatcher.notify(delPlaceFromTrip(i, 0));
 			},
 			false
@@ -106,13 +100,11 @@ export const initDelTripBtn = (): void => {
 			'click',
 			event => {
 				event.preventDefault();
-				console.log('delite trip');
 				dispatcher.notify(deleteTrip());
 			},
 			false
 		);
 	} else {
-		console.log('NO DEL BTN ');
 	}
 };
 
@@ -123,7 +115,6 @@ export const initDescription = (): void => {
 			'input',
 			event => {
 				event.preventDefault();
-				console.log('store new decription');
 				const curtrip = storage.getCurrentTrip();
 				curtrip.description = getFormInfo().text;
 				storage.storeCurrentTrip(curtrip);
@@ -131,7 +122,7 @@ export const initDescription = (): void => {
 			false
 		);
 	} else {
-		console.log('NO DEL BTN ');
+		// console.log('NO DEL BTN ');
 	}
 };
 

@@ -1,10 +1,7 @@
 import countryPageTemplate from '@/components/country_page/country_sights.handlebars';
 import {
-	DataType,
 	dispatcher,
-	ErrorMsgData,
 	EventType,
-	NamedUUID,
 	Token,
 	UUID,
 } from '@/dispatcher';
@@ -68,7 +65,6 @@ export const initTagsBtns = () => {
 	const moreBtn = document.getElementById('more-tags-btn');
 	if (moreBtn !== null) {
 		moreBtn.addEventListener('click', () => {
-			console.log(document.getElementById('myDropdown')?.classList.contains('show'));
 			if (document.getElementById('myDropdown')?.classList.contains('show')) {
 				document.getElementById('myDropdown')?.classList.remove('show');
 			} else {
@@ -81,13 +77,13 @@ export const initTagsBtns = () => {
 class TagCardsHolderView extends BasicView {
 	#tokens: Token[];
 
-	#cards: Array<SightCardInTrip>;
+	// #cards: Array<SightCardInTrip>;
 
 	constructor() {
 		super('#card-grid-wrapper');
 
 		this.#tokens = [];
-		this.#cards = [];
+		// this.#cards = [];
 	}
 
 	init = () => {
@@ -107,7 +103,7 @@ class TagCardsHolderView extends BasicView {
 
 	rerenderCards = () => {
 		this.setEmpty();
-		this.#cards = [];
+		// this.#cards = [];
 
 		const cardsArray = storage.getSightsCardsMin();
 		cardsArray.forEach(sight => {
@@ -127,7 +123,7 @@ class TagCardsHolderView extends BasicView {
 		cardsArray.forEach(sight => {
 			const card = new SightCardInTrip();
 			card.createCard(sight.sight.id, sight.PP, sight.sight.adoptedTags);
-			this.#cards.push(card);
+			// this.#cards.push(card);
 		});
 		initTagsBtns();
 	};

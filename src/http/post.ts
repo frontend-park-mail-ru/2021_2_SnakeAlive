@@ -1,4 +1,4 @@
-const sendPostRequest = (uri: string, body: any, headers?: any): Promise<Response> => {
+const sendPostRequest = (uri: string, body: any, headers?: Headers): Promise<Response> => {
 	if (!body) {
 		return Promise.reject(new Error('empty post request body'));
 	}
