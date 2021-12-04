@@ -1,14 +1,12 @@
 import BasicView from '@/view/view';
-import { DataType, dispatcher, EventType, Token } from '@/dispatcher';
+import { dispatcher, EventType, Token } from '@/dispatcher';
 
 import picture from '@/../image/snake_error.svg';
 import errorPage from '@/components/errorPage.handlebars';
-import { newSetMainHeaderRequest } from '@/actions';
+import { newSetMainHeaderRequest } from '@/actions/header';
 
 export default class ErrorView extends BasicView {
 	#tokens: Token[];
-
-	// #formElement: HTMLElement;
 
 	constructor() {
 		super('#content');
@@ -24,7 +22,7 @@ export default class ErrorView extends BasicView {
 		this.#tokens = [dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.#destroy)];
 	};
 
-	#destroy = (metadata: DataType): void => {
+	#destroy = (): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});

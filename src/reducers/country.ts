@@ -1,35 +1,19 @@
 import { sendGetJSONRequest } from '@/http';
 import { backendEndpoint, countrySights, sightsURI } from '@/constants';
 import {
-	initErrorPageRequest,
 	newGetCountryCardsError,
 	newGetCountryCardsRequest,
 	newGetCountryCardsResult,
-	newInitCountryRequest,
 	newInitCountryResponse,
-	newSetMainHeaderRequest,
-} from '@/actions';
-import { adaptGetCards } from '@/adapters';
+} from '@/actions/country';
+import { initErrorPageRequest } from '@/actions/page';
+import { newSetMainHeaderRequest } from '@/actions/header';
 import { storage } from '@/storage';
 import { DataType, dispatcher, EventType, UUID, NamedUUID, Token } from '@/dispatcher';
-import { Country, CountryCardResponse, CountryResponse } from '@/models';
-import { minAdaptCountryCards } from '@/adapters/country_cards_2';
+import { CountryCardResponse, CountryResponse } from '@/models';
+import { minAdaptCountryCards } from '@/adapters/country_cards_min';
 import { GET_COUNTRY_NAME } from '@/components/trip/trip_form';
-
-// export const getCountryName = (russianName: string): string => {
-// 	switch (russianName) {
-// 		case 'Россия': {
-// 			return 'Russia';
-// 		}
-// 		case 'Великобритания': {
-// 			return 'Russia';
-// 		}
-// 		default: {
-// 			console.log('default');
-// 			return 'Russia';
-// 		}
-// 	}
-// };
+import { adoptGotCountry } from '@/adapters/country';
 
 export default class CountryReducer {
 	#tokens: Token[];
@@ -46,7 +30,7 @@ export default class CountryReducer {
 		];
 	};
 
-	destroy = (metadata: DataType): void => {
+	destroy = (): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});
@@ -54,16 +38,11 @@ export default class CountryReducer {
 
 	initCountryPage = (metadata: DataType): void => {
 		const country = <NamedUUID>metadata;
-		console.log('country - ', country);
 		dispatcher.notify(newSetMainHeaderRequest());
 		// получение инфы по стране
 		this.#getCountry(country.ID)
 			.then((info: CountryResponse) => {
-				console.log(info);
-				storage.storeCountry({
-					name: info.name,
-					ID: String(country.name),
-				});
+				storage.storeCountry(adoptGotCountry(info));
 				dispatcher.notify(newInitCountryResponse());
 				dispatcher.notify(newGetCountryCardsRequest(country.name, <string>country.ID));
 			})
@@ -78,10 +57,7 @@ export default class CountryReducer {
 		// собственно получение мест
 		this.#getCards(<string>data.ID)
 			.then((cards: CountryCardResponse[]) => {
-				console.log('country reducer : ', cards);
-				// storage.storeCountryCards(adaptGetCards(cards));
-				storage.storeCountryCardsMin(minAdaptCountryCards(cards));
-				console.log(storage.getCountryCards());
+				storage.storeSightsCardsMin(minAdaptCountryCards(cards));
 				dispatcher.notify(newGetCountryCardsResult());
 			})
 			.catch((error: Error) => {
@@ -90,6 +66,7 @@ export default class CountryReducer {
 	};
 
 	#getCards = (countryID: string): Promise<CountryCardResponse[]> =>
+		// sendGetJSONRequest(backendEndpoint + sightsURI + GET_COUNTRY_NAME(countryID))
 		sendGetJSONRequest(backendEndpoint + sightsURI + GET_COUNTRY_NAME(countryID))
 			.then(response => {
 				if (response.status === 404) {

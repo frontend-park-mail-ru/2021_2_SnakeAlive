@@ -1,0 +1,53 @@
+@import '../../index';
+
+.scroll {
+  &__wrapper {
+    display: flex;
+    flex-direction: row;
+
+    overflow-y: hidden;
+    overflow-x: scroll;
+    height: 150px;
+    width: 100%;
+
+    background: $my--frame-collection;
+    margin: 0;
+    border-radius: 4px;
+
+    &::-webkit-scrollbar {
+      height: $small-px;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: $my--button-fill;
+      border-radius: 0 0 4px 4px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: $my--button-fill-hover;
+      border-radius: 4px;
+    }
+  }
+
+  &__card {
+    &_last {
+      padding-right: 0;
+    }
+
+    padding-right: $small-px;
+    white-space: nowrap;
+    zoom:1;
+    height: 100%;
+
+    &__text_wrapper {
+
+    }
+
+    &__text {
+
+    }
+
+    &__image {
+      height: 100%;
+      border-radius: 4px;
+    }
+  }
+}

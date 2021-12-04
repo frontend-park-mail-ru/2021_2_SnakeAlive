@@ -3,12 +3,20 @@
 .auth_page {
   width: 100%;
   display: grid;
-  //grid-template-columns: repeat(6, 1fr);
-  grid-template: "ml f f t t  mr"  / 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
   padding: 10px 0;
   align-items: flex-start;
+
+  @media (min-width: 960px) {
+    grid-template: "ml f f t t mr"  / 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-column-gap: $small-px;
+    grid-row-gap: $small-px;
+  }
+
+  @media (max-width: 961px) {
+    grid-template: "f" "t";
+    row-gap: $small-px;
+    gap: 10px;
+  }
 }
 
 .form_place {

@@ -57,7 +57,6 @@ class Form {
 		this.#button = new Button(btn);
 
 		parent.appendChild(formHTML);
-		console.log(parent);
 	}
 
 	/**
@@ -94,11 +93,11 @@ class Form {
 
 	/** Функция показывает в форме ошибку: показывает ее текст и указывает поле, в котором содержится ошибка */
 	setLoginError(error: Error) {
-		if (error.name == 'wrong_email'){
-			this.#inputs[0].setError()
-		}else if(error.name == 'wrong_password'){
-			this.#inputs[1].setError()
-		}else if(error.name  == 'no_user'){
+		if (error.name == 'wrong_email') {
+			this.#inputs[0].setError();
+		} else if (error.name == 'wrong_password') {
+			this.#inputs[1].setError();
+		} else if (error.name == 'no_user') {
 			this.#inputs.forEach(input => {
 				input.setError();
 			});
@@ -111,16 +110,15 @@ class Form {
 	}
 
 	setRegisterError(error: Error) {
-		if (error.name == 'wrong_name'){
-			this.#inputs[0].setError()
-		}else if(error.name == 'wrong_surname'){
-			this.#inputs[1].setError()
-		}
-		else if(error.name == 'wrong_email'){
-			this.#inputs[2].setError()
-		}else if(error.name == 'wrong_password'){
-			this.#inputs[3].setError()
-			this.#inputs[4].setError()
+		if (error.name == 'wrong_name') {
+			this.#inputs[0].setError();
+		} else if (error.name == 'wrong_surname') {
+			this.#inputs[1].setError();
+		} else if (error.name == 'wrong_email') {
+			this.#inputs[2].setError();
+		} else if (error.name == 'wrong_password') {
+			this.#inputs[3].setError();
+			this.#inputs[4].setError();
 		}
 		const errDiv = document.getElementById('error_text');
 		if (errDiv != null) {

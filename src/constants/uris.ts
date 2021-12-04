@@ -7,12 +7,18 @@ const sightURI = '/sight/';
 const sightsURI = '/sights/';
 const tripURI = '/trip/';
 const postTripURI = '/trip';
+const tripCoord = '/trip/sights/';
 const reviewsURI = '/review/';
 const reviewURI = '/review';
 const upload = '/upload';
 const listOfCountries = '/country/list';
+const albumURI = '/album/';
+const photoURI = '/photo/';
+const searchURI = 'search/';
+const tagsURI = '/sights/tag';
+const user = 'user';
 
-const queryParamsToGetReview = '?skip=0&limit=420';
+const queryParamsToGetReview = '?skip=0&limit=10';
 
 export {
 	loginURI,
@@ -29,4 +35,10 @@ export {
 	upload,
 	postTripURI,
 	listOfCountries,
+	tripCoord,
+	albumURI,
+	photoURI,
+	searchURI,
+	tagsURI,
+	user,
 };

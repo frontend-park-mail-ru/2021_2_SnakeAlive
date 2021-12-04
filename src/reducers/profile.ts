@@ -1,7 +1,7 @@
 import {
 	GetProfileResponse,
-	Profile,
-	ProfileMetadata,
+	ProfileAlbum,
+	ProfileTrip,
 	UpdateProfileMetadataRequest,
 	UpdateProfileMetadataResponse,
 } from '@/models/profile';
@@ -12,28 +12,28 @@ import {
 	sendPostFileRequest,
 } from '@/http';
 import {
+	albumURI,
 	backendEndpoint,
-	backendFileEndpoint,
 	logout,
 	pathsURLfrontend,
 	profile,
+	tripURI,
 	upload,
 } from '@/constants';
 import {
 	adaptGetProfileResponse,
 	adaptUpdateProfileMetadataRequest,
 	adaptUpdateProfileMetadataResponse,
+	adoptProfileAlbums,
+	adoptProfileTrips,
 } from '@/adapters/profile';
 import { storage } from '@/storage';
-import { DataType, dispatcher, EventType, File, Token, UpdateProfile } from '@/dispatcher';
-import {
-	initErrorPageRequest,
-	newGetProfileRequest,
-	newGetProfileResponse,
-	newSetEmptyHeaderRequest,
-} from '@/actions';
-import { UserMetadata } from '@/models';
+import { dispatcher, EventType, File, Token, UpdateProfile } from '@/dispatcher';
+import { newGetProfileRequest, newGetProfileResponse } from '@/actions/profile';
+import { initErrorPageRequest } from '@/actions/page';
+import { newSetEmptyHeaderRequest } from '@/actions/header';
 import { router } from '@/router';
+import { user } from '@/constants/uris';
 
 export default class ProfileReducer {
 	#tokens: Token[];
@@ -48,20 +48,29 @@ export default class ProfileReducer {
 		];
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
 	init = (): void => {};
 
-	destroy = (metadata: DataType): void => {
+	destroy = (): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});
 	};
 
-	getProfile = (metadata: DataType): void => {
+	getProfile = (): void => {
 		dispatcher.notify(newSetEmptyHeaderRequest(true)); // ???
 		this.#sendGetProfile()
 			.then((response: GetProfileResponse) => {
 				storage.storeProfile(adaptGetProfileResponse(response));
-				dispatcher.notify(newGetProfileResponse());
+
+				this.#getProfileTrips().then((trips: ProfileTrip[]) => {
+					storage.storeProfileTrips(adoptProfileTrips(trips));
+					this.#getProfileAlbums().then((albums: ProfileAlbum[]) => {
+						storage.storeProfileAlbums(adoptProfileAlbums(albums));
+
+						dispatcher.notify(newGetProfileResponse());
+					});
+				});
 			})
 			.catch((error: Error) => {
 				dispatcher.notify(initErrorPageRequest(error));
@@ -79,10 +88,15 @@ export default class ProfileReducer {
 			});
 	};
 
-	updateProfilePhoto = (metadata: DataType): void => {
-		const photo = <File>metadata;
-		this.#sendUpdateProfilePhoto(photo.data)
-			.then(response => dispatcher.notify(newGetProfileRequest()))
+	updateProfilePhoto = (metadata: File): void => {
+		this.#sendUpdateProfilePhoto(metadata.data)
+			.then(obj => {
+				const updatedProfile = storage.getProfile().meta;
+				updatedProfile.avatar = obj.filename;
+				this.#sendUpdateProfileMetadata(updatedProfile).then(() => {
+					dispatcher.notify(newGetProfileRequest());
+				});
+			})
 			.catch((error: Error) => {
 				dispatcher.notify(initErrorPageRequest(error));
 			});
@@ -93,7 +107,7 @@ export default class ProfileReducer {
 			if (request.ok) {
 				router.go(pathsURLfrontend.root);
 			} else {
-				console.log('problems in logout');
+				// console.log('problems in logout');
 			}
 		});
 	};
@@ -126,14 +140,26 @@ export default class ProfileReducer {
 			})
 			.then(response => response.json());
 
-	#sendUpdateProfilePhoto = (request: FormData): Promise<Response> =>
-		sendPostFileRequest(backendEndpoint + upload, request).then(response => {
-			if (response.status === 404) {
-				return Promise.reject(new Error('На сайте нет такой страницы'));
-			}
-			if (response.status === 401) {
-				return Promise.reject(new Error('Нужно войти в систему'));
-			}
-			return Promise.resolve(response);
-		});
+	#sendUpdateProfilePhoto = (request: FormData): Promise<{ filename: string }> =>
+		sendPostFileRequest(backendEndpoint + upload, request)
+			.then(response => {
+				if (response.status === 404) {
+					return Promise.reject(new Error('На сайте нет такой страницы'));
+				}
+				if (response.status === 401) {
+					return Promise.reject(new Error('Нужно войти в систему'));
+				}
+				return Promise.resolve(response);
+			})
+			.then(response => response.json());
+
+	#getProfileTrips = (): Promise<ProfileTrip[]> =>
+		sendGetJSONRequest(backendEndpoint + tripURI + user)
+			.then(response => Promise.resolve(response))
+			.then(response => response.json());
+
+	#getProfileAlbums = (): Promise<ProfileAlbum[]> =>
+		sendGetJSONRequest(backendEndpoint + albumURI + user)
+			.then(response => Promise.resolve(response))
+			.then(response => response.json());
 }

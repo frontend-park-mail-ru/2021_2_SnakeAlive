@@ -1,22 +1,14 @@
 import BasicView from '@/view/view';
 import { DataType, dispatcher, EventType, NumID, Token } from '@/dispatcher';
-import {
-	deleteCurrentTripPlace,
-	newCreateReviewRequest,
-	newDeleteReviewRequest,
-	newGetReviewsRequest,
-} from '@/actions';
+import { newDeleteReviewRequest } from '@/actions/review';
 import { storage } from '@/storage';
 import { Review } from '@/models/review';
 import { initReviewForm } from '@/components';
 import { createReviewForm } from '@/components/reviews/review_form';
-import { UserMetadata } from '@/models';
 import reviewsListTemplate from '@/components/reviews/reviews.handlebars';
 
 export class ReviewsView extends BasicView {
 	#tokens: Token[];
-
-	#deleteBtns = [];
 
 	constructor() {
 		super('#reviews__content');
@@ -32,7 +24,7 @@ export class ReviewsView extends BasicView {
 		];
 	};
 
-	destroy = (metadata: EventType): void => {
+	destroy = (): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});
@@ -40,36 +32,28 @@ export class ReviewsView extends BasicView {
 		this.setEmpty();
 	};
 
-	renderReviews = (metadata: DataType): void => {
+	renderReviews = (): void => {
 		const reviews = storage.getReviews();
 		this.setView(reviewsListTemplate({ reviews }));
 
 		reviews.forEach(reviewInfo => {
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore
-			const deleteBtn = document.getElementById(`delete_button_${String(reviewInfo.review.id)}`);
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore
-			console.log(`delete_button_${String(reviewInfo.review.id)}`);
-			console.log(deleteBtn);
-			if (deleteBtn !== null) {
-				console.log('try to delete');
-				deleteBtn.addEventListener(
-					'click',
-					event => {
-						event.preventDefault();
-						console.log('clicked');
-						// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-						// @ts-ignore
-						dispatcher.notify(newDeleteReviewRequest(reviewInfo.review.id));
-					},
-					false
-				);
+			// значит свой отзыв и можно его удалить
+			if (reviewInfo.owner) {
+				const deleteBtn = document.getElementById(`delete_button_${String(reviewInfo.id)}`);
+				if (deleteBtn !== null) {
+					deleteBtn.addEventListener(
+						'click',
+						event => {
+							event.preventDefault();
+							// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+							// @ts-ignore
+							dispatcher.notify(newDeleteReviewRequest(reviewInfo.id));
+						},
+						false
+					);
+				}
 			}
 		});
-
-		// and fucking render
-		// id of review: sight_review_{id} => here add callbacks for delete
 	};
 
 	appendReview = (metadata: DataType): void => {
@@ -78,12 +62,6 @@ export class ReviewsView extends BasicView {
 		if (review === null) {
 			return;
 		}
-
-		// add render ???
-
-		// изменила на добавление первым
-		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-		// @ts-ignore
 		this.appendLastChild(reviewsListTemplate({ reviews: review }));
 	};
 
@@ -112,10 +90,7 @@ export class ReviewCreateView extends BasicView {
 	};
 
 	createFormIfLogged = () => {
-		console.log('in ReviewCreateView');
-		console.log(storage.getProfile());
 		if (storage.getProfile().meta !== undefined) {
-			console.log('in if, got name ', storage.getUserMetadata().name);
 			this.#createForm();
 		}
 	};
@@ -132,10 +107,4 @@ export class ReviewCreateView extends BasicView {
 		this.setView(createReviewForm());
 		initReviewForm();
 	};
-
-	// #createReview = (): void => {
-	// 	// как узнать про placeID ???
-	// 	// скорее всего взять из storage
-	// 	dispatcher.notify(newCreateReviewRequest('', '', 0, 0));
-	// };
 }

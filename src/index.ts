@@ -5,8 +5,9 @@ import { router } from './router';
 import './drop_default.css';
 import './index.scss';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-// console.log = () => {}; // !!
+import './components/horizontal_scroll/horizontal_scroll.scss';
+
+import SearchReducer from '@/reducers/search';
 
 const main = () => {
 	const contentPlace: HTMLDivElement = document.createElement('div');
@@ -35,43 +36,9 @@ const main = () => {
 	window.onpopstate = () => {
 		router.go(window.location.href);
 	};
+
+	const searchReducer = new SearchReducer();
+	searchReducer.init();
 };
 
 main();
-
-/**
- * Функция отображает в html "главную страницу" со списком достопримечательностей и двумя кнопками
- */
-// const generateMainPage = (): void => {
-//     const root: HTMLElement | null = document.getElementById('root');
-//     if (root === null) {
-//         console.log("root null")
-//         return;
-//     }
-//     // root.innerHTML += headerHTML();
-//     // root.innerHTML += innerHTML();
-//     // root.innerHTML += footerHTML();
-//     //
-//     // chooseHeaderType();
-//     const storage: Storage = new Storage();
-//     const dispatcher: Dispatcher = new Dispatcher();
-//     const pageReducer: PageReducer = new PageReducer(storage, dispatcher);
-//     pageReducer.init();
-//
-//     dispatcher.notify(newInitPageRequest());
-//
-//     // const shower = new Shower(dispatcher);
-//     // shower.showNext();
-//     //
-//     // const btnExit = new Button();
-//     // btnExit.makeButton(
-//     //     'Следующая страна',
-//     //     'left-side-btn',
-//     //     'btn-next-country',
-//     //     document.getElementById('root')
-//     // );
-//     // btnExit.addClickListener(() => shower.showNext());
-//     // btnExit.setActive();
-// };
-//
-// generateMainPage();

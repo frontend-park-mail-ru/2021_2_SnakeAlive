@@ -8,8 +8,10 @@ import {
 	CountryResponse,
 } from './country';
 import { UserMetadata } from './user';
-import { Sight } from './sight';
+import { Sight, SightsCoord, SightDay } from './sight';
 import { Trip } from './trip';
+import { ProfileAlbum } from './profile';
+import { Album, GotAlbumInterface } from './album';
 
 export {
 	Country,
@@ -20,6 +22,11 @@ export {
 	CountryCardTag,
 	UserMetadata,
 	Sight,
+	SightsCoord,
+	SightDay,
 	Trip,
 	CountryResponse,
+	Album,
+	GotAlbumInterface,
+	ProfileAlbum,
 };

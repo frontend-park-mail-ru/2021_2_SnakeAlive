@@ -6,8 +6,18 @@ export interface NumID {
 	ID: number;
 }
 
+export interface CardOrderAndDay {
+	cardId: number;
+	day: number;
+}
+
 export interface UUID {
 	ID: string;
+}
+
+export interface Search {
+	type: string;
+	text: string;
 }
 
 export interface IDState {
@@ -88,28 +98,17 @@ export interface SightToTrip {
 export interface IsTrue {
 	isTrue: boolean;
 }
+export interface AlbumInfo {
+	title: string;
+	description: string;
+}
 
-// export interface SightData {
-// 	id: string,
-// 	name: string,
-// 	description: string,
-// 	country: string,
-// 	rating: string,
-// 	tags: Array<string>
-// }
-//
-// export interface TripData {
-// 	id: string,
-// 	title: string,
-// 	description: string,
-// 	days: Array<Array<SightData>>,
-// }
-//
-// export interface CountryData {
-// 	name: string,
-// 	description: string,
-// 	sights: Array<SightData>,
-// }
+export interface AlbumUpdateInfo {
+	title: string;
+	description: string;
+	photos: string[];
+	actionAfter?: (id: string) => void;
+}
 
 export type DataType =
 	| UUID
@@ -126,8 +125,9 @@ export type DataType =
 	| CreateReviewForm
 	| SightToTrip
 	| IsTrue
-	// | SightData
-	// | TripData
-	// | CountryData
+	| IDState
 	| SubmitTripInfo
-	| Empty;
+	| Empty
+	| AlbumInfo
+	| AlbumUpdateInfo
+	| Search;

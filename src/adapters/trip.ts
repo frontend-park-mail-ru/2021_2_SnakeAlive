@@ -1,47 +1,28 @@
 import { Trip } from '@/models';
-import { TripFormInfo } from '@/models/trip';
+import { TripFormInfo, TripSights } from '@/models/trip';
 
 export const adoptForSend = (trip: Trip): TripFormInfo => {
-	const { title, description, days } = trip;
-	const responseDays: Array<Array<Record<string, number>>> = [[]];
-	let i = 0;
-	if (days) {
-		days.forEach(day => {
-			day.forEach(sight => {
-				responseDays[0].push({ id: Number(sight.id) });
-			});
-			i += 1;
+	const { title, description, sights } = trip;
+	const responseDays: Array<TripSights> = [];
+	if (sights) {
+		sights.forEach(sight => {
+			responseDays.push({ id: Number(sight.id), day: 0 });
 		});
+	} else {
+		responseDays.push({ id: 1, day: 0 });
 	}
-
 	return {
 		title,
 		description,
-		days: responseDays,
+		sights: responseDays,
 	};
 };
 
-// export const adoptForSendRemovePlace = (trip: Trip, sightToRemove: sightToTrip): TripFormInfo => {
-// 	const { title, description, days } = trip;
-// 	const responseDays: Array<Array<Record<string, number>>> = [[]];
-//
-// 	let i = 0;
-// 	if (days) {
-// 		days.forEach((day)=>{
-// 			day.forEach((sight) => {
-// 				responseDays[i].push({ "id": Number(sight.id) })
-// 			})
-// 			i += 1;
-// 		})
-// 	}
-//
-// 	responseDays[sightToRemove.day].filter((sight) =>
-// 		sight.id !== sightToRemove.sightId
-// 	);
-//
-// 	return {
-// 		title,
-// 		description,
-// 		days: responseDays
-// 	};
-// }
+export const adoptForCreate = (trip: Trip): TripFormInfo => {
+	const { title, description } = trip;
+	return {
+		title,
+		description,
+		sights: [{ id: 1, day: -1 }], // fake data, not rendering
+	};
+};

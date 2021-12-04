@@ -21,6 +21,12 @@
   }
 }
 
+.trip_cards_holder {
+  > frame {
+    margin-bottom: 10px;
+  }
+}
+
 .error_block {
   visibility: hidden;
   &__text {
@@ -29,43 +35,80 @@
   }
 }
 
+#trip-search-place{
+  margin-top: 15px;
+}
+
 #button_select {
   display: none;
 }
 
 .trip_page {
   display: grid;
-  grid-template: "l map map"  / 1fr 1fr 1fr;
+
   grid-column-gap: 10px;
+
+  @media (min-width: 960px) {
+    grid-template: "l map"  / 2fr 6fr;
+    grid-column-gap: $small-px;
+    grid-row-gap: $small-px;
+  }
+
+  @media (max-width: 961px) {
+    grid-template: "l" "map";
+    row-gap: $small-px;
+  }
 
   &__left__info {
     > div {
+      width: 100%;
+      max-width: 100%;
       margin-top: 10px;
     }
     grid-area: l;
     width: 100%;
+    max-width: 500px;
+
   }
 
   &__map {
     grid-area: map;
+    height: 100vh;
+    position: sticky;
+    top: 0;
      &__image_container {
        position: sticky;
-       top: 0;
-        display: block;
-        width: 100%;
-        height: 100vh;
+
+       //display: block;
+       width: 100%;
+       height: 100vh;
+       padding: 10px 0;
 
        img {
          object-fit: cover;
          object-position: center;
          width: 100%;
          height: 100%;
+         //padding: 0 10px;
        }
     }
   }
 }
 
-.select_string {
+#map {
+  height: 740px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.trip_preview{
+  width: 100%; /* Ширина изображений */
+  height: 100%; /* Высота изображении */
+  object-fit: cover; /* Вписываем фотографию в область */
+}
+
+
+.select_string, .string {
   display: flex;
   flex-direction: row;
   height: min-content;
@@ -73,6 +116,7 @@
 }
 
 .trip_form {
+  padding: 0;
   &__horizontal_holder {
     display: flex;
     flex-direction: row;
@@ -84,9 +128,14 @@
     @include text-small;
     color: $my--small-text;
   }
+
+  > div {
+    margin-top: $small-px;
+  }
 }
 
 .buttons_holder {
+  gap: $large-px;
   margin-top: $small-px;
   margin-right: $small-px;
 }
@@ -107,10 +156,8 @@
   //height: 85px;
 
   .textarea_behavior{
-    border:0;
     width:100%;
     word-wrap: break-word;
-    background: $my--input-fill;
 
     div {
       display: flex;
@@ -121,8 +168,7 @@
   }
   textarea{
     width: 100% !important;
-    //overflow:hidden;
-    overflow-y: scroll;
+    overflow-y: hidden;
     max-height: 400px;
     resize: none;
     @include text-plain-no-wrap;
@@ -140,10 +186,69 @@
   }
 }
 
+.tag {
+  cursor: pointer;
+}
+
 
 .select_string {
   display: block;
   > div {
     padding-bottom: $small-px;
   }
+}
+
+.trip_sight__preview_photo {
+  width: 100%;
+  height: 50px;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  margin-top: $small-px /2;
+  img {
+    min-height: 100%;
+    min-width: 100%;
+    object-fit: cover;
+
+    position: absolute;
+    top: -50%;
+    left: 0;
+    //position: center;
+    //top: 50%;
+    //top: 0;
+    //left: 0;
+    width: 100%;
+  }
+}
+
+.trip_sight__info_string {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#trip_sight_photo_wrapper {
+  //height: 250px;
+  //min-height: 250px;
+  width: 100%;
+  //min-height: 150px;
+  //padding: 10px;
+  margin: 0;
+  padding: $large-px 0;
+
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+.trip_sight_photo {
+  height: 10px;
+  > img {
+    overflow-x: hidden;
+  }
+}
+
+.trip_sight_clickable {
+  cursor: pointer;
 }

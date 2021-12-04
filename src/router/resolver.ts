@@ -1,34 +1,30 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Loader } from '@googlemaps/js-api-loader';
 import { dispatcher, IEvent } from '@/dispatcher';
 import {
-	createTripFormRequest,
+	initAlbumPageRequest,
 	initErrorPageRequest,
 	initLoginPageRequest,
 	initProfilePageRequest,
 	initRegisterPageRequest,
 	initSightPageRequest,
+	initTagPageRequest,
 	initTripPageRequest,
-	newGetProfileRequest,
-	newGetReviewsRequest,
-	newGetSightRequest,
-	newGetTripRequest,
-	newInitCountryRequest,
 	newInitPageRequest,
-	showLoginForm,
-	showRegisterForm,
-} from '@/actions';
+	initTripEditPageRequest,
+} from '@/actions/page';
+import { newGetProfileRequest } from '@/actions/profile';
+import { showLoginForm, showRegisterForm } from '@/actions/auth';
+import { newGetReviewsRequest } from '@/actions/review';
+import { newGetSightRequest } from '@/actions/sight';
+import { newInitCountryRequest } from '@/actions/country';
 import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
-import { storage } from '@/storage';
+import { createAlbumFormRequest, newGetAlbumRequest } from '@/actions/album';
+import { newTagRequest } from '@/actions/tag';
 
 const pathErrorEvent: IEvent = initErrorPageRequest(new Error('Неверная ссылка'));
 
-const tryGetParam = (
-	params: paramsURLfrontend[],
-	path: URL
-	// initEvent: () => IEvent,
-	// event: any // => IEvent
-): Record<string, string> /* IEvent */ => {
-	// const id = path.searchParams.get(param);
-
+const tryGetParam = (params: paramsURLfrontend[], path: URL): Record<string, string> => {
 	const res: Record<string, string> = {};
 
 	let gotParam: string | null;
@@ -38,16 +34,7 @@ const tryGetParam = (
 			res[param] = gotParam;
 		}
 	});
-	console.log(res, 'res');
 	return res;
-	// костыль для обработки редактирования
-	// if (res.edit) {
-	// 	console.log(res.edit, 'herehere');
-	// }
-	//
-	// console.log(" ", res.edit, res.name, res.edit);
-	// dispatcher.notify(initEvent());
-	// dispatcher.notify(event(res.id, res.name, res.edit)); // второй раз это на самом деле name, для страны, не убирать
 };
 
 const getIDParam = (path: URL): number | null =>
@@ -56,7 +43,6 @@ const getIDParam = (path: URL): number | null =>
 const getIDParamDispatchError = (path: URL): number | null => {
 	const id: number | null = getIDParam(path);
 
-	console.log('id : ', id);
 	if (id === null) {
 		dispatcher.notify(pathErrorEvent);
 	}
@@ -65,9 +51,6 @@ const getIDParamDispatchError = (path: URL): number | null => {
 };
 
 export const notifier = (path: URL): void /* IEvent */ => {
-	console.log('path :', path);
-	console.log('try to resolve');
-
 	switch (path.pathname) {
 		case pathsURLfrontend.root: {
 			dispatcher.notify(newInitPageRequest());
@@ -75,7 +58,6 @@ export const notifier = (path: URL): void /* IEvent */ => {
 			break;
 		}
 		case pathsURLfrontend.country: {
-			console.log('country');
 			dispatcher.notify(newInitPageRequest());
 			const params = tryGetParam([paramsURLfrontend.id], path);
 			if (params.id) {
@@ -87,17 +69,11 @@ export const notifier = (path: URL): void /* IEvent */ => {
 		}
 		case pathsURLfrontend.trip: {
 			const params = tryGetParam([paramsURLfrontend.id, paramsURLfrontend.edit], path);
-			console.log(params);
 
-			dispatcher.notify(initTripPageRequest());
 			if (params.id) {
-				if (params.edit === '1') {
-					dispatcher.notify(newGetTripRequest(params.id, true));
-				} else {
-					dispatcher.notify(newGetTripRequest(params.id, false));
-				}
+				dispatcher.notify(initTripEditPageRequest(Number(params.id)));
 			} else {
-				dispatcher.notify(createTripFormRequest());
+				dispatcher.notify(initTripPageRequest());
 			}
 			break;
 		}
@@ -126,6 +102,31 @@ export const notifier = (path: URL): void /* IEvent */ => {
 			dispatcher.notify(initSightPageRequest());
 			dispatcher.notify(newGetSightRequest(String(id)));
 			dispatcher.notify(newGetReviewsRequest(id));
+			break;
+		}
+		case pathsURLfrontend.album: {
+			const params = tryGetParam([paramsURLfrontend.id, paramsURLfrontend.edit], path);
+
+			dispatcher.notify(initAlbumPageRequest());
+			if (params.id) {
+				if (params.edit === '1') {
+					dispatcher.notify(newGetAlbumRequest(params.id, true));
+				} else {
+					dispatcher.notify(newGetAlbumRequest(params.id, false));
+				}
+			} else {
+				dispatcher.notify(createAlbumFormRequest());
+			}
+			break;
+		}
+		case pathsURLfrontend.tag: {
+			const params = tryGetParam([paramsURLfrontend.tag], path);
+			if (params.tag) {
+				dispatcher.notify(initTagPageRequest());
+				dispatcher.notify(newTagRequest(params.tag));
+			} else {
+				dispatcher.notify(initErrorPageRequest(Error('эта страна не поддерживается')));
+			}
 			break;
 		}
 		default:

@@ -1,12 +1,11 @@
-import sights from '@/components/country_page/sights.handlebars';
-
 import countryPageTemplate from '@/components/country_page/country_sights.handlebars';
 import { DataType, dispatcher, ErrorMsgData, EventType, Token } from '@/dispatcher';
 import BasicView from '@/view/view';
 import { storage } from '@/storage';
 import tripSights from '@/components/country_page/sights.handlebars';
 import { SightCardInTrip } from '@/view/sight_cards';
-import { minCardInfo } from '@/models/country';
+import { TagAdoptedForRender } from '@/models/sight';
+import { allTags, initTagsBtns, tags } from './tag';
 
 class CountryCardsHolderView extends BasicView {
 	#tokens: Token[];
@@ -28,7 +27,7 @@ class CountryCardsHolderView extends BasicView {
 		];
 	};
 
-	destroy = (metadata: DataType): void => {
+	destroy = (): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});
@@ -40,25 +39,28 @@ class CountryCardsHolderView extends BasicView {
 		this.setEmpty();
 		this.#cards = [];
 
-		const cardsArray = storage.getCountryCardsMin();
-		console.log(cardsArray);
-		// ?
+		const cardsArray = storage.getSightsCardsMin();
+
+		cardsArray.forEach(sight => {
+			const tagsAdopted: Array<TagAdoptedForRender> = [];
+			sight.sight.tags.forEach(tag => {
+				tagsAdopted.push({
+					name: tag,
+					sightPP: sight.PP,
+				});
+			});
+			// eslint-disable-next-line no-param-reassign
+			sight.sight.adoptedTags = tagsAdopted;
+		});
 
 		this.setView(tripSights({ cards: cardsArray }));
 
 		cardsArray.forEach(sight => {
 			const card = new SightCardInTrip();
-			card.createCard(sight.sight.id, sight.PP);
+			card.createCard(sight.sight.id, sight.PP, sight.sight.adoptedTags);
 			this.#cards.push(card);
 		});
-		console.log(this.#cards);
 	};
-	//
-	// renderCountryCards = (metadata: DataType): void => {
-	// 	console.log('storage.getCountryCards()', storage.getCountryCards());
-	// 	this.setView(JSON.stringify(storage.getCountryCards().cards));
-	// 	// this.setView(sights(storage.getCountryCards()));
-	// };
 
 	renderErrorMessage = (metadata: DataType): void => {
 		const event = <ErrorMsgData>metadata;
@@ -82,7 +84,7 @@ class CountryHolderView extends BasicView {
 		];
 	}
 
-	destroy = (metadata: DataType): void => {
+	destroy = (): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});
@@ -90,12 +92,18 @@ class CountryHolderView extends BasicView {
 		this.setEmpty();
 	};
 
-	renderCountry = (metadata: DataType): void => {
-		const { name, ID } = storage.getCountry();
-		console.log('renderCountry', name, ID);
-		this.setView(countryPageTemplate({ name }));
+	renderCountry = (): void => {
+		const { translation } = storage.getCountry();
+		this.setView(countryPageTemplate({ name: `по стране ${translation}` }));
 
-		// dispatcher.notify(newGetCountryCardsRequest(name,ID));
+		this.setView(
+			countryPageTemplate({
+				name: `по стране ${translation}`,
+				tags,
+				allTags,
+			})
+		);
+		initTagsBtns();
 	};
 }
 

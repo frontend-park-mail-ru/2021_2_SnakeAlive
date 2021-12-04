@@ -1,16 +1,15 @@
-import { storage } from '../storage';
-import { DataType, dispatcher, EventType, Token } from '../dispatcher';
+import { storage } from '@/storage';
+import { dispatcher, EventType, Token } from '@/dispatcher';
 import {
 	newSetEmptyHeaderResponse,
 	newSetMainHeaderBasicResponse,
 	newSetMainHeaderLoggedResponse,
-} from '@/actions/index';
+} from '@/actions/header';
 import { HttpError, sendGetJSONRequest } from '@/http/index';
 import { backendEndpoint, profile } from '@/constants/index';
-import { UserMetadata } from '@/models';
-import { UpdateProfileMetadataRequest } from '@/models/profile';
-import { adoptGotDataToProfile, GotProfileResponse } from '@/adapters/header';
+import { GotProfileResponse } from '@/adapters/header';
 import { IsTrue } from '@/dispatcher/metadata_types';
+import { adaptGetProfileResponse } from '@/adapters/profile';
 
 const enum state {
 	main = 'main',
@@ -37,7 +36,7 @@ export default class HeaderReducer {
 		];
 	};
 
-	destroy = (metadata: DataType): void => {
+	destroy = (): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});
@@ -45,24 +44,20 @@ export default class HeaderReducer {
 
 	checkIfMain = () => {
 		if (this.#state !== state.main) {
-			this.setHeader({});
-			console.log(this.#state, ' -> ', state.main);
+			this.setHeader();
 			this.#state = state.main;
 		}
 	};
 
 	checkIfEmpty = (metadata: IsTrue) => {
 		if (this.#state !== state.empty) {
-			console.log('here?77777');
 			dispatcher.notify(newSetEmptyHeaderResponse(metadata.isTrue));
-			console.log(this.#state, ' -> ', state.empty);
 			this.#state = state.empty;
 		}
 	};
 
-	setHeader = (metadata: DataType): void => {
+	setHeader = (): void => {
 		this.#state = state.main;
-		console.log('setHeader');
 		sendGetJSONRequest(backendEndpoint + profile)
 			.then(response => {
 				if (response.status === 401) {
@@ -70,18 +65,13 @@ export default class HeaderReducer {
 						new HttpError('пользователь не авторизован', response.status.toString())
 					);
 				}
-				console.log(response.status);
 				return response.json();
 			})
 			.then((data: GotProfileResponse) => {
-				// случайно подошел
-
-				// storage.setUserMetadata(data);
-				storage.storeProfile(adoptGotDataToProfile(data));
+				storage.storeProfile(adaptGetProfileResponse(data));
 				dispatcher.notify(newSetMainHeaderLoggedResponse());
 			})
 			.catch(err => {
-				console.log('err ', err.status);
 				if (err.status !== undefined) {
 					dispatcher.notify(newSetMainHeaderBasicResponse());
 				}

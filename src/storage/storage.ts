@@ -1,7 +1,8 @@
-import { Country, CountryCard, Sight, TemplateCards, Trip, UserMetadata } from '@/models';
-import { Profile, ProfileMetadata } from '@/models/profile';
+import { Country, Sight, TemplateCards, Trip, UserMetadata } from '@/models';
+import { Profile, ProfileAlbum, ProfileMetadata, ProfileTrip } from '@/models/profile';
 import { Review } from '@/models/review';
 import { minCardInfo } from '@/models/country';
+import { Album } from '@/models/album';
 
 class Storage {
 	#countryCards: TemplateCards;
@@ -12,11 +13,7 @@ class Storage {
 
 	#sight: Sight;
 
-	#serverTripState: Trip;
-
-	#currentTripEditState: Trip;
-
-	#addedSights: number[];
+	#trip: Trip;
 
 	#profile: Profile;
 
@@ -26,19 +23,33 @@ class Storage {
 
 	#cards: minCardInfo[];
 
+	#album: Album;
+
+	#albumTripId = '';
+
+	#searchSightsResult: {
+		type: string;
+		sights: Sight[];
+	}[];
+
+	#profileTrips: ProfileTrip[];
+
+	#profileAlbums: ProfileAlbum[];
+
 	constructor() {
 		this.#countryCards = <TemplateCards>{};
 		this.#country = <Country>{};
 		this.#userMetadata = <UserMetadata>{};
 		this.#sight = <Sight>{};
-		// this.#trip = <Trip>{};
-		this.#serverTripState = <Trip>{};
-		this.#currentTripEditState = <Trip>{};
-		this.#addedSights = [];
+		this.#trip = <Trip>{};
 		this.#profile = <Profile>{};
 		this.#reviews = [];
 		this.#lastTrips = [];
 		this.#cards = [];
+		this.#album = <Album>{};
+		this.#searchSightsResult = [];
+		this.#profileTrips = <ProfileTrip[]>{};
+		this.#profileAlbums = <ProfileAlbum[]>{};
 	}
 
 	addLastTripId = (id: number) => {
@@ -49,38 +60,17 @@ class Storage {
 		});
 	};
 
-	getLastTrips = () => this.#lastTrips;
-
-	dropLastTrips = () => {
-		this.#lastTrips = [];
-	};
-
-	storeCountryCards = (cards: TemplateCards): void => {
-		this.#countryCards = cards;
-	};
-
-	storeCountryCardsMin = (cards: minCardInfo[]): void => {
+	storeSightsCardsMin = (cards: minCardInfo[]): void => {
 		this.#cards = cards;
 	};
 
-	getCountryCardsMin = (): minCardInfo[] => this.#cards;
-
-	getCountryCards = (): TemplateCards => this.#countryCards;
+	getSightsCardsMin = (): minCardInfo[] => this.#cards;
 
 	storeCountry = (country: Country): void => {
-		console.log(country);
 		this.#country = country;
 	};
 
 	getCountry = (): Country => this.#country;
-
-	setUserMetadata = (user: UserMetadata): void => {
-		this.#userMetadata = user;
-	};
-
-	getUserMetadata(): UserMetadata {
-		return this.#userMetadata;
-	}
 
 	storeSight = (sight: Sight): void => {
 		this.#sight = sight;
@@ -89,10 +79,14 @@ class Storage {
 	getSight = (): Sight => this.#sight;
 
 	storeCurrentTrip = (trip: Trip): void => {
-		this.#currentTripEditState = trip;
+		this.#trip = trip;
 	};
 
-	getCurrentTrip = (): Trip => this.#currentTripEditState;
+	clearCurrentTrip = (): void => {
+		this.#trip = <Trip>{};
+	};
+
+	getCurrentTrip = (): Trip => this.#trip;
 
 	storeProfile = (profile: Profile): void => {
 		this.#profile = profile;
@@ -110,11 +104,6 @@ class Storage {
 
 	getReviews = (): Review[] => this.#reviews;
 
-	appendReview = (review: Review): number => {
-		this.#reviews.push(review);
-		return this.#reviews.length;
-	};
-
 	getReview = (position: number): Review | null => {
 		if (this.#reviews.length < position) {
 			return null;
@@ -122,6 +111,48 @@ class Storage {
 
 		return this.#reviews[position];
 	};
+
+	storeAlbum = (album: Album): void => {
+		this.#album = album;
+	};
+
+	getAlbum = (): Album => this.#album;
+
+	storeAlbumTripId = (id: string) => {
+		this.#albumTripId = id;
+	};
+
+	getAlbumTripId = (): string => this.#albumTripId;
+
+	storeSearchSightsResult = (type: string, sights: Sight[]): void => {
+		this.#searchSightsResult.push({
+			type,
+			sights,
+		});
+	};
+
+	getSearchSightsResult = (type: string): Sight[] => {
+		let result: Sight[] = [];
+		// eslint-disable-next-line consistent-return
+		this.#searchSightsResult.forEach(obj => {
+			if (obj.type === type) {
+				result = obj.sights;
+			}
+		});
+		return result;
+	};
+
+	storeProfileTrips = (trips: ProfileTrip[]) => {
+		this.#profileTrips = trips;
+	};
+
+	getProfileTrips = (): ProfileTrip[] => this.#profileTrips;
+
+	storeProfileAlbums = (albums: ProfileAlbum[]) => {
+		this.#profileAlbums = albums;
+	};
+
+	getProfileAlbums = (): ProfileAlbum[] => this.#profileAlbums;
 }
 
 export const storage = new Storage();

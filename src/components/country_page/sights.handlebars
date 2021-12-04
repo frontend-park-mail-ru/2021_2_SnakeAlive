@@ -1,19 +1,21 @@
 {{#each cards}}
-<div class="card frame" id="go_button_{{sight.id}}_{{PP}}">
+<div class="card frame" >
+	<div class="card__top" id="go_button_{{sight.id}}_{{PP}}">
     <div class="carousel card__photo_wrapper">
 			<img src="{{sight.photo}}" alt="" class='photo'>
 <!--        {{#each imgs}} -->
-<!--            {{#if @first}} -->
-<!--              <div class ="card__carousel__item card__carousel__item_main"> -->
-<!--            {{else}} -->
-<!--              <div class ="card__carousel__item"> -->
-<!--            {{/if}} -->
+<!--            {{#if @first}}-->
+<!--              <div class ="card__carousel__item card__carousel__item_main">-->
+<!--            {{else}}-->
+<!--              <div class ="card__carousel__item">-->
+<!--            {{/if}}-->
 <!--                  <img src="{{photo}}" alt="" class='photo'>-->
-<!--              </div> -->
-<!--        {{/each}} -->
+<!--              </div>-->
+<!--        {{/each}}-->
+<!--			<div id='photo_{{sight.id}}_{{PP}}'></div>-->
     </div>
 
-    <div class="card__data__holder" >
+<!--    <div class="card__data__holder" >-->
         <div class="card__name__holder">
             {{sight.name}}
         </div>
@@ -23,27 +25,25 @@
 				<span class="span__font__large span__font__large-green">✦</span><span class='rating__text'>{{sight.rating}}</span>
 			</div>
 
+		</div>
         <div class="tag__holder">
-            {{#each sight.tags}}
-                <div class="tag card__tag card__tag__font">
-                    {{this}}
+            {{#each sight.adoptedTags  }}
+                <div class="tag card__tag card__tag__font" id='card_tag_{{this.name}}_{{this.sightPP}}'>
+                    {{this.name}}
                     {{#if @last}}
                     {{else}}
                         <span class="span__font__large span__font__large-blue">•</span>
                     {{/if}}
                 </div>
             {{/each}}
-        </div>
+				 </div>
+<!--			<div id='trip-add-block'>-->
+<!--				<button class='usual_button usual_button_light' id='trip-add-btn'>Добавить в поездку</button>-->
+<!--				{{#each userTrips }}-->
+<!--					<div id='add_trip_{{this.tripId}}_{{PP}}'><p>{{this.name}}</p></div>-->
+<!--				{{/each}}-->
+<!--			</div>-->
 
-<!--        <div class="card__comment__holder">-->
-<!--										<span class="card__comment__author font__default">-->
-<!--											Автор:-->
-<!--											<a class="font__link">{{author}}</a>-->
-<!--										</span>-->
-<!--            <div class="card__comment__data font__default">-->
-<!--                {{comment}}-->
-<!--            </div>-->
-<!--        </div>-->
-    </div>
+<!--    </div>-->
 </div>
 {{/each}}

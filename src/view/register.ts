@@ -1,9 +1,8 @@
 import BasicView from './view';
-import { DataType, dispatcher, EventType, Token, ValidationErrData } from '@/dispatcher/';
+import { dispatcher, EventType, Token, ValidationErrData } from '@/dispatcher/';
 import { Form, makeSimpleButton, registerHTML } from '@/components';
 
-import { newSetEmptyHeaderResponse, submitRegisterData } from '../actions';
-import { formLoginConfig } from '@/components/simple_form/login_conf';
+import { submitRegisterData } from '@/actions/auth';
 import { pathsURLfrontend } from '@/constants';
 import { formRegisterConfig } from '@/components/simple_form/register_conf';
 import {
@@ -34,7 +33,7 @@ export default class RegisterView extends BasicView {
 		];
 	};
 
-	createPage = (metadata: DataType) => {
+	createPage = () => {
 		this.setView(registerHTML());
 		const formPlaceElement = document.querySelector('#form_place');
 		if (formPlaceElement !== null) {
@@ -45,7 +44,9 @@ export default class RegisterView extends BasicView {
 	};
 
 	#submit = (values: { [key: string]: string }) => {
-		const { name_holder, surname_holder, email_holder, password_holder, repeatedPassword_holder } = values;
+		// eslint-disable-next-line camelcase
+		const { name_holder, surname_holder, email_holder, password_holder, repeatedPassword_holder } =
+			values;
 		const nameInput: Input = new Input('#name_holder', 'input-error-red');
 		const surnameInput: Input = new Input('#surname_holder', 'input-error-red');
 		const emailInput: Input = new Input('#email_holder', 'input-error-red');
@@ -59,12 +60,10 @@ export default class RegisterView extends BasicView {
 				{
 					validators: [
 						function (): boolean {
-							if (
-								validateNotEmpty(nameInput.getValue())
-							) {
+							if (validateNotEmpty(nameInput.getValue())) {
 								return true;
 							}
-							metadata.data.push({ error: 'Имя не может быть пустым', name: 'wrong_name'});
+							metadata.data.push({ error: 'Имя не может быть пустым', name: 'wrong_name' });
 							return false;
 						},
 					],
@@ -73,12 +72,10 @@ export default class RegisterView extends BasicView {
 				{
 					validators: [
 						function (): boolean {
-							if (
-								validateNotEmpty(surnameInput.getValue()) 
-							) {
+							if (validateNotEmpty(surnameInput.getValue())) {
 								return true;
 							}
-							metadata.data.push({ error: 'Фамилия не может быть пустой', name: 'wrong_surname'});
+							metadata.data.push({ error: 'Фамилия не может быть пустой', name: 'wrong_surname' });
 							return false;
 						},
 					],
@@ -104,7 +101,10 @@ export default class RegisterView extends BasicView {
 							) {
 								return true;
 							}
-							metadata.data.push({ error: 'Пароль должен содержать не менее 8 символов', name: 'wrong_password'});
+							metadata.data.push({
+								error: 'Пароль должен содержать не менее 8 символов',
+								name: 'wrong_password',
+							});
 							return false;
 						},
 					],
@@ -113,12 +113,10 @@ export default class RegisterView extends BasicView {
 				{
 					validators: [
 						function (): boolean {
-							if (
-								validateEqual(passInput.getValue(),repasswordInput.getValue())
-							) {
+							if (validateEqual(passInput.getValue(), repasswordInput.getValue())) {
 								return true;
 							}
-							metadata.data.push({ error: 'Пароли не совпадают', name: 'wrong_password'});
+							metadata.data.push({ error: 'Пароли не совпадают', name: 'wrong_password' });
 							return false;
 						},
 					],
@@ -131,10 +129,10 @@ export default class RegisterView extends BasicView {
 		}
 		dispatcher.notify(
 			submitRegisterData(
-				name_holder, 
-				surname_holder, 
-				email_holder, 
-				password_holder, 
+				name_holder,
+				surname_holder,
+				email_holder,
+				password_holder,
 				repeatedPassword_holder
 			)
 		);
@@ -142,11 +140,11 @@ export default class RegisterView extends BasicView {
 
 	setErrors = (metadata: ValidationErrData) => {
 		const err: Error = new Error(metadata.data[0].error);
-		err.name = metadata.data[0].name
+		err.name = metadata.data[0].name;
 		this.#form?.setRegisterError(err);
 	};
 
-	#destroy = (metadata: DataType): void => {
+	#destroy = (): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});

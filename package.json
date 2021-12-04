@@ -6,6 +6,8 @@
   "devDependencies": {
     "@babel/core": "^7.15.5",
     "@babel/eslint-parser": "^7.15.7",
+    "@types/google.maps": "^3.47.0",
+    "@types/googlemaps": "^3.43.3",
     "@typescript-eslint/eslint-plugin": "^5.2.0",
     "@typescript-eslint/parser": "^5.2.0",
     "acorn": "^8.5.0",
@@ -26,6 +28,7 @@
     "html-webpack-plugin": "^5.5.0",
     "husky": "^7.0.4",
     "mini-css-extract-plugin": "^2.4.3",
+    "mocker-api": "^2.9.4",
     "node-sass": "^6.0.1",
     "prettier": "^2.4.1",
     "ruby": "^0.6.1",
@@ -59,6 +62,8 @@
   },
   "homepage": "https://github.com/frontend-park-mail-ru/2021_2_SnakeAlive#readme",
   "dependencies": {
-    "style-loader": "^3.3.1"
+    "@googlemaps/js-api-loader": "^1.12.9",
+    "style-loader": "^3.3.1",
+    "throttle-typescript": "^1.1.0"
   }
 }

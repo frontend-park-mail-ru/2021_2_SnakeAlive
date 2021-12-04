@@ -1,15 +1,8 @@
 import BasicView from './view';
-import {
-	DataType,
-	dispatcher,
-	ErrorMsgData,
-	EventType,
-	Token,
-	ValidationErrData,
-} from '@/dispatcher';
+import { dispatcher, EventType, Token, ValidationErrData } from '@/dispatcher';
 import { Form, loginHTML, makeSimpleButton } from '@/components';
 
-import { submitLoginData } from '@/actions';
+import { submitLoginData } from '@/actions/auth';
 import { formLoginConfig } from '@/components/simple_form/login_conf';
 import { pathsURLfrontend } from '@/constants';
 
@@ -40,7 +33,7 @@ export default class LoginView extends BasicView {
 		];
 	};
 
-	createPage = (metadata: DataType) => {
+	createPage = () => {
 		this.setView(loginHTML());
 		const formPlaceElement = document.querySelector('#form_place');
 		if (formPlaceElement !== null) {
@@ -52,11 +45,11 @@ export default class LoginView extends BasicView {
 
 	setErrors = (metadata: ValidationErrData) => {
 		const err: Error = new Error(metadata.data[0].error);
-		err.name = metadata.data[0].name
+		err.name = metadata.data[0].name;
 		this.#form?.setLoginError(err);
 	};
 
-	destroy = (metadata: DataType): void => {
+	destroy = (): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});
@@ -65,7 +58,8 @@ export default class LoginView extends BasicView {
 	};
 
 	#submit = (values: { [key: string]: string }) => {
-		const { email_holder, password_holder } = values;
+		const emailHolder = values.email_holder;
+		const passwordHolder = values.password_holder;
 		const emailInput: Input = new Input('#email_holder', 'input-error-red');
 		const passInput: Input = new Input('#password_holder', 'input-error-red');
 		const metadata: ValidationErrData = {
@@ -75,7 +69,7 @@ export default class LoginView extends BasicView {
 			!validateElements([
 				{
 					validators: [
-						function (): boolean {
+						(): boolean => {
 							if (!validateEmail(emailInput.getValue())) {
 								metadata.data.push({ error: 'Некорректная элетронная почта', name: 'wrong_email' });
 							}
@@ -86,14 +80,17 @@ export default class LoginView extends BasicView {
 				},
 				{
 					validators: [
-						function (): boolean {
+						(): boolean => {
 							if (
 								validateNotEmpty(passInput.getValue()) &&
 								validateLength(passInput.getValue(), 8)
 							) {
 								return true;
 							}
-							metadata.data.push({ error: 'Пароль должен содержать не менее 8 символов', name: 'wrong_password'});
+							metadata.data.push({
+								error: 'Пароль должен содержать не менее 8 символов',
+								name: 'wrong_password',
+							});
 							return false;
 						},
 					],
@@ -104,7 +101,6 @@ export default class LoginView extends BasicView {
 			this.setErrors(metadata);
 			return;
 		}
-
-		dispatcher.notify(submitLoginData(email_holder, password_holder));
+		dispatcher.notify(submitLoginData(emailHolder, passwordHolder));
 	};
 }

@@ -1,24 +1,35 @@
 import {
 	GetProfileResponse,
 	Profile,
+	ProfileAlbum,
 	ProfileMetadata,
+	ProfileTrip,
 	UpdateProfileMetadataRequest,
 	UpdateProfileMetadataResponse,
 } from '@/models/profile';
 import { UpdateProfile } from '@/dispatcher';
-import { backendFileEndpoint } from '@/constants';
 import { storage } from '@/storage';
 
+import avatarPath from '../../image/test.jpeg';
+
 export function adaptGetProfileResponse(response: GetProfileResponse): Profile {
+	if (
+		response.avatar === 'default.jpg' ||
+		response.avatar.slice(-9) === 'test.jpeg' ||
+		response.avatar.slice(-12) === 'default.jpeg'
+	) {
+		response.avatar = avatarPath;
+	}
+
 	return <Profile>{
 		meta: <ProfileMetadata>{
 			name: response.name,
 			surname: response.surname,
 			description: response.description,
 			email: response.email,
-			// avatar: backendFileEndpoint + response.avatar
+			id: response.id,
 		},
-		profileImage: backendFileEndpoint + response.avatar,
+		profileImage: response.avatar,
 	};
 }
 
@@ -38,8 +49,33 @@ export function adaptUpdateProfileMetadataResponse(
 	response: UpdateProfileMetadataResponse
 ): ProfileMetadata {
 	return <ProfileMetadata>{
+		email: response.email,
+		avatar: '',
 		name: response.name,
 		surname: response.surname,
 		description: '',
+		id: Number(response.id),
 	};
 }
+
+export const adoptProfileTrips = (trips: ProfileTrip[]): ProfileTrip[] => {
+	if (trips) {
+		trips.forEach(trip => {
+			// eslint-disable-next-line no-param-reassign
+			trip.htmlId = `go_trip_${trip.id}`;
+		});
+		return trips;
+	}
+	return [];
+};
+
+export const adoptProfileAlbums = (albums: ProfileAlbum[]): ProfileAlbum[] => {
+	if (albums) {
+		albums.forEach(album => {
+			// eslint-disable-next-line no-param-reassign
+			album.htmlId = `go_album_${album.id}`;
+		});
+		return albums;
+	}
+	return [];
+};

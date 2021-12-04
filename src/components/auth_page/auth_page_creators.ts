@@ -1,13 +1,7 @@
 import loginTemplate from './login.handlebars';
 import registerTemplate from './register.handlebars';
-import { Button, makeSimpleButton } from '@/components';
-import { router } from '@/router';
-import { texts } from '../texts';
-
 import './auth.scss';
-import { pathsURLfrontend } from '@/constants';
 
-// const loginHTML = (): { view: string, form: Form } => {
 const loginHTML = (): string => {
 	const parent = document.createElement('div');
 
@@ -30,7 +24,6 @@ const loginHTML = (): string => {
 	const grandparent = document.createElement('div');
 	grandparent.appendChild(parent);
 
-	console.log(grandparent.innerHTML);
 	return grandparent.innerHTML;
 };
 
@@ -56,7 +49,6 @@ const registerHTML = (): string => {
 	const grandparent = document.createElement('div');
 	grandparent.appendChild(parent);
 
-	console.log(grandparent.innerHTML);
 	return grandparent.innerHTML;
 };
 

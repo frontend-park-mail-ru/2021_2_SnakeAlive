@@ -9,6 +9,7 @@ export const minAdaptCountryCards = (cards: CountryCardResponse[]): minCardInfo[
 				id: String(card.id),
 				name: card.name,
 				rating: 5,
+				adoptedTags: [],
 				tags: card.tags,
 				photo: card.photos[0],
 			},

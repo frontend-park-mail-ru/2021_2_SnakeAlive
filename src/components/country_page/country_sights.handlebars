@@ -1,7 +1,22 @@
 <div id='data__holder'>
 	<div class='header_holder' id='header__holder'>
+		<div class='header__categories'>
+			{{#each tags}}
+			<div class='category' id='tag_{{this.name}}'>{{this.name}}</div>
+			{{/each}}
+			<div>
+				<div class='category' id='more-tags-btn'>Еще</div>
+				<div id="myDropdown" class="dropdown-content">
+					{{#each allTags}}
+						<a id='dropdown_tag_{{this.name}}'>{{this.name}}</a>
+					{{/each}}
+  				</div>
+			</div>
+			
+
+		</div>
 		<h2 class='header__default cardlist__header__main'>
-			Лучшие достопримечательности по стране:
+			Лучшие достопримечательности
 			{{name}}
 		</h2>
 	</div>

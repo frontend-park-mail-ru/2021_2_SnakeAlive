@@ -1,12 +1,12 @@
 import BasicView from '@/view/view';
-import { DataType, dispatcher, EventType, Token } from '@/dispatcher';
+import { dispatcher, EventType, Token } from '@/dispatcher';
 import {
 	logoutRequest,
 	newUpdateProfileMetadataRequest,
 	newUpdateProfilePhotoRequest,
-} from '@/actions';
+} from '@/actions/profile';
 import { storage } from '@/storage';
-import { Profile } from '@/models/profile';
+import { Profile, ProfileAlbum, ProfileTrip } from '@/models/profile';
 import profileTemplate from '@/templates/profile.handlebars';
 import profileEditTemplate from '@/templates/profile_edit.handlebars';
 import Button from '@/components/minified/button/button';
@@ -20,19 +20,25 @@ import {
 import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
 import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
+import horisontalScroll from '../components/horizontal_scroll/horisontal_scroll.handlebars';
 
-const setListenersOnTrips = (trips: number[]) => {
-	trips.forEach(id => {
-		// id="go_trip_{{this}}
-		const btn = document.getElementById(`go_trip_${id}`);
+export const setListenersOnCards = (
+	name: string,
+	cards: ProfileTrip[] | ProfileAlbum[],
+	pathToGo: pathsURLfrontend
+) => {
+	cards.forEach(trip => {
+		// trip="go_trip_{{this}}
+		// const btn = document.getElementById(`go_${name}_${trip.id}`);
+		const btn = document.getElementById(trip.htmlId);
 		if (btn !== null) {
 			btn.addEventListener('click', event => {
 				event.preventDefault();
 				router.go(
-					createFrontendQueryParams(pathsURLfrontend.trip, [
+					createFrontendQueryParams(pathToGo, [
 						{
 							key: paramsURLfrontend.id,
-							value: String(id),
+							value: String(trip.id),
 						},
 					])
 				);
@@ -61,7 +67,7 @@ export default class ProfileView extends BasicView {
 		];
 	};
 
-	destroy = (metadata: DataType): void => {
+	destroy = (): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});
@@ -69,20 +75,20 @@ export default class ProfileView extends BasicView {
 		this.setEmpty();
 	};
 
-	render = (metadata: DataType): void =>
-		this.#isProfile ? this.#renderProfile() : this.#renderEdit();
+	render = (): void => (this.#isProfile ? this.#renderProfile() : this.#renderEdit());
 
 	#renderProfile = (): void => {
 		this.#isProfile = true;
 		const profile: Profile = storage.getProfile();
-		console.log(profile);
 
-		const trips = storage.getLastTrips(); // поездки
-		const ifTrips = trips.length > 0;
+		const trips = storage.getProfileTrips(); // поездки
+		const albums = storage.getProfileAlbums(); // альбомы
+		this.setView(profileTemplate({ profile, trips, albums }));
 
-		this.setView(profileTemplate({ profile, ifTrips, trips }));
+		this.#createScrolls(albums);
 
-		setListenersOnTrips(trips); // поездки
+		setListenersOnCards('trip', trips, pathsURLfrontend.trip); // поездки
+		setListenersOnCards('album', albums, pathsURLfrontend.album); // поездки
 
 		const editBtn: Button = new Button('#profile__edit_btn');
 		editBtn.setOnClick(this.#renderEdit);
@@ -91,7 +97,6 @@ export default class ProfileView extends BasicView {
 		// logoutBtn.setOnClick(dispatcher.notify(logoutRequest()));
 
 		const logoutBtn = document.querySelector('#profile__logout_btn');
-		console.log(logoutBtn);
 		if (logoutBtn !== null) {
 			logoutBtn.addEventListener(
 				'click',
@@ -120,7 +125,7 @@ export default class ProfileView extends BasicView {
 		backBtn.setOnClick(this.#renderProfile);
 
 		const fileInput = <HTMLInputElement>document.querySelector('#update_photo');
-		fileInput.addEventListener('change', (event: Event) => {
+		fileInput.addEventListener('change', () => {
 			this.#uploadFile();
 		});
 	};
@@ -131,7 +136,7 @@ export default class ProfileView extends BasicView {
 			const uploadFile = new FormData();
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-ignore
-			uploadFile.append('avatar', fileInput.files[0]);
+			uploadFile.append('file', fileInput.files[0]);
 
 			dispatcher.notify(newUpdateProfilePhotoRequest(uploadFile));
 		});
@@ -163,14 +168,6 @@ export default class ProfileView extends BasicView {
 					],
 					errorSetters: [surnameInput],
 				},
-				// {
-				// 	validators: [
-				// 		function (): boolean {
-				// 			return validateEmail(emailInput.getValue());
-				// 		},
-				// 	],
-				// 	errorSetters: [emailInput],
-				// },
 				{
 					validators: [
 						function (): boolean {
@@ -195,12 +192,6 @@ export default class ProfileView extends BasicView {
 		) {
 			return;
 		}
-		// name: string,
-		// 	surname: string,
-		// 	email: string,
-		// 	password: string,
-		// 	description?: string
-		console.log(storage.getProfile().meta.email);
 		dispatcher.notify(
 			newUpdateProfileMetadataRequest(
 				nameInput.getValue(),
@@ -211,5 +202,24 @@ export default class ProfileView extends BasicView {
 				'no description now'
 			)
 		);
+	};
+
+	#createScrolls = (albums: ProfileAlbum[]) => {
+		albums.forEach(album => {
+			const place = document.getElementById(`photo_scroll_${album.htmlId}`);
+			if (place !== null) {
+				const pages: Array<{
+					picture: string;
+				}> = [];
+				if (album.photos) {
+					album.photos.forEach(photo => {
+						pages.push({
+							picture: photo,
+						});
+					});
+				}
+				place.innerHTML = horisontalScroll({ pages });
+			}
+		});
 	};
 }

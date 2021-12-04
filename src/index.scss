@@ -1,8 +1,8 @@
 $header_height: 7.5vh;
 
 // отступы
-$large-px: 24px;
-$small-px: 10px;
+$large-px: 12px;
+$small-px: 6px;
 
 /* Color styles */
 $my--main-background: #EDEEF0;
@@ -22,6 +22,7 @@ $my--error: rgba(231, 63, 70, 1);
 $my--small-text: rgba(153, 162, 172, 1);
 
 $my--button-header-hover: #EDEEF0;
+$my--frame-collection: #fafafa;
 //
 $white: white;
 $black: black; // вдруг захочется поизголяться тут
@@ -110,7 +111,14 @@ html, body {
   border-radius: 4px;
   border: 1px solid $my--frame-border;
   padding: $large-px;
+  box-sizing: border-box;
+
   background: $white;
+  //> * {
+  //  padding: $large-px;
+  //}
+  margin: 0;
+
 }
 
 input,
@@ -126,7 +134,8 @@ textarea:active {
   border-radius: 4px;
   width: 100%;
   @include text-plain-no-wrap;
-  padding: 6px;
+  padding: 6px 0;
+  outline: none;
 }
 
 .icon {
@@ -151,62 +160,90 @@ textarea:active {
     height: 30vh;
   }
 }
-
+//
+//.profile_wrapper {
+//  display: grid;
+//  @media (max-width: 960px) {
+//    grid-template: 'content' / 1fr;
+//  }
+//  @media (min-width: 961px) {
+//    grid-template: 'ml content mr' / 1fr 10fr 1fr;
+//  }
+//
+//  max-width: 100vw;
+//}
 
 .profile {
-  background-color: $white;
+  //max-width: 100vh;
+  max-width: 100%;
+
+  grid-area: content;
   display: grid;
 
-  @media (max-width: 320px) {
-    height: 110px;
+  > * {
+    max-width: 100%;
+  }
+
+  @media (max-width: 960px) {
+    //height: 110px;
     padding: 1px;
     margin-top: 4px;
 
-    grid-template-areas: "photo metadata_holder"
-                          "btn_block btn_block";
-    grid-template-rows: 50px 50px;
-    grid-template-columns: 50px 1fr;
+
+    grid-template-areas: "info"
+                        "trips"
+                        "albums";
+
+    //grid-template-rows: 200px max-content;
+    //grid-template-columns: 50px 1fr;
     row-gap: 4px;
   }
 
-  @media (min-width: 321px) and (max-width: 960px) {
-    height: 200px;
-    padding: 10px;
-    margin: 10px 60px 10px;
-    border-radius: 15px;
-
-    grid-template-areas: "photo metadata_holder btn_block";
-    grid-template-rows: 200px;
-    grid-template-columns: 200px 1fr 200px;
-    row-gap: 3px;
-  }
+  //@media (min-width: 321px) and (max-width: 960px) {
+  //  padding: 10px;
+  //  margin: 10px 60px 10px;
+  //  border-radius: 15px;
+  //  background: green;
+  //
+  //  grid-template-areas: "photo photo"
+  //                       "metadata_holder btn_block";
+  //  grid-template-rows: 1fr 1fr;
+  //  grid-template-columns: 1fr 1fr;
+  //  row-gap: 3px;
+  //}
 
   @media (min-width: 961px) {
-    border-radius: 15px;
+    //border-radius: 15px;
     height: 200px;
     margin: 20px 100px 10px;
 
-    grid-template-areas: "photo metadata_holder btn_block";
+    row-gap: $small-px;
+    column-gap: $small-px;
+
+    grid-template-areas: "info info info info"
+                         "trips trips albums albums";
     grid-template-rows: 200px;
-    grid-template-columns: 200px 1fr 200px;
-    row-gap: 3px;
+    grid-template-columns: 200px 1fr 3fr 200px;
+
+    padding: 0;
   }
 
   &__photo {
     grid-area: photo;
     justify-content: center;
     align-items: center;
+    height: 200px;
 
-    @media (max-width: 320px) {
+    @media (max-width: 960px) {
       max-height: 50px;
       max-width: 50px;
       border-radius: 3px;
     }
 
-    @media (min-width: 321px) and (max-width: 960px) {
-      display: flex;
-      justify-content: center;
-    }
+    //@media (min-width: 321px) and (max-width: 960px) {
+    //  display: flex;
+    //  justify-content: center;
+    //}
 
     @media (min-width: 961px) {
       display: flex;
@@ -216,14 +253,14 @@ textarea:active {
     img {
       border-radius: 50%;
 
-      @media (max-width: 320px) {
+      @media (max-width: 960px) {
         max-height: 50px;
         max-width: 50px;
       }
 
-      @media (min-width: 321px) and (max-width: 960px) {
-        width: 60%;
-      }
+      //@media (min-width: 321px) and (max-width: 960px) {
+      //  width: 60%;
+      //}
 
       @media (min-width: 961px) {
         width: 60%;
@@ -235,15 +272,15 @@ textarea:active {
     grid-area: metadata_holder;
     display: grid;
 
-    @media (max-width: 320px) {
+    @media (max-width: 960px) {
       grid-template-rows: 20px 15px;
     }
 
-    @media (min-width: 321px) and (max-width: 960px) {
-      grid-template-rows: 30px 20px;
-      padding-top: 15%;
-      row-gap: 5px;
-    }
+    //@media (min-width: 321px) and (max-width: 960px) {
+    //  grid-template-rows: 30px 20px;
+    //  padding-top: 15%;
+    //  row-gap: 5px;
+    //}
 
     @media (min-width: 961px) {
       grid-template-rows: 30px 20px;
@@ -256,33 +293,39 @@ textarea:active {
     text-align: left;
     padding: 4px;
 
-    @media (max-width: 320px) {
+    @media (max-width: 960px) {
       padding-left: 10px;
-      @include text-small;
-    }
-
-    @media (min-width: 321px) and (max-width: 960px) {
-      padding-left: 15px;
       @include text-local-header;
-
-      display: flex;
-      align-items: center;
     }
+
+    //@media (min-width: 321px) and (max-width: 960px) {
+    //  padding-left: 15px;
+    //  @include text-local-header;
+    //
+    //  display: flex;
+    //  align-items: center;
+    //}
 
     @media (min-width: 961px) {
       padding-left: 15px;
-      @include text-local-header;
+      &__email {
+        @include text-local-name();
+      }
 
       display: flex;
       align-items: center;
     }
   }
 
+  &__edit-btn, &__close-btn {
+    width: 100%;
+  }
+
   &__btn-block {
     display: grid;
     grid-area: btn_block;
 
-    @media (max-width: 320px) {
+    @media (max-width: 960px) {
       grid-template-areas: "edit-btn"
                           "close-btn";
       grid-template-rows: 25px 25px;
@@ -290,13 +333,13 @@ textarea:active {
       grid-gap: 2px;
     }
 
-    @media (min-width: 321px) and (max-width: 960px) {
-      grid-template-areas:"edit-btn"
-                          "close-btn";
-      grid-template-rows: 100px 100px;
-      grid-template-columns: 150px;
-      grid-gap: 2px;
-    }
+    //@media (min-width: 321px) and (max-width: 960px) {
+    //  grid-template-areas:"edit-btn"
+    //                      "close-btn";
+    //  grid-template-rows: 100px 100px;
+    //  grid-template-columns: 150px;
+    //  grid-gap: 2px;
+    //}
 
     @media (min-width: 961px) {
       grid-template-areas:"edit-btn"
@@ -313,17 +356,17 @@ textarea:active {
     color: $my--button-text;
     grid-area: edit-btn;
 
-    @media (max-width: 320px) {
+    @media (max-width: 960px) {
       @include text-small;
       border-radius: 3px;
     }
 
-    @media (min-width: 321px) and (max-width: 960px) {
-      height: 50px;
-      margin-top: 50px;
-      @include text-button;
-      border-radius: 5px;
-    }
+    //@media (min-width: 321px) and (max-width: 960px) {
+    //  height: 50px;
+    //  margin-top: 50px;
+    //  @include text-button;
+    //  border-radius: 5px;
+    //}
 
     @media (min-width: 961px) {
       height: 30px;
@@ -347,16 +390,16 @@ textarea:active {
     color: $my--button-text;
     grid-area: close-btn;
 
-    @media (max-width: 320px) {
+    @media (max-width: 960px) {
       @include text-small;
       border-radius: 3px;
     }
 
-    @media (min-width: 321px) and (max-width: 960px) {
-      height: 50px;
-      @include text-button;
-      border-radius: 5px;
-    }
+    //@media (min-width: 321px) and (max-width: 960px) {
+    //  height: 50px;
+    //  @include text-button;
+    //  border-radius: 5px;
+    //}
 
     @media (min-width: 961px) {
       height: 30px;
@@ -377,60 +420,82 @@ textarea:active {
 }
 
 .profile_edit {
+  grid-area: content;
+
   background-color: $white;
   display: grid;
-  justify-content: center;
+  //justify-content: center;
 
-  @media (max-width: 320px) {
-    height: 525px;
+  @media (min-width: 960px) {
+    //height: 525px;
     padding: 1px;
     margin-top: 4px;
 
-    grid-template-rows: 130px 310px 60px;
-    grid-template-columns: 300px;
+    display: grid;
+    grid-template-areas: "photo-edit-block content-edit-block buttons-edit-block";
+
+    grid-template-columns: 2fr 3fr 2fr;
+    //grid-template-rows: 900px;
     row-gap: 3px;
   }
 
-  @media (min-width: 321px) and (max-width: 960px) {
-    height: 300px;
+  //@media (min-width: 321px) and (max-width: 960px) {
+  //  height: 300px;
+  //  padding: 10px;
+  //  margin-top: 5px;
+  //
+  //  grid-template-rows: 500px;
+  //  grid-template-columns: 200px 400px 170px;
+  //  row-gap: 3px;
+  //}
+
+  @media (max-width: 961px) {
+    //height: 300px;
     padding: 10px;
     margin-top: 5px;
+    display: grid;
 
-    grid-template-rows: 500px;
-    grid-template-columns: 200px 400px 170px;
-    row-gap: 3px;
-  }
+    grid-template-areas: "photo-edit-block"
+                        "content-edit-block"
+                          "buttons-edit-block"
+    "trips"
+    "albums";
 
-  @media (min-width: 961px) {
-    height: 300px;
-    padding: 10px;
-    margin-top: 5px;
-
-    grid-template-rows: 500px;
-    grid-template-columns: 200px 400px 170px;
+    grid-template-rows: 200px 400px 170px;
     row-gap: 3px;
   }
 
   &__photo_block {
-    display: grid;
-    justify-content: center;
+    //display: grid;
+    //justify-content: center;
+    grid-area: photo-edit-block;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+    gap: 10px;
 
-    @media (max-width: 320px) {
-      grid-template-rows: 100px 30px 0px;
-      grid-template-columns: 250px;
-      row-gap: 3px;
+    @media (max-width: 960px) {
+      //grid-template-rows: 3fr 1fr 0;
+      //grid-template-columns: 250px;
+      //row-gap: 3px;
     }
 
-    @media (min-width: 321px) and (max-width: 960px) {
-      grid-template-rows: 200px 0px 50px;
-      grid-template-columns: 170px;
-      row-gap: 5px;
-    }
+    //@media (min-width: 321px) and (max-width: 960px) {
+    //  grid-template-rows: 200px 0 50px;
+    //  grid-template-columns: 170px;
+    //  row-gap: 5px;
+    //}
 
     @media (min-width: 961px) {
-      grid-template-rows: 200px 0px 50px;
-      grid-template-columns: 170px;
-      row-gap: 5px;
+      //grid-template-rows: 4fr 0 1fr;
+      //grid-template-columns: 170px;
+      //row-gap: 5px;
+    }
+
+    > * {
+      text-align: center;
     }
   }
 
@@ -441,16 +506,16 @@ textarea:active {
     img {
       border-radius: 50%;
 
-      @media (max-width: 320px) {
+      @media (max-width: 960px) {
         width: 43%;
       }
 
-      @media (min-width: 321px) and (max-width: 960px) {
-        width: 70%;
-        height: 70%;
-
-        margin-top: 20%;
-      }
+      //@media (min-width: 321px) and (max-width: 960px) {
+      //  width: 70%;
+      //  height: 70%;
+      //
+      //  margin-top: 20%;
+      //}
 
       @media (min-width: 961px) {
         width: 70%;
@@ -465,19 +530,20 @@ textarea:active {
   &__button_block {
     display: grid;
     justify-content: center;
+    grid-area: buttons-edit-block;
 
-    @media (max-width: 320px) {
+    @media (max-width: 960px) {
       grid-template-rows: 30px 30px;
       grid-template-columns: 250px;
       row-gap: 3px;
     }
 
-    @media (min-width: 321px) and (max-width: 960px) {
-      margin-top: 27px;
-      grid-template-rows: 50px 50px;
-      grid-template-columns: 170px;
-      row-gap: 5px;
-    }
+    //@media (min-width: 321px) and (max-width: 960px) {
+    //  margin-top: 27px;
+    //  grid-template-rows: 50px 50px;
+    //  grid-template-columns: 170px;
+    //  row-gap: 5px;
+    //}
 
     @media (min-width: 961px) {
       margin-top: 27px;
@@ -490,17 +556,18 @@ textarea:active {
   &__btn {
     background-color: $my--button-fill;
     color: $my--button-text;
+    padding: 6px;
 
-    @media (max-width: 320px) {
+    @media (max-width: 960px) {
       @include text-small;
       border-radius: 3px;
     }
 
-    @media (min-width: 321px) and (max-width: 960px) {
-      height: 50px;
-      @include text-button;
-      border-radius: 5px;
-    }
+    //@media (min-width: 321px) and (max-width: 960px) {
+    //  height: 50px;
+    //  @include text-button;
+    //  border-radius: 5px;
+    //}
 
     @media (min-width: 961px) {
       height: 30px;
@@ -521,29 +588,41 @@ textarea:active {
   &__metadata {
     display: grid;
     justify-content: center;
+    grid-area: content-edit-block;
+    max-width: 100%;
 
-    @media (max-width: 320px) {
-      margin-top: 15px;
-
-      grid-template-rows: 50px 50px 50px 50px 50px;
-      grid-template-columns: 250px;
-      row-gap: 10px;
+    @media (max-width: 960px) {
+      //margin-top: 15px;
+      //
+      //grid-template-rows: 50px 50px 50px 50px 50px;
+      //grid-template-columns: 250px;
+      //row-gap: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-items: center;
+      gap: 10px;
     }
 
-    @media (min-width: 321px) and (max-width: 960px) {
-      margin-top: 15px;
-
-      grid-template-rows: 50px 50px 50px 50px 50px;
-      grid-template-columns: 250px;
-      row-gap: 10px;
-    }
+    //@media (min-width: 321px) and (max-width: 960px) {
+    //  margin-top: 15px;
+    //
+    //  grid-template-rows: 50px 50px 50px 50px 50px;
+    //  grid-template-columns: 250px;
+    //  row-gap: 10px;
+    //}
 
     @media (min-width: 961px) {
-      margin-top: 15px;
-
-      grid-template-rows: 50px 50px 50px 50px 50px;
-      grid-template-columns: 250px;
-      row-gap: 10px;
+      //margin-top: 15px;
+      //
+      //grid-template-rows: 50px 50px 50px 50px 50px;
+      //grid-template-columns: 250px;
+      //row-gap: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-items: center;
+      gap: 10px;
     }
   }
 
@@ -554,7 +633,9 @@ textarea:active {
       justify-content: flex-start;
       align-items: center;
       flex-wrap: wrap;
+
     }
+    min-width: 80%;
 
     &__input {
       @media (max-width: 320px) {
@@ -584,25 +665,99 @@ textarea:active {
 }
 
 //profile_show__photo временное, простити
-.profile_show__photo {
+.profile_show {
+  &__info {
+    grid-area: info;
+    display: grid;
+
+    @media (max-width: 960px) {
+      grid-template-areas: "photo"
+                        "metadata_holder"
+                        "btn_block";
+      row-gap: 4px;
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 961px) {
+      row-gap: $small-px;
+      column-gap: $small-px;
+
+      grid-template-areas: "photo metadata_holder btn_block";
+      //grid-template-rows: 200px;
+      grid-template-columns: 200px 1fr 200px;
+
+      padding: 0;
+    }
+  }
+
+  &__trips {
+    grid-area: trips;
+    width: 100%;
+    max-width: 100%;
+    background: $white;
+  }
+
+  &__albums {
+    grid-area: albums;
+    width: 100%;
+    max-width: 100%;
+    background: $white;
+    min-width: 0; min-height: 0;
+  }
+
+  &__photo {
+  grid-area: photo;
   align-self: center;
   justify-self: center;
-  width: 80%;
-  height: 80%;
   display: block;
   position: relative;
   overflow: hidden;
   border-radius: 50%;
 
-  img {
-    min-height: 100%;
-    min-width: 100%;
-    object-fit: cover;
+    padding-top: $large-px;
 
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+    height: 140px;
+    width: 140px;
+
+    margin: $large-px;
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  &__data {
+    grid-area: metadata_holder;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    &__name {
+      @include text-local-header();
+    }
+    &__email {
+      @include text-small();
+    }
+  }
+
+  &__btns {
+    grid-area: btn_block;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    gap: $large-px;
+    padding: $large-px;
+
+    > button {
+      padding: $small-px;
+    }
   }
 }
 
@@ -620,6 +775,9 @@ textarea:active {
 .card__data__holder {
 	margin-left: 5px;
 	margin-top: 10px;
+
+  display: flex;
+  flex-direction: column;
 }
 
 .card__comment__holder {
@@ -650,14 +808,14 @@ textarea:active {
 }
 
 .carousel {
-	margin-top: 10px;
-	transition: all 0.3s ease;
+  transition: all 0.3s ease;
 	justify-content: center;
 	height: 300px;
+  margin: 0;
 }
 
 .carousel img {
-	width: 100%;
+	width: 90%;
 	height: 300px;
 	transition: all 0.3s ease;
 	justify-self: flex-start;
@@ -666,13 +824,15 @@ textarea:active {
 /*tags*/
 
 .tag__holder {
-	margin-top: 10px;
 	width: 100%;
-	text-align: left;
+	//text-align: left;
+  padding: 0;
 
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+
+    align-self: end;
 }
 
 .tag {
@@ -739,24 +899,42 @@ textarea:active {
 
 .card_grid_wrapper {
   display: grid;
-  grid-template: "ml content  mr"  / 1fr 4fr 1fr;
+  @media (max-width: 380px) {
+    grid-template: "content"  / 1fr;
+  }
+
+  @media (min-width: 381px) {
+    grid-template: "ml content  mr"  / 1fr 4fr 1fr;
+  }
 }
-.card__grid__1 {
-	grid-template-columns: repeat(1, minmax(var(--photo-width), 1fr));
-}
-.card__grid__2 {
-	grid-template-columns: repeat(2, minmax(var(--photo-width), 1fr));
-}
+
 .card__grid__3 {
+  grid-area: content;
+  @media (max-width: 380px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  @media (min-width: 380px) and (max-width: 960px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 961px) {
     grid-template-columns: repeat(3, 1fr);
+  }
 }
+
 .card {
-	//padding: 4px 4px 4px 4px;
-	max-width: var(--photo-width);
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-start;
-	//min-height: 520px;
+	justify-content: space-between;
+
+
+  &__top {
+    padding: 0;
+    > div {
+    padding-bottom: $small-px;
+    }
+  }
 }
 
 .header__default {
@@ -765,12 +943,75 @@ textarea:active {
 	font-family: var(--font-default);
 	font-weight: var(--font-header-weight);
 }
+.category{
+  padding: 11px 16px;
+  border-radius: 30px;
+  border: 1px solid
+}
+
+.category{
+  padding: 11px 16px;
+  border-radius: 4px;
+  border: 1px solid;
+  margin: 0px 5px 15px 5px;
+}
+.category:hover{
+  cursor: pointer;
+  //background: rgba(0,0,0,0);
+	color: $white;
+  background-color: $logo-color;
+}
+
+.header__categories{
+  display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+  margin-left: auto;
+  margin-right: auto;
+
+  overflow-x: auto;
+  
+  width: auto;
+  white-space: nowrap;
+
+  max-width: 900px;
+
+}
+
+
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  cursor: pointer;
+  background: rgba(0,0,0,0);
+	color: $logo-color;
+	box-shadow: inset 0 0 0 2px $logo-color;
+}
+
+.show {display: block;}
 
 .cardlist__header__main {
 	line-height: 110%;
 	font-size: 160%;
 	width: 100%;
 	margin: 0 auto;
+  margin-top: 50px;
 }
 
 .header_holder {
@@ -806,23 +1047,128 @@ textarea:active {
   align-self: center;
   justify-self: center;
   width: 100%;
-  display: block;
-  position: relative;
-  overflow: hidden;
+  //display: block;
+  //text-align: center;
+  //position: relative;
+
   border-radius: 4px;
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  align-content: center;
+  justify-content: center;
 
   img {
+    text-align: center;
     min-height: 100%;
-    min-width: 100%;
     object-fit: cover;
-
-    position: absolute;
-    top: 0;
-    left: 0;
+    border-radius: 4px;
+    overflow: hidden;
     width: 100%;
+
+    //margin: $large-px;
+    //position: absolute;
+    //top: 0;
+    //left: 2* $large-px;
+    //width: 100%;
   }
 }
 
 .card.frame:hover {
   cursor: pointer;
+}
+.string-left {
+  display: flex;
+  flex-direction: row;
+  > * {
+    margin-right: $small-px;
+  }
+}
+
+.string-space {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.inner_delete_btn {
+  font-size: $small-px * 2;
+  color: green;
+
+  position: relative;
+  bottom: $small-px * 4;
+  right: - $small-px * 2;
+}
+
+.frame_collection {
+  border-radius: 4px;
+  border: 1px solid $my--frame-border;
+
+  background: $white;
+  height: max-content;
+  padding: $large-px;
+  margin: 0;
+  box-sizing: border-box;
+  width: 100%;
+
+  &__wrapper {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__header {
+    padding: $large-px;
+
+    > p {
+      @include text-local-header;
+    }
+  }
+
+  &__card {
+    cursor: pointer;
+    //border-bottom: 1px solid $my--frame-border;
+    //border-top: 1px solid $my--frame-border;
+    border-radius: 4px;
+    //padding: $large-px;
+    margin-top: $small-px;
+    margin-left: 0;
+    margin-right: 0;
+    background: $my--frame-collection;
+
+    padding: $large-px;
+    box-sizing: border-box;
+
+    > * {
+      margin-bottom: $small-px;
+    }
+
+    &_inline {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: $large-px * 2;
+    }
+
+    &__header {
+      @include text-local-header();
+      //min-width: 35%;
+    }
+
+    &__text {
+      @include text-plain-no-wrap();
+      white-space: nowrap; /* Текст не переносится */
+      overflow: hidden; /* Обрезаем всё за пределами блока */
+
+      text-overflow: ellipsis; /* Добавляем многоточие */
+      position: relative;
+
+      &_right {
+        max-width: 200px;
+        text-align: right;
+        width: 100%;
+      }
+    }
+  }
 }

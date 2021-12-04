@@ -20,7 +20,6 @@ export default class Input {
 	};
 
 	setError = (): void => {
-		console.error('error set', this.#errorClass);
 		this.#component.classList.add(this.#errorClass);
 	};
 }
