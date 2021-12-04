@@ -125,6 +125,41 @@ export const initDescription = (): void => {
 	}
 };
 
+export const initAddPartisipantBtn = (): void => {
+	const askConfirmBtn = document.getElementById('partisipant_add');
+	if (askConfirmBtn !== null) {
+		askConfirmBtn.addEventListener(
+			'click',
+			event => {
+				event.preventDefault();
+				//show dropdown with linl and instructiom
+			},
+			false
+		);
+	} else {
+		//console.log('NO BTN ');
+	}
+}
+
+export const initShareBtn = (): void => {
+	const askConfirmBtn = document.getElementById('share');
+	if (askConfirmBtn !== null) {
+		askConfirmBtn.addEventListener(
+			'click',
+			event => {
+				event.preventDefault();
+				//show dropdown with share link and instructiom
+			},
+			false
+		);
+	} else {
+		//console.log('NO BTN ');
+	}
+}
+
+
+
+
 const getFormInfo = (): {
 	title: string;
 	text: string;
