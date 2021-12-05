@@ -6,7 +6,7 @@
 // export const backendFileEndpoint = 'http://localhost:3000/';
 // export const frontEndEndPoint = 'http://localhost:2000';
 
-export const backendEndpoint = 'https://snakehastrip.ru:8080';
-export const backendFileEndpoint = 'https://snakehastrip.ru:3000/';
-export const frontEndEndPoint = 'https://snakehastrip.ru:2000';
+export const backendEndpoint = 'https://snakehastrip.ru';
+export const backendFileEndpoint = 'https://snakehastrip.ru';
+export const frontEndEndPoint = 'https://snakehastrip.ru';
 
