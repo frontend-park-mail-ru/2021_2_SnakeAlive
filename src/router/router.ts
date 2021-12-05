@@ -16,6 +16,10 @@ class Router {
 	start = () => {
 		const url = new URL(window.location.href); // это встроенный класс
 		notifier(url);
+
+		window.onpopstate = () => {
+			this.go(window.location.href);
+		};
 	};
 
 	go = (_path: string, _data?: string) => {

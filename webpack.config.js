@@ -2,6 +2,7 @@ const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 // const MockDevServer = require('webpack-mock-dev-server');
 
@@ -18,6 +19,9 @@ module.exports = {
 		port: 2000,
 		historyApiFallback: true,
 		// before: MockDevServer(path.resolve(__dirname, 'mock-dev-server.config')),
+		devMiddleware: {
+			writeToDisk: true,
+		},
 	},
 	stats: {
 		children:true,
@@ -48,6 +52,12 @@ module.exports = {
 		new MiniCssExtractPlugin({
 			filename: filename('css'),
 		}),
+		// new WorkboxPlugin.GenerateSW({
+		// 	// these options encourage the ServiceWorkers to get in there fast
+		// 	// and not allow any straggling "old" SWs to hang around
+		// 	clientsClaim: true,
+		// 	skipWaiting: true,
+		// }),
 	],
 	module: {
 		rules: [

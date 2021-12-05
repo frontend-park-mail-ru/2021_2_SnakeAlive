@@ -33,12 +33,18 @@ const main = () => {
 
 	router.start();
 
-	window.onpopstate = () => {
-		router.go(window.location.href);
-	};
-
 	const searchReducer = new SearchReducer();
 	searchReducer.init();
+
+	// if ('serviceWorker' in navigator) {
+	// 	window.addEventListener('load', () => {
+	// 		navigator.serviceWorker.register('/service-worker.js').then(registration => {
+	// 			console.log('SW registered: ', registration);
+	// 		}).catch(registrationError => {
+	// 			console.log('SW registration failed: ', registrationError);
+	// 		});
+	// 	});
+	// }
 };
 
 main();
