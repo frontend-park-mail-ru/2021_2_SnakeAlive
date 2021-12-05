@@ -8,5 +8,5 @@
 
 export const backendEndpoint = 'https://snakehastrip.ru/api';
 export const backendFileEndpoint = 'https://snakehastrip.ru/api';
-export const frontEndEndPoint = 'https://snakehastrip.ru/api';
+export const frontEndEndPoint = 'https://snakehastrip.ru';
 
