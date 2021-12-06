@@ -10,6 +10,8 @@ import {
 	initDelTripBtn,
 	initSubmitTripBtn,
 	initDescription,
+	initAddPartisipantBtn,
+	initShareBtn,
 } from '@/components/trip/trip_form';
 import { Map } from '@/components/map/map';
 import { pathsURLfrontend } from '@/constants';
@@ -25,6 +27,16 @@ import { ProfileAlbum } from '@/models/profile';
 import typicalCollection from '../components/frame_collection.handlebars';
 import horisontalScroll from '@/components/horizontal_scroll/horisontal_scroll.handlebars';
 import { setListenersOnCards } from '@/view/profile';
+//import {plus_icon} from "../../../image/plus_icon.jpg"
+
+import share_icon from '../../image/icon/share_56.svg';
+import addUser_icon from '../../image/icon/user_add_56.svg';
+
+const partisipants = [
+	{ id: 1, profilePhoto: '/image/7b205eb741a49105fcd425910545cc79.jpeg' },
+	{ id: 1, profilePhoto: '/image/7b205eb741a49105fcd425910545cc79.jpeg' },
+	{ id: 1, profilePhoto: '/image/7b205eb741a49105fcd425910545cc79.jpeg' },
+];
 
 export class TripInfoView extends BasicView {
 	#tokens: Token[];
@@ -70,6 +82,9 @@ export class TripInfoView extends BasicView {
 				tripCreated: true,
 				title: trip.title,
 				description: trip.description,
+				partisipants: partisipants,
+				shareimg: share_icon,
+				addUserImg: addUser_icon,
 			})
 		);
 		const searchPlace = document.getElementById('trip-search-place');
@@ -96,6 +111,8 @@ export class TripInfoView extends BasicView {
 		initDescription();
 		initDelTripBtn();
 		initSubmitTripBtn();
+		initAddPartisipantBtn();
+		initShareBtn();
 
 		const albumPlace = document.getElementById('trip_albums_holder');
 		if (albumPlace !== null) {

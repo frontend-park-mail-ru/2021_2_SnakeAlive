@@ -100,11 +100,55 @@
   width: 100%;
   margin-top: 10px;
 }
+.trip_title_holder{
+  display: flex;
+}
+
+.share-btn{
+  width: 25px;
+}
+
+.tripWrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 5px;
+  align-items: center;
+}
+
+.col-8{
+  grid-column: 1/3;
+  grid-row: 1;
+}
+
+.col-4{
+  grid-column: 3;
+  grid-row: 1;
+}
 
 .trip_preview{
   width: 100%; /* Ширина изображений */
   height: 100%; /* Высота изображении */
   object-fit: cover; /* Вписываем фотографию в область */
+}
+
+.trip-partisipant-circle-img{
+  width: 35px;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.trip-partisipant-add-img{
+  margin-left: 16px;
+  width: 35px;
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+
+.partisipant{
+  margin-inline-end: -8px;
 }
 
 
