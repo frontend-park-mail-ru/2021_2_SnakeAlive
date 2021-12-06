@@ -33,7 +33,6 @@ module.exports = {
 	},
 	entry: {
 		main: './index.ts',
-		// offline: './offline.ts',
 	},
 	output: {
 		filename: filename('js'),

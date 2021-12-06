@@ -3,7 +3,7 @@ import { dispatcher, EventType, Token } from '@/dispatcher';
 
 import picture from '@/../image/snake_error.svg';
 import errorPage from '@/components/errorPage.handlebars';
-import offlinePage from '@/offline/offline.handlebars';
+import offlinePage from '@/components/offline.handlebars';
 import { newSetEmptyHeaderRequest, newSetMainHeaderRequest } from '@/actions/header';
 import { makeHeader } from '@/components/header/header';
 
@@ -35,6 +35,14 @@ export default class ErrorView extends BasicView {
 		}
 
 		this.setView(offlinePage());
+
+		const refreshButton = document.getElementById('refresh');
+		if (refreshButton !== null) {
+			refreshButton.addEventListener('click', event => {
+				event.preventDefault();
+				document.location.reload();
+			});
+		}
 
 		this.#tokens = [dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.#destroy)];
 	};

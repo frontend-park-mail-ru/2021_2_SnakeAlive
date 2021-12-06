@@ -16,7 +16,6 @@ export const createFrontendQueryParams = (
 };
 
 const checkIfOnline = (): boolean => {
-	console.log(navigator.onLine);
 	if (navigator.onLine) {
 		return true;
 	}
@@ -28,12 +27,9 @@ const checkIfOnline = (): boolean => {
 
 class Router {
 	start = () => {
-		console.log('router START', window.location.href);
 		if (!checkIfOnline()) {
-			console.log('offline');
 			return;
 		}
-		console.log('online');
 
 		const url = new URL(window.location.href); // это встроенный класс
 		notifier(url);

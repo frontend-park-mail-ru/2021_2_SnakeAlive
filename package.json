@@ -52,9 +52,7 @@
     "webpack-dev": "cross-env NODE_ENV=development webpack --mode development",
     "webpack-dev-watch": "cross-env NODE_ENV=development webpack --mode development --watch",
     "webpack-dev-server": "webpack serve --open",
-    "webpack-prod": "cross-env NODE_ENV=production webpack --mode production",
-    "build-SW": "webpack",
-    "start-SW": "PORT=2000 http-server dist"
+    "webpack-prod": "cross-env NODE_ENV=production webpack --mode production"
   },
   "repository": {
     "type": "git",
