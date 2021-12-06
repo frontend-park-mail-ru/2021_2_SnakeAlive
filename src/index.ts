@@ -8,6 +8,19 @@ import './index.scss';
 import './components/horizontal_scroll/horizontal_scroll.scss';
 
 import SearchReducer from '@/reducers/search';
+import { dispatcher } from '@/dispatcher';
+import { destroyCurrentPage } from '@/actions/page';
+import ErrorView from '@/view/error';
+
+const initOfflinePage = () => {
+	dispatcher.notify(destroyCurrentPage());
+	const errorView: ErrorView = new ErrorView();
+	errorView.initOffline();
+};
+
+window.addEventListener('offline', () => {
+	initOfflinePage();
+});
 
 const main = () => {
 	const contentPlace: HTMLDivElement = document.createElement('div');
@@ -36,15 +49,20 @@ const main = () => {
 	const searchReducer = new SearchReducer();
 	searchReducer.init();
 
-	// if ('serviceWorker' in navigator) {
-	// 	window.addEventListener('load', () => {
-	// 		navigator.serviceWorker.register('/service-worker.js').then(registration => {
-	// 			console.log('SW registered: ', registration);
-	// 		}).catch(registrationError => {
-	// 			console.log('SW registration failed: ', registrationError);
-	// 		});
-	// 	});
-	// }
+	if ('serviceWorker' in navigator) {
+		window.addEventListener('load', () => {
+			navigator.serviceWorker
+				// @ts-ignore
+				.register(new URL('./service-worker.js', import.meta.url))
+				.then(registration => {
+					// navigator.serviceWorker.register('/service-worker.js').then(registration => {
+					console.log('SW registered: ', registration);
+				})
+				.catch(registrationError => {
+					console.log('SW registration failed: ', registrationError);
+				});
+		});
+	}
 };
 
 main();

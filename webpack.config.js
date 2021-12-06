@@ -2,14 +2,13 @@ const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const WorkboxPlugin = require('workbox-webpack-plugin');
-
-// const MockDevServer = require('webpack-mock-dev-server');
+const CopyPlugin = require("copy-webpack-plugin");
 
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = !isDev;
 
-const filename = ext => (isDev ? `[name].${ext}` : `[name].[hash].${ext}`);
+// const filename = ext => (isDev ? `[name].${ext}` : `[name].[contenthash].${ext}`);
+const filename = ext => `[name].[contenthash].${ext}`; //
 
 module.exports = {
 	mode: 'development',
@@ -18,7 +17,6 @@ module.exports = {
 		static: './dist',
 		port: 2000,
 		historyApiFallback: true,
-		// before: MockDevServer(path.resolve(__dirname, 'mock-dev-server.config')),
 		devMiddleware: {
 			writeToDisk: true,
 		},
@@ -35,6 +33,7 @@ module.exports = {
 	},
 	entry: {
 		main: './index.ts',
+		// offline: './offline.ts',
 	},
 	output: {
 		filename: filename('js'),
@@ -58,6 +57,11 @@ module.exports = {
 		// 	clientsClaim: true,
 		// 	skipWaiting: true,
 		// }),
+		new CopyPlugin({
+			patterns: [
+				{ from: path.resolve(__dirname, 'src/offline'), to: path.resolve(__dirname, 'dist/offline') },
+			],
+		}),
 	],
 	module: {
 		rules: [

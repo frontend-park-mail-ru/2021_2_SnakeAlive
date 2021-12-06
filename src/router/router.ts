@@ -1,5 +1,8 @@
 import { notifier } from './resolver';
 import { frontEndEndPoint, paramsURLfrontend, pathsURLfrontend } from '@/constants';
+import { dispatcher } from '@/dispatcher';
+import { destroyCurrentPage } from '@/actions/page';
+import ErrorView from '@/view/error';
 
 export const createFrontendQueryParams = (
 	uri: pathsURLfrontend,
@@ -12,8 +15,26 @@ export const createFrontendQueryParams = (
 	return url.href;
 };
 
+const checkIfOnline = (): boolean => {
+	console.log(navigator.onLine);
+	if (navigator.onLine) {
+		return true;
+	}
+	dispatcher.notify(destroyCurrentPage());
+	const errorView: ErrorView = new ErrorView();
+	errorView.initOffline();
+	return false;
+};
+
 class Router {
 	start = () => {
+		console.log('router START', window.location.href);
+		if (!checkIfOnline()) {
+			console.log('offline');
+			return;
+		}
+		console.log('online');
+
 		const url = new URL(window.location.href); // это встроенный класс
 		notifier(url);
 
