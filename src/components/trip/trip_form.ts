@@ -5,10 +5,12 @@ import {
 	createTripFormRequest,
 	updateCurrentTripInfo,
 	delPlaceFromTrip,
+	shareTrip,
+	addUserToTrip,
 } from '@/actions/trip';
 import { newGetReviewsResponse } from '@/actions/review';
 import { sendGetJSONRequest } from '@/http';
-import { backendEndpoint, paramsURLfrontend, pathsURLfrontend, sightsURI } from '@/constants';
+import { backendEndpoint, paramsURLfrontend, pathsURLfrontend, sightsURI, tripAddUser } from '@/constants';
 import tripSightsSelectTemplate from './sight_select.handlebars';
 import { Sight } from '@/models';
 import { storage } from '@/storage';
@@ -18,6 +20,7 @@ import { createFrontendQueryParams } from '@/router/router';
 import { setTextAreaResizeParams } from '@/components/reviews/review_form';
 import { Loader } from '@googlemaps/js-api-loader';
 import { initSearchView, SearchView } from '@/components/search/search';
+import { dropDownToggle } from '../dropdown/dropdown';
 
 export const GET_COUNTRY_NAME = (id: string) => {
 	switch (id) {
@@ -125,6 +128,8 @@ export const initDescription = (): void => {
 	}
 };
 
+
+
 export const initAddPartisipantBtn = (): void => {
 	const askConfirmBtn = document.getElementById('partisipant_add');
 	if (askConfirmBtn !== null) {
@@ -139,23 +144,67 @@ export const initAddPartisipantBtn = (): void => {
 	} else {
 		//console.log('NO BTN ');
 	}
-};
+	const addUserBtn = document.getElementById('add_user_btn');
+	if (addUserBtn !== null) {
+		addUserBtn.addEventListener(
+			'click',
+			event => {
+				event.preventDefault();
+				console.log("click")
+				const addUserEmail = <HTMLInputElement>document.getElementById('search_trip_user')
+				if (addUserEmail !== null){
+					if(addUserEmail){
+						console.log("notify")
+						dispatcher.notify(addUserToTrip(addUserEmail.value))
+						if (document.getElementById('AddUserDropdown')?.classList.contains('show')) {
+							document.getElementById('AddUserDropdown')?.classList.remove('show');
+						}
+					}
+				}else{
+					console.log("addUserEmail null", addUserEmail)
+				}
+			},
+			false
+		);
+	} else {
+		// console.log('No button = ', addAlbumBtn);
+	}
+	dropDownToggle('AddUserDropdown', 'partisipant_add_img')
+}
 
-export const initShareBtn = (): void => {
+export const initShareBtn = (): void => {		
 	const askConfirmBtn = document.getElementById('share');
 	if (askConfirmBtn !== null) {
 		askConfirmBtn.addEventListener(
 			'click',
 			event => {
 				event.preventDefault();
-				//show dropdown with share link and instructiom
+				dispatcher.notify(shareTrip())
+
 			},
 			false
 		);
 	} else {
 		//console.log('NO BTN ');
 	}
-};
+	dropDownToggle('ShareLinkDropdown', 'share')
+}
+
+export const initShareBtnCopy = (): void => {
+	const askConfirmBtn = document.getElementById('dropdown_share_link');
+	if (askConfirmBtn !== null) {
+		askConfirmBtn.addEventListener(
+			'click',
+			event => {
+				event.preventDefault();
+				navigator.clipboard.writeText(storage.getShareTripLink())
+			},
+			false
+		);
+	} else {
+		//console.log('NO BTN ');
+	}
+}
 
 const getFormInfo = (): {
 	title: string;

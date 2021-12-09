@@ -1,5 +1,5 @@
 import { Empty, EventType, IEvent, NumID } from '@/dispatcher';
-import { IsTrue, TripInfo, IDState, CardOrderAndDay } from '@/dispatcher/metadata_types';
+import { IsTrue, TripInfo, IDState, CardOrderAndDay, Email } from '@/dispatcher/metadata_types';
 import { Sight, SightDay } from '@/models';
 
 const newGetTripRequest = (tripID: number): IEvent =>
@@ -74,6 +74,35 @@ const deleteTrip = () =>
 		metadata: <Empty>{},
 	};
 
+const shareTrip = () =>
+	<IEvent>{
+		key: EventType.SHARE_TRIP_REQUEST,
+		metadata: <Empty>{},
+	};
+
+const newShareTripLink = () =>
+	<IEvent>{
+		key: EventType.SHARE_TRIP_RESPONSE,
+		metadata: <Empty>{},
+	};
+
+const addUserToTrip = (email: string) =>
+	<IEvent>{
+		key: EventType.ADD_USER_TO_TRIP_REQUEST,
+		metadata: <Email>{
+			email: email,
+		},
+	};
+
+const getAddUserToTripResponse = (isOk: boolean) =>
+	<IEvent>{
+		key: EventType.ADD_USER_TO_TRIP_RESPONSE,
+		metadata: <IsTrue>{
+			isTrue: isOk,
+		},
+	};
+	
+
 export {
 	newGetTripRequest,
 	newGetTripResult,
@@ -83,5 +112,9 @@ export {
 	addPlaceToTrip,
 	delPlaceFromTrip,
 	deleteTrip,
+	shareTrip,
+	newShareTripLink,
 	rerenderTripCards,
+	addUserToTrip,
+	getAddUserToTripResponse,
 };

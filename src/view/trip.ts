@@ -12,6 +12,7 @@ import {
 	initDescription,
 	initAddPartisipantBtn,
 	initShareBtn,
+	initShareBtnCopy,
 } from '@/components/trip/trip_form';
 import { Map } from '@/components/map/map';
 import { pathsURLfrontend } from '@/constants';
@@ -27,16 +28,16 @@ import { ProfileAlbum } from '@/models/profile';
 import typicalCollection from '../components/frame_collection.handlebars';
 import horisontalScroll from '@/components/horizontal_scroll/horisontal_scroll.handlebars';
 import { setListenersOnCards } from '@/view/profile';
-//import {plus_icon} from "../../../image/plus_icon.jpg"
 
 import share_icon from '../../image/icon/share_56.svg';
-import addUser_icon from '../../image/icon/user_add_56.svg';
+import addUser_icon from '../../image/icon/user_add_56.svg'
+import { adoptPartisipants } from '@/adapters/trip';
 
-const partisipants = [
-	{ id: 1, profilePhoto: '/image/7b205eb741a49105fcd425910545cc79.jpeg' },
-	{ id: 1, profilePhoto: '/image/7b205eb741a49105fcd425910545cc79.jpeg' },
-	{ id: 1, profilePhoto: '/image/7b205eb741a49105fcd425910545cc79.jpeg' },
-];
+// const partisipants = [
+// 	{id: 1, profilePhoto: "/image/7b205eb741a49105fcd425910545cc79.jpeg"},
+// 	{id: 1, profilePhoto: "/image/7b205eb741a49105fcd425910545cc79.jpeg"},
+// 	{id: 1, profilePhoto: "/image/7b205eb741a49105fcd425910545cc79.jpeg"}, 
+// ]
 
 export class TripInfoView extends BasicView {
 	#tokens: Token[];
@@ -59,12 +60,23 @@ export class TripInfoView extends BasicView {
 			dispatcher.register(EventType.SUBMIT_SEARCH_RESULTS, this.addPlace),
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
 			dispatcher.register(EventType.DELETE_CURRENT_TRIP_PLACE, this.delPlace),
+			dispatcher.register(EventType.SHARE_TRIP_RESPONSE, this.shareTrip),
+			dispatcher.register(EventType.ADD_USER_TO_TRIP_RESPONSE, this.addUserToTrip),
 		];
 
 		// eslint-disable-next-line no-use-before-define
 		const cardsHolder = new CardSightsHolder();
 		cardsHolder.init();
 		this.setView(tripFormTemplate());
+	};
+
+	addUserToTrip = (metada: IsTrue): void => {
+		const isOk = metada.isTrue
+		
+	}
+
+	shareTrip = (): void => {
+		initShareBtnCopy()
 	};
 
 	destroy = (): void => {
@@ -77,12 +89,13 @@ export class TripInfoView extends BasicView {
 
 	createTripEdit = () => {
 		const trip = storage.getCurrentTrip();
+		const partisipants = adoptPartisipants(trip.users)
 		this.setView(
 			tripFormTemplate({
 				tripCreated: true,
 				title: trip.title,
 				description: trip.description,
-				partisipants: partisipants,
+				partisipants:partisipants,
 				shareimg: share_icon,
 				addUserImg: addUser_icon,
 			})

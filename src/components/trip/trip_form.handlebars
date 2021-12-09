@@ -9,6 +9,10 @@
 				</div>
 				<div class="col-4 btn" id="share">
 					<img class="share-btn" src="{{shareimg}}">
+					<div id="ShareLinkDropdown" class="dropdown-content">
+						<a id='dropdown_share_link'>Скопировать ссылку</a>
+						
+  					</div>
 				</div>
 			</div>
 
@@ -58,8 +62,17 @@
 		</div>
 		{{/each}}
 		<div class="partisipant btn" id="partisipant_add">
-			<img class="trip-partisipant-add-img" src={{addUserImg}}>
+			<img class="trip-partisipant-add-img" id="partisipant_add_img" src={{addUserImg}}>
+			<div id="AddUserDropdown" class="dropdown-content border">
+				<span id='dropdown_add_user' class="dropdown_user_add_header">Введите email пользователя</span>
+				<div id="search_area" class="user_search_area dropdownWrapper">
+					<input id="search_trip_user" list="search_list_trip" class="search_area__input col-8">
+					<button class="btn usual_button usual_button_dark col-4"id="add_user_btn">Добавить</button>
+				</div>
+				
+  			</div>
 		</div>
+
 		
 	</div>
 	<div class="trip_form__horizontal_holder buttons_holder">
