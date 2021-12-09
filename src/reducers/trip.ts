@@ -78,7 +78,6 @@ export default class TripReducer {
 
 	getShareTripLink = (): void => {
 		const tripID = storage.getCurrentTrip().id
-		console.log("link :  ",backendEndpoint + tripShare + tripID)
 		sendPostJSONRequest(backendEndpoint + tripShare + tripID,"")
 			.then(response => {
 				if (response.status === 404) {
@@ -95,7 +94,6 @@ export default class TripReducer {
 			.then(response => response.text())
 			.then(response => {
 				const link = backendEndpoint + response.substring(1,response.length-1)
-				console.log(link)
 				storage.setShareTripLink(link)
 				dispatcher.notify(newShareTripLink())
 			});

@@ -9,4 +9,21 @@ export const dropDownToggle = (dropdownId: string, trigerId: string): void => {
 			}
 		});
 	}
+	document.addEventListener(
+		'click',
+		event => {
+			event.preventDefault();
+			const target = <HTMLDivElement>event.target
+			if (!target.classList.contains('dropdown_item')){
+			  	dropDownHide(dropdownId); 
+			};
+		},
+		false
+	);	
 } 
+
+export const dropDownHide = (dropdownId: string): void =>{
+	if (document.getElementById(dropdownId)?.classList.contains('show')) {
+		document.getElementById(dropdownId)?.classList.remove('show');
+	} 
+}
