@@ -20,7 +20,7 @@ import { createFrontendQueryParams } from '@/router/router';
 import { setTextAreaResizeParams } from '@/components/reviews/review_form';
 import { Loader } from '@googlemaps/js-api-loader';
 import { initSearchView, SearchView } from '@/components/search/search';
-import { dropDownToggle } from '../dropdown/dropdown';
+import { dropDownHide, dropDownToggle } from '../dropdown/dropdown';
 
 export const GET_COUNTRY_NAME = (id: string) => {
 	switch (id) {
@@ -160,8 +160,6 @@ export const initAddPartisipantBtn = (): void => {
 							document.getElementById('AddUserDropdown')?.classList.remove('show');
 						}
 					}
-				}else{
-					console.log("addUserEmail null", addUserEmail)
 				}
 			},
 			false
@@ -172,7 +170,7 @@ export const initAddPartisipantBtn = (): void => {
 	dropDownToggle('AddUserDropdown', 'partisipant_add_img')
 }
 
-export const initShareBtn = (): void => {		
+export const initShareBtn = (): void => {	
 	const askConfirmBtn = document.getElementById('share');
 	if (askConfirmBtn !== null) {
 		askConfirmBtn.addEventListener(
