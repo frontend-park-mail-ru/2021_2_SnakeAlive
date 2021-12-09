@@ -64,7 +64,6 @@ export class Map extends BasicView {
 				this.#markers.push(marker);
 				this.updateMap();
 			});
-		console.log(this.#markers);
 	};
 
 	delMarker = (metadata: CardOrderAndDay) => {
@@ -98,7 +97,6 @@ export class Map extends BasicView {
 							lng: Number(storage.getSearchSightsResult('trip')[0].lng),
 							lat: Number(storage.getSearchSightsResult('trip')[0].lat),
 						});
-						console.log(this.#coord);
 						const marker = new google.maps.Marker({
 							position: {
 								lat: Number(storage.getSearchSightsResult('trip')[0].lat),

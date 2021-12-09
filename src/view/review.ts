@@ -2,7 +2,7 @@ import BasicView from '@/view/view';
 import { DataType, dispatcher, EventType, NumID, Token } from '@/dispatcher';
 import { newDeleteReviewRequest } from '@/actions/review';
 import { storage } from '@/storage';
-import { Review, UserReview } from '@/models/review';
+import { Review } from '@/models/review';
 import { initReviewForm } from '@/components';
 import { createReviewForm } from '@/components/reviews/review_form';
 import reviewsListTemplate from '@/components/reviews/reviews.handlebars';
@@ -24,7 +24,7 @@ export class ReviewsView extends BasicView {
 		];
 	};
 
-	destroy = (metadata: EventType): void => {
+	destroy = (): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});
@@ -32,24 +32,25 @@ export class ReviewsView extends BasicView {
 		this.setEmpty();
 	};
 
-	renderReviews = (metadata: DataType): void => {
+	renderReviews = (): void => {
 		const reviews = storage.getReviews();
+		// console.log(reviews);
+
 		this.setView(reviewsListTemplate({ reviews }));
+
+		if (!reviews) {
+			return;
+		}
 
 		reviews.forEach(reviewInfo => {
 			// значит свой отзыв и можно его удалить
 			if (reviewInfo.owner) {
 				const deleteBtn = document.getElementById(`delete_button_${String(reviewInfo.id)}`);
-				console.log(`delete_button_${String(reviewInfo.id)}`);
-				console.log(deleteBtn);
-				console.log(reviewInfo);
 				if (deleteBtn !== null) {
-					console.log('try to delete');
 					deleteBtn.addEventListener(
 						'click',
 						event => {
 							event.preventDefault();
-							console.log('clicked');
 							// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 							// @ts-ignore
 							dispatcher.notify(newDeleteReviewRequest(reviewInfo.id));
@@ -58,49 +59,7 @@ export class ReviewsView extends BasicView {
 					);
 				}
 			}
-
-			// created_at: ""
-			// id: 1
-			// place_id: 0
-			// rating: 10
-			// text: "text"
-			// title: "title"
-			// user_id: 1
-
-			// export interface Review {
-			// 	id: number;
-			// 	title: string;
-			// 	text: string;
-			// 	owned: boolean;
-			// 	user: UserReview;
-			// }
-
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore
-
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore
-			// console.log(`delete_button_${String(reviewInfo.id)}`);
-			// console.log(deleteBtn);
-			// console.log(reviewInfo);
-			// if (deleteBtn !== null) {
-			// 	console.log('try to delete');
-			// 	deleteBtn.addEventListener(
-			// 		'click',
-			// 		event => {
-			// 			event.preventDefault();
-			// 			console.log('clicked');
-			// 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// 			// @ts-ignore
-			// 			dispatcher.notify(newDeleteReviewRequest(reviewInfo.id));
-			// 		},
-			// 		false
-			// 	);
-			// }
 		});
-
-		// and fucking render
-		// id of review: sight_review_{id} => here add callbacks for delete
 	};
 
 	appendReview = (metadata: DataType): void => {
@@ -109,12 +68,6 @@ export class ReviewsView extends BasicView {
 		if (review === null) {
 			return;
 		}
-
-		// add render ???
-
-		// изменила на добавление первым
-		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-		// @ts-ignore
 		this.appendLastChild(reviewsListTemplate({ reviews: review }));
 	};
 
@@ -138,15 +91,12 @@ export class ReviewCreateView extends BasicView {
 		this.#tokens = [
 			dispatcher.register(EventType.CREATE_REVIEW_FORM, this.createFormIfLogged),
 			dispatcher.register(EventType.SET_MAIN_HEADER_LOGGED_RESPONSE, this.createFormIfLogged),
-			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy), 
+			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
 		];
 	};
 
 	createFormIfLogged = () => {
-		console.log('in ReviewCreateView');
-		console.log(storage.getProfile());
 		if (storage.getProfile().meta !== undefined) {
-			console.log('in if, got name ', storage.getUserMetadata().name);
 			this.#createForm();
 		}
 	};

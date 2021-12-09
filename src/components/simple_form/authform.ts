@@ -26,7 +26,7 @@ class Form {
 			blockErrInput.classList.add('auth_form__error_block');
 
 			const errText = document.createElement('p');
-			errText.id = input.name;
+			errText.id = `wrong_${input.id}`;
 			errText.classList.add('auth_form__error_block__text');
 			errText.textContent = 'ошибок нет';
 			blockErrInput.appendChild(errText);
@@ -40,7 +40,7 @@ class Form {
 
 			blockErrInput.appendChild(inputHTML);
 			formHTML.appendChild(blockErrInput);
-			this.#inputs.push(new Input(inputHTML));
+			this.#inputs.push(new Input(inputHTML, errText));
 		});
 
 		const errDiv = document.createElement('div');
@@ -57,7 +57,6 @@ class Form {
 		this.#button = new Button(btn);
 
 		parent.appendChild(formHTML);
-		console.log(parent);
 	}
 
 	/**
@@ -93,40 +92,49 @@ class Form {
 	}
 
 	/** Функция показывает в форме ошибку: показывает ее текст и указывает поле, в котором содержится ошибка */
-	setLoginError(error: Error) {
-		if (error.name == 'wrong_email') {
-			this.#inputs[0].setError();
-		} else if (error.name == 'wrong_password') {
-			this.#inputs[1].setError();
-		} else if (error.name == 'no_user') {
-			this.#inputs.forEach(input => {
-				input.setError();
-			});
-		}
-		const errDiv = document.getElementById('error_text');
-		if (errDiv != null) {
-			errDiv.textContent = error.message;
-			errDiv.style.color = 'red';
-		}
-	}
+	// setLoginError(error: Error) {
+	// 	if (error.name == 'wrong_email') {
+	// 		this.#inputs[0].setError();
+	// 	} else if (error.name == 'wrong_password') {
+	// 		this.#inputs[1].setError();
+	// 	} else if (error.name == 'no_user') {
+	// 		this.#inputs.forEach(input => {
+	// 			input.setError();
+	// 		});
+	// 	}
+	// 	const errDiv = document.getElementById('error_text');
+	// 	if (errDiv != null) {
+	// 		errDiv.textContent = error.message;
+	// 		errDiv.style.color = 'red';
+	// 	}
+	// }
+	//
+	// setRegisterError(error: Error) {
+	// 	if (error.name == 'wrong_name') {
+	// 		this.#inputs[0].setError();
+	// 	} else if (error.name == 'wrong_surname') {
+	// 		this.#inputs[1].setError();
+	// 	} else if (error.name == 'wrong_email') {
+	// 		this.#inputs[2].setError();
+	// 	} else if (error.name == 'wrong_password') {
+	// 		this.#inputs[3].setError();
+	// 		this.#inputs[4].setError();
+	// 	}
+	// 	const errDiv = document.getElementById('error_text');
+	// 	if (errDiv != null) {
+	// 		errDiv.textContent = error.message;
+	// 		errDiv.style.color = 'red';
+	// 	}
+	// }
 
-	setRegisterError(error: Error) {
-		if (error.name == 'wrong_name') {
-			this.#inputs[0].setError();
-		} else if (error.name == 'wrong_surname') {
-			this.#inputs[1].setError();
-		} else if (error.name == 'wrong_email') {
-			this.#inputs[2].setError();
-		} else if (error.name == 'wrong_password') {
-			this.#inputs[3].setError();
-			this.#inputs[4].setError();
-		}
-		const errDiv = document.getElementById('error_text');
-		if (errDiv != null) {
-			errDiv.textContent = error.message;
-			errDiv.style.color = 'red';
-		}
-	}
+	setFormErrors = (errors: Error[]) => {
+		errors.forEach(error => {
+			const currentInput = this.#inputs.filter(input => `${error.name}_holder` === input.errorName);
+			if (currentInput.length === 1) {
+				currentInput[0].setError(error.message);
+			}
+		});
+	};
 }
 
 /** Функция возвращает html верстку формы по FormConfig */

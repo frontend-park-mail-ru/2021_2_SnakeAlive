@@ -1,4 +1,5 @@
-$header_height: 7.5vh;
+//$header_height: 7.5vh;
+$header_height: 60px;
 
 // отступы
 $large-px: 12px;
@@ -31,8 +32,13 @@ $logo-color: #0077FF;
 
 .input-error-red {
   border-radius: 2px;
-  border-color: red;
+  border-color: $my--error;
   border-style: solid;
+
+  &-text {
+    color: $my--error;
+    visibility: visible;
+  }
 }
 
 // шрифты
@@ -186,7 +192,7 @@ textarea:active {
 
   @media (max-width: 960px) {
     //height: 110px;
-    padding: 1px;
+    padding: 1px 0 10px;
     margin-top: 4px;
 
 
@@ -196,7 +202,7 @@ textarea:active {
 
     //grid-template-rows: 200px max-content;
     //grid-template-columns: 50px 1fr;
-    row-gap: 4px;
+    row-gap: 10px;
   }
 
   //@media (min-width: 321px) and (max-width: 960px) {
@@ -214,7 +220,7 @@ textarea:active {
 
   @media (min-width: 961px) {
     //border-radius: 15px;
-    height: 200px;
+    //height: 200px;
     margin: 20px 100px 10px;
 
     row-gap: $small-px;
@@ -895,6 +901,8 @@ textarea:active {
 
   grid-column-gap: 10px;
   grid-row-gap: 10px;
+
+  padding-bottom: 10px;
 }
 
 .card_grid_wrapper {
@@ -986,7 +994,7 @@ textarea:active {
   background-color: #f1f1f1;
   min-width: 160px;
   overflow: auto;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 3px 12px 16px 3px rgba(0,0,0,0.2);
   z-index: 1;
 }
 
@@ -1005,6 +1013,10 @@ textarea:active {
 }
 
 .show {display: block;}
+
+.btn:hover{
+  cursor: pointer;
+}
 
 .cardlist__header__main {
 	line-height: 110%;
@@ -1099,6 +1111,11 @@ textarea:active {
   position: relative;
   bottom: $small-px * 4;
   right: - $small-px * 2;
+}
+
+.hidden{
+  visibility: hidden;
+  height: 0px;
 }
 
 .frame_collection {

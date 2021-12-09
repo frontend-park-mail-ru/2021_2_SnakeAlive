@@ -8,9 +8,19 @@ import './index.scss';
 import './components/horizontal_scroll/horizontal_scroll.scss';
 
 import SearchReducer from '@/reducers/search';
+import { dispatcher } from '@/dispatcher';
+import { destroyCurrentPage } from '@/actions/page';
+import ErrorView from '@/view/error';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-// console.log = () => {}; // !!
+const initOfflinePage = () => {
+	dispatcher.notify(destroyCurrentPage());
+	const errorView: ErrorView = new ErrorView();
+	errorView.initOffline();
+};
+
+window.addEventListener('offline', () => {
+	initOfflinePage();
+});
 
 const main = () => {
 	const contentPlace: HTMLDivElement = document.createElement('div');
@@ -36,49 +46,20 @@ const main = () => {
 
 	router.start();
 
-	window.onpopstate = () => {
-		router.go(window.location.href);
-	};
-
 	const searchReducer = new SearchReducer();
 	searchReducer.init();
+
+	if ('serviceWorker' in navigator) {
+		window.addEventListener('load', () => {
+			navigator.serviceWorker
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+				// @ts-ignore
+				.register(new URL('./service-worker.js', import.meta.url))
+				// .catch(registrationError => {
+					// console.log('SW registration failed: ', registrationError);
+				// });
+		});
+	}
 };
 
 main();
-
-/**
- * Функция отображает в html "главную страницу" со списком достопримечательностей и двумя кнопками
- */
-// const generateMainPage = (): void => {
-//     const root: HTMLElement | null = document.getElementById('root');
-//     if (root === null) {
-//         console.log("root null")
-//         return;
-//     }
-//     // root.innerHTML += headerHTML();
-//     // root.innerHTML += innerHTML();
-//     // root.innerHTML += footerHTML();
-//     //
-//     // chooseHeaderType();
-//     const storage: Storage = new Storage();
-//     const dispatcher: Dispatcher = new Dispatcher();
-//     const pageReducer: PageReducer = new PageReducer(storage, dispatcher);
-//     pageReducer.init();
-//
-//     dispatcher.notify(newInitPageRequest());
-//
-//     // const shower = new Shower(dispatcher);
-//     // shower.showNext();
-//     //
-//     // const btnExit = new Button();
-//     // btnExit.makeButton(
-//     //     'Следующая страна',
-//     //     'left-side-btn',
-//     //     'btn-next-country',
-//     //     document.getElementById('root')
-//     // );
-//     // btnExit.addClickListener(() => shower.showNext());
-//     // btnExit.setActive();
-// };
-//
-// generateMainPage();

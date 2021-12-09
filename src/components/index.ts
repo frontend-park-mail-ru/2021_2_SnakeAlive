@@ -5,6 +5,7 @@ import Input from './input';
 import { loginHTML, registerHTML } from './auth_page/auth_page_creators';
 import { createSightTemplate } from './sight_page/sight_page';
 import { initReviewForm } from './reviews/review_form';
+import { dropDownToggle, dropDownHide } from './dropdown/dropdown';
 
 export {
 	Form,
@@ -16,4 +17,6 @@ export {
 	registerHTML,
 	createSightTemplate,
 	initReviewForm,
+	dropDownToggle,
+	dropDownHide,
 };

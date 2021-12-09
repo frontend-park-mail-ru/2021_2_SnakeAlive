@@ -10,21 +10,16 @@ import {
 	initDelTripBtn,
 	initSubmitTripBtn,
 	initDescription,
+	initAddPartisipantBtn,
+	initShareBtn,
+	initShareBtnCopy,
 } from '@/components/trip/trip_form';
-import { loader, Map } from '@/components/map/map';
-import { sendGetJSONRequest } from '@/http';
-import { backendEndpoint, listOfCountries, pathsURLfrontend } from '@/constants';
+import { Map } from '@/components/map/map';
+import { pathsURLfrontend } from '@/constants';
 import { IsTrue, SightToTrip } from '@/dispatcher/metadata_types';
 import { storage } from '@/storage';
-import {
-	rerenderTripCards,
-	newGetTripRequest,
-	addPlaceToTrip,
-	delPlaceFromTrip,
-	deleteTrip,
-} from '@/actions/trip';
+import { newGetTripRequest, addPlaceToTrip, delPlaceFromTrip } from '@/actions/trip';
 import { SightCardInTrip } from '@/view/sight_cards';
-import { Sight, SightsCoord, SightDay } from '@/models';
 import defaultPicture from '@/../image/moscow_city_1.jpeg';
 import { initSearchView, SearchView } from '@/components/search/search';
 import { router } from '@/router';
@@ -34,61 +29,30 @@ import typicalCollection from '../components/frame_collection.handlebars';
 import horisontalScroll from '@/components/horizontal_scroll/horisontal_scroll.handlebars';
 import { setListenersOnCards } from '@/view/profile';
 
-export class InitTripPage extends BasicView {
-	#TripInfo: TripInfoView;
+// eslint-disable-next-line camelcase
+import share_icon from '../../image/icon/share_56.svg';
+// eslint-disable-next-line camelcase
+import addUser_icon from '../../image/icon/user_add_56.svg';
+import { adoptPartisipants } from '@/adapters/trip';
 
-	#TripMap: TripMapView;
-
-	#tokens: Token[];
-
-	constructor() {
-		super('#content');
-		this.#TripInfo = new TripInfoView();
-		this.#TripMap = new TripMapView();
-		this.#tokens = [];
-	}
-
-	init = (): void => {
-		this.#tokens = [
-			dispatcher.register(EventType.GET_TRIP_RESPONSE, this.#TripInfo.createTripEdit),
-			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
-		];
-		this.setView(tripPageTemplate());
-		this.#TripMap.init();
-		this.#TripInfo.init();
-		init(true);
-		console.log('INITIALIZE TRIP PAGE');
-	};
-
-	initEdit = (metadata: NumID): void => {
-		// need get and store trip with id in params
-		const { ID } = metadata;
-		dispatcher.notify(newGetTripRequest(ID));
-		initEdit();
-		console.log('INITIALIZE EDIT TRIP PAGE');
-	};
-
-	destroy = (): void => {
-		this.#tokens.forEach(element => {
-			dispatcher.unregister(element);
-		});
-
-		this.setEmpty();
-	};
-}
+// const partisipants = [
+// 	{id: 1, profilePhoto: "/image/7b205eb741a49105fcd425910545cc79.jpeg"},
+// 	{id: 1, profilePhoto: "/image/7b205eb741a49105fcd425910545cc79.jpeg"},
+// 	{id: 1, profilePhoto: "/image/7b205eb741a49105fcd425910545cc79.jpeg"},
+// ]
 
 export class TripInfoView extends BasicView {
 	#tokens: Token[];
 
-	#firstCreated = false;
-
 	#search: SearchView | null = null;
 
+	// eslint-disable-next-line no-use-before-define
 	#cardHolder: CardSightsHolder;
 
 	constructor() {
 		super('#trip-info');
 		this.#tokens = [];
+		// eslint-disable-next-line no-use-before-define
 		this.#cardHolder = new CardSightsHolder();
 	}
 
@@ -98,11 +62,23 @@ export class TripInfoView extends BasicView {
 			dispatcher.register(EventType.SUBMIT_SEARCH_RESULTS, this.addPlace),
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
 			dispatcher.register(EventType.DELETE_CURRENT_TRIP_PLACE, this.delPlace),
+			dispatcher.register(EventType.SHARE_TRIP_RESPONSE, this.shareTrip),
+			dispatcher.register(EventType.ADD_USER_TO_TRIP_RESPONSE, this.addUserToTrip),
 		];
 
+		// eslint-disable-next-line no-use-before-define
 		const cardsHolder = new CardSightsHolder();
 		cardsHolder.init();
 		this.setView(tripFormTemplate());
+	};
+
+	addUserToTrip = (metada: IsTrue): void => {
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		const isOk = metada.isTrue;
+	};
+
+	shareTrip = (): void => {
+		initShareBtnCopy();
 	};
 
 	destroy = (): void => {
@@ -114,20 +90,23 @@ export class TripInfoView extends BasicView {
 	};
 
 	createTripEdit = () => {
-		console.log('lock');
 		const trip = storage.getCurrentTrip();
+		const partisipants = adoptPartisipants(trip.users);
 		this.setView(
 			tripFormTemplate({
 				tripCreated: true,
 				title: trip.title,
 				description: trip.description,
+				partisipants,
+				shareimg: share_icon,
+				addUserImg: addUser_icon,
 			})
 		);
 		const searchPlace = document.getElementById('trip-search-place');
 		if (searchPlace !== null) {
 			searchPlace.innerHTML = initSearchView('trip');
 			// eslint-disable-next-line @typescript-eslint/no-empty-function
-			this.#search = new SearchView('trip', (id: string) => {});
+			this.#search = new SearchView('trip', () => {});
 		}
 
 		const addAlbumBtn = document.getElementById('btn-add-album');
@@ -142,16 +121,18 @@ export class TripInfoView extends BasicView {
 				false
 			);
 		} else {
-			console.log('No button = ', addAlbumBtn);
+			// console.log('No button = ', addAlbumBtn);
 		}
 		initDescription();
 		initDelTripBtn();
 		initSubmitTripBtn();
+		initAddPartisipantBtn();
+		initShareBtn();
 
 		const albumPlace = document.getElementById('trip_albums_holder');
 		if (albumPlace !== null) {
 			const shownAlbums: ProfileAlbum[] = [];
-			if (trip.albums !== null) {
+			if (trip.albums) {
 				trip.albums.forEach(album => {
 					shownAlbums.push({
 						photos: album.photos,
@@ -185,17 +166,12 @@ export class TripInfoView extends BasicView {
 	};
 
 	addPlace = () => {
-		// update trip - add place
-		console.log('Add place in view');
 		const place = storage.getSearchSightsResult('trip')[0];
 		const day = 0;
 		dispatcher.notify(addPlaceToTrip(place, day));
-		// rerender cards
 	};
 
 	delPlace = (metadata: SightToTrip) => {
-		// update trip - del place
-		console.log('del place from view');
 		const sight = metadata.sightId;
 		const day = 0;
 		dispatcher.notify(delPlaceFromTrip(sight, day));
@@ -222,7 +198,7 @@ export class TripMapView extends BasicView {
 		];
 	};
 
-	#destroy = (metadata: EventType): void => {
+	#destroy = (): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});
@@ -263,11 +239,9 @@ export class CardSightsHolder extends BasicView {
 
 		let i = 0;
 		const { sights } = storage.getCurrentTrip();
-		console.log('sights = ', sights);
 		if (sights) {
 			sights.forEach(sight => {
 				if (i !== 0) {
-					console.log('sight ', sight);
 					const adoptedTags: Array<TagAdoptedForRender> = [];
 					sight.tags.forEach(tag => {
 						adoptedTags.push({
@@ -318,6 +292,47 @@ export class CardSightsHolder extends BasicView {
 		});
 
 		this.#cards = [];
+
+		this.setEmpty();
+	};
+}
+
+export class InitTripPage extends BasicView {
+	#TripInfo: TripInfoView;
+
+	#TripMap: TripMapView;
+
+	#tokens: Token[];
+
+	constructor() {
+		super('#content');
+		this.#TripInfo = new TripInfoView();
+		this.#TripMap = new TripMapView();
+		this.#tokens = [];
+	}
+
+	init = (): void => {
+		this.#tokens = [
+			dispatcher.register(EventType.GET_TRIP_RESPONSE, this.#TripInfo.createTripEdit),
+			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
+		];
+		this.setView(tripPageTemplate());
+		this.#TripMap.init();
+		this.#TripInfo.init();
+		init(true);
+	};
+
+	initEdit = (metadata: NumID): void => {
+		// need get and store trip with id in params
+		const { ID } = metadata;
+		dispatcher.notify(newGetTripRequest(ID));
+		initEdit();
+	};
+
+	destroy = (): void => {
+		this.#tokens.forEach(element => {
+			dispatcher.unregister(element);
+		});
 
 		this.setEmpty();
 	};

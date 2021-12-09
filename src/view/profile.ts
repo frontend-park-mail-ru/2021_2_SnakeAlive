@@ -1,5 +1,5 @@
 import BasicView from '@/view/view';
-import { DataType, dispatcher, EventType, Token } from '@/dispatcher';
+import { dispatcher, EventType, Token } from '@/dispatcher';
 import {
 	logoutRequest,
 	newUpdateProfileMetadataRequest,
@@ -32,7 +32,6 @@ export const setListenersOnCards = (
 		// const btn = document.getElementById(`go_${name}_${trip.id}`);
 		const btn = document.getElementById(trip.htmlId);
 		if (btn !== null) {
-			console.log(btn);
 			btn.addEventListener('click', event => {
 				event.preventDefault();
 				router.go(
@@ -68,7 +67,7 @@ export default class ProfileView extends BasicView {
 		];
 	};
 
-	destroy = (metadata: DataType): void => {
+	destroy = (): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});
@@ -76,13 +75,11 @@ export default class ProfileView extends BasicView {
 		this.setEmpty();
 	};
 
-	render = (metadata: DataType): void =>
-		this.#isProfile ? this.#renderProfile() : this.#renderEdit();
+	render = (): void => (this.#isProfile ? this.#renderProfile() : this.#renderEdit());
 
 	#renderProfile = (): void => {
 		this.#isProfile = true;
 		const profile: Profile = storage.getProfile();
-		console.log(profile);
 
 		const trips = storage.getProfileTrips(); // поездки
 		const albums = storage.getProfileAlbums(); // альбомы
@@ -100,7 +97,6 @@ export default class ProfileView extends BasicView {
 		// logoutBtn.setOnClick(dispatcher.notify(logoutRequest()));
 
 		const logoutBtn = document.querySelector('#profile__logout_btn');
-		console.log(logoutBtn);
 		if (logoutBtn !== null) {
 			logoutBtn.addEventListener(
 				'click',
@@ -129,7 +125,7 @@ export default class ProfileView extends BasicView {
 		backBtn.setOnClick(this.#renderProfile);
 
 		const fileInput = <HTMLInputElement>document.querySelector('#update_photo');
-		fileInput.addEventListener('change', (event: Event) => {
+		fileInput.addEventListener('change', () => {
 			this.#uploadFile();
 		});
 	};
@@ -172,14 +168,6 @@ export default class ProfileView extends BasicView {
 					],
 					errorSetters: [surnameInput],
 				},
-				// {
-				// 	validators: [
-				// 		function (): boolean {
-				// 			return validateEmail(emailInput.getValue());
-				// 		},
-				// 	],
-				// 	errorSetters: [emailInput],
-				// },
 				{
 					validators: [
 						function (): boolean {
@@ -204,12 +192,6 @@ export default class ProfileView extends BasicView {
 		) {
 			return;
 		}
-		// name: string,
-		// 	surname: string,
-		// 	email: string,
-		// 	password: string,
-		// 	description?: string
-		console.log(storage.getProfile().meta.email);
 		dispatcher.notify(
 			newUpdateProfileMetadataRequest(
 				nameInput.getValue(),

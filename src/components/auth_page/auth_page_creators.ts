@@ -24,7 +24,6 @@ const loginHTML = (): string => {
 	const grandparent = document.createElement('div');
 	grandparent.appendChild(parent);
 
-	console.log(grandparent.innerHTML);
 	return grandparent.innerHTML;
 };
 
@@ -50,7 +49,6 @@ const registerHTML = (): string => {
 	const grandparent = document.createElement('div');
 	grandparent.appendChild(parent);
 
-	console.log(grandparent.innerHTML);
 	return grandparent.innerHTML;
 };
 

@@ -24,7 +24,7 @@ export default class SightView extends BasicView {
 		];
 	};
 
-	setSight = (metadata: EventType): void => {
+	setSight = (): void => {
 		dispatcher.notify(newSetMainHeaderRequest());
 		const sight = storage.getSight();
 
@@ -35,6 +35,7 @@ export default class SightView extends BasicView {
 				sightPP: 0,
 			});
 		});
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore
 		sight.tags = adoptedTags;
 		this.setView(createSightTemplate(sight));
@@ -59,7 +60,7 @@ export default class SightView extends BasicView {
 		// this.setView(`<div class='full-page'>${JSON.stringify(storage.getSight(), null, 4)}</div>`);
 	};
 
-	destroy = (metadata: EventType): void => {
+	destroy = (): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});

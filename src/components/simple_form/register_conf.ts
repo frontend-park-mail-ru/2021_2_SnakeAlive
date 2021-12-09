@@ -13,27 +13,27 @@ export const formRegisterConfig: FormConfig = {
 	inputs: [
 		{
 			type: 'text',
-			name: 'name',
+			name: 'Имя',
 			id: 'name_holder',
 		},
 		{
 			type: 'text',
-			name: 'surname',
+			name: 'Фамилия',
 			id: 'surname_holder',
 		},
 		{
 			type: 'email',
-			name: 'email',
+			name: 'Электронная почта',
 			id: 'email_holder',
 		},
 		{
 			type: 'password',
-			name: 'password',
+			name: 'Пароль',
 			id: 'password_holder',
 		},
 		{
 			type: 'password',
-			name: 'repeatedPassword',
+			name: 'Пароль второй раз',
 			id: 'repeatedPassword_holder',
 		},
 	],

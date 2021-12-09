@@ -1,10 +1,8 @@
-import { dispatcher } from '@/dispatcher';
 import {} from '@/actions/trip';
 import { router } from '@/router';
 import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
 import { createFrontendQueryParams } from '@/router/router';
 import { TagAdoptedForRender } from '@/models/sight';
-import photoSlider from '@/components/photo_slider/photo_slider';
 
 export class SightCardInTrip {
 	#id = -1;
@@ -20,24 +18,21 @@ export class SightCardInTrip {
 
 		// id="delete_button_{{ this.id }}_{{this.PP}}"
 		// навешивание обработчиков на внутри сего места (надо бы протестить)
-		// const deleteBtn = document.getElementById(`delete_button_${this.#id}_${this.#PP}`);
-		// if (deleteBtn !== null) {
-		// 	deleteBtn.addEventListener(
-		// 		'click',
-		// 		event => {
-		// 			event.preventDefault();
-		// 			console.log("CLICK CLACK")
-		// 			//dispatcher.notify(deleteCurrentTripPlace(this.#id, 0));
-		// 		},
-		// 		false
-		// 	);
-		// }
+		const deleteBtn = document.getElementById(`delete_button_${this.#id}_${this.#PP}`);
+		if (deleteBtn !== null) {
+			deleteBtn.addEventListener(
+				'click',
+				event => {
+					event.preventDefault();
+					// dispatcher.notify(deleteCurrentTripPlace(this.#id, 0));
+				},
+				false
+			);
+		}
 
 		// const goBtn = document.getElementById(`go_button_${this.#id}_${this.#PP}`);
 		const goBtn = document.getElementById(`go_button_${this.#id}_${this.#PP}`);
-		console.log(`go_button_${this.#id}_${this.#PP}`);
 		if (goBtn !== null) {
-			console.log(goBtn.id);
 			goBtn.addEventListener(
 				'click',
 				event => {
@@ -56,7 +51,7 @@ export class SightCardInTrip {
 		}
 
 		tags.forEach(tag => {
-			const tegElem = document.getElementById(`tag_${tag.name}_${tag.sightPP}`);
+			const tegElem = document.getElementById(`card_tag_${tag.name}_${tag.sightPP}`);
 			if (tegElem !== null) {
 				tegElem.addEventListener('click', () => {
 					router.go(

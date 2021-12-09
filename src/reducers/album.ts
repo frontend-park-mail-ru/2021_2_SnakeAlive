@@ -18,7 +18,6 @@ import { initErrorPageRequest } from '@/actions/page';
 import { newSetMainHeaderRequest } from '@/actions/header';
 import { newGetAlbumResult, renderAlbumPhotos } from '@/actions/album';
 import { Album, GotAlbumInterface } from '@/models/album';
-import { photoURI } from '@/constants/uris';
 import { AlbumInfo, AlbumUpdateInfo, File, IDState } from '@/dispatcher/metadata_types';
 import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
@@ -54,7 +53,6 @@ export default class AlbumReducer {
 		this.#getAlbum(ID)
 			.then((album: GotAlbumInterface) => {
 				storage.storeAlbum(adoptGotAlbum(album));
-				console.log('HERE', album, state);
 				dispatcher.notify(newGetAlbumResult(state));
 			})
 			.catch((error: Error) => {
@@ -92,7 +90,6 @@ export default class AlbumReducer {
 	};
 
 	deleteAlbum = () => {
-		console.log(storage.getAlbum());
 		const { tripId } = storage.getAlbum();
 		sendDeleteJSONRequest(backendEndpoint + albumURI + storage.getAlbum().id)
 			.then(response => {
@@ -115,13 +112,11 @@ export default class AlbumReducer {
 
 	#addPhoto = (album: Album, photoName: string): Album => {
 		const copiedAlbum = album;
-		console.log('ADD PHOTOS', album, photoName);
 		if (album.photos !== null) {
 			copiedAlbum.photos.push(photoName);
 			return copiedAlbum;
 		}
 		copiedAlbum.photos = [photoName];
-		console.log(copiedAlbum);
 		return copiedAlbum;
 	};
 

@@ -1,4 +1,4 @@
-import { DataType, dispatcher, EventType, LoginData, ValidationErrData } from '@/dispatcher';
+import { dispatcher, EventType, LoginData, ValidationErrData } from '@/dispatcher';
 import { newSetEmptyHeaderRequest, newSetMainHeaderStrongRequest } from '@/actions/header';
 import { setValidationErrorLogin } from '@/actions/auth';
 import { sendPostJSONRequest } from '@/http';
@@ -7,7 +7,6 @@ import { router } from '@/router';
 
 export default class LoginReducer {
 	init = () => {
-		console.log('login reducer inited');
 		dispatcher.register(EventType.SUBMIT_LOGIN_DATA, this.login);
 		dispatcher.notify(newSetEmptyHeaderRequest(false));
 	};
@@ -24,12 +23,13 @@ export default class LoginReducer {
 					return Promise.reject();
 				}
 				if (response.status === 404) {
-					result.data.push({ error: 'Пользователь не найден', name: 'no_user' });
+					result.data.push({ error: 'Пользователь не найден', name: 'wrong_email' });
 					return Promise.reject();
 				}
 				if (response.status === 400) {
-					result.data.push({ error: 'Некорректные данные', name: 'no_user' });
-					return Promise.reject(new Error('серверная валидация. сделать другую обработку ошибок'));
+					result.data.push({ error: 'Некорректные данные', name: 'wrong_password' });
+					result.data.push({ error: 'Некорректные данные', name: 'wrong_email' });
+					return Promise.reject(new Error('серверная валидация'));
 				}
 				return Promise.resolve(response);
 			})
@@ -39,7 +39,6 @@ export default class LoginReducer {
 				router.go(pathsURLfrontend.root);
 			})
 			.catch(() => {
-				console.log('rejected');
 				dispatcher.notify(setValidationErrorLogin(result.data));
 			});
 	};

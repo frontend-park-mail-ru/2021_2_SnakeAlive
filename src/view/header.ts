@@ -1,6 +1,6 @@
 import BasicView from './view';
 import { storage } from '@/storage';
-import { DataType, dispatcher, EventType, Token } from '@/dispatcher';
+import { dispatcher, EventType, Token } from '@/dispatcher';
 
 import { makeSimpleButton } from '@/components';
 import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
@@ -31,7 +31,7 @@ export default class HeaderView extends BasicView {
 		];
 	};
 
-	destroy = (metadata: DataType): void => {
+	destroy = (): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});
@@ -39,7 +39,7 @@ export default class HeaderView extends BasicView {
 		this.setEmpty();
 	};
 
-	setMainHeaderLogged = (metadata: DataType): void => {
+	setMainHeaderLogged = (): void => {
 		const user: Profile = storage.getProfile();
 		const dataTemplate = {
 			isNotEmpty: true,
@@ -70,7 +70,7 @@ export default class HeaderView extends BasicView {
 		}
 	};
 
-	setMainHeaderBasic = (metadata: DataType): void => {
+	setMainHeaderBasic = (): void => {
 		const dataTemplate = {
 			isNotEmpty: true,
 			isUser: false,
@@ -107,19 +107,5 @@ export default class HeaderView extends BasicView {
 
 		makeSimpleButton('logo-h', pathsURLfrontend.root);
 		makeSimpleButton('trip-block', pathsURLfrontend.trip);
-
-		// поиск
-		// const searchPlace = document.getElementById('header-search-place');
-		// if (searchPlace !== null) {
-		// 	searchPlace.innerHTML = initSearchView("header");
-		// 	this.#search = new SearchView("header", (id:string) => {
-		// 		router.go(createFrontendQueryParams(pathsURLfrontend.sight, [
-		// 			{
-		// 				key: paramsURLfrontend.id,
-		// 				value: id
-		// 			}
-		// 		]))
-		// 	});
-		// }
 	};
 }

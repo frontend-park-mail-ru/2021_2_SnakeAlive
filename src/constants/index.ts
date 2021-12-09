@@ -8,6 +8,8 @@ import {
 	sightURI,
 	sightsURI,
 	tripURI,
+	tripShare,
+	tripAddUser,
 	reviewsURI,
 	reviewURI,
 	queryParamsToGetReview,
@@ -17,6 +19,7 @@ import {
 	tripCoord,
 	albumURI,
 	searchURI,
+	userURI,
 } from './uris';
 import { russiaFormName, russiaUriName, nicaraguaFormName, nicaraguaUriName } from './defaults';
 import { pathsURLfrontend, paramsURLfrontend } from '@/constants/frontendURIs';
@@ -48,4 +51,7 @@ export {
 	listOfCountries,
 	albumURI,
 	searchURI,
+	tripShare,
+	tripAddUser,
+	userURI,
 };

@@ -1,16 +1,10 @@
-import sights from '@/components/country_page/sights.handlebars';
-
 import countryPageTemplate from '@/components/country_page/country_sights.handlebars';
-import Template from '@/components/country_page/categories.handlebars';
 import { DataType, dispatcher, ErrorMsgData, EventType, Token } from '@/dispatcher';
 import BasicView from '@/view/view';
 import { storage } from '@/storage';
 import tripSights from '@/components/country_page/sights.handlebars';
 import { SightCardInTrip } from '@/view/sight_cards';
-import { minCardInfo } from '@/models/country';
 import { TagAdoptedForRender } from '@/models/sight';
-import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
-import { createFrontendQueryParams, router } from '@/router/router';
 import { allTags, initTagsBtns, tags } from './tag';
 
 class CountryCardsHolderView extends BasicView {
@@ -33,7 +27,7 @@ class CountryCardsHolderView extends BasicView {
 		];
 	};
 
-	destroy = (metadata: DataType): void => {
+	destroy = (): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});
@@ -66,14 +60,7 @@ class CountryCardsHolderView extends BasicView {
 			card.createCard(sight.sight.id, sight.PP, sight.sight.adoptedTags);
 			this.#cards.push(card);
 		});
-		console.log(this.#cards);
 	};
-	//
-	// renderCountryCards = (metadata: DataType): void => {
-	// 	console.log('storage.getCountryCards()', storage.getCountryCards());
-	// 	this.setView(JSON.stringify(storage.getCountryCards().cards));
-	// 	// this.setView(sights(storage.getCountryCards()));
-	// };
 
 	renderErrorMessage = (metadata: DataType): void => {
 		const event = <ErrorMsgData>metadata;
@@ -97,7 +84,7 @@ class CountryHolderView extends BasicView {
 		];
 	}
 
-	destroy = (metadata: DataType): void => {
+	destroy = (): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});
@@ -105,12 +92,10 @@ class CountryHolderView extends BasicView {
 		this.setEmpty();
 	};
 
-	renderCountry = (metadata: DataType): void => {
-		const { translation, name, ID } = storage.getCountry();
+	renderCountry = (): void => {
+		const { translation } = storage.getCountry();
 		this.setView(countryPageTemplate({ name: `по стране ${translation}` }));
-		console.log('renderCountry', name, ID);
 
-		console.log(storage.getCountry());
 		this.setView(
 			countryPageTemplate({
 				name: `по стране ${translation}`,

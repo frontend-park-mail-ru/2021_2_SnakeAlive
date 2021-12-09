@@ -1,4 +1,4 @@
-import { HttpError, sendDeleteJSONRequest, sendGetJSONRequest, sendPostJSONRequest } from '@/http';
+import { sendDeleteJSONRequest, sendGetJSONRequest, sendPostJSONRequest } from '@/http';
 import {
 	backendEndpoint,
 	profile,
@@ -10,17 +10,15 @@ import { createReviewForm, newGetReviewsRequest, newGetReviewsResponse } from '@
 import { initErrorPageRequest } from '@/actions/page';
 import { storage } from '@/storage';
 import { CreateReview, DataType, dispatcher, EventType, NumID, Token } from '@/dispatcher';
-import { CreateReviewRequest, CreateReviewResponse, Review } from '@/models/review';
+import { CreateReviewRequest, UserReview } from '@/models/review';
 import {
 	adaptCreateReviewRequest,
-	adaptCreateReviewResponse,
 	adoptGotReview,
 	adoptReviewBeforePost,
 	ReviewGotInfo,
 } from '@/adapters/review';
 import { CreateReviewForm } from '@/dispatcher/metadata_types';
 import { GotProfileResponse } from '@/adapters/header';
-import { newSetMainHeaderBasicResponse, newSetMainHeaderLoggedResponse } from '@/actions/header';
 import { adaptGetProfileResponse } from '@/adapters/profile';
 
 export default class ReviewReducer {
@@ -36,13 +34,12 @@ export default class ReviewReducer {
 		this.#tokens = [
 			dispatcher.register(EventType.GET_REVIEWS_REQUEST, this.getReviews),
 			dispatcher.register(EventType.DELETE_REVIEW_REQUEST, this.deleteReview),
-			// dispatcher.register(EventType.CREATE_REVIEW_REQUEST, this.createReview),
 			dispatcher.register(EventType.CREATE_REVIEW_FORM_RESPONSE, this.createReview),
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
 		];
 	};
 
-	destroy = (metadata: DataType): void => {
+	destroy = (): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});
@@ -52,16 +49,20 @@ export default class ReviewReducer {
 		const event = <NumID>metadata;
 		this.#placeId = event.ID;
 
-		this.#putUserToStorage().then((data: GotProfileResponse | number) => {
+		this.#putUserToStorage().then((gotProfile: GotProfileResponse | number) => {
+			if (typeof gotProfile !== 'number') {
+				storage.storeProfile(adaptGetProfileResponse(gotProfile));
+			}
+			this.#sendGetReviews(event.ID).then((reviews: ReviewGotInfo[]) => {
+				// const users = this.#getReviewsUsers(reviews);
+				const users: UserReview[] = [];
+				if (reviews) {
+					users.length = reviews.length;
+				}
 
-			this.#sendGetReviews(event.ID)
-				.then((reviews: ReviewGotInfo[]) => {
-					storage.storeReviews(adoptGotReview(reviews));
-					dispatcher.notify(newGetReviewsResponse());
-				})
-				.catch((error: Error) => {
-					console.log(error);
-				});
+				storage.storeReviews(adoptGotReview(reviews, users));
+				dispatcher.notify(newGetReviewsResponse());
+			});
 		});
 	};
 
@@ -82,16 +83,15 @@ export default class ReviewReducer {
 		const event = <CreateReview>metadata;
 		event.placeId = Number(storage.getSight().id);
 		this.#sendCreateReview(adaptCreateReviewRequest(event))
-			.then((responseText: string) => {
-				console.log(responseText);
+			.then(() => {
 				dispatcher.notify(createReviewForm());
 				dispatcher.notify(newGetReviewsRequest(this.#placeId));
 				// надо добавлять а не ререндить всех но что поделать
 				// как бы надо проверять ок/не ок ответ пришел, ноо мы этого не делаем
 				// все равно только по обновлению работает. починить если останется время
 			})
-			.catch((error: Error) => {
-				console.log('something went wrong during POST /review', error);
+			.catch((/* error: Error */) => {
+				// console.log('something went wrong during POST /review', error);
 			});
 	};
 
@@ -139,4 +139,26 @@ export default class ReviewReducer {
 			}
 			return response.json();
 		});
+
+	// #getReviewsUsers = (reviews: ReviewGotInfo[]): UserReview[] => {
+	// 	const amount = reviews.length;
+	// 	const res: UserReview[] = [];
+	//
+	// 	reviews.forEach(review => sendGetJSONRequest(backendEndpoint + userURI + review.id)
+	// 			.then((response: Response) => {
+	// 				if (response.status === 200) {
+	// 					return Promise.resolve(response);
+	// 				}
+	// 				return Promise.reject(new Error(`got user with error ${response.status}`));
+	// 			})
+	// 			.then(user => user.json())
+	// 		// eslint-disable-next-line consistent-return
+	// 			.then((user: UserReview) => {
+	// 				res.push(user);
+	// 				if (res.length === amount) {
+	// 					return res;
+	// 				}
+	// 			})
+	// 			.catch(err => console.log(err)));
+	// }
 }

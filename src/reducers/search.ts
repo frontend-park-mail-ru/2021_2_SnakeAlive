@@ -22,7 +22,7 @@ export default class SearchReducer {
 		url.searchParams.set('search', search.text);
 		url.searchParams.set('skip', '0');
 		url.searchParams.set('limit', '0');
-		const countriesPromise = sendGetJSONRequest(url.toString())
+		sendGetJSONRequest(url.toString())
 			.then(response => {
 				if (response.ok) {
 					return Promise.resolve(response);
@@ -31,7 +31,6 @@ export default class SearchReducer {
 			})
 			.then(response => response.json())
 			.then(response => {
-				console.log('response search list', response, response.name);
 				storage.storeSearchSightsResult(search.type, response);
 			});
 		dispatcher.notify(gotSearchResults(search.type));

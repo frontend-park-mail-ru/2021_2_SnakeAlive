@@ -1,5 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Loader } from '@googlemaps/js-api-loader';
-import { dispatcher, EventType, IEvent } from '@/dispatcher';
+import { dispatcher, IEvent } from '@/dispatcher';
 import {
 	initAlbumPageRequest,
 	initErrorPageRequest,
@@ -12,7 +13,6 @@ import {
 	newInitPageRequest,
 	initTripEditPageRequest,
 } from '@/actions/page';
-import { createTripFormRequest, newGetTripRequest } from '@/actions/trip';
 import { newGetProfileRequest } from '@/actions/profile';
 import { showLoginForm, showRegisterForm } from '@/actions/auth';
 import { newGetReviewsRequest } from '@/actions/review';
@@ -21,7 +21,6 @@ import { newInitCountryRequest } from '@/actions/country';
 import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
 import { createAlbumFormRequest, newGetAlbumRequest } from '@/actions/album';
 import { newTagRequest } from '@/actions/tag';
-import { storage } from '@/storage';
 
 const pathErrorEvent: IEvent = initErrorPageRequest(new Error('Неверная ссылка'));
 
@@ -35,7 +34,6 @@ const tryGetParam = (params: paramsURLfrontend[], path: URL): Record<string, str
 			res[param] = gotParam;
 		}
 	});
-	console.log(res, 'res');
 	return res;
 };
 
@@ -45,7 +43,6 @@ const getIDParam = (path: URL): number | null =>
 const getIDParamDispatchError = (path: URL): number | null => {
 	const id: number | null = getIDParam(path);
 
-	console.log('id : ', id);
 	if (id === null) {
 		dispatcher.notify(pathErrorEvent);
 	}
@@ -54,9 +51,6 @@ const getIDParamDispatchError = (path: URL): number | null => {
 };
 
 export const notifier = (path: URL): void /* IEvent */ => {
-	console.log('path :', path);
-	console.log('try to resolve');
-
 	switch (path.pathname) {
 		case pathsURLfrontend.root: {
 			dispatcher.notify(newInitPageRequest());
@@ -64,7 +58,6 @@ export const notifier = (path: URL): void /* IEvent */ => {
 			break;
 		}
 		case pathsURLfrontend.country: {
-			console.log('country');
 			dispatcher.notify(newInitPageRequest());
 			const params = tryGetParam([paramsURLfrontend.id], path);
 			if (params.id) {
@@ -76,7 +69,6 @@ export const notifier = (path: URL): void /* IEvent */ => {
 		}
 		case pathsURLfrontend.trip: {
 			const params = tryGetParam([paramsURLfrontend.id, paramsURLfrontend.edit], path);
-			console.log(params);
 
 			if (params.id) {
 				dispatcher.notify(initTripEditPageRequest(Number(params.id)));
@@ -131,7 +123,6 @@ export const notifier = (path: URL): void /* IEvent */ => {
 			const params = tryGetParam([paramsURLfrontend.tag], path);
 			if (params.tag) {
 				dispatcher.notify(initTagPageRequest());
-				console.log(params.tag);
 				dispatcher.notify(newTagRequest(params.tag));
 			} else {
 				dispatcher.notify(initErrorPageRequest(Error('эта страна не поддерживается')));

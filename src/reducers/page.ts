@@ -5,7 +5,7 @@ import RegisterReducer from './register';
 import { destroyCurrentPage } from '@/actions/page';
 import { CountryCardsHolderView, CountryHolderView, LoginView, RegisterView } from '@/view';
 
-import { DataType, dispatcher, ErrorMsgData, EventType, NumID, UUID } from '@/dispatcher';
+import { dispatcher, ErrorMsgData, EventType, NumID } from '@/dispatcher';
 import ErrorView from '@/view/error';
 import SightReducer from '@/reducers/sight';
 import SightView from '@/view/sight';
@@ -21,9 +21,9 @@ import TagReducer from '@/reducers/tag';
 import { TagCardsHolderView, TagHolderView } from '@/view/tag';
 
 export default class PageReducer {
-	constructor() {
-		console.log('pageReducer constructed');
-	}
+	// constructor() {
+	// 	//
+	// }
 
 	init = () => {
 		dispatcher.register(EventType.INIT_COUNTRY_PAGE_REQUEST, this.createCountryPage);
@@ -105,7 +105,6 @@ export default class PageReducer {
 
 	createTripPage = (): void => {
 		dispatcher.notify(destroyCurrentPage());
-		console.log('page reducer create trip');
 
 		const tripReducer: TripReducer = new TripReducer();
 		tripReducer.init();
@@ -116,7 +115,6 @@ export default class PageReducer {
 
 	createTripEditPage = (metadata: NumID): void => {
 		dispatcher.notify(destroyCurrentPage());
-		console.log('page reducer create edit trip');
 
 		const tripReducer: TripReducer = new TripReducer();
 		tripReducer.init();
@@ -136,7 +134,7 @@ export default class PageReducer {
 		albumView.init();
 	};
 
-	createProfilePage = (metadata: DataType): void => {
+	createProfilePage = (): void => {
 		dispatcher.notify(destroyCurrentPage());
 
 		const profileReducer: ProfileReducer = new ProfileReducer();

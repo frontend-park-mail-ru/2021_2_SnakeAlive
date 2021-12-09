@@ -1,4 +1,4 @@
-import { Empty, EventType, IEvent, NamedUUID, NumID } from '@/dispatcher';
+import { Empty, EventType, IEvent } from '@/dispatcher';
 import { Search } from '@/dispatcher/metadata_types';
 
 const searchRequest = (text: string, type: string): IEvent =>

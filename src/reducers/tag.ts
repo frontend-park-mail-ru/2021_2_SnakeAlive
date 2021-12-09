@@ -1,11 +1,11 @@
 import { sendGetJSONRequest } from '@/http';
-import { backendEndpoint, countrySights, sightsURI } from '@/constants';
+import { backendEndpoint } from '@/constants';
 import {} from '@/actions/country';
 import { newSetMainHeaderRequest } from '@/actions/header';
 import { storage } from '@/storage';
-import { DataType, dispatcher, EventType, UUID, NamedUUID, Token } from '@/dispatcher';
-import { CountryCardResponse, CountryResponse } from '@/models';
-import { minAdaptCountryCards } from '@/adapters/country_cards_2';
+import { dispatcher, EventType, NamedUUID, Token } from '@/dispatcher';
+import { CountryCardResponse } from '@/models';
+import { minAdaptCountryCards } from '@/adapters/country_cards_min';
 import { tagsURI } from '@/constants/uris';
 import { newGetTagCardsResult, newTagResponse } from '@/actions/tag';
 
@@ -23,14 +23,13 @@ export default class TagReducer {
 		];
 	};
 
-	destroy = (metadata: DataType): void => {
+	destroy = (): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});
 	};
 
 	initTagPage = (tag: NamedUUID): void => {
-		console.log('tag - ', tag);
 		dispatcher.notify(newSetMainHeaderRequest());
 		this.#getTagCards(tag.ID);
 	};
@@ -38,15 +37,12 @@ export default class TagReducer {
 	#getTagCards = (name: string): void => {
 		this.#getCards(name).then((cards: CountryCardResponse[]) => {
 			dispatcher.notify(newTagResponse(name));
-			console.log('tag reducer : ', cards);
 			storage.storeSightsCardsMin(minAdaptCountryCards(cards));
-			console.log(storage.getCountryCards());
 			dispatcher.notify(newGetTagCardsResult());
 		});
 	};
 
 	#getCards = (tagID: string): Promise<CountryCardResponse[]> => {
-		console.log(backendEndpoint + tagsURI);
 		const uri = new URL(backendEndpoint + tagsURI);
 
 		uri.searchParams.append('tag', tagID);

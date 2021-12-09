@@ -3,9 +3,19 @@
 
 		<div class="form_form__input_holder">
 			{{#if tripCreated}}
-			<div class='label-div'>
-				<label for="title">Название поездки: {{title}}</label>
+			<div class='label-div trip_title_holder tripWrapper'>
+				<div class="col-8">
+					<label for="title">Название поездки: {{title}}</label>
+				</div>
+				<div class="col-4 btn dropdown_item" id="share">
+					<img class="share-btn dropdown_item" src="{{shareimg}}">
+					<div id="ShareLinkDropdown" class="dropdown-content dropdown_item">
+						<a id='dropdown_share_link' class='dropdown_item'>Скопировать ссылку</a>
+						
+  					</div>
+				</div>
 			</div>
+
 			{{else}}	
 			<div class='label-div'>
 				<label for="title">Название поездки</label>
@@ -28,23 +38,43 @@
 	</div>
 	{{#if tripCreated}}
 	<div id='trip-search-place'></div>
-	{{!-- <div class="trip_form__horizontal_holder buttons_holder">
-		<button class="usual_button usual_button_dark" id="btn-add-place">ТЕСТ</button>
-	</div> --}}
 	{{else}}
 		<div>
 	<button class="usual_button usual_button_dark" id='trip_submit'>Создать</button>
 		</div>
-	{{/if}}
 	
 	
 
 	<div class="error_block" id="error_block">
 		<p class="error_block__text">Ошибка. Обязательны название поездки и хотя бы одно место, которое вы собираетесь посетить</p>
 	</div>
+	{{/if}}
 
 
 {{#if tripCreated}}
+	<div class="trip_form__horizontal_holder">
+		<p >Участники:</p>
+	</div>
+	<div class="trip_form__horizontal_holder partisipants_holder">
+		{{#each partisipants}}
+		<div class="partisipant" id="partisipant_{{this.id}}">
+			<img class="trip-partisipant-circle-img" src="{{this.profilePhoto}}">
+		</div>
+		{{/each}}
+		<div class="partisipant btn" id="partisipant_add">
+			<img class="trip-partisipant-add-img dropdown_item" id="partisipant_add_img" src={{addUserImg}}>
+			<div id="AddUserDropdown" class="dropdown-content border dropdown_item">
+				<span id='dropdown_add_user' class="dropdown_user_add_header dropdown_item">Введите email пользователя</span>
+				<div id="search_area" class="user_search_area dropdownWrapper dropdown_item">
+					<input id="search_trip_user" list="search_list_trip" class="search_area__input col-8 dropdown_item">
+					<button class="btn usual_button usual_button_dark col-4 dropdown_item"id="add_user_btn">Добавить</button>
+				</div>
+				
+  			</div>
+		</div>
+
+		
+	</div>
 	<div class="trip_form__horizontal_holder buttons_holder">
 		<button class="usual_button usual_button_dark" id="btn-add-album">Добавить альбом</button>
 		<button class="usual_button usual_button_light" id="trip-submit">Сохранить поездку</button>

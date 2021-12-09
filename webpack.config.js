@@ -2,13 +2,13 @@ const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
-// const MockDevServer = require('webpack-mock-dev-server');
+const CopyPlugin = require("copy-webpack-plugin");
 
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = !isDev;
 
-const filename = ext => (isDev ? `[name].${ext}` : `[name].[hash].${ext}`);
+// const filename = ext => (isDev ? `[name].${ext}` : `[name].[contenthash].${ext}`);
+const filename = ext => `[name].[contenthash].${ext}`; //
 
 module.exports = {
 	mode: 'development',
@@ -17,7 +17,9 @@ module.exports = {
 		static: './dist',
 		port: 2000,
 		historyApiFallback: true,
-		// before: MockDevServer(path.resolve(__dirname, 'mock-dev-server.config')),
+		devMiddleware: {
+			writeToDisk: true,
+		},
 	},
 	stats: {
 		children:true,
@@ -47,6 +49,17 @@ module.exports = {
 		new CleanWebpackPlugin(),
 		new MiniCssExtractPlugin({
 			filename: filename('css'),
+		}),
+		// new WorkboxPlugin.GenerateSW({
+		// 	// these options encourage the ServiceWorkers to get in there fast
+		// 	// and not allow any straggling "old" SWs to hang around
+		// 	clientsClaim: true,
+		// 	skipWaiting: true,
+		// }),
+		new CopyPlugin({
+			patterns: [
+				{ from: path.resolve(__dirname, 'src/offline'), to: path.resolve(__dirname, 'dist/offline') },
+			],
 		}),
 	],
 	module: {

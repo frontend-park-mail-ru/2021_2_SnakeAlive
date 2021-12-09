@@ -1,5 +1,5 @@
 import BasicView from './view';
-import { DataType, dispatcher, EventType, Token, ValidationErrData } from '@/dispatcher';
+import { dispatcher, EventType, Token, ValidationErrData } from '@/dispatcher';
 import { Form, loginHTML, makeSimpleButton } from '@/components';
 
 import { submitLoginData } from '@/actions/auth';
@@ -33,7 +33,7 @@ export default class LoginView extends BasicView {
 		];
 	};
 
-	createPage = (metadata: DataType) => {
+	createPage = () => {
 		this.setView(loginHTML());
 		const formPlaceElement = document.querySelector('#form_place');
 		if (formPlaceElement !== null) {
@@ -44,12 +44,16 @@ export default class LoginView extends BasicView {
 	};
 
 	setErrors = (metadata: ValidationErrData) => {
-		const err: Error = new Error(metadata.data[0].error);
-		err.name = metadata.data[0].name;
-		this.#form?.setLoginError(err);
+		const errors: Error[] = [];
+		metadata.data.forEach(err => {
+			const newErr = new Error(err.error);
+			newErr.name = err.name;
+			errors.push(newErr);
+		});
+		this.#form?.setFormErrors(errors);
 	};
 
-	destroy = (metadata: DataType): void => {
+	destroy = (): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});
@@ -65,12 +69,11 @@ export default class LoginView extends BasicView {
 		const metadata: ValidationErrData = {
 			data: [],
 		};
-		console.log(submitLoginData(emailHolder, passwordHolder));
 		if (
 			!validateElements([
 				{
 					validators: [
-						function (): boolean {
+						(): boolean => {
 							if (!validateEmail(emailInput.getValue())) {
 								metadata.data.push({ error: 'Некорректная элетронная почта', name: 'wrong_email' });
 							}
@@ -81,7 +84,7 @@ export default class LoginView extends BasicView {
 				},
 				{
 					validators: [
-						function (): boolean {
+						(): boolean => {
 							if (
 								validateNotEmpty(passInput.getValue()) &&
 								validateLength(passInput.getValue(), 8)

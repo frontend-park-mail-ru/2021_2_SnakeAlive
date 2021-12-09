@@ -7,7 +7,6 @@ import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
 import { storage } from '@/storage';
 
 const hideConfirm = (): void => {
-	console.log('hid confirm');
 	const answerPlace = document.getElementById('form__submit_holder__answer');
 	if (answerPlace !== null) {
 		answerPlace.style.display = 'none';
@@ -20,8 +19,6 @@ const hideConfirm = (): void => {
 };
 
 const showConfirm = () => {
-	console.log('show confirm');
-
 	const answerPlace = document.getElementById('form__submit_holder__answer');
 	if (answerPlace !== null) {
 		answerPlace.style.display = 'flex';

@@ -8,14 +8,16 @@ import {
 	UpdateProfileMetadataResponse,
 } from '@/models/profile';
 import { UpdateProfile } from '@/dispatcher';
-import { backendFileEndpoint } from '@/constants';
 import { storage } from '@/storage';
 
 import avatarPath from '../../image/test.jpeg';
-import { destroyCurrentPage } from '@/actions/page';
 
 export function adaptGetProfileResponse(response: GetProfileResponse): Profile {
-	if (response.avatar === 'default.jpg' || response.avatar.slice(-9) === 'test.jpeg') {
+	if (
+		response.avatar === 'default.jpg' ||
+		response.avatar.slice(-9) === 'test.jpeg' ||
+		response.avatar.slice(-12) === 'default.jpeg'
+	) {
 		response.avatar = avatarPath;
 	}
 
@@ -25,6 +27,7 @@ export function adaptGetProfileResponse(response: GetProfileResponse): Profile {
 			surname: response.surname,
 			description: response.description,
 			email: response.email,
+			id: response.id,
 		},
 		profileImage: response.avatar,
 	};

@@ -13,13 +13,7 @@ import albumInfoTemplate from '@/components/album/album_info.handlebars';
 import albumPhotosTemplate from '@/components/album/album_photos.handlebars';
 import '@/components/album/album.scss';
 import { initAlbumForm } from '@/components/album/album_form';
-import {
-	addAlbumPhoto,
-	deletePhoto,
-	newGetAlbumResult,
-	renderAlbumPhotos,
-	updateAlbumInfoRequest,
-} from '@/actions/album';
+import { addAlbumPhoto, deletePhoto, newGetAlbumResult, renderAlbumPhotos } from '@/actions/album';
 
 import defaultPhoto from '../../image/defaultAlbum.png';
 
@@ -82,12 +76,9 @@ export class PhotosView {
 			}
 		}
 
-		console.log('render');
 		if (isEdit.isTrue) {
-			console.log('isEdit');
 			if (photos) {
 				photos.forEach(photo => {
-					console.log('photo!');
 					this.#initDeleteButton(photo);
 				});
 			}
@@ -113,11 +104,9 @@ export class PhotosView {
 		this.#isInited = true;
 
 		const addBtn = document.getElementById('add_photos_btn');
-		console.log('addBtn ', addBtn);
 
 		const addInput = <HTMLInputElement>document.getElementById('add_photos_input');
 		if (addBtn !== null && addInput !== null) {
-			console.log('addListener');
 			addBtn.addEventListener(
 				'click',
 				() => {
@@ -127,7 +116,6 @@ export class PhotosView {
 			);
 
 			addInput.addEventListener('change', event => {
-				console.log('changed');
 				event.preventDefault();
 				if (addInput === null) {
 					return;
@@ -138,7 +126,6 @@ export class PhotosView {
 				const error = this.#checkLoadedFile(addInput.files[0]);
 				if (error !== null) {
 					// показать ошибку на странице
-					console.log(error);
 					return;
 				}
 
@@ -155,14 +142,11 @@ export class PhotosView {
 	};
 
 	#initDeleteButton = (photoName: string) => {
-		console.log('deleteBtn');
 		const deleteBtn = document.getElementById(`delete_photo_${photoName}`);
-		console.log(deleteBtn);
 		if (deleteBtn !== null) {
 			deleteBtn.addEventListener(
 				'click',
 				event => {
-					console.log('isClicked');
 					event.preventDefault();
 					dispatcher.notify(deletePhoto(photoName));
 					const photo = document.getElementById(`album_page__photo_holder_place_${photoName}`);
@@ -175,7 +159,7 @@ export class PhotosView {
 		}
 	};
 
-	destroy = (metadata: EventType): void => {
+	destroy = (): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});
@@ -245,7 +229,7 @@ export class AlbumView extends BasicView {
 		initAlbumForm(true);
 	};
 
-	destroy = (metadata: EventType): void => {
+	destroy = (): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});
@@ -279,6 +263,7 @@ export class AlbumView extends BasicView {
 				description,
 			});
 		}
+
 		// go_edit кнопка
 		const editBtn = document.getElementById('go_edit');
 		if (editBtn !== null) {

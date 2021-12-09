@@ -1,5 +1,5 @@
 import BasicView from './view';
-import { DataType, dispatcher, EventType, Token, ValidationErrData } from '@/dispatcher/';
+import { dispatcher, EventType, Token, ValidationErrData } from '@/dispatcher/';
 import { Form, makeSimpleButton, registerHTML } from '@/components';
 
 import { submitRegisterData } from '@/actions/auth';
@@ -33,7 +33,7 @@ export default class RegisterView extends BasicView {
 		];
 	};
 
-	createPage = (metadata: DataType) => {
+	createPage = () => {
 		this.setView(registerHTML());
 		const formPlaceElement = document.querySelector('#form_place');
 		if (formPlaceElement !== null) {
@@ -44,6 +44,7 @@ export default class RegisterView extends BasicView {
 	};
 
 	#submit = (values: { [key: string]: string }) => {
+		// eslint-disable-next-line camelcase
 		const { name_holder, surname_holder, email_holder, password_holder, repeatedPassword_holder } =
 			values;
 		const nameInput: Input = new Input('#name_holder', 'input-error-red');
@@ -115,7 +116,7 @@ export default class RegisterView extends BasicView {
 							if (validateEqual(passInput.getValue(), repasswordInput.getValue())) {
 								return true;
 							}
-							metadata.data.push({ error: 'Пароли не совпадают', name: 'wrong_password' });
+							metadata.data.push({ error: 'Пароли не совпадают', name: 'wrong_repeatedPassword' });
 							return false;
 						},
 					],
@@ -138,12 +139,16 @@ export default class RegisterView extends BasicView {
 	};
 
 	setErrors = (metadata: ValidationErrData) => {
-		const err: Error = new Error(metadata.data[0].error);
-		err.name = metadata.data[0].name;
-		this.#form?.setRegisterError(err);
+		const errors: Error[] = [];
+		metadata.data.forEach(err => {
+			const newErr = new Error(err.error);
+			newErr.name = err.name;
+			errors.push(newErr);
+		});
+		this.#form?.setFormErrors(errors);
 	};
 
-	#destroy = (metadata: DataType): void => {
+	#destroy = (): void => {
 		this.#tokens.forEach(element => {
 			dispatcher.unregister(element);
 		});

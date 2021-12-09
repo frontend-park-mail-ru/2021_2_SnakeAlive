@@ -1,33 +1,47 @@
 import { notifier } from './resolver';
-import { dispatcher, UUID } from '@/dispatcher';
 import { frontEndEndPoint, paramsURLfrontend, pathsURLfrontend } from '@/constants';
+import { dispatcher } from '@/dispatcher';
+import { destroyCurrentPage } from '@/actions/page';
+import ErrorView from '@/view/error';
 
 export const createFrontendQueryParams = (
 	uri: pathsURLfrontend,
 	params: { key: paramsURLfrontend; value: string }[]
-	// paramName: paramsURLfrontend,
-	// idOrName: string
 ): string => {
 	const url = new URL(frontEndEndPoint + uri);
 	params.forEach(param => {
 		url.searchParams.set(param.key, param.value);
 	});
-	// console.log("madeUrl: ", url);
 	return url.href;
 };
 
+const checkIfOnline = (): boolean => {
+	if (navigator.onLine) {
+		return true;
+	}
+	dispatcher.notify(destroyCurrentPage());
+	const errorView: ErrorView = new ErrorView();
+	errorView.initOffline();
+	return false;
+};
+
 class Router {
-	start = (_data?: object) => {
+	start = () => {
+		if (!checkIfOnline()) {
+			return;
+		}
+
 		const url = new URL(window.location.href); // это встроенный класс
 		notifier(url);
+
+		window.onpopstate = () => {
+			notifier(new URL(window.location.href));
+		};
 	};
 
 	go = (_path: string, _data?: string) => {
-		console.log(_path);
-		const testQ = new URL(window.location.href);
-		if (window.location.pathname === _path && testQ.searchParams.toString() === '') return;
 		const url = new URL(_path, window.location.href);
-		console.log('router go - data ', _data);
+		if (window.location.pathname === _path && url.searchParams.toString() === '') return;
 		if (_data) {
 			url.searchParams.append('id', _data);
 		}
@@ -36,14 +50,14 @@ class Router {
 	};
 
 	// нужен если на странице делать кнопку назад
-	// popstate = (): void => {
-	// 	window.history.back();
-	// 	const url = new URL(window.location.href);
-	// 	notifier(url);
-	// };
+	popstate = (): void => {
+		window.history.back();
+		const url = new URL(window.location.href);
+		notifier(url);
+	};
 
 	pushHistoryState = (_path: string, _data?: object): void => {
-		window.history.pushState(_data, _path, _path);
+		this.#pushHistoryState(_path, { _data });
 	};
 
 	#pushHistoryState = (_path: string, _data?: object): void => {
