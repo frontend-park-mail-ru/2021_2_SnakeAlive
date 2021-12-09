@@ -117,7 +117,7 @@ export class TripInfoView extends BasicView {
 		const albumPlace = document.getElementById('trip_albums_holder');
 		if (albumPlace !== null) {
 			const shownAlbums: ProfileAlbum[] = [];
-			if (trip.albums !== null) {
+			if (trip.albums) {
 				trip.albums.forEach(album => {
 					shownAlbums.push({
 						photos: album.photos,

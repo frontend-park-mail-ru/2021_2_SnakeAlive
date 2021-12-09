@@ -1,4 +1,5 @@
-$header_height: 7.5vh;
+//$header_height: 7.5vh;
+$header_height: 60px;
 
 // отступы
 $large-px: 12px;
@@ -31,8 +32,13 @@ $logo-color: #0077FF;
 
 .input-error-red {
   border-radius: 2px;
-  border-color: red;
+  border-color: $my--error;
   border-style: solid;
+
+  &-text {
+    color: $my--error;
+    visibility: visible;
+  }
 }
 
 // шрифты

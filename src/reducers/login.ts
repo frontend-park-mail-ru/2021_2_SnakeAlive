@@ -23,12 +23,13 @@ export default class LoginReducer {
 					return Promise.reject();
 				}
 				if (response.status === 404) {
-					result.data.push({ error: 'Пользователь не найден', name: 'no_user' });
+					result.data.push({ error: 'Пользователь не найден', name: 'wrong_email' });
 					return Promise.reject();
 				}
 				if (response.status === 400) {
-					result.data.push({ error: 'Некорректные данные', name: 'no_user' });
-					return Promise.reject(new Error('серверная валидация. сделать другую обработку ошибок'));
+					result.data.push({ error: 'Некорректные данные', name: 'wrong_password' });
+					result.data.push({ error: 'Некорректные данные', name: 'wrong_email' });
+					return Promise.reject(new Error('серверная валидация'));
 				}
 				return Promise.resolve(response);
 			})

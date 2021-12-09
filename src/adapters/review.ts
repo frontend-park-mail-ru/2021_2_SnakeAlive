@@ -58,7 +58,7 @@ export interface ReviewGotInfo {
 	user_id: number;
 }
 
-export const adoptGotReview = (gotReviews: ReviewGotInfo[]): Review[] => {
+export const adoptGotReview = (gotReviews: ReviewGotInfo[], users: UserReview[]): Review[] => {
 	const storeReviews: Review[] = [];
 	const currentUser = storage.getProfile();
 	let userId: number | null = null;
@@ -66,6 +66,11 @@ export const adoptGotReview = (gotReviews: ReviewGotInfo[]): Review[] => {
 		userId = currentUser.meta.id;
 	}
 
+	if (!gotReviews) {
+		return storeReviews;
+	}
+
+	let i = 0;
 	gotReviews.forEach(review => {
 		let owner = false;
 		if (review.user_id === userId) {
@@ -77,8 +82,9 @@ export const adoptGotReview = (gotReviews: ReviewGotInfo[]): Review[] => {
 			text: review.text,
 			rating: review.rating,
 			owner,
-			user: <UserReview>{},
+			user: users[i],
 		});
+		i += 1;
 	});
 	return storeReviews;
 };

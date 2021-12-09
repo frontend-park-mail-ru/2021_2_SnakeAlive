@@ -35,14 +35,13 @@ class Router {
 		notifier(url);
 
 		window.onpopstate = () => {
-			this.go(window.location.href);
+			notifier(new URL(window.location.href));
 		};
 	};
 
 	go = (_path: string, _data?: string) => {
-		const testQ = new URL(window.location.href);
-		if (window.location.pathname === _path && testQ.searchParams.toString() === '') return;
 		const url = new URL(_path, window.location.href);
+		if (window.location.pathname === _path && url.searchParams.toString() === '') return;
 		if (_data) {
 			url.searchParams.append('id', _data);
 		}
@@ -58,7 +57,7 @@ class Router {
 	};
 
 	pushHistoryState = (_path: string, _data?: object): void => {
-		window.history.pushState(_data, _path, _path);
+		this.#pushHistoryState(_path, { _data });
 	};
 
 	#pushHistoryState = (_path: string, _data?: object): void => {

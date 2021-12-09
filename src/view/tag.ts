@@ -120,7 +120,6 @@ class TagCardsHolderView extends BasicView {
 			card.createCard(sight.sight.id, sight.PP, sight.sight.adoptedTags);
 			// this.#cards.push(card);
 		});
-		initTagsBtns();
 	};
 }
 
@@ -135,7 +134,7 @@ class TagHolderView extends BasicView {
 
 	init() {
 		this.#tokens = [
-			dispatcher.register(EventType.INIT_TAG_RESULT, this.renderCountry),
+			dispatcher.register(EventType.INIT_TAG_RESULT, this.renderTag),
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
 		];
 	}
@@ -148,7 +147,7 @@ class TagHolderView extends BasicView {
 		this.setEmpty();
 	};
 
-	renderCountry = (metadata: UUID): void => {
+	renderTag = (metadata: UUID): void => {
 		this.setView(
 			countryPageTemplate({
 				name: `по тегу ${metadata.ID}`,
