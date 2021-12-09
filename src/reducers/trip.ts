@@ -1,5 +1,5 @@
 import { dispatcher, EventType, Token } from '@/dispatcher';
-import { SightDay, Trip } from '@/models';
+import { SightDay, Trip, UserEmail } from '@/models';
 import { storage } from '@/storage';
 import {
 	sendDeleteJSONRequest,
@@ -13,10 +13,12 @@ import {
 	pathsURLfrontend,
 	postTripURI,
 	tripURI,
+	tripShare,
+	tripAddUser,
 } from '@/constants';
-import { newGetTripResult, rerenderTripCards, createTripEdit } from '@/actions/trip';
+import { newGetTripResult, rerenderTripCards, createTripEdit, newShareTripLink, getAddUserToTripResponse } from '@/actions/trip';
 import { newSetMainHeaderRequest } from '@/actions/header';
-import { NumID, CardOrderAndDay, TripInfo } from '@/dispatcher/metadata_types';
+import { NumID, CardOrderAndDay, TripInfo, Email } from '@/dispatcher/metadata_types';
 import { adoptForSend, adoptForCreate } from '@/adapters';
 import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
@@ -41,9 +43,63 @@ export default class TripReducer {
 			dispatcher.register(EventType.DEL_CURRENT_TRIP_PLACE, this.deleteCurrentTripPlace),
 
 			dispatcher.register(EventType.DELETE_TRIP, this.deleteTrip),
+
+			dispatcher.register(EventType.SHARE_TRIP_REQUEST, this.getShareTripLink),
+			dispatcher.register(EventType.ADD_USER_TO_TRIP_REQUEST, this.addUserToTrip),
 		];
 
 		dispatcher.notify(newSetMainHeaderRequest());
+	};
+
+	addUserToTrip = (metadata: Email): void => {
+		const tripID = storage.getCurrentTrip().id
+		const userToAdd: UserEmail = {email: metadata.email}
+		console.log("link :  ",backendEndpoint + tripAddUser + tripID)
+		sendPostJSONRequest(backendEndpoint + tripAddUser + tripID, userToAdd)
+			.then(response => {
+				if (response.status === 404) {
+					dispatcher.notify(getAddUserToTripResponse(false))
+					return Promise.reject(new Error('Такой поездки не существует'));
+				}
+				if (response.status === 401) {
+					dispatcher.notify(getAddUserToTripResponse(false))
+					return Promise.reject(new Error('Нужно войти в систему'));
+				}
+				if (response.status === 400) {
+					dispatcher.notify(getAddUserToTripResponse(false))
+					return Promise.reject(new Error('Ошибка запроса'));
+				}
+				return Promise.resolve(response);
+			})
+			.then(response => {
+				dispatcher.notify(getAddUserToTripResponse(true))
+			});
+	}
+
+	getShareTripLink = (): void => {
+		const tripID = storage.getCurrentTrip().id
+		console.log("link :  ",backendEndpoint + tripShare + tripID)
+		sendPostJSONRequest(backendEndpoint + tripShare + tripID,"")
+			.then(response => {
+				if (response.status === 404) {
+					return Promise.reject(new Error('Такой поездки не существует'));
+				}
+				if (response.status === 401) {
+					return Promise.reject(new Error('Нужно войти в систему'));
+				}
+				if (response.status === 400) {
+					return Promise.reject(new Error('Ошибка запроса'));
+				}
+				return Promise.resolve(response);
+			})
+			.then(response => response.text())
+			.then(response => {
+				const link = backendEndpoint + response.substring(1,response.length-1)
+				console.log(link)
+				storage.setShareTripLink(link)
+				dispatcher.notify(newShareTripLink())
+			});
+			
 	};
 
 	destroy = (): void => {

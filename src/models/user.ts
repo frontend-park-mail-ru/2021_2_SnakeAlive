@@ -4,3 +4,12 @@ export interface UserMetadata {
 	surname: string;
 	avatarPath: string;
 }
+
+export interface UserEmail {
+	email: string; 
+}
+
+export interface Partisipants {
+	id: number; 
+	profilePhoto: string;
+}

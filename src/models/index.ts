@@ -7,7 +7,7 @@ import {
 	CountryCardTag,
 	CountryResponse,
 } from './country';
-import { UserMetadata } from './user';
+import { UserMetadata, UserEmail, Partisipants } from './user';
 import { Sight, SightsCoord, SightDay } from './sight';
 import { Trip } from './trip';
 import { ProfileAlbum } from './profile';
@@ -21,6 +21,8 @@ export {
 	CountryCardPhoto,
 	CountryCardTag,
 	UserMetadata,
+	UserEmail,
+	Partisipants,
 	Sight,
 	SightsCoord,
 	SightDay,

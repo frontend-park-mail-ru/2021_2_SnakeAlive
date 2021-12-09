@@ -27,6 +27,10 @@ class Storage {
 
 	#albumTripId = '';
 
+	#shareTripLink = '';
+
+	#addTripUserLink = '';
+
 	#searchSightsResult: {
 		type: string;
 		sights: Sight[];
@@ -153,6 +157,18 @@ class Storage {
 	};
 
 	getProfileAlbums = (): ProfileAlbum[] => this.#profileAlbums;
+
+	setShareTripLink = (link: string) =>{
+		this.#shareTripLink = link
+	}
+
+	getShareTripLink = (): string => this.#shareTripLink
+
+	setAddTripUserLink = (link: string) =>{
+		this.#addTripUserLink = link
+	}
+
+	getAddTripUserLink = (): string => this.#addTripUserLink
 }
 
 export const storage = new Storage();

@@ -986,7 +986,7 @@ textarea:active {
   background-color: #f1f1f1;
   min-width: 160px;
   overflow: auto;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 3px 12px 16px 3px rgba(0,0,0,0.2);
   z-index: 1;
 }
 
@@ -1103,6 +1103,11 @@ textarea:active {
   position: relative;
   bottom: $small-px * 4;
   right: - $small-px * 2;
+}
+
+.hidden{
+  visibility: hidden;
+  height: 0px;
 }
 
 .frame_collection {

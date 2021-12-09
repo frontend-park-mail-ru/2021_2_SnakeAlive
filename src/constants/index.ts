@@ -8,6 +8,8 @@ import {
 	sightURI,
 	sightsURI,
 	tripURI,
+	tripShare,
+	tripAddUser,
 	reviewsURI,
 	reviewURI,
 	queryParamsToGetReview,
@@ -48,4 +50,6 @@ export {
 	listOfCountries,
 	albumURI,
 	searchURI,
+	tripShare,
+	tripAddUser,
 };

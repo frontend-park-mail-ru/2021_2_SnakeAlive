@@ -8,6 +8,8 @@ const sightsURI = '/sights/';
 const tripURI = '/trip/';
 const postTripURI = '/trip';
 const tripCoord = '/trip/sights/';
+const tripShare = '/trip/share/';
+const tripAddUser = '/trip/user/';
 const reviewsURI = '/review/';
 const reviewURI = '/review';
 const upload = '/upload';
@@ -36,6 +38,8 @@ export {
 	postTripURI,
 	listOfCountries,
 	tripCoord,
+	tripShare,
+	tripAddUser,
 	albumURI,
 	photoURI,
 	searchURI,

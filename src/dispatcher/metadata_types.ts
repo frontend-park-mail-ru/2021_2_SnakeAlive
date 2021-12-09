@@ -98,9 +98,14 @@ export interface SightToTrip {
 export interface IsTrue {
 	isTrue: boolean;
 }
+
 export interface AlbumInfo {
 	title: string;
 	description: string;
+}
+
+export interface Email {
+	email: string;
 }
 
 export interface AlbumUpdateInfo {
@@ -130,4 +135,5 @@ export type DataType =
 	| Empty
 	| AlbumInfo
 	| AlbumUpdateInfo
-	| Search;
+	| Search
+	| Email;
