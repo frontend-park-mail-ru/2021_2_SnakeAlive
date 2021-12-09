@@ -67,6 +67,7 @@ export default class HeaderReducer {
 				}
 				return response.json();
 			})
+			// eslint-disable-next-line @typescript-eslint/no-empty-function
 			.then((data: GotProfileResponse) => {
 				storage.storeProfile(adaptGetProfileResponse(data));
 				dispatcher.notify(newSetMainHeaderLoggedResponse());

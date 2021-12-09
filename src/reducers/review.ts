@@ -5,12 +5,13 @@ import {
 	queryParamsToGetReview,
 	reviewsURI,
 	reviewURI,
+	userURI,
 } from '@/constants';
 import { createReviewForm, newGetReviewsRequest, newGetReviewsResponse } from '@/actions/review';
 import { initErrorPageRequest } from '@/actions/page';
 import { storage } from '@/storage';
 import { CreateReview, DataType, dispatcher, EventType, NumID, Token } from '@/dispatcher';
-import { CreateReviewRequest } from '@/models/review';
+import { CreateReviewRequest, UserReview } from '@/models/review';
 import {
 	adaptCreateReviewRequest,
 	adoptGotReview,
@@ -20,6 +21,7 @@ import {
 import { CreateReviewForm } from '@/dispatcher/metadata_types';
 import { GotProfileResponse } from '@/adapters/header';
 import { adaptGetProfileResponse } from '@/adapters/profile';
+import { router } from '@/router';
 
 export default class ReviewReducer {
 	#tokens: Token[];
@@ -54,7 +56,13 @@ export default class ReviewReducer {
 				storage.storeProfile(adaptGetProfileResponse(gotProfile));
 			}
 			this.#sendGetReviews(event.ID).then((reviews: ReviewGotInfo[]) => {
-				storage.storeReviews(adoptGotReview(reviews));
+				// const users = this.#getReviewsUsers(reviews);
+				const users: UserReview[] = [];
+				if (reviews) {
+					users.length = reviews.length;
+				}
+
+				storage.storeReviews(adoptGotReview(reviews, users));
 				dispatcher.notify(newGetReviewsResponse());
 			});
 		});
@@ -100,7 +108,10 @@ export default class ReviewReducer {
 				}
 				return Promise.resolve(response);
 			})
-			.then(response => response.json());
+			.then(response => response.json())
+			.catch(err => {
+				// console.log("get reviews:", err);
+			});
 
 	#sendDeleteReview = (reviewID: number): Promise<Response> =>
 		sendDeleteJSONRequest(backendEndpoint + reviewsURI + reviewID).then(response => {
@@ -133,4 +144,26 @@ export default class ReviewReducer {
 			}
 			return response.json();
 		});
+
+	// #getReviewsUsers = (reviews: ReviewGotInfo[]): UserReview[] => {
+	// 	const amount = reviews.length;
+	// 	const res: UserReview[] = [];
+	//
+	// 	reviews.forEach(review => sendGetJSONRequest(backendEndpoint + userURI + review.id)
+	// 			.then((response: Response) => {
+	// 				if (response.status === 200) {
+	// 					return Promise.resolve(response);
+	// 				}
+	// 				return Promise.reject(new Error(`got user with error ${response.status}`));
+	// 			})
+	// 			.then(user => user.json())
+	// 		// eslint-disable-next-line consistent-return
+	// 			.then((user: UserReview) => {
+	// 				res.push(user);
+	// 				if (res.length === amount) {
+	// 					return res;
+	// 				}
+	// 			})
+	// 			.catch(err => console.log(err)));
+	// }
 }

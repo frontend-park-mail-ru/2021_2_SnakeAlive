@@ -34,7 +34,13 @@ export class ReviewsView extends BasicView {
 
 	renderReviews = (): void => {
 		const reviews = storage.getReviews();
+		// console.log(reviews);
+
 		this.setView(reviewsListTemplate({ reviews }));
+
+		if (!reviews) {
+			return;
+		}
 
 		reviews.forEach(reviewInfo => {
 			// значит свой отзыв и можно его удалить

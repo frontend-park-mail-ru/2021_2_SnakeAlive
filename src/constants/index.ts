@@ -19,6 +19,7 @@ import {
 	tripCoord,
 	albumURI,
 	searchURI,
+	userURI,
 } from './uris';
 import { russiaFormName, russiaUriName, nicaraguaFormName, nicaraguaUriName } from './defaults';
 import { pathsURLfrontend, paramsURLfrontend } from '@/constants/frontendURIs';
@@ -52,4 +53,5 @@ export {
 	searchURI,
 	tripShare,
 	tripAddUser,
+	userURI,
 };

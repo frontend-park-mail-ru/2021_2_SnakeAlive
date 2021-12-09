@@ -19,6 +19,7 @@ const photoURI = '/photo/';
 const searchURI = 'search/';
 const tagsURI = '/sights/tag';
 const user = 'user';
+const userURI = '/user/';
 
 const queryParamsToGetReview = '?skip=0&limit=10';
 
@@ -45,4 +46,5 @@ export {
 	searchURI,
 	tagsURI,
 	user,
+	userURI,
 };
