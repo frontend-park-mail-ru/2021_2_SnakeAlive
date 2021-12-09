@@ -10,7 +10,13 @@ import {
 } from '@/actions/trip';
 import { newGetReviewsResponse } from '@/actions/review';
 import { sendGetJSONRequest } from '@/http';
-import { backendEndpoint, paramsURLfrontend, pathsURLfrontend, sightsURI, tripAddUser } from '@/constants';
+import {
+	backendEndpoint,
+	paramsURLfrontend,
+	pathsURLfrontend,
+	sightsURI,
+	tripAddUser,
+} from '@/constants';
 import tripSightsSelectTemplate from './sight_select.handlebars';
 import { Sight } from '@/models';
 import { storage } from '@/storage';
@@ -128,8 +134,6 @@ export const initDescription = (): void => {
 	}
 };
 
-
-
 export const initAddPartisipantBtn = (): void => {
 	const askConfirmBtn = document.getElementById('partisipant_add');
 	if (askConfirmBtn !== null) {
@@ -150,12 +154,12 @@ export const initAddPartisipantBtn = (): void => {
 			'click',
 			event => {
 				event.preventDefault();
-				console.log("click")
-				const addUserEmail = <HTMLInputElement>document.getElementById('search_trip_user')
-				if (addUserEmail !== null){
-					if(addUserEmail){
-						console.log("notify")
-						dispatcher.notify(addUserToTrip(addUserEmail.value))
+				console.log('click');
+				const addUserEmail = <HTMLInputElement>document.getElementById('search_trip_user');
+				if (addUserEmail !== null) {
+					if (addUserEmail) {
+						console.log('notify');
+						dispatcher.notify(addUserToTrip(addUserEmail.value));
 						if (document.getElementById('AddUserDropdown')?.classList.contains('show')) {
 							document.getElementById('AddUserDropdown')?.classList.remove('show');
 						}
@@ -167,26 +171,25 @@ export const initAddPartisipantBtn = (): void => {
 	} else {
 		// console.log('No button = ', addAlbumBtn);
 	}
-	dropDownToggle('AddUserDropdown', 'partisipant_add_img')
-}
+	dropDownToggle('AddUserDropdown', 'partisipant_add_img');
+};
 
-export const initShareBtn = (): void => {	
+export const initShareBtn = (): void => {
 	const askConfirmBtn = document.getElementById('share');
 	if (askConfirmBtn !== null) {
 		askConfirmBtn.addEventListener(
 			'click',
 			event => {
 				event.preventDefault();
-				dispatcher.notify(shareTrip())
-
+				dispatcher.notify(shareTrip());
 			},
 			false
 		);
 	} else {
 		//console.log('NO BTN ');
 	}
-	dropDownToggle('ShareLinkDropdown', 'share')
-}
+	dropDownToggle('ShareLinkDropdown', 'share');
+};
 
 export const initShareBtnCopy = (): void => {
 	const askConfirmBtn = document.getElementById('dropdown_share_link');
@@ -195,14 +198,14 @@ export const initShareBtnCopy = (): void => {
 			'click',
 			event => {
 				event.preventDefault();
-				navigator.clipboard.writeText(storage.getShareTripLink())
+				navigator.clipboard.writeText(storage.getShareTripLink());
 			},
 			false
 		);
 	} else {
 		//console.log('NO BTN ');
 	}
-}
+};
 
 const getFormInfo = (): {
 	title: string;

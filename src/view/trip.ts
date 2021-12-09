@@ -29,14 +29,16 @@ import typicalCollection from '../components/frame_collection.handlebars';
 import horisontalScroll from '@/components/horizontal_scroll/horisontal_scroll.handlebars';
 import { setListenersOnCards } from '@/view/profile';
 
+// eslint-disable-next-line camelcase
 import share_icon from '../../image/icon/share_56.svg';
-import addUser_icon from '../../image/icon/user_add_56.svg'
+// eslint-disable-next-line camelcase
+import addUser_icon from '../../image/icon/user_add_56.svg';
 import { adoptPartisipants } from '@/adapters/trip';
 
 // const partisipants = [
 // 	{id: 1, profilePhoto: "/image/7b205eb741a49105fcd425910545cc79.jpeg"},
 // 	{id: 1, profilePhoto: "/image/7b205eb741a49105fcd425910545cc79.jpeg"},
-// 	{id: 1, profilePhoto: "/image/7b205eb741a49105fcd425910545cc79.jpeg"}, 
+// 	{id: 1, profilePhoto: "/image/7b205eb741a49105fcd425910545cc79.jpeg"},
 // ]
 
 export class TripInfoView extends BasicView {
@@ -71,12 +73,12 @@ export class TripInfoView extends BasicView {
 	};
 
 	addUserToTrip = (metada: IsTrue): void => {
-		const isOk = metada.isTrue
-		
-	}
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		const isOk = metada.isTrue;
+	};
 
 	shareTrip = (): void => {
-		initShareBtnCopy()
+		initShareBtnCopy();
 	};
 
 	destroy = (): void => {
@@ -89,13 +91,13 @@ export class TripInfoView extends BasicView {
 
 	createTripEdit = () => {
 		const trip = storage.getCurrentTrip();
-		const partisipants = adoptPartisipants(trip.users)
+		const partisipants = adoptPartisipants(trip.users);
 		this.setView(
 			tripFormTemplate({
 				tripCreated: true,
 				title: trip.title,
 				description: trip.description,
-				partisipants:partisipants,
+				partisipants,
 				shareimg: share_icon,
 				addUserImg: addUser_icon,
 			})

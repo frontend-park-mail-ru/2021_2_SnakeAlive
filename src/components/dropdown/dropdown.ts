@@ -13,17 +13,17 @@ export const dropDownToggle = (dropdownId: string, trigerId: string): void => {
 		'click',
 		event => {
 			event.preventDefault();
-			const target = <HTMLDivElement>event.target
-			if (!target.classList.contains('dropdown_item')){
-			  	dropDownHide(dropdownId); 
-			};
+			const target = <HTMLDivElement>event.target;
+			if (!target.classList.contains('dropdown_item')) {
+				dropDownHide(dropdownId);
+			}
 		},
 		false
-	);	
-} 
+	);
+};
 
-export const dropDownHide = (dropdownId: string): void =>{
+export const dropDownHide = (dropdownId: string): void => {
 	if (document.getElementById(dropdownId)?.classList.contains('show')) {
 		document.getElementById(dropdownId)?.classList.remove('show');
-	} 
-}
+	}
+};

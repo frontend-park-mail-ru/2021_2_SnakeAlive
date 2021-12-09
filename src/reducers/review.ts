@@ -5,7 +5,6 @@ import {
 	queryParamsToGetReview,
 	reviewsURI,
 	reviewURI,
-	userURI,
 } from '@/constants';
 import { createReviewForm, newGetReviewsRequest, newGetReviewsResponse } from '@/actions/review';
 import { initErrorPageRequest } from '@/actions/page';
@@ -21,7 +20,6 @@ import {
 import { CreateReviewForm } from '@/dispatcher/metadata_types';
 import { GotProfileResponse } from '@/adapters/header';
 import { adaptGetProfileResponse } from '@/adapters/profile';
-import { router } from '@/router';
 
 export default class ReviewReducer {
 	#tokens: Token[];
@@ -108,10 +106,7 @@ export default class ReviewReducer {
 				}
 				return Promise.resolve(response);
 			})
-			.then(response => response.json())
-			.catch(err => {
-				// console.log("get reviews:", err);
-			});
+			.then(response => response.json());
 
 	#sendDeleteReview = (reviewID: number): Promise<Response> =>
 		sendDeleteJSONRequest(backendEndpoint + reviewsURI + reviewID).then(response => {

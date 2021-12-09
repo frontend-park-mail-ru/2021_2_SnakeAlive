@@ -1,9 +1,5 @@
 import { dispatcher, EventType, RegisterData, ValidationErrData } from '../dispatcher';
-import {
-	newSetEmptyHeaderRequest,
-	newSetEmptyHeaderResponse,
-	newSetMainHeaderStrongRequest,
-} from '@/actions/header';
+import { newSetEmptyHeaderResponse } from '@/actions/header';
 import { setValidationErrorRegister } from '@/actions/auth';
 import { sendPostJSONRequest } from '@/http';
 import { backendEndpoint, pathsURLfrontend, registerURI } from '@/constants';

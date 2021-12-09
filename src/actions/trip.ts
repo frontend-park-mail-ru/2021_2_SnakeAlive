@@ -90,7 +90,7 @@ const addUserToTrip = (email: string) =>
 	<IEvent>{
 		key: EventType.ADD_USER_TO_TRIP_REQUEST,
 		metadata: <Email>{
-			email: email,
+			email,
 		},
 	};
 
@@ -101,7 +101,6 @@ const getAddUserToTripResponse = (isOk: boolean) =>
 			isTrue: isOk,
 		},
 	};
-	
 
 export {
 	newGetTripRequest,

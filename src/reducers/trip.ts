@@ -16,7 +16,13 @@ import {
 	tripShare,
 	tripAddUser,
 } from '@/constants';
-import { newGetTripResult, rerenderTripCards, createTripEdit, newShareTripLink, getAddUserToTripResponse } from '@/actions/trip';
+import {
+	newGetTripResult,
+	rerenderTripCards,
+	createTripEdit,
+	newShareTripLink,
+	getAddUserToTripResponse,
+} from '@/actions/trip';
 import { newSetMainHeaderRequest } from '@/actions/header';
 import { NumID, CardOrderAndDay, TripInfo, Email } from '@/dispatcher/metadata_types';
 import { adoptForSend, adoptForCreate } from '@/adapters';
@@ -52,33 +58,33 @@ export default class TripReducer {
 	};
 
 	addUserToTrip = (metadata: Email): void => {
-		const tripID = storage.getCurrentTrip().id
-		const userToAdd: UserEmail = {email: metadata.email}
-		console.log("link :  ",backendEndpoint + tripAddUser + tripID)
+		const tripID = storage.getCurrentTrip().id;
+		const userToAdd: UserEmail = { email: metadata.email };
+		// console.log('link :  ', backendEndpoint + tripAddUser + tripID);
 		sendPostJSONRequest(backendEndpoint + tripAddUser + tripID, userToAdd)
 			.then(response => {
 				if (response.status === 404) {
-					dispatcher.notify(getAddUserToTripResponse(false))
+					dispatcher.notify(getAddUserToTripResponse(false));
 					return Promise.reject(new Error('Такой поездки не существует'));
 				}
 				if (response.status === 401) {
-					dispatcher.notify(getAddUserToTripResponse(false))
+					dispatcher.notify(getAddUserToTripResponse(false));
 					return Promise.reject(new Error('Нужно войти в систему'));
 				}
 				if (response.status === 400) {
-					dispatcher.notify(getAddUserToTripResponse(false))
+					dispatcher.notify(getAddUserToTripResponse(false));
 					return Promise.reject(new Error('Ошибка запроса'));
 				}
 				return Promise.resolve(response);
 			})
-			.then(response => {
-				dispatcher.notify(getAddUserToTripResponse(true))
+			.then(() => {
+				dispatcher.notify(getAddUserToTripResponse(true));
 			});
-	}
+	};
 
 	getShareTripLink = (): void => {
-		const tripID = storage.getCurrentTrip().id
-		sendPostJSONRequest(backendEndpoint + tripShare + tripID,"")
+		const tripID = storage.getCurrentTrip().id;
+		sendPostJSONRequest(backendEndpoint + tripShare + tripID, '')
 			.then(response => {
 				if (response.status === 404) {
 					return Promise.reject(new Error('Такой поездки не существует'));
@@ -93,11 +99,10 @@ export default class TripReducer {
 			})
 			.then(response => response.text())
 			.then(response => {
-				const link = backendEndpoint + response.substring(1,response.length-1)
-				storage.setShareTripLink(link)
-				dispatcher.notify(newShareTripLink())
+				const link = backendEndpoint + response.substring(1, response.length - 1);
+				storage.setShareTripLink(link);
+				dispatcher.notify(newShareTripLink());
 			});
-			
 	};
 
 	destroy = (): void => {

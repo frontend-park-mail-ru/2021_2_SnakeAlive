@@ -4,7 +4,7 @@ import { dispatcher, EventType, Token } from '@/dispatcher';
 import picture from '@/../image/snake_error.svg';
 import errorPage from '@/components/errorPage.handlebars';
 import offlinePage from '@/components/offline.handlebars';
-import { newSetEmptyHeaderRequest, newSetMainHeaderRequest } from '@/actions/header';
+import { newSetMainHeaderRequest } from '@/actions/header';
 import { makeHeader } from '@/components/header/header';
 
 export default class ErrorView extends BasicView {

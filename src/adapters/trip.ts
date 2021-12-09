@@ -30,8 +30,7 @@ export const adoptForCreate = (trip: Trip): TripFormInfo => {
 export const adoptPartisipants = (users: Array<number>): Array<Partisipants> => {
 	const partisipants: Array<Partisipants> = [];
 	users.forEach(user => {
-		partisipants.push({id: user, profilePhoto: "/image/7b205eb741a49105fcd425910545cc79.jpeg"})
-	})
-	return partisipants
-}
-
+		partisipants.push({ id: user, profilePhoto: '/image/7b205eb741a49105fcd425910545cc79.jpeg' });
+	});
+	return partisipants;
+};

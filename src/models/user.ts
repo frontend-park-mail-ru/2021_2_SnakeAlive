@@ -6,10 +6,10 @@ export interface UserMetadata {
 }
 
 export interface UserEmail {
-	email: string; 
+	email: string;
 }
 
 export interface Partisipants {
-	id: number; 
+	id: number;
 	profilePhoto: string;
 }
