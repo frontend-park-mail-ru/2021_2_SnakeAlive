@@ -112,7 +112,6 @@ export const initDelTripBtn = (): void => {
 			},
 			false
 		);
-	} else {
 	}
 };
 
@@ -129,8 +128,6 @@ export const initDescription = (): void => {
 			},
 			false
 		);
-	} else {
-		// console.log('NO DEL BTN ');
 	}
 };
 
@@ -145,8 +142,6 @@ export const initAddPartisipantBtn = (): void => {
 			},
 			false
 		);
-	} else {
-		//console.log('NO BTN ');
 	}
 	const addUserBtn = document.getElementById('add_user_btn');
 	if (addUserBtn !== null) {
@@ -168,8 +163,6 @@ export const initAddPartisipantBtn = (): void => {
 			},
 			false
 		);
-	} else {
-		// console.log('No button = ', addAlbumBtn);
 	}
 	dropDownToggle('AddUserDropdown', 'partisipant_add_img');
 };
@@ -185,8 +178,6 @@ export const initShareBtn = (): void => {
 			},
 			false
 		);
-	} else {
-		//console.log('NO BTN ');
 	}
 	dropDownToggle('ShareLinkDropdown', 'share');
 };
@@ -202,8 +193,6 @@ export const initShareBtnCopy = (): void => {
 			},
 			false
 		);
-	} else {
-		//console.log('NO BTN ');
 	}
 };
 

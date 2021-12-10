@@ -5,7 +5,7 @@
 			{{#if tripCreated}}
 			<div class='label-div trip_title_holder tripWrapper'>
 				<div class="col-8">
-					<label for="title">Название поездки: {{title}}</label>
+					<label for="title" class="h2">Название поездки: {{title}}</label>
 				</div>
 				<div class="col-4 btn dropdown_item" id="share">
 					<img class="share-btn dropdown_item" src="{{shareimg}}">
@@ -18,7 +18,7 @@
 
 			{{else}}	
 			<div class='label-div'>
-				<label for="title">Название поездки</label>
+				<label for="title" class="h2">Название поездки</label>
 			</div>
 			<input type="text" id="title" name="title" class="form__input" value="{{title}}"/>
 			{{/if}}
@@ -26,7 +26,7 @@
 
 	<div class="trip_form__input_holder">
 		<div class='label-div'>
-			<label for="comment_text">Информация о поездке</label>
+			<label for="comment_text" class="h2">Информация о поездке</label>
 		</div>
 		<div class="trip_form__input_holder__text">
 			<div class="comment_text_hidden">
@@ -53,7 +53,7 @@
 
 {{#if tripCreated}}
 	<div class="trip_form__horizontal_holder">
-		<p >Участники:</p>
+		<p class="h2">Участники:</p>
 	</div>
 	<div class="trip_form__horizontal_holder partisipants_holder">
 		{{#each partisipants}}
