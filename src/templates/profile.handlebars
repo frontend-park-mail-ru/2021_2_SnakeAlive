@@ -8,10 +8,13 @@
         <div class="profile__data-holder profile_show__data__name">{{profile.meta.name}} {{profile.meta.surname}} </div>
         <div class="profile__data-holder profile__data-holder__email profile_show__data__email">{{profile.meta.email}} </div>
     </div>
-    <div id="btn_block" class="profile_show__btns">
-        <button id="profile__edit_btn" class="profile__edit-btn ">Редактировать</button>
-        <button id="profile__logout_btn" class="profile__close-btn">Выйти</button>
-    </div>
+		{{#if isAlien}}
+			<div id="btn_block" class="profile_show__btns">
+					<button id="profile__edit_btn" class="profile__edit-btn ">Редактировать</button>
+					<button id="profile__logout_btn" class="profile__close-btn">Выйти</button>
+			</div>
+		{{/if}}
+
 	</div>
 
 

@@ -45,9 +45,19 @@ const logoutRequest = (): IEvent =>
 		metadata: <Empty>{},
 	};
 
+// alien_profile
+
+
+const newGetAlienProfileResponse = (): IEvent =>
+	<IEvent>{
+		key: EventType.GET_ALIEN_PROFILE_RESPONSE,
+		metadata: <Empty>{},
+	};
+
 export {
 	newGetProfileRequest,
 	newGetProfileResponse,
+	newGetAlienProfileResponse,
 	newUpdateProfileMetadataRequest,
 	newUpdateProfilePhotoRequest,
 	logoutRequest,
