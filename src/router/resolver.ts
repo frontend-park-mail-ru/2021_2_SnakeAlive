@@ -11,9 +11,9 @@ import {
 	initTagPageRequest,
 	initTripPageRequest,
 	newInitPageRequest,
-	initTripEditPageRequest,
+	initTripEditPageRequest, initAlienProfileRequest, initSearchPageRequest,
 } from '@/actions/page';
-import { newGetProfileRequest } from '@/actions/profile';
+import { newGetAlienProfileRequest, newGetProfileRequest } from '@/actions/profile';
 import { showLoginForm, showRegisterForm } from '@/actions/auth';
 import { newGetReviewsRequest } from '@/actions/review';
 import { newGetSightRequest } from '@/actions/sight';
@@ -21,6 +21,7 @@ import { newInitCountryRequest } from '@/actions/country';
 import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
 import { createAlbumFormRequest, newGetAlbumRequest } from '@/actions/album';
 import { newTagRequest } from '@/actions/tag';
+import { initEmptySearchPageRequest } from '@/actions/search';
 
 const pathErrorEvent: IEvent = initErrorPageRequest(new Error('Неверная ссылка'));
 
@@ -125,8 +126,24 @@ export const notifier = (path: URL): void /* IEvent */ => {
 				dispatcher.notify(initTagPageRequest());
 				dispatcher.notify(newTagRequest(params.tag));
 			} else {
-				dispatcher.notify(initErrorPageRequest(Error('эта страна не поддерживается')));
+				dispatcher.notify(initErrorPageRequest(Error('нет такого тега')));
 			}
+			break;
+		}
+		// /user?id=3
+		case pathsURLfrontend.users: {
+			const params = tryGetParam([paramsURLfrontend.id], path);
+			if (params.id) {
+				dispatcher.notify(initAlienProfileRequest());
+				dispatcher.notify(newGetAlienProfileRequest(params.id));
+			} else {
+				dispatcher.notify(initErrorPageRequest(Error('Кто это? Нет такого пользователя')));
+			}
+			break;
+		}
+		case pathsURLfrontend.search: {
+			dispatcher.notify(initSearchPageRequest());
+			dispatcher.notify(initEmptySearchPageRequest());
 			break;
 		}
 		default:

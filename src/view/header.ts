@@ -11,6 +11,7 @@ import { IsTrue } from '@/dispatcher/metadata_types';
 import { initSearchView, SearchView } from '@/components/search/search';
 import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
+import { searchPlaceType } from '@/models/search';
 
 export default class HeaderView extends BasicView {
 	#tokens: Token[];
@@ -56,8 +57,8 @@ export default class HeaderView extends BasicView {
 		// поиск
 		const searchPlace = document.getElementById('header-search-place');
 		if (searchPlace !== null) {
-			searchPlace.innerHTML = initSearchView('header');
-			this.#search = new SearchView('header', (id: string) => {
+			searchPlace.innerHTML = initSearchView(searchPlaceType.header, true);
+			this.#search = new SearchView(searchPlaceType.header, (id: string) => {
 				router.go(
 					createFrontendQueryParams(pathsURLfrontend.sight, [
 						{
@@ -84,8 +85,8 @@ export default class HeaderView extends BasicView {
 		// поиск
 		const searchPlace = document.getElementById('header-search-place');
 		if (searchPlace !== null) {
-			searchPlace.innerHTML = initSearchView('header');
-			this.#search = new SearchView('header', (id: string) => {
+			searchPlace.innerHTML = initSearchView(searchPlaceType.header, true);
+			this.#search = new SearchView(searchPlaceType.header, (id: string) => {
 				router.go(
 					createFrontendQueryParams(pathsURLfrontend.sight, [
 						{

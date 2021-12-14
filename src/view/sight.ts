@@ -29,32 +29,36 @@ export default class SightView extends BasicView {
 		const sight = storage.getSight();
 
 		const adoptedTags: Array<TagAdoptedForRender> = [];
-		sight.tags.forEach(tag => {
-			adoptedTags.push({
-				name: tag,
-				sightPP: 0,
+		if (sight.tags) {
+			sight.tags.forEach(tag => {
+				adoptedTags.push({
+					name: tag,
+					sightPP: 0,
+				});
 			});
-		});
+		}
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore
 		sight.tags = adoptedTags;
 		this.setView(createSightTemplate(sight));
 
-		adoptedTags.forEach(tag => {
-			const tegElem = document.getElementById(`tag_${tag.name}_0`);
-			if (tegElem !== null) {
-				tegElem.addEventListener('click', () => {
-					router.go(
-						createFrontendQueryParams(pathsURLfrontend.tag, [
-							{
-								key: paramsURLfrontend.tag,
-								value: tag.name,
-							},
-						])
-					);
-				});
-			}
-		});
+		if (adoptedTags) {
+			adoptedTags.forEach(tag => {
+				const tegElem = document.getElementById(`tag_${tag.name}_0`);
+				if (tegElem !== null) {
+					tegElem.addEventListener('click', () => {
+						router.go(
+							createFrontendQueryParams(pathsURLfrontend.tag, [
+								{
+									key: paramsURLfrontend.tag,
+									value: tag.name,
+								},
+							])
+						);
+					});
+				}
+			});
+		}
 
 		dispatcher.notify(createReviewForm());
 		// this.setView(`<div class='full-page'>${JSON.stringify(storage.getSight(), null, 4)}</div>`);

@@ -1,4 +1,5 @@
 import { TripFormInfo } from '@/models/trip';
+import { searchPlaceType } from '@/models/search';
 
 export interface Empty {}
 
@@ -16,7 +17,7 @@ export interface UUID {
 }
 
 export interface Search {
-	type: string;
+	type: searchPlaceType;
 	text: string;
 }
 

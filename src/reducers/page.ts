@@ -19,6 +19,10 @@ import AlbumReducer from '@/reducers/album';
 import { AlbumView } from '@/view/album';
 import TagReducer from '@/reducers/tag';
 import { TagCardsHolderView, TagHolderView } from '@/view/tag';
+import AlienProfileReducer from '@/reducers/alien_profile';
+import AlienProfileView from '@/view/alien_profile';
+import SearchPageReducer from '@/reducers/search_page';
+import { SearchHolderView } from '@/view/search_page';
 
 export default class PageReducer {
 	// constructor() {
@@ -38,6 +42,8 @@ export default class PageReducer {
 		dispatcher.register(EventType.INIT_PROFILE_PAGE_REQUEST, this.createProfilePage);
 
 		dispatcher.register(EventType.INIT_TAG_PAGE_REQUEST, this.createTagPage);
+		dispatcher.register(EventType.INIT_ALIEN_PROFILE_PAGE_REQUEST, this.createAlienProfilePage);
+		dispatcher.register(EventType.INIT_SEARCH_PAGE_REQUEST, this.createSearchPage);
 	};
 
 	createInitPage = (): void => {
@@ -156,4 +162,24 @@ export default class PageReducer {
 		const tagCardsHolderView: TagCardsHolderView = new TagCardsHolderView();
 		tagCardsHolderView.init();
 	};
+
+	createAlienProfilePage = (): void => {
+		dispatcher.notify(destroyCurrentPage());
+
+		const alienProfileReducer: AlienProfileReducer = new AlienProfileReducer();
+		alienProfileReducer.init();
+
+		const alienProfileView: AlienProfileView = new AlienProfileView();
+		alienProfileView.init();
+	};
+
+	createSearchPage = () => {
+		dispatcher.notify(destroyCurrentPage());
+
+		const searchPageReducer: SearchPageReducer = new SearchPageReducer();
+		searchPageReducer.init();
+
+		const searchHolderView: SearchHolderView = new SearchHolderView();
+		searchHolderView.init();
+	}
 }

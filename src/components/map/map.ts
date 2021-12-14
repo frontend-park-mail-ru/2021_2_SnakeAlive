@@ -1,10 +1,11 @@
 import BasicView from '@/view/view';
-import { sendGetJSONRequest, sendPostJSONRequest } from '@/http';
-import { backendEndpoint, sightURI, tripCoord, sightsURI, searchURI } from '@/constants';
-import { NumID, CardOrderAndDay, SightToTrip, SubmitTripInfo } from '@/dispatcher/metadata_types';
+import { sendGetJSONRequest } from '@/http';
+import { backendEndpoint, searchURI, sightsURI, sightURI } from '@/constants';
+import { CardOrderAndDay, NumID } from '@/dispatcher/metadata_types';
 import { SightDay, SightsCoord } from '@/models';
 import { Loader } from '@googlemaps/js-api-loader';
 import { storage } from '@/storage';
+import { searchPlaceType } from '@/models/search';
 //import { loader } from '@/storage';
 
 export const loader = new Loader({
@@ -56,8 +57,8 @@ export class Map extends BasicView {
 				this.#map.setCenter({ lat: lat, lng: lng });
 				const marker = new google.maps.Marker({
 					position: {
-						lat: Number(storage.getSearchSightsResult('trip')[0].lat),
-						lng: Number(storage.getSearchSightsResult('trip')[0].lng),
+						lat: Number(storage.getSearchSightsResult(searchPlaceType.trip)[0].lat),
+						lng: Number(storage.getSearchSightsResult(searchPlaceType.trip)[0].lng),
 					},
 					map: this.#map,
 				});
@@ -89,18 +90,18 @@ export class Map extends BasicView {
 					})
 					.then(response => response.json())
 					.then(response => {
-						storage.storeSearchSightsResult('trip', response);
+						storage.storeSearchSightsResult(searchPlaceType.trip, response);
 					})
 					.then(() => {
 						this.#coord.push({
 							id: Number(sight.id),
-							lng: Number(storage.getSearchSightsResult('trip')[0].lng),
-							lat: Number(storage.getSearchSightsResult('trip')[0].lat),
+							lng: Number(storage.getSearchSightsResult(searchPlaceType.trip)[0].lng),
+							lat: Number(storage.getSearchSightsResult(searchPlaceType.trip)[0].lat),
 						});
 						const marker = new google.maps.Marker({
 							position: {
-								lat: Number(storage.getSearchSightsResult('trip')[0].lat),
-								lng: Number(storage.getSearchSightsResult('trip')[0].lng),
+								lat: Number(storage.getSearchSightsResult(searchPlaceType.trip)[0].lat),
+								lng: Number(storage.getSearchSightsResult(searchPlaceType.trip)[0].lng),
 							},
 							map: this.#map,
 						});

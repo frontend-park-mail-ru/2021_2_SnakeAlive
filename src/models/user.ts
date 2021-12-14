@@ -13,3 +13,7 @@ export interface Partisipants {
 	id: number;
 	profilePhoto: string;
 }
+
+export interface tripUser {
+	id: number,
+}

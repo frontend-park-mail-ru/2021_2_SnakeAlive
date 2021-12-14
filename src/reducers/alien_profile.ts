@@ -1,4 +1,5 @@
 import {
+	AlienProfileTrip,
 	GetProfileResponse,
 	ProfileAlbum,
 	ProfileTrip,
@@ -23,28 +24,25 @@ import {
 import {
 	adaptGetProfileResponse,
 	adaptUpdateProfileMetadataRequest,
-	adaptUpdateProfileMetadataResponse,
+	adaptUpdateProfileMetadataResponse, adoptAlienProfileTrips, // adoptAlienProfileAlbums, adoptAlienProfileTrips,
 	adoptProfileAlbums,
 	adoptProfileTrips,
 } from '@/adapters/profile';
 import { storage } from '@/storage';
-import { dispatcher, EventType, File, Token, UpdateProfile } from '@/dispatcher';
-import { newGetProfileRequest, newGetProfileResponse } from '@/actions/profile';
+import { dispatcher, EventType, File, NamedUUID, Token, UpdateProfile, UUID } from '@/dispatcher';
+import { newGetAlienProfileResponse, newGetProfileRequest, newGetProfileResponse } from '@/actions/profile';
 import { initErrorPageRequest } from '@/actions/page';
-import { newSetEmptyHeaderRequest } from '@/actions/header';
+import { newSetEmptyHeaderRequest, newSetMainHeaderRequest } from '@/actions/header';
 import { router } from '@/router';
-import { user } from '@/constants/uris';
+import { alienUser, user } from '@/constants/uris';
 
 export default class AlienProfileReducer {
 	#tokens: Token[];
 
 	constructor() {
 		this.#tokens = [
-			dispatcher.register(EventType.GET_PROFILE_REQUEST, this.getProfile),
-			dispatcher.register(EventType.UPDATE_PROFILE_METADATA_REQUEST, this.updateProfileMetadata),
-			dispatcher.register(EventType.UPDATE_PROFILE_PHOTO_REQUEST, this.updateProfilePhoto),
+			dispatcher.register(EventType.GET_ALIEN_PROFILE_REQUEST, this.getProfile),
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
-			dispatcher.register(EventType.LOGOUT_REQUEST, this.sendLogoutRequest),
 		];
 	}
 
@@ -57,28 +55,25 @@ export default class AlienProfileReducer {
 		});
 	};
 
-	getProfile = (): void => {
-		dispatcher.notify(newSetEmptyHeaderRequest(true)); // ???
-		this.#sendGetProfile()
+	getProfile = (metadata: UUID): void => {
+		dispatcher.notify(newSetMainHeaderRequest()); // ???
+		this.#sendGetProfile(metadata.ID)
 			.then((response: GetProfileResponse) => {
 				storage.storeProfile(adaptGetProfileResponse(response));
 
-				this.#getAlienProfileTrips().then((trips: ProfileTrip[]) => {
-					storage.storeProfileTrips(adoptProfileTrips(trips));
-					this.#getAlienProfileAlbums().then((albums: ProfileAlbum[]) => {
-						storage.storeProfileAlbums(adoptProfileAlbums(albums));
-
-						dispatcher.notify(newGetProfileResponse());
-					});
+				this.#getProfileTripsForAlian().then((trips: AlienProfileTrip[]) => {
+					storage.storeProfileTrips(adoptAlienProfileTrips(trips, metadata.ID));
+						dispatcher.notify(newGetAlienProfileResponse());
 				});
+
 			})
 			.catch((error: Error) => {
 				dispatcher.notify(initErrorPageRequest(error));
 			});
 	};
 
-	#sendGetProfile = (): Promise<GetProfileResponse> =>
-		sendGetJSONRequest(backendEndpoint + profile)
+	#sendGetProfile = (id: string): Promise<GetProfileResponse> =>
+		sendGetJSONRequest(backendEndpoint + alienUser + id)
 			.then(response => {
 				if (response.status === 404) {
 					return Promise.reject(new Error('На сайте нет такой страницы'));
@@ -90,13 +85,8 @@ export default class AlienProfileReducer {
 			})
 			.then(response => response.json());
 
-	#getAlienProfileTrips = (): Promise<ProfileTrip[]> =>
+	#getProfileTripsForAlian = (): Promise<AlienProfileTrip[]> =>
 		sendGetJSONRequest(backendEndpoint + tripURI + user)
-			.then(response => Promise.resolve(response))
-			.then(response => response.json());
-
-	#getAlienProfileAlbums = (): Promise<ProfileAlbum[]> =>
-		sendGetJSONRequest(backendEndpoint + albumURI + user)
 			.then(response => Promise.resolve(response))
 			.then(response => response.json());
 

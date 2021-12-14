@@ -1,3 +1,5 @@
+import { tripUser } from '@/models/user';
+
 export interface GetProfileResponse {
 	name: string;
 	surname: string;
@@ -51,4 +53,12 @@ export interface ProfileAlbum {
 	title: string;
 	description: string;
 	photos: string[];
+}
+
+export interface AlienProfileTrip {
+	htmlId: string;
+	id: number;
+	title: string;
+	description: string;
+	users: tripUser[];
 }

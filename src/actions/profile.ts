@@ -1,4 +1,4 @@
-import { Empty, EventType, IEvent, File } from '@/dispatcher';
+import { Empty, EventType, IEvent, File, UUID } from '@/dispatcher';
 import { UpdateProfile } from '@/dispatcher/metadata_types';
 
 const newGetProfileRequest = (): IEvent =>
@@ -54,8 +54,17 @@ const newGetAlienProfileResponse = (): IEvent =>
 		metadata: <Empty>{},
 	};
 
+const newGetAlienProfileRequest = (ID: string): IEvent =>
+	<IEvent>{
+		key: EventType.GET_ALIEN_PROFILE_REQUEST,
+		metadata: <UUID>{
+			ID
+		},
+	};
+
 export {
 	newGetProfileRequest,
+	newGetAlienProfileRequest,
 	newGetProfileResponse,
 	newGetAlienProfileResponse,
 	newUpdateProfileMetadataRequest,

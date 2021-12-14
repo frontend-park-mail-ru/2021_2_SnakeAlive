@@ -1,4 +1,5 @@
 import {
+	AlienProfileTrip,
 	GetProfileResponse,
 	Profile,
 	ProfileAlbum,
@@ -76,6 +77,26 @@ export const adoptProfileAlbums = (albums: ProfileAlbum[]): ProfileAlbum[] => {
 			album.htmlId = `go_album_${album.id}`;
 		});
 		return albums;
+	}
+	return [];
+};
+
+export const adoptAlienProfileTrips = (trips: AlienProfileTrip[], alienId: string): ProfileTrip[] => {
+	if (trips) {
+		const commonTrips: ProfileTrip[] = trips.filter(trip => {
+			let isCommon = false;
+			trip.users.forEach(user => {
+				if (user.id.toString() === alienId) {
+					isCommon = true;
+				}
+			});
+			return isCommon;
+		})
+		commonTrips.forEach(trip => {
+			// eslint-disable-next-line no-param-reassign
+			trip.htmlId = `go_trip_${trip.id}`;
+		});
+		return commonTrips;
 	}
 	return [];
 };

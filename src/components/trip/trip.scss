@@ -170,6 +170,10 @@
 
 .partisipant{
   margin-inline-end: -8px;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .dropdown_user_add_header{

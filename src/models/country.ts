@@ -14,6 +14,7 @@ interface CountryResponse {
 }
 
 interface CountryCardResponse {
+	descripton: string;
 	id: number;
 	name: string;
 	tags: string[];
@@ -37,6 +38,7 @@ interface CountryCard {
 	comment: string;
 	tags: CountryCardTag[];
 	imgs: CountryCardPhoto[];
+	description: string;
 }
 
 interface TemplateCards {
@@ -53,6 +55,12 @@ export interface minCardInfo {
 		photo: string;
 	};
 	PP: number;
+}
+
+export interface SearchCountry {
+	name: string;
+	ID: string;
+	translation: string;
 }
 
 export {

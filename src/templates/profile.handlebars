@@ -8,19 +8,25 @@
         <div class="profile__data-holder profile_show__data__name">{{profile.meta.name}} {{profile.meta.surname}} </div>
         <div class="profile__data-holder profile__data-holder__email profile_show__data__email">{{profile.meta.email}} </div>
     </div>
-		{{#if isAlien}}
+		{{#unless isAlien}}
 			<div id="btn_block" class="profile_show__btns">
 					<button id="profile__edit_btn" class="profile__edit-btn ">Редактировать</button>
 					<button id="profile__logout_btn" class="profile__close-btn">Выйти</button>
 			</div>
-		{{/if}}
+		{{/unless}}
 
 	</div>
 
 
 	{{#if trips}}
 		<div class='profile_show__trips frame_collection'>
-			<div class='frame_collection__header'><p>Мои поездки</p></div>
+			<div class='frame_collection__header'><p>
+				{{#if isAlien}}
+					Совместные поездки
+				{{else}}
+					Мои поездки
+				{{/if}}
+			</p></div>
 			<div class='frame_collection__wrapper'>
 				{{#each trips}}
 					<div id="{{this.htmlId}}" class='frame_collection__card frame_collection__card_inline'>

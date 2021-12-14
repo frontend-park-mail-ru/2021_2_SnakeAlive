@@ -17,6 +17,9 @@
   &__input:active,
   &__input:focus,
   &__input:hover {
+    &::-webkit-calendar-picker-indicator {
+      display: none !important;
+    }
     border: none;
     padding: 0 5px;
   }

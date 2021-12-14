@@ -5,26 +5,56 @@ import './search.scss';
 import { dispatcher, EventType } from '@/dispatcher';
 import { storage } from '@/storage';
 import { Search } from '@/dispatcher/metadata_types';
-import { searchRequest, searchSubmit } from '@/actions/search';
+import { initEmptySearchPageRequest, searchRequest, searchSubmit } from '@/actions/search';
 import { throttle } from 'throttle-typescript';
+import { router } from '@/router';
+import { pathsURLfrontend } from '@/constants';
+import { searchPlaceType } from '@/models/search';
 
-export const initSearchView = (type: string): string => searchTemplate({ icon: imgSearch, type });
+export const initSearchView = (type: searchPlaceType, needsPageGoBtn: boolean): string => searchTemplate({ icon: imgSearch, type, needsPageGoBtn });
 
 export class SearchView {
-	#type = '';
+	#type: searchPlaceType;
 
 	#callback: (id: string) => void;
 
+	#inputCallback: (str: string) => void;
+
+	#goSearchCallback: () => void;
+
 	#searchList: HTMLElement | null = null;
 
-	constructor(type: string, callback: (id: string) => void) {
+	#value = '';
+
+	constructor(type: searchPlaceType,
+							callback: (id: string) => void,
+							inputCallback: (text: string) => void =
+								(text: string) => {
+									dispatcher.notify(searchRequest(text, this.#type))
+								},
+							goSearchCallback: () => void =
+								() => {
+									router.go(pathsURLfrontend.search, this.#value);
+								}) {
 		this.#type = type;
 
 		this.#callback = callback;
 
+		this.#inputCallback = inputCallback;
+
+		this.#goSearchCallback = goSearchCallback;
+
 		const searchList = document.getElementById(`search_list_${type}`);
 		if (searchList !== null) {
 			this.#searchList = searchList;
+		}
+
+		const goPageBtn = document.getElementById(`go_search_page_${type}`);
+		if (goPageBtn !== null) {
+			goPageBtn.addEventListener('click', event => {
+				event.preventDefault();
+				this.#goSearchCallback();
+			}, false);
 		}
 
 		const input = <HTMLInputElement>document.getElementById(`search_${type}`);
@@ -32,8 +62,7 @@ export class SearchView {
 		if (input !== null) {
 			input.addEventListener('keydown', e => {
 				if (e.key === 'Enter') {
-					//console.log("SearchSubmit =  ", storage.getSearchSightsResult(this.#type));
-					dispatcher.notify(searchSubmit());
+					goSearchCallback();
 					e.preventDefault();
 				}
 			});
@@ -41,7 +70,7 @@ export class SearchView {
 			input.addEventListener(
 				'input',
 				() => {
-					dispatcher.notify(searchRequest(input.value, this.#type));
+					inputCallback(input.value)
 				},
 				false
 			);
@@ -50,6 +79,7 @@ export class SearchView {
 				'input',
 				() => {
 					const { value } = input;
+					this.#value = value;
 					if (this.#searchList !== null) {
 						const values = <HTMLOptionElement[]>(<unknown>this.#searchList.childNodes);
 						values.forEach(option => {

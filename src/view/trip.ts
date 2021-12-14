@@ -1,24 +1,24 @@
 import BasicView from '@/view/view';
-import { dispatcher, EventType, Token, NumID } from '@/dispatcher';
+import { dispatcher, EventType, NumID, Token } from '@/dispatcher';
 import tripPageTemplate from '@/components/trip/trip.handlebars';
 import tripFormTemplate from '@/components/trip/trip_form.handlebars';
 import tripSights from '@/components/trip/trip_sights.handlebars';
 import {
 	init,
-	initEdit,
+	initAddPartisipantBtn,
 	initDelSightsBtns,
 	initDelTripBtn,
-	initSubmitTripBtn,
 	initDescription,
-	initAddPartisipantBtn,
+	initEdit,
 	initShareBtn,
 	initShareBtnCopy,
+	initSubmitTripBtn,
 } from '@/components/trip/trip_form';
 import { Map } from '@/components/map/map';
-import { pathsURLfrontend } from '@/constants';
+import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
 import { IsTrue, SightToTrip } from '@/dispatcher/metadata_types';
 import { storage } from '@/storage';
-import { newGetTripRequest, addPlaceToTrip, delPlaceFromTrip } from '@/actions/trip';
+import { addPlaceToTrip, delPlaceFromTrip, newGetTripRequest } from '@/actions/trip';
 import { SightCardInTrip } from '@/view/sight_cards';
 import defaultPicture from '@/../image/moscow_city_1.jpeg';
 import { initSearchView, SearchView } from '@/components/search/search';
@@ -34,12 +34,51 @@ import share_icon from '../../image/icon/share_56.svg';
 // eslint-disable-next-line camelcase
 import addUser_icon from '../../image/icon/user_add_56.svg';
 import { adoptPartisipants } from '@/adapters/trip';
+import { Partisipants } from '@/models';
+import { createFrontendQueryParams } from '@/router/router';
+import { searchPlaceType } from '@/models/search';
 
 // const partisipants = [
 // 	{id: 1, profilePhoto: "/image/7b205eb741a49105fcd425910545cc79.jpeg"},
 // 	{id: 1, profilePhoto: "/image/7b205eb741a49105fcd425910545cc79.jpeg"},
 // 	{id: 1, profilePhoto: "/image/7b205eb741a49105fcd425910545cc79.jpeg"},
 // ]
+
+const initPartisipantsBtns = (partisipants: Array<Partisipants>): void => {
+	// id="partisipant_1"
+	if (! partisipants) {
+		return;
+	}
+
+	console.log('f');
+
+	partisipants.forEach(user => {
+		// @ts-ignore
+		const btn = document.getElementById(`partisipant_${user.id.id}`);
+		// @ts-ignore
+		console.log(`partisipant_${user.id.id}`);
+		console.log(btn);
+		if (btn !== null) {
+			btn.addEventListener('click',
+				event => {
+					event.preventDefault();
+					console.log(storage.getProfile().meta.id);
+					// @ts-ignore
+					if (user.id.id === storage.getProfile().meta.id) {
+						router.go(pathsURLfrontend.profile);
+					} else {
+						router.go(createFrontendQueryParams(pathsURLfrontend.users, [
+							{
+								key: paramsURLfrontend.id,
+								// @ts-ignore
+								value: user.id.id.toString()
+							}
+						]))
+					}
+				}, false);
+		}
+	});
+}
 
 export class TripInfoView extends BasicView {
 	#tokens: Token[];
@@ -104,9 +143,9 @@ export class TripInfoView extends BasicView {
 		);
 		const searchPlace = document.getElementById('trip-search-place');
 		if (searchPlace !== null) {
-			searchPlace.innerHTML = initSearchView('trip');
+			searchPlace.innerHTML = initSearchView(searchPlaceType.trip, false);
 			// eslint-disable-next-line @typescript-eslint/no-empty-function
-			this.#search = new SearchView('trip', () => {});
+			this.#search = new SearchView(searchPlaceType.trip, () => {});
 		}
 
 		const addAlbumBtn = document.getElementById('btn-add-album');
@@ -128,6 +167,8 @@ export class TripInfoView extends BasicView {
 		initSubmitTripBtn();
 		initAddPartisipantBtn();
 		initShareBtn();
+
+		initPartisipantsBtns(partisipants);
 
 		const albumPlace = document.getElementById('trip_albums_holder');
 		if (albumPlace !== null) {
@@ -166,7 +207,7 @@ export class TripInfoView extends BasicView {
 	};
 
 	addPlace = () => {
-		const place = storage.getSearchSightsResult('trip')[0];
+		const place = storage.getSearchSightsResult(searchPlaceType.trip)[0];
 		const day = 0;
 		dispatcher.notify(addPlaceToTrip(place, day));
 	};

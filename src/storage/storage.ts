@@ -1,8 +1,10 @@
 import { Country, Sight, TemplateCards, Trip, UserMetadata } from '@/models';
 import { Profile, ProfileAlbum, ProfileMetadata, ProfileTrip } from '@/models/profile';
 import { Review } from '@/models/review';
-import { minCardInfo } from '@/models/country';
+import { minCardInfo, SearchCountry } from '@/models/country';
 import { Album } from '@/models/album';
+import { AdoptedTag, TagResponse } from '@/models/tags';
+import { searchPlaceType, SearchRequest } from '@/models/search';
 
 class Storage {
 	#countryCards: TemplateCards;
@@ -32,13 +34,19 @@ class Storage {
 	#addTripUserLink = '';
 
 	#searchSightsResult: {
-		type: string;
+		type: searchPlaceType;
 		sights: Sight[];
 	}[];
 
 	#profileTrips: ProfileTrip[];
 
 	#profileAlbums: ProfileAlbum[];
+
+	#countryList: SearchCountry[];
+
+	#tagList: AdoptedTag[];
+
+	#searchRequest: SearchRequest;
 
 	constructor() {
 		this.#countryCards = <TemplateCards>{};
@@ -54,6 +62,9 @@ class Storage {
 		this.#searchSightsResult = [];
 		this.#profileTrips = <ProfileTrip[]>{};
 		this.#profileAlbums = <ProfileAlbum[]>{};
+		this.#countryList = [];
+		this.#tagList = [];
+		this.#searchRequest = <SearchRequest>{};
 	}
 
 	addLastTripId = (id: number) => {
@@ -128,14 +139,14 @@ class Storage {
 
 	getAlbumTripId = (): string => this.#albumTripId;
 
-	storeSearchSightsResult = (type: string, sights: Sight[]): void => {
+	storeSearchSightsResult = (type: searchPlaceType, sights: Sight[]): void => {
 		this.#searchSightsResult.push({
 			type,
 			sights,
 		});
 	};
 
-	getSearchSightsResult = (type: string): Sight[] => {
+	getSearchSightsResult = (type: searchPlaceType): Sight[] => {
 		let result: Sight[] = [];
 		// eslint-disable-next-line consistent-return
 		this.#searchSightsResult.forEach(obj => {
@@ -169,6 +180,32 @@ class Storage {
 	};
 
 	getAddTripUserLink = (): string => this.#addTripUserLink;
+
+	storeGotSearchCountries = (countries: SearchCountry[]) => {
+		this.#countryList = countries;
+	}
+
+	getSearchCountries = (): SearchCountry[] => this.#countryList;
+
+	storeGotSearchTags = (tags: TagResponse[]) => {
+		this.#tagList = tags;
+	}
+
+	getSearchTags = (): TagResponse[] => this.#tagList;
+
+	storeSearchRequestCountries = (countries: string[]) => {
+		this.#searchRequest.countries = countries;
+	}
+
+	storeSearchRequestTags = (tags: number[]) => {
+		this.#searchRequest.tags = tags;
+	}
+
+	storeSearchRequestText = (search: string) => {
+		this.#searchRequest.search = search;
+	}
+
+	getSearchRequest = () => this.#searchRequest;
 }
 
 export const storage = new Storage();

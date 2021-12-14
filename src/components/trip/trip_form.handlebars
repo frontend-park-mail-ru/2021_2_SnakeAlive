@@ -57,7 +57,7 @@
 	</div>
 	<div class="trip_form__horizontal_holder partisipants_holder">
 		{{#each partisipants}}
-		<div class="partisipant" id="partisipant_{{this.id}}">
+		<div class="partisipant" id="partisipant_{{this.id.id}}" title="{{this.id.name}}">
 			<img class="trip-partisipant-circle-img" src="{{this.profilePhoto}}">
 		</div>
 		{{/each}}

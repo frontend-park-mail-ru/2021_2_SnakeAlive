@@ -9,6 +9,8 @@ export const enum pathsURLfrontend {
 	album = '/album',
 	sights = '/sights',
 	tag = '/tag',
+	users = '/user',
+	search = '/search'
 }
 
 export const enum paramsURLfrontend {

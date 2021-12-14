@@ -2,5 +2,8 @@
 	<img class="search_area__icon" src="{{icon}}" alt="🔍">
 	<input id="search_{{type}}" list="search_list_{{type}}" class="search_area__input">
 	<datalist id="search_list_{{type}}"></datalist>
+	{{#if needsPageGoBtn}}
+		<button class='usual_button usual_button_dark' id='go_search_page_{{type}}'><img class="search_area__icon" src="{{icon}}" alt="🔍"></button>
+	{{/if}}
 </div>
 

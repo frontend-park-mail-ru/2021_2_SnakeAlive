@@ -2,6 +2,7 @@ const loginURI = '/login';
 const registerURI = '/register';
 const countrySights = '/country/';
 const profile = '/profile';
+const alienUser = '/user/'
 const logout = '/logout';
 const sightURI = '/sight/';
 const sightsURI = '/sights/';
@@ -16,10 +17,11 @@ const upload = '/upload';
 const listOfCountries = '/country/list';
 const albumURI = '/album/';
 const photoURI = '/photo/';
-const searchURI = 'search/';
+const searchURI = 'search';
 const tagsURI = '/sights/tag';
 const user = 'user';
 const userURI = '/user/';
+const allTagsURI = '/tags';
 
 const queryParamsToGetReview = '?skip=0&limit=10';
 
@@ -47,4 +49,6 @@ export {
 	tagsURI,
 	user,
 	userURI,
+	alienUser,
+	allTagsURI
 };

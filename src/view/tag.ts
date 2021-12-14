@@ -26,6 +26,19 @@ export const allTags = [
 	{ name: 'Дворец', PP: 4 },
 ];
 
+export const initDropdown = (htmlId = 'myDropdown') => {
+	const moreBtn = document.getElementById('more-tags-btn');
+	if (moreBtn !== null) {
+		moreBtn.addEventListener('click', () => {
+			if (document.getElementById(htmlId)?.classList.contains('show')) {
+				document.getElementById(htmlId)?.classList.remove('show');
+			} else {
+				document.getElementById(htmlId)?.classList.toggle('show');
+			}
+		});
+	}
+}
+
 export const initTagsBtns = () => {
 	tags.forEach(tag => {
 		const tegElem = document.getElementById(`tag_${tag.name}`);
@@ -57,16 +70,7 @@ export const initTagsBtns = () => {
 			});
 		}
 	});
-	const moreBtn = document.getElementById('more-tags-btn');
-	if (moreBtn !== null) {
-		moreBtn.addEventListener('click', () => {
-			if (document.getElementById('myDropdown')?.classList.contains('show')) {
-				document.getElementById('myDropdown')?.classList.remove('show');
-			} else {
-				document.getElementById('myDropdown')?.classList.toggle('show');
-			}
-		});
-	}
+	initDropdown();
 };
 
 class TagCardsHolderView extends BasicView {

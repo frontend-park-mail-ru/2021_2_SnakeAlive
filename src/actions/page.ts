@@ -77,6 +77,18 @@ const initTagPageRequest = (): IEvent =>
 		metadata: <Empty>{},
 	};
 
+const initAlienProfileRequest = (): IEvent =>
+	<IEvent>{
+		key: EventType.INIT_ALIEN_PROFILE_PAGE_REQUEST,
+		metadata: <Empty>{},
+	};
+
+const initSearchPageRequest = (): IEvent =>
+	<IEvent>{
+		key: EventType.INIT_SEARCH_PAGE_REQUEST,
+		metadata: <Empty>{},
+	};
+
 export {
 	newInitPageRequest,
 	initLoginPageRequest,
@@ -90,4 +102,6 @@ export {
 	initAlbumPageRequest,
 	initTripEditPageRequest,
 	initTagPageRequest,
+	initAlienProfileRequest,
+	initSearchPageRequest
 };
