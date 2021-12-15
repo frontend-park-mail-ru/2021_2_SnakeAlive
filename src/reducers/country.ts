@@ -45,7 +45,6 @@ export default class CountryReducer {
 		this.#getCountry(country.ID)
 			.then((info: CountryResponse) => {
 				getTags().then(tags => {
-					console.log(tags);
 					storage.storeGotSearchTags(tags);
 
 					storage.storeCountry(adoptGotCountry(info));

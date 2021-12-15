@@ -19,7 +19,10 @@ export default class ErrorView extends BasicView {
 	init = (err: Error): void => {
 		dispatcher.notify(newSetMainHeaderRequest());
 
-		const { message } = err; // упростить нельзя, тк handlebars не хочет читать поля напрямую
+	 let { message } = err; // упростить нельзя, тк handlebars не хочет читать поля напрямую
+		if (message === 'Unexpected token < in JSON at position 0') {
+			message = "неожиданный ответ. Уже чиним";
+		}
 		this.setView(errorPage({ message, picture }));
 		this.#tokens = [dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.#destroy)];
 	};

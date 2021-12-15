@@ -12,6 +12,7 @@ interface CountryResponse {
 	id: number;
 	description: string;
 	photo: string;
+	translated: string;
 }
 
 interface CountryCardResponse {

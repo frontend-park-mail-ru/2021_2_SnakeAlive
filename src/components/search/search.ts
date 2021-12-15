@@ -1,8 +1,8 @@
 import searchTemplate from './search.handlebars';
-
+import './search.scss';
 import imgSearch from '../../../image/icon/search_16.svg';
 import imgSearchWhite from '../../../image/icon/search_white.svg';
-import './search.scss';
+
 import { dispatcher, EventType } from '@/dispatcher';
 import { storage } from '@/storage';
 import { Search } from '@/dispatcher/metadata_types';

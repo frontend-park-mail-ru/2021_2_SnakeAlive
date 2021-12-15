@@ -35,14 +35,14 @@
 					<div class='category' id='more-countries-btn'>Все</div>
 					<div id="dropdown_countries" class="dropdown-content">
 						{{#each allCountries}}
-							<a id='dropdown_country_{{this.name}}'>{{this.name}}</a>
+							<a id='dropdown_country_{{this.name}}'>{{this.translation}}</a>
 						{{/each}}
 					</div>
 				</div>
 				{{/if}}
 
 				{{#each countries}}
-					<div class='category' id='country_{{this.name}}'>{{this.name}}</div>
+					<div class='category' id='country_{{this.name}}'>{{this.translation}}</div>
 				{{/each}}
 
 			</div>
