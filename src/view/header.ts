@@ -15,12 +15,12 @@ import { searchPlaceType } from '@/models/search';
 import { newSetMainHeaderStrongRequest } from '@/actions/header';
 
 const initHeaderSearch = (): SearchView | null => {
+	console.log('initing');
 	// поиск
 	const searchPlace = document.getElementById('header-search-place');
 	if (searchPlace !== null) {
 		searchPlace.innerHTML = initSearchView(searchPlaceType.header, true);
 		return new SearchView(searchPlaceType.header, (id: string) => {
-			console.log('руку');
 			router.go(
 				createFrontendQueryParams(pathsURLfrontend.sight, [
 					{
@@ -77,6 +77,7 @@ export default class HeaderView extends BasicView {
 		makeSimpleButton('trip-block', pathsURLfrontend.trip);
 
 		this.#search = initHeaderSearch();
+		console.log(this.#search)
 	};
 
 	setMainHeaderBasic = (): void => {
@@ -91,6 +92,7 @@ export default class HeaderView extends BasicView {
 		makeSimpleButton('user-block', pathsURLfrontend.login);
 
 		this.#search = initHeaderSearch();
+		console.log(this.#search)
 	};
 
 	setMainHeaderEmpty = (metadata: IsTrue): void => {
