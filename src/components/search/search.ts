@@ -7,10 +7,10 @@ import { dispatcher, EventType } from '@/dispatcher';
 import { storage } from '@/storage';
 import { Search } from '@/dispatcher/metadata_types';
 import { searchRequest } from '@/actions/search';
-import { throttle } from 'throttle-typescript';
 import { router } from '@/router';
 import { pathsURLfrontend } from '@/constants';
 import { searchPlaceType } from '@/models/search';
+import { Sight } from '@/models';
 
 export const initSearchView = (type: searchPlaceType, needsPageGoBtn: boolean): string =>
 	searchTemplate({ icon: imgSearch, type, needsPageGoBtn, iconWhite: imgSearchWhite });
@@ -30,14 +30,14 @@ export class SearchView {
 
 	constructor(
 		type: searchPlaceType,
-		callback: (id: string) => void,
+		callback: (id: string, sight?: Sight, day?: number) => void,
 		inputCallback: (text: string) => void = (text: string) => {
 			dispatcher.notify(searchRequest(text, this.#type));
 		},
 		goSearchCallback: () => void
-			// = () => {
-		// 	router.go(pathsURLfrontend.search, this.#value);
-		// }
+			= () => {
+			router.go(pathsURLfrontend.search, this.#value);
+		}
 	) {
 		this.#type = type;
 
@@ -66,8 +66,11 @@ export class SearchView {
 		if (input !== null) {
 			input.addEventListener('keydown', e => {
 				if (e.key === 'Enter') {
-					goSearchCallback();
+					console.log(callback);
 					e.preventDefault();
+					callback(storage.getSearchSightsResult(this.#type)[0].id, storage.getSearchSightsResult(this.#type)[0], 42);
+					input.value = '';
+					this.#value = '';
 				}
 			});
 
@@ -75,16 +78,11 @@ export class SearchView {
 				'input',
 				(event) => {
 					event.preventDefault();
-					inputCallback(input.value);
-				},
-				false
-			);
 
-			input.addEventListener(
-				'input',
-				() => {
 					const { value } = input;
 					this.#value = value;
+					inputCallback(this.#value);
+
 					if (this.#searchList !== null) {
 						const values = <HTMLOptionElement[]>(<unknown>this.#searchList.childNodes);
 						values.forEach(option => {
@@ -94,6 +92,8 @@ export class SearchView {
 							}
 						});
 					}
+
+
 				},
 				false
 			);

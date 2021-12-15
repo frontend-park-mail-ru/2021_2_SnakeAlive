@@ -23,7 +23,7 @@ import { SightCardInTrip } from '@/view/sight_cards';
 import defaultPicture from '@/../image/moscow_city_1.jpeg';
 import { initSearchView, SearchView } from '@/components/search/search';
 import { router } from '@/router';
-import { SightAdoptedForRender, TagAdoptedForRender } from '@/models/sight';
+import { Sight, SightAdoptedForRender, TagAdoptedForRender } from '@/models/sight';
 import { ProfileAlbum } from '@/models/profile';
 import typicalCollection from '../components/frame_collection.handlebars';
 import horisontalScroll from '@/components/horizontal_scroll/horisontal_scroll.handlebars';
@@ -160,7 +160,15 @@ export class TripInfoView extends BasicView {
 			// 		}
 			// 	)
 			// eslint-disable-next-line @typescript-eslint/no-empty-function
-			this.#search = new SearchView(searchPlaceType.trip, () => {} );
+			this.#search = new SearchView(searchPlaceType.trip, (str, sight, day) => {
+				console.log(sight, day);
+				if (! sight) {
+					return;
+				}
+				if (day !== undefined) {
+					dispatcher.notify(addPlaceToTrip(sight, day));
+				}
+			} );
 		}
 
 		const addAlbumBtn = document.getElementById('btn-add-album');
@@ -295,6 +303,7 @@ export class CardSightsHolder extends BasicView {
 
 		let i = 0;
 		const { sights } = storage.getCurrentTrip();
+		console.log(sights);
 		if (sights) {
 			sights.forEach(sight => {
 				if (i !== 0) {

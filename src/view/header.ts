@@ -12,6 +12,28 @@ import { initSearchView, SearchView } from '@/components/search/search';
 import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
 import { searchPlaceType } from '@/models/search';
+import { newSetMainHeaderStrongRequest } from '@/actions/header';
+
+const initHeaderSearch = (): SearchView | null => {
+	// поиск
+	const searchPlace = document.getElementById('header-search-place');
+	if (searchPlace !== null) {
+		searchPlace.innerHTML = initSearchView(searchPlaceType.header, true);
+		return new SearchView(searchPlaceType.header, (id: string) => {
+			console.log('руку');
+			router.go(
+				createFrontendQueryParams(pathsURLfrontend.sight, [
+					{
+						key: paramsURLfrontend.id,
+						value: id,
+					},
+				])
+			);
+			dispatcher.notify(newSetMainHeaderStrongRequest());
+		});
+	}
+	return null;
+}
 
 export default class HeaderView extends BasicView {
 	#tokens: Token[];
@@ -54,21 +76,7 @@ export default class HeaderView extends BasicView {
 		makeSimpleButton('user-block', pathsURLfrontend.profile);
 		makeSimpleButton('trip-block', pathsURLfrontend.trip);
 
-		// поиск
-		const searchPlace = document.getElementById('header-search-place');
-		if (searchPlace !== null) {
-			searchPlace.innerHTML = initSearchView(searchPlaceType.header, true);
-			this.#search = new SearchView(searchPlaceType.header, (id: string) => {
-				router.go(
-					createFrontendQueryParams(pathsURLfrontend.sight, [
-						{
-							key: paramsURLfrontend.id,
-							value: id,
-						},
-					])
-				);
-			});
-		}
+		this.#search = initHeaderSearch();
 	};
 
 	setMainHeaderBasic = (): void => {
@@ -82,21 +90,7 @@ export default class HeaderView extends BasicView {
 		makeSimpleButton('logo-h', pathsURLfrontend.root);
 		makeSimpleButton('user-block', pathsURLfrontend.login);
 
-		// поиск
-		const searchPlace = document.getElementById('header-search-place');
-		if (searchPlace !== null) {
-			searchPlace.innerHTML = initSearchView(searchPlaceType.header, true);
-			this.#search = new SearchView(searchPlaceType.header, (id: string) => {
-				router.go(
-					createFrontendQueryParams(pathsURLfrontend.sight, [
-						{
-							key: paramsURLfrontend.id,
-							value: id,
-						},
-					])
-				);
-			}, null, );
-		}
+		this.#search = initHeaderSearch();
 	};
 
 	setMainHeaderEmpty = (metadata: IsTrue): void => {
