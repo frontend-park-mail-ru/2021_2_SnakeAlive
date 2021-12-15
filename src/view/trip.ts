@@ -15,10 +15,10 @@ import {
 	initShareBtnCopy,
 } from '@/components/trip/trip_form';
 import { Map } from '@/components/map/map';
-import { pathsURLfrontend } from '@/constants';
+import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
 import { IsTrue, SightToTrip } from '@/dispatcher/metadata_types';
 import { storage } from '@/storage';
-import { newGetTripRequest, addPlaceToTrip, delPlaceFromTrip } from '@/actions/trip';
+import { newGetTripRequest, addPlaceToTrip, delPlaceFromTrip, newGetTripResult } from '@/actions/trip';
 import { SightCardInTrip } from '@/view/sight_cards';
 import defaultPicture from '@/../image/moscow_city_1.jpeg';
 import { initSearchView, SearchView } from '@/components/search/search';
@@ -34,6 +34,7 @@ import share_icon from '../../image/icon/share_56.svg';
 // eslint-disable-next-line camelcase
 import addUser_icon from '../../image/icon/user_add_56.svg';
 import { adoptPartisipants } from '@/adapters/trip';
+import { createFrontendQueryParams } from '@/router/router';
 
 // const partisipants = [
 // 	{id: 1, profilePhoto: "/image/7b205eb741a49105fcd425910545cc79.jpeg"},
@@ -315,11 +316,43 @@ export class InitTripPage extends BasicView {
 		this.#tokens = [
 			dispatcher.register(EventType.GET_TRIP_RESPONSE, this.#TripInfo.createTripEdit),
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
+			dispatcher.register(EventType.UPDATE_CURRENT_TRIP_INFO, this.destroy),
 		];
 		this.setView(tripPageTemplate());
 		this.#TripMap.init();
 		this.#TripInfo.init();
 		init(true);
+
+		//ws
+		let socket = new WebSocket("ws://localhost:5050/connect");
+		socket.onopen = function(e) {
+			console.log("[open] Соединение установлено");
+		  };
+		  
+		  socket.onmessage = function(event) {
+			console.log(`[message] Данные получены с сервера: ${event.data}`);
+			router.go(
+				createFrontendQueryParams(pathsURLfrontend.trip, [
+					{
+						key: paramsURLfrontend.id,
+						value: storage.getCurrentTrip().id,
+					},
+				])
+			);
+		  };
+		  
+		  socket.onclose = function(event) {
+			if (event.wasClean) {
+				console.log(`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`);
+			} else {
+
+			  console.log('[close] Соединение прервано');
+			}
+		  };
+		  
+		  socket.onerror = function(error) {
+			console.log(`[error] ${error.type}`);
+		  };
 	};
 
 	initEdit = (metadata: NumID): void => {
