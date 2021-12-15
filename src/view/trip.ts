@@ -149,8 +149,18 @@ export class TripInfoView extends BasicView {
 		const searchPlace = document.getElementById('trip-search-place');
 		if (searchPlace !== null) {
 			searchPlace.innerHTML = initSearchView(searchPlaceType.trip, false);
+			// constructor(
+			// 		type: searchPlaceType,
+			// 		callback: (id: string) => void,
+			// 		inputCallback: (text: string) => void = (text: string) => {
+			// 			dispatcher.notify(searchRequest(text, this.#type));
+			// 		},
+			// 		goSearchCallback: () => void = () => {
+			// 			router.go(pathsURLfrontend.search, this.#value);
+			// 		}
+			// 	)
 			// eslint-disable-next-line @typescript-eslint/no-empty-function
-			this.#search = new SearchView(searchPlaceType.trip, () => {});
+			this.#search = new SearchView(searchPlaceType.trip, () => {} );
 		}
 
 		const addAlbumBtn = document.getElementById('btn-add-album');

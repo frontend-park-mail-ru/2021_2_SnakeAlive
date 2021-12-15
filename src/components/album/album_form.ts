@@ -104,7 +104,6 @@ export const initAlbumForm = (isNew: boolean) => {
 		);
 	}
 
-	if (!isNew) {
 		// кнопка сохранить и завершить btn_make_and_finish
 		const createFinishBtn = document.getElementById('btn_make_and_finish');
 		if (createFinishBtn !== null) {
@@ -141,6 +140,7 @@ export const initAlbumForm = (isNew: boolean) => {
 			);
 		}
 
+	if (!isNew) {
 		// блок удаления альбома
 		const askConfirmBtn = document.getElementById('ask_confirm_button');
 		if (askConfirmBtn !== null) {

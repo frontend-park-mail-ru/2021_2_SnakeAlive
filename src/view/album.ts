@@ -38,6 +38,7 @@ export class PhotosView {
 	};
 
 	renderPhotos = (isEdit: IsTrue) => {
+		console.log('this foo')
 		this.#leftPhotosHolder = document.getElementById('album_page__photo_holder_left');
 		if (this.#leftPhotosHolder === null) {
 			throw Error('not found in html "album_page__photo_holder_left');
@@ -110,10 +111,13 @@ export class PhotosView {
 			addBtn.addEventListener(
 				'click',
 				() => {
+					console.log('btn add clicked');
 					addInput.click();
 				},
 				false
 			);
+
+			addInput.addEventListener('click', () => {console.log('input clicked')});
 
 			addInput.addEventListener('change', event => {
 				event.preventDefault();

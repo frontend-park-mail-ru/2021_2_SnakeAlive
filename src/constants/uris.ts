@@ -16,6 +16,7 @@ const reviewURI = '/review';
 const upload = '/upload';
 const listOfCountries = '/country/list';
 const albumURI = '/album/';
+const albumURIsingle = '/album';
 const photoURI = '/photo/';
 const searchURI = 'search';
 const tagsURI = '/sights/tag';
@@ -51,4 +52,5 @@ export {
 	userURI,
 	alienUser,
 	allTagsURI,
+	albumURIsingle
 };

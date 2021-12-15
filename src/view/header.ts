@@ -95,7 +95,7 @@ export default class HeaderView extends BasicView {
 						},
 					])
 				);
-			});
+			}, null, );
 		}
 	};
 

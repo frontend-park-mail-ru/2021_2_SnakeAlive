@@ -34,9 +34,10 @@ export class SearchView {
 		inputCallback: (text: string) => void = (text: string) => {
 			dispatcher.notify(searchRequest(text, this.#type));
 		},
-		goSearchCallback: () => void = () => {
-			router.go(pathsURLfrontend.search, this.#value);
-		}
+		goSearchCallback: () => void
+			// = () => {
+		// 	router.go(pathsURLfrontend.search, this.#value);
+		// }
 	) {
 		this.#type = type;
 
@@ -51,13 +52,14 @@ export class SearchView {
 			this.#searchList = searchList;
 		}
 
-		// const goPageBtn = document.getElementById(`go_search_page_${type}`);
-		// if (goPageBtn !== null) {
-		// 	goPageBtn.addEventListener('click', event => {
-		// 		event.preventDefault();
-		// 		this.#goSearchCallback();
-		// 	}, false);
-		// }
+		const goPageBtn = document.getElementById(`go_search_page_${type}`);
+		if (goPageBtn !== null) {
+			goPageBtn.addEventListener('click', event => {
+				console.log(goPageBtn.id, "clicked");
+				event.preventDefault();
+				this.#goSearchCallback();
+			}, false);
+		}
 
 		const input = <HTMLInputElement>document.getElementById(`search_${type}`);
 
@@ -71,7 +73,8 @@ export class SearchView {
 
 			input.addEventListener(
 				'input',
-				() => {
+				(event) => {
+					event.preventDefault();
 					inputCallback(input.value);
 				},
 				false
@@ -86,6 +89,7 @@ export class SearchView {
 						const values = <HTMLOptionElement[]>(<unknown>this.#searchList.childNodes);
 						values.forEach(option => {
 							if (value === option.value) {
+								console.log(this.#callback, "inited");
 								this.#callback(option.id);
 							}
 						});

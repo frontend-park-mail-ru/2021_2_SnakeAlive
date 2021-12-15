@@ -22,6 +22,7 @@ import { AlbumInfo, AlbumUpdateInfo, File, IDState } from '@/dispatcher/metadata
 import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
 import { adoptGotAlbum } from '@/adapters/album';
+import { albumURIsingle } from '@/constants/uris';
 
 export default class AlbumReducer {
 	#tokens: Token[];
@@ -139,7 +140,7 @@ export default class AlbumReducer {
 				sendData.trip_id = 42;
 			}
 			sendData.user_id = storage.getProfile().meta.id;
-			return sendPostJSONRequest(backendEndpoint + albumURI, sendData)
+			return sendPostJSONRequest(backendEndpoint + albumURIsingle, sendData)
 				.then(response => {
 					if (response.status !== 200) {
 						return Promise.reject(new Error('не отправлена информация об альбоме'));
