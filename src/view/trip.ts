@@ -23,7 +23,7 @@ import { SightCardInTrip } from '@/view/sight_cards';
 import defaultPicture from '@/../image/moscow_city_1.jpeg';
 import { initSearchView, SearchView } from '@/components/search/search';
 import { router } from '@/router';
-import { Sight, SightAdoptedForRender, TagAdoptedForRender } from '@/models/sight';
+import { SightAdoptedForRender, TagAdoptedForRender } from '@/models/sight';
 import { ProfileAlbum } from '@/models/profile';
 import typicalCollection from '../components/frame_collection.handlebars';
 import horisontalScroll from '@/components/horizontal_scroll/horisontal_scroll.handlebars';
@@ -37,6 +37,7 @@ import { adoptPartisipants } from '@/adapters/trip';
 import { Partisipants } from '@/models';
 import { createFrontendQueryParams } from '@/router/router';
 import { searchPlaceType } from '@/models/search';
+import { searchRequest } from '@/actions/search';
 
 // const partisipants = [
 // 	{id: 1, profilePhoto: "/image/7b205eb741a49105fcd425910545cc79.jpeg"},
@@ -160,15 +161,28 @@ export class TripInfoView extends BasicView {
 			// 		}
 			// 	)
 			// eslint-disable-next-line @typescript-eslint/no-empty-function
-			this.#search = new SearchView(searchPlaceType.trip, (str, sight, day) => {
-				console.log(sight, day);
+			this.#search = new SearchView(searchPlaceType.trip,
+				(str, sight, day) => {
 				if (! sight) {
 					return;
 				}
 				if (day !== undefined) {
 					dispatcher.notify(addPlaceToTrip(sight, day));
 				}
-			} );
+			},
+				(text: string) => { // ввод текста
+					dispatcher.notify(searchRequest(text, searchPlaceType.trip));
+				},
+				() => null,
+				(str, sight, day) => {
+					if (! sight) {
+						return;
+					}
+					if (day !== undefined) {
+						dispatcher.notify(addPlaceToTrip(sight, day));
+					}
+				}
+				);
 		}
 
 		const addAlbumBtn = document.getElementById('btn-add-album');
@@ -303,7 +317,6 @@ export class CardSightsHolder extends BasicView {
 
 		let i = 0;
 		const { sights } = storage.getCurrentTrip();
-		console.log(sights);
 		if (sights) {
 			sights.forEach(sight => {
 				if (i !== 0) {

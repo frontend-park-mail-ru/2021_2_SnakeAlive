@@ -226,6 +226,7 @@ class SearchHolderView extends BasicView {
 					dispatcher.notify(sendPageSearch());
 				}
 			);
+			this.#search.stopCleaning();
 		}
 
 		initCategories(renderObj.tags, renderObj.allTags);

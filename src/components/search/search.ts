@@ -30,6 +30,8 @@ export class SearchView {
 
 	#value = '';
 
+	#needCleaning = true;
+
 	constructor(
 		type: searchPlaceType,
 		callback: (id: string, sight?: Sight, day?: number) => void, // нажатие на элемент выпадающего списка
@@ -84,8 +86,8 @@ export class SearchView {
 					} else {
 						this.#enterCallback(this.#value);
 					}
-					input.value = '';
-					this.#value = '';
+
+					this.#clearSearch(input);
 				}
 			});
 
@@ -96,13 +98,15 @@ export class SearchView {
 
 					const { value } = input;
 					this.#value = value;
-					inputCallback(this.#value);
+					this.#inputCallback(this.#value);
 
 					if (this.#searchList !== null) {
 						const values = <HTMLOptionElement[]>(<unknown>this.#searchList.childNodes);
 						values.forEach(option => {
 							if (value === option.value) {
-								this.#callback(option.id);
+								// eslint-disable-next-line eqeqeq
+								this.#callback(option.id, storage.getSearchSightsResult(this.#type).filter(sight => sight.id == option.id)[0], 42);
+								this.#clearSearch(input);
 							}
 						});
 					}
@@ -133,4 +137,19 @@ export class SearchView {
 			});
 		}
 	};
+
+	stopCleaning = () => {
+		this.#needCleaning = false;
+	}
+
+	#clearSearch = (input: HTMLInputElement) => {
+		if (this.#needCleaning) {
+			// eslint-disable-next-line no-param-reassign
+			input.value = '';
+			this.#value = '';
+			if (this.#searchList) {
+				this.#searchList.innerHTML = '';
+			}
+		}
+	}
 }
