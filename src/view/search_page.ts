@@ -10,6 +10,8 @@ import { initSearchView, SearchView } from '@/components/search/search';
 import { sendPageSearch } from '@/actions/search';
 import { Search } from '@/dispatcher/metadata_types';
 import { searchPlaceType } from '@/models/search';
+import { AdoptedTag } from '@/models/tags';
+import { SearchCountry } from '@/models/country';
 
 class SearchCardsHolderView extends BasicView {
 	// #cards: Array<SightCardInTrip>;
@@ -36,7 +38,7 @@ class SearchCardsHolderView extends BasicView {
 			if (sight.sight.tags) {
 				sight.sight.tags.forEach(tag => {
 					tagsAdopted.push({
-						id: tag.id.toString(),
+						id: tag.ID.toString(),
 						name: tag.name,
 						sightPP: sight.PP,
 					});
@@ -55,6 +57,102 @@ class SearchCardsHolderView extends BasicView {
 		});
 	};
 }
+
+const changeIncludeState = (single: string, list: string[]): string[] => {
+	let newList: string[] = [];
+	if (!list) {
+		newList.push(single);
+		return newList;
+	}
+
+	if (list.indexOf(single) !== -1) { // значит уже есть в списке
+		newList = list.filter(elem => elem !== single);
+	} else {
+		newList = list;
+		newList.push(single);
+	}
+	return newList;
+}
+
+const listToString = (list: number[]): string[] => {
+	const resList: string[] = [];
+	if (! list){
+		return resList;
+	}
+	list.forEach(item => {
+		resList.push(item.toString());
+	});
+	return resList;
+}
+
+const listToNumbers = (list: string[]): number[] => {
+	const resList: number[] = [];
+	if (! list){
+		return resList;
+	}
+	list.forEach(item => {
+		resList.push(Number(item));
+	});
+	return resList;
+}
+
+const initCategories = (list: AdoptedTag[] | SearchCountry[], moreList: AdoptedTag[] | SearchCountry[]) => {
+
+	if ( ! list ) {
+		return;
+	}
+
+	interface Info {
+		type: "tag" | "country";
+		callback: (any) => void
+	}
+	// @ts-ignore
+	const info: Info = {};
+	// @ts-ignore
+	if (list[0].translation) {
+		// это страны
+		info.type = "country";
+		info.callback = (name: string) => {
+			storage.storeSearchRequestCountries(changeIncludeState(name, storage.getSearchRequest().countries));
+			dispatcher.notify(sendPageSearch());
+		}
+	} else {
+		info.type = "tag";
+		info.callback = (name: string) => {
+			storage.storeSearchRequestTags(listToNumbers(changeIncludeState(name, listToString(storage.getSearchRequest().tags))));
+			dispatcher.notify(sendPageSearch());
+		}
+	}
+
+	const activeCSSClass = 'page_category_active';
+	list.forEach(tag => {
+		const tegElem = document.getElementById(`${info.type}_${tag.ID}`);
+		if (tegElem !== null) {
+			tegElem.addEventListener('click', () => {
+				if (tegElem.classList.contains(activeCSSClass)) {
+					tegElem.classList.remove(activeCSSClass);
+				} else {
+					tegElem.classList.add(activeCSSClass);
+				}
+				info.callback(tag.ID);
+			});
+		}
+	});
+	moreList.forEach(tag => {
+		const tegElem = document.getElementById(`dropdown_${info.type}_${tag.ID}`);
+		if (tegElem !== null) {
+			tegElem.addEventListener('click', () => {
+				if (tegElem.classList.contains(activeCSSClass)) {
+					tegElem.classList.remove(activeCSSClass);
+				} else {
+					tegElem.classList.add(activeCSSClass);
+				}
+				info.callback(tag.ID);
+			});
+		}
+	});
+	initDropdown();
+};
 
 class SearchHolderView extends BasicView {
 	#tokens: Token[];
@@ -88,13 +186,15 @@ class SearchHolderView extends BasicView {
 	};
 
 	renderEmptySearchPage = (): void => {
+		const renderObj = {
+			tags: storage.getSearchTags().slice(0, 6),
+			allTags: storage.getSearchTags().slice(6),
+			countries: storage.getSearchCountries().slice(0, 6),
+			allCountries: storage.getSearchCountries().slice(6, 0),
+		};
+
 		this.setView(
-			searchPageTemplate({
-				tags: storage.getSearchTags().slice(0, 6),
-				allTags: storage.getSearchTags().slice(6),
-				countries: storage.getSearchCountries().slice(0, 6),
-				allCountries: storage.getSearchCountries().slice(6, 0),
-			})
+			searchPageTemplate(renderObj)
 		);
 		initDropdown('dropdown_tags'); // ??
 		initDropdown('dropdown_countries'); // ??
@@ -107,13 +207,29 @@ class SearchHolderView extends BasicView {
 				searchPlaceType.page,
 				() => null,
 				(text: string) => {
-					storage.storeSearchRequestText(text);
+					if (text) {
+						storage.storeSearchRequestText(text);
+					} else {
+						storage.storeSearchRequestText("");
+					}
+					dispatcher.notify(sendPageSearch());
 				},
 				() => {
+					dispatcher.notify(sendPageSearch());
+				},
+				(text) => {
+					if (text) {
+						storage.storeSearchRequestText(text);
+					} else {
+						storage.storeSearchRequestText("");
+					}
 					dispatcher.notify(sendPageSearch());
 				}
 			);
 		}
+
+		initCategories(renderObj.tags, renderObj.allTags);
+		initCategories(renderObj.countries, renderObj.allCountries);
 
 		// dispatcher.notify(newGetTagCardsResult());
 	};

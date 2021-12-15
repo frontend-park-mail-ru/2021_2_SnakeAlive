@@ -33,7 +33,7 @@ export default class SightView extends BasicView {
 			console.log(sight.tags);
 			sight.tags.forEach(tag => {
 				adoptedTags.push({
-					id: tag.id.toString(),
+					id: tag.ID.toString(),
 					name: tag.name,
 					sightPP: 0,
 				});
@@ -46,14 +46,14 @@ export default class SightView extends BasicView {
 
 		if (adoptedTags) {
 			adoptedTags.forEach(tag => {
-				const tegElem = document.getElementById(`tag_${tag.name}_0`);
+				const tegElem = document.getElementById(`tag_${tag.id}_0`);
 				if (tegElem !== null) {
 					tegElem.addEventListener('click', () => {
 						router.go(
 							createFrontendQueryParams(pathsURLfrontend.tag, [
 								{
 									key: paramsURLfrontend.tag,
-									value: tag.name,
+									value: tag.id,
 								},
 							])
 						);

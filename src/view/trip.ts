@@ -310,7 +310,7 @@ export class CardSightsHolder extends BasicView {
 					const adoptedTags: Array<TagAdoptedForRender> = [];
 					sight.tags.forEach(tag => {
 						adoptedTags.push({
-							id: tag.id.toString(),
+							id: tag.ID.toString(),
 							name: tag.name,
 							sightPP: i,
 						});

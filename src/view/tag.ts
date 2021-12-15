@@ -8,6 +8,7 @@ import { newGetTagCardsResult } from '@/actions/tag';
 import { TagAdoptedForRender } from '@/models/sight';
 import { createFrontendQueryParams, router } from '@/router/router';
 import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
+import { AdoptedTag } from '@/models/tags';
 
 // export const tags = [
 // 	{ name: 'Природа', PP: 0 },
@@ -39,16 +40,16 @@ export const initDropdown = (htmlId = 'myDropdown') => {
 	}
 };
 
-export const initTagsBtns = tags => {
+export const initTagsBtns = (tags: AdoptedTag[]) => {
 	tags.forEach(tag => {
-		const tegElem = document.getElementById(`tag_${tag.id}`);
+		const tegElem = document.getElementById(`tag_${tag.ID}`);
 		if (tegElem !== null) {
 			tegElem.addEventListener('click', () => {
 				router.go(
 					createFrontendQueryParams(pathsURLfrontend.tag, [
 						{
 							key: paramsURLfrontend.tag,
-							value: tag.id,
+							value: tag.ID,
 						},
 					])
 				);
@@ -56,14 +57,14 @@ export const initTagsBtns = tags => {
 		}
 	});
 	tags.forEach(tag => {
-		const tegElem = document.getElementById(`dropdown_tag_${tag.id}`);
+		const tegElem = document.getElementById(`dropdown_tag_${tag.ID}`);
 		if (tegElem !== null) {
 			tegElem.addEventListener('click', () => {
 				router.go(
 					createFrontendQueryParams(pathsURLfrontend.tag, [
 						{
 							key: paramsURLfrontend.tag,
-							value: tag.id,
+							value: tag.ID,
 						},
 					])
 				);
@@ -109,7 +110,7 @@ class TagCardsHolderView extends BasicView {
 			const tagsAdopted: Array<TagAdoptedForRender> = [];
 			sight.sight.tags.forEach(tag => {
 				tagsAdopted.push({
-					id: tag.id.toString(),
+					id: tag.ID.toString(),
 					name: tag.name,
 					sightPP: sight.PP,
 				});

@@ -4,6 +4,6 @@ export interface TagResponse {
 }
 
 export interface AdoptedTag {
-	id: number;
+	ID: string;
 	name: string;
 }

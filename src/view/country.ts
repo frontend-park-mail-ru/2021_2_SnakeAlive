@@ -45,7 +45,7 @@ class CountryCardsHolderView extends BasicView {
 			const tagsAdopted: Array<TagAdoptedForRender> = [];
 			sight.sight.tags.forEach(tag => {
 				tagsAdopted.push({
-					id: tag.id.toString(),
+					id: tag.ID.toString(),
 					name: tag.name,
 					sightPP: sight.PP,
 				});

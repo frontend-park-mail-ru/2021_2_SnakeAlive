@@ -5,7 +5,7 @@ import { AdoptedTag, TagResponse } from '@/models/tags';
 
 export const minAdaptCountryCards = (
 	cards: CountryCardResponse[],
-	tags: TagResponse[]
+	tags: AdoptedTag[]
 ): minCardInfo[] => {
 	const returnCards: minCardInfo[] = [];
 	let i = 0;
@@ -21,7 +21,7 @@ export const minAdaptCountryCards = (
 			card.tags.forEach(tagName => {
 				resTags.push({
 					name: tagName,
-					id: tags.filter(tag => tag.name === tagName)[0].id,
+					ID: tags.filter(tag => tag.name === tagName)[0].ID,
 				});
 			});
 		}

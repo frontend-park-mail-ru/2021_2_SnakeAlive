@@ -1,18 +1,9 @@
 import placeIcon from '../../../image/icon/place.svg';
-// import { createReviewForm } from '@/components/reviews/review_form';
 import sightTemplate from './sight_page.handlebars';
 import { Sight } from '@/models/sight';
-import form from '../reviews/review_form.handlebars';
 
 import '../reviews/review.scss';
-// import '../reviews/review.scss';
-
-// id: string;
-// name: string;
-// description: string;
-// country: string;
-// rating: string;
-// tags: Array<string>;
+import '../../index.scss';
 
 import './sight_page.scss';
 

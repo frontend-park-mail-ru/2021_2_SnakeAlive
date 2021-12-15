@@ -18,11 +18,13 @@ export const initSearchView = (type: searchPlaceType, needsPageGoBtn: boolean): 
 export class SearchView {
 	#type: searchPlaceType;
 
-	#callback: (id: string) => void;
+	#callback: (id: string, sight?: Sight, day?: number) => void;
 
 	#inputCallback: (str: string) => void;
 
 	#goSearchCallback: () => void;
+
+	#enterCallback: (text: string, sight?: Sight, day?: number) => void;
 
 	#searchList: HTMLElement | null = null;
 
@@ -30,14 +32,15 @@ export class SearchView {
 
 	constructor(
 		type: searchPlaceType,
-		callback: (id: string, sight?: Sight, day?: number) => void,
-		inputCallback: (text: string) => void = (text: string) => {
+		callback: (id: string, sight?: Sight, day?: number) => void, // нажатие на элемент выпадающего списка
+		inputCallback: (text: string) => void = (text: string) => { // ввод текста
 			dispatcher.notify(searchRequest(text, this.#type));
 		},
-		goSearchCallback: () => void
+		goSearchCallback: () => void // нажатие на кнопку на экране
 			= () => {
 			router.go(pathsURLfrontend.search, this.#value);
-		}
+		},
+		enterCallback?: (text?: string, sight?: Sight, day?: number) => void
 	) {
 		this.#type = type;
 
@@ -46,6 +49,12 @@ export class SearchView {
 		this.#inputCallback = inputCallback;
 
 		this.#goSearchCallback = goSearchCallback;
+
+		if (enterCallback) {
+			this.#enterCallback = enterCallback;
+		} else {
+			this.#enterCallback = this.#callback;
+		}
 
 		const searchList = document.getElementById(`search_list_${type}`);
 		if (searchList !== null) {
@@ -66,9 +75,15 @@ export class SearchView {
 		if (input !== null) {
 			input.addEventListener('keydown', e => {
 				if (e.key === 'Enter') {
-					console.log(callback);
 					e.preventDefault();
-					callback(storage.getSearchSightsResult(this.#type)[0].id, storage.getSearchSightsResult(this.#type)[0], 42);
+
+					const { value } = input;
+					this.#value = value;
+					if (storage.getSearchSightsResult(this.#type).length > 0) {
+						this.#enterCallback(storage.getSearchSightsResult(this.#type)[0].id, storage.getSearchSightsResult(this.#type)[0], 42);
+					} else {
+						this.#enterCallback(this.#value);
+					}
 					input.value = '';
 					this.#value = '';
 				}
@@ -87,7 +102,6 @@ export class SearchView {
 						const values = <HTMLOptionElement[]>(<unknown>this.#searchList.childNodes);
 						values.forEach(option => {
 							if (value === option.value) {
-								console.log(this.#callback, "inited");
 								this.#callback(option.id);
 							}
 						});

@@ -10,6 +10,7 @@ import { tagsURI } from '@/constants/uris';
 import { newGetTagCardsResult, newTagResponse } from '@/actions/tag';
 import { initEmptySearchPageResponse } from '@/actions/search';
 import { getTags } from '@/reducers/search_page';
+import { adoptGotTags } from '@/adapters/tags';
 
 export default class TagReducer {
 	#tokens: Token[];
@@ -40,7 +41,7 @@ export default class TagReducer {
 		this.#getCards(name).then((cards: CountryCardResponse[]) => {
 			getTags().then(tags => {
 				dispatcher.notify(newTagResponse(tags.filter(tag => tag.id.toString() === name)[0].name));
-				storage.storeSightsCardsMin(minAdaptCountryCards(cards, tags));
+				storage.storeSightsCardsMin(minAdaptCountryCards(cards, adoptGotTags(tags)));
 				dispatcher.notify(newGetTagCardsResult());
 			});
 		});
@@ -49,7 +50,7 @@ export default class TagReducer {
 	#getCards = (tagID: string): Promise<CountryCardResponse[]> => {
 		const uri = new URL(backendEndpoint + tagsURI);
 		return getTags().then(tags => {
-			storage.storeGotSearchTags(tags);
+			storage.storeGotSearchTags(adoptGotTags(tags));
 
 			uri.searchParams.append('tag', tagID);
 			return sendGetJSONRequest(uri.toString())

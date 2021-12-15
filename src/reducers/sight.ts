@@ -8,6 +8,7 @@ import { newGetSightResult } from '@/actions/sight';
 import { getTags } from '@/reducers/search_page';
 import { GotSight } from '@/models/sight';
 import { adoptSight } from '@/adapters/sight';
+import { adoptGotTags } from '@/adapters/tags';
 
 export default class SightReducer {
 	#tokens: Token[];
@@ -35,7 +36,7 @@ export default class SightReducer {
 			.then((sight: GotSight) => {
 				getTags().then(tags => {
 					console.log(tags);
-					storage.storeGotSearchTags(tags);
+					storage.storeGotSearchTags(adoptGotTags(tags));
 
 					storage.storeSight(adoptSight(sight, tags));
 					dispatcher.notify(newGetSightResult());

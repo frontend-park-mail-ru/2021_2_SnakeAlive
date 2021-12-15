@@ -18,7 +18,8 @@ import {
 import { adoptGotSearchCountries } from '@/adapters/search';
 import { TagResponse } from '@/models/tags';
 import { GET_COUNTRY_NAME } from '@/components/trip/trip_form';
-import { searchPlaceType } from '@/models/search';
+import { isSearchRequestEmpty, searchPlaceType, SearchRequest } from '@/models/search';
+import { adoptGotTags } from '@/adapters/tags';
 
 export const getTags = (): Promise<TagResponse[]> =>
 	sendGetJSONRequest(backendEndpoint + allTagsURI)
@@ -61,19 +62,30 @@ export default class SearchPageReducer {
 			storage.storeGotSearchCountries(adoptGotSearchCountries(countries));
 			// запрос за категориями
 			getTags().then(tags => {
-				storage.storeGotSearchTags(tags);
+				storage.storeGotSearchTags(adoptGotTags(tags));
 				dispatcher.notify(initEmptySearchPageResponse());
 			});
 		});
 	};
 
 	sendSearchRequest = (): void => {
+		console.log("send: ", storage.getSearchRequest());
+
+		if (isSearchRequestEmpty(storage.getSearchRequest())) {
+			return;
+			// вывод валидации?
+		}
+
 		this.#sendSearch()
 			.then((cards: CountryCardResponse[]) => {
 				storage.storeSightsCardsMin(minAdaptCountryCards(cards, storage.getSearchTags()));
 				dispatcher.notify(gotSearchResults(searchPlaceType.page));
 			})
 			.catch((error: Error) => {
+				if (error.message === '400') {
+					storage.storeSightsCardsMin([]);
+					dispatcher.notify(gotSearchResults(searchPlaceType.page));
+				}
 				dispatcher.notify(newGetSearchCardsError(error));
 			});
 	};
@@ -86,6 +98,9 @@ export default class SearchPageReducer {
 				}
 				if (response.status === 401) {
 					return Promise.reject(new Error('Нужно войти в систему'));
+				}
+				if (response.status === 400) {
+					return Promise.reject(new Error('400'));
 				}
 				return Promise.resolve(response);
 			})

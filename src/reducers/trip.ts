@@ -136,7 +136,7 @@ export default class TripReducer {
 		storage.storeCurrentTrip(trip);
 		const tripSend = adoptForSend(trip);
 		this.#updateTrip(tripSend, trip.id).then((tripResponse) => {
-			storage.storeCurrentTrip(trip);
+			storage.storeCurrentTrip(tripResponse);
 			dispatcher.notify(rerenderTripCards(true));
 		});
 	};

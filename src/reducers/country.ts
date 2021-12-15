@@ -16,6 +16,7 @@ import { GET_COUNTRY_NAME } from '@/components/trip/trip_form';
 import { adoptGotCountry } from '@/adapters/country';
 import { initEmptySearchPageResponse } from '@/actions/search';
 import { getTags } from '@/reducers/search_page';
+import { adoptGotTags } from '@/adapters/tags';
 
 export default class CountryReducer {
 	#tokens: Token[];
@@ -45,7 +46,7 @@ export default class CountryReducer {
 		this.#getCountry(country.ID)
 			.then((info: CountryResponse) => {
 				getTags().then(tags => {
-					storage.storeGotSearchTags(tags);
+					storage.storeGotSearchTags(adoptGotTags(tags));
 
 					storage.storeCountry(adoptGotCountry(info));
 					dispatcher.notify(newInitCountryResponse());

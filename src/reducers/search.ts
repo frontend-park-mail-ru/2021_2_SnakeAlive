@@ -4,8 +4,8 @@ import { backendEndpoint, searchURI, sightsURI } from '@/constants';
 import { Search } from '@/dispatcher/metadata_types';
 import { Sight } from '@/models';
 import { storage } from '@/storage';
-import { gotSearchResults } from '@/actions/search';
-import { SearchRequest } from '@/models/search';
+import { gotSearchResults, searchRequest } from '@/actions/search';
+import { isSearchRequestEmpty, SearchRequest } from '@/models/search';
 
 export default class SearchReducer {
 	#tokens: Token[];
@@ -19,6 +19,13 @@ export default class SearchReducer {
 	};
 
 	sendSearchRequest = (search: Search) => {
+		if (isSearchRequestEmpty(storage.getSearchRequest())) {
+			return;
+			// вывод валидации?
+		}
+
+		// if (search.type === )
+
 		const url = new URL(backendEndpoint + sightsURI + searchURI);
 		sendPatchJSONRequest(url.toString(), <SearchRequest>{
 			search: search.text,
