@@ -50,20 +50,20 @@ const initPartisipantsBtns = (partisipants: Array<Partisipants>): void => {
 		return;
 	}
 
-	console.log('f');
+	// console.log('f');
 
 	partisipants.forEach(user => {
 		// @ts-ignore
 		const btn = document.getElementById(`partisipant_${user.id.id}`);
 		// @ts-ignore
-		console.log(`partisipant_${user.id.id}`);
-		console.log(btn);
+		// console.log(`partisipant_${user.id.id}`);
+		// console.log(btn);
 		if (btn !== null) {
 			btn.addEventListener(
 				'click',
 				event => {
 					event.preventDefault();
-					console.log(storage.getProfile().meta.id);
+					// console.log(storage.getProfile().meta.id);
 					// @ts-ignore
 					if (user.id.id === storage.getProfile().meta.id) {
 						router.go(pathsURLfrontend.profile);

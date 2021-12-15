@@ -154,7 +154,6 @@ export const initAddPartisipantBtn = (): void => {
 			'click',
 			event => {
 				event.preventDefault();
-				console.log('click');
 				const addUserEmail = <HTMLInputElement>document.getElementById('search_trip_user');
 				if (addUserEmail !== null) {
 					if (addUserEmail) {

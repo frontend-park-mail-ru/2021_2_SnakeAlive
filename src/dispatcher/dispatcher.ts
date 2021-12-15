@@ -45,7 +45,6 @@ class Dispatcher {
 	};
 
 	notify = (event: IEvent): void => {
-		console.log(event);
 		const subs = this.#subscribers.get(event.key);
 		if (subs === undefined) {
 			return;
