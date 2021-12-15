@@ -2,7 +2,7 @@ const loginURI = '/login';
 const registerURI = '/register';
 const countrySights = '/country/';
 const profile = '/profile';
-const alienUser = '/user/'
+const alienUser = '/user/';
 const logout = '/logout';
 const sightURI = '/sight/';
 const sightsURI = '/sights/';
@@ -50,5 +50,5 @@ export {
 	user,
 	userURI,
 	alienUser,
-	allTagsURI
+	allTagsURI,
 };

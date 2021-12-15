@@ -1,3 +1,17 @@
+import { AdoptedTag } from '@/models/tags';
+
+export interface GotSight {
+	id: string;
+	name: string;
+	description: string;
+	country: string;
+	lat: string;
+	lng: string;
+	rating: string;
+	tags: string[];
+	photos: Array<string>;
+}
+
 export interface Sight {
 	id: string;
 	name: string;
@@ -6,7 +20,7 @@ export interface Sight {
 	lat: string;
 	lng: string;
 	rating: string;
-	tags: Array<string>;
+	tags: Array<AdoptedTag>;
 	photos: Array<string>;
 }
 
@@ -22,6 +36,7 @@ export interface SightDay {
 }
 
 export interface TagAdoptedForRender {
+	id: string;
 	name: string;
 	sightPP: number;
 }

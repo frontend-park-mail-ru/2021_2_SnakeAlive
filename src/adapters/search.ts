@@ -8,4 +8,4 @@ export const adoptGotSearchCountries = (countries: CountryResponse[]) => {
 		res.push(adoptGotCountry(country));
 	});
 	return res;
-}
+};

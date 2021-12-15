@@ -81,7 +81,10 @@ export const adoptProfileAlbums = (albums: ProfileAlbum[]): ProfileAlbum[] => {
 	return [];
 };
 
-export const adoptAlienProfileTrips = (trips: AlienProfileTrip[], alienId: string): ProfileTrip[] => {
+export const adoptAlienProfileTrips = (
+	trips: AlienProfileTrip[],
+	alienId: string
+): ProfileTrip[] => {
 	if (trips) {
 		const commonTrips: ProfileTrip[] = trips.filter(trip => {
 			let isCommon = false;
@@ -91,7 +94,7 @@ export const adoptAlienProfileTrips = (trips: AlienProfileTrip[], alienId: strin
 				}
 			});
 			return isCommon;
-		})
+		});
 		commonTrips.forEach(trip => {
 			// eslint-disable-next-line no-param-reassign
 			trip.htmlId = `go_trip_${trip.id}`;

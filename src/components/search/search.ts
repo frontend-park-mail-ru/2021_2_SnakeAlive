@@ -1,17 +1,19 @@
 import searchTemplate from './search.handlebars';
 
 import imgSearch from '../../../image/icon/search_16.svg';
+import imgSearchWhite from '../../../image/icon/search_white.svg';
 import './search.scss';
 import { dispatcher, EventType } from '@/dispatcher';
 import { storage } from '@/storage';
 import { Search } from '@/dispatcher/metadata_types';
-import { initEmptySearchPageRequest, searchRequest, searchSubmit } from '@/actions/search';
+import { searchRequest } from '@/actions/search';
 import { throttle } from 'throttle-typescript';
 import { router } from '@/router';
 import { pathsURLfrontend } from '@/constants';
 import { searchPlaceType } from '@/models/search';
 
-export const initSearchView = (type: searchPlaceType, needsPageGoBtn: boolean): string => searchTemplate({ icon: imgSearch, type, needsPageGoBtn });
+export const initSearchView = (type: searchPlaceType, needsPageGoBtn: boolean): string =>
+	searchTemplate({ icon: imgSearch, type, needsPageGoBtn, iconWhite: imgSearchWhite });
 
 export class SearchView {
 	#type: searchPlaceType;
@@ -26,16 +28,16 @@ export class SearchView {
 
 	#value = '';
 
-	constructor(type: searchPlaceType,
-							callback: (id: string) => void,
-							inputCallback: (text: string) => void =
-								(text: string) => {
-									dispatcher.notify(searchRequest(text, this.#type))
-								},
-							goSearchCallback: () => void =
-								() => {
-									router.go(pathsURLfrontend.search, this.#value);
-								}) {
+	constructor(
+		type: searchPlaceType,
+		callback: (id: string) => void,
+		inputCallback: (text: string) => void = (text: string) => {
+			dispatcher.notify(searchRequest(text, this.#type));
+		},
+		goSearchCallback: () => void = () => {
+			router.go(pathsURLfrontend.search, this.#value);
+		}
+	) {
 		this.#type = type;
 
 		this.#callback = callback;
@@ -49,13 +51,13 @@ export class SearchView {
 			this.#searchList = searchList;
 		}
 
-		const goPageBtn = document.getElementById(`go_search_page_${type}`);
-		if (goPageBtn !== null) {
-			goPageBtn.addEventListener('click', event => {
-				event.preventDefault();
-				this.#goSearchCallback();
-			}, false);
-		}
+		// const goPageBtn = document.getElementById(`go_search_page_${type}`);
+		// if (goPageBtn !== null) {
+		// 	goPageBtn.addEventListener('click', event => {
+		// 		event.preventDefault();
+		// 		this.#goSearchCallback();
+		// 	}, false);
+		// }
 
 		const input = <HTMLInputElement>document.getElementById(`search_${type}`);
 
@@ -70,7 +72,7 @@ export class SearchView {
 			input.addEventListener(
 				'input',
 				() => {
-					inputCallback(input.value)
+					inputCallback(input.value);
 				},
 				false
 			);

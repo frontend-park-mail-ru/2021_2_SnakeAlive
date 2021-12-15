@@ -5,7 +5,7 @@ import { storage } from '@/storage';
 import tripSights from '@/components/country_page/sights.handlebars';
 import { SightCardInTrip } from '@/view/sight_cards';
 import { TagAdoptedForRender } from '@/models/sight';
-import { allTags, initTagsBtns, tags } from './tag';
+import { initTagsBtns } from './tag';
 
 class CountryCardsHolderView extends BasicView {
 	#tokens: Token[];
@@ -45,7 +45,8 @@ class CountryCardsHolderView extends BasicView {
 			const tagsAdopted: Array<TagAdoptedForRender> = [];
 			sight.sight.tags.forEach(tag => {
 				tagsAdopted.push({
-					name: tag,
+					id: tag.id.toString(),
+					name: tag.name,
 					sightPP: sight.PP,
 				});
 			});
@@ -95,15 +96,15 @@ class CountryHolderView extends BasicView {
 	renderCountry = (): void => {
 		const { translation } = storage.getCountry();
 		this.setView(countryPageTemplate({ name: `по стране ${translation}` }));
-
+		console.log(storage.getSearchTags());
 		this.setView(
 			countryPageTemplate({
 				name: `по стране ${translation}`,
-				tags,
-				allTags,
+				tags: storage.getSearchTags().slice(0, 6),
+				allTags: storage.getSearchTags().slice(6),
 			})
 		);
-		initTagsBtns();
+		initTagsBtns(storage.getSearchTags());
 	};
 }
 

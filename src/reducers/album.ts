@@ -81,6 +81,8 @@ export default class AlbumReducer {
 	};
 
 	updateInfo = (data: AlbumUpdateInfo) => {
+		const isFirst = window.location.href.split('?').length <= 1;
+
 		this.#sendAlbumInfo(data).then((album: GotAlbumInterface) => {
 			storage.storeAlbum(adoptGotAlbum(album));
 			if (data.actionAfter) {

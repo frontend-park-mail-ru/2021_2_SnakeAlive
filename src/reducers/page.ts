@@ -181,5 +181,5 @@ export default class PageReducer {
 
 		const searchHolderView: SearchHolderView = new SearchHolderView();
 		searchHolderView.init();
-	}
+	};
 }

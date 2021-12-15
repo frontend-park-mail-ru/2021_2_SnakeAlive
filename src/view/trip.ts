@@ -46,7 +46,7 @@ import { searchPlaceType } from '@/models/search';
 
 const initPartisipantsBtns = (partisipants: Array<Partisipants>): void => {
 	// id="partisipant_1"
-	if (! partisipants) {
+	if (!partisipants) {
 		return;
 	}
 
@@ -59,7 +59,8 @@ const initPartisipantsBtns = (partisipants: Array<Partisipants>): void => {
 		console.log(`partisipant_${user.id.id}`);
 		console.log(btn);
 		if (btn !== null) {
-			btn.addEventListener('click',
+			btn.addEventListener(
+				'click',
 				event => {
 					event.preventDefault();
 					console.log(storage.getProfile().meta.id);
@@ -67,18 +68,22 @@ const initPartisipantsBtns = (partisipants: Array<Partisipants>): void => {
 					if (user.id.id === storage.getProfile().meta.id) {
 						router.go(pathsURLfrontend.profile);
 					} else {
-						router.go(createFrontendQueryParams(pathsURLfrontend.users, [
-							{
-								key: paramsURLfrontend.id,
-								// @ts-ignore
-								value: user.id.id.toString()
-							}
-						]))
+						router.go(
+							createFrontendQueryParams(pathsURLfrontend.users, [
+								{
+									key: paramsURLfrontend.id,
+									// @ts-ignore
+									value: user.id.id.toString(),
+								},
+							])
+						);
 					}
-				}, false);
+				},
+				false
+			);
 		}
 	});
-}
+};
 
 export class TripInfoView extends BasicView {
 	#tokens: Token[];
@@ -286,7 +291,8 @@ export class CardSightsHolder extends BasicView {
 					const adoptedTags: Array<TagAdoptedForRender> = [];
 					sight.tags.forEach(tag => {
 						adoptedTags.push({
-							name: tag,
+							id: tag.id.toString(),
+							name: tag.name,
 							sightPP: i,
 						});
 					});

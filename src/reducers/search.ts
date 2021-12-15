@@ -21,7 +21,7 @@ export default class SearchReducer {
 	sendSearchRequest = (search: Search) => {
 		const url = new URL(backendEndpoint + sightsURI + searchURI);
 		sendPatchJSONRequest(url.toString(), <SearchRequest>{
-			search: search.text
+			search: search.text,
 		})
 			.then(response => {
 				if (response.ok) {

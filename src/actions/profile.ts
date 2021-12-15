@@ -47,7 +47,6 @@ const logoutRequest = (): IEvent =>
 
 // alien_profile
 
-
 const newGetAlienProfileResponse = (): IEvent =>
 	<IEvent>{
 		key: EventType.GET_ALIEN_PROFILE_RESPONSE,
@@ -58,7 +57,7 @@ const newGetAlienProfileRequest = (ID: string): IEvent =>
 	<IEvent>{
 		key: EventType.GET_ALIEN_PROFILE_REQUEST,
 		metadata: <UUID>{
-			ID
+			ID,
 		},
 	};
 

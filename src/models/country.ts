@@ -1,4 +1,5 @@
 import { TagAdoptedForRender } from '@/models/sight';
+import { AdoptedTag } from '@/models/tags';
 
 interface Country {
 	name: string;
@@ -50,7 +51,7 @@ export interface minCardInfo {
 		id: string;
 		name: string;
 		rating: number;
-		tags: string[];
+		tags: AdoptedTag[];
 		adoptedTags: TagAdoptedForRender[];
 		photo: string;
 	};

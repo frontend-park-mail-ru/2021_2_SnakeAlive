@@ -103,5 +103,5 @@ export {
 	initTripEditPageRequest,
 	initTagPageRequest,
 	initAlienProfileRequest,
-	initSearchPageRequest
+	initSearchPageRequest,
 };

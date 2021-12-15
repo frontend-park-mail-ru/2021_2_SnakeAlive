@@ -4,20 +4,14 @@ import { storage } from '@/storage';
 import { TagAdoptedForRender } from '@/models/sight';
 import tripSights from '@/components/country_page/sights.handlebars';
 import { SightCardInTrip } from '@/view/sight_cards';
-import countryPageTemplate from '@/components/country_page/country_sights.handlebars';
-import { newGetTagCardsResult } from '@/actions/tag';
-import { allTags, initDropdown, initTagsBtns, tags } from '@/view/tag';
+import { initDropdown } from '@/view/tag';
 import searchPageTemplate from '@/components/search/search_page.handlebars';
 import { initSearchView, SearchView } from '@/components/search/search';
-import { router } from '@/router';
-import { createFrontendQueryParams } from '@/router/router';
-import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
-import { getSearchCardsResult, sendPageSearch } from '@/actions/search';
+import { sendPageSearch } from '@/actions/search';
 import { Search } from '@/dispatcher/metadata_types';
 import { searchPlaceType } from '@/models/search';
 
 class SearchCardsHolderView extends BasicView {
-
 	// #cards: Array<SightCardInTrip>;
 
 	constructor() {
@@ -42,7 +36,8 @@ class SearchCardsHolderView extends BasicView {
 			if (sight.sight.tags) {
 				sight.sight.tags.forEach(tag => {
 					tagsAdopted.push({
-						name: tag,
+						id: tag.id.toString(),
+						name: tag.name,
 						sightPP: sight.PP,
 					});
 				});
@@ -98,17 +93,18 @@ class SearchHolderView extends BasicView {
 				tags: storage.getSearchTags().slice(0, 6),
 				allTags: storage.getSearchTags().slice(6),
 				countries: storage.getSearchCountries().slice(0, 6),
-				allCountries: storage.getSearchCountries().slice(6, 0)
+				allCountries: storage.getSearchCountries().slice(6, 0),
 			})
 		);
-		initDropdown("dropdown_tags"); // ??
-		initDropdown("dropdown_countries"); // ??
+		initDropdown('dropdown_tags'); // ??
+		initDropdown('dropdown_countries'); // ??
 
 		// поиск
 		const searchPlace = document.getElementById('page-search-place');
 		if (searchPlace !== null) {
 			searchPlace.innerHTML = initSearchView(searchPlaceType.page, true);
-			this.#search = new SearchView(searchPlaceType.page,
+			this.#search = new SearchView(
+				searchPlaceType.page,
 				() => null,
 				(text: string) => {
 					storage.storeSearchRequestText(text);
@@ -116,7 +112,7 @@ class SearchHolderView extends BasicView {
 				() => {
 					dispatcher.notify(sendPageSearch());
 				}
-				);
+			);
 		}
 
 		// dispatcher.notify(newGetTagCardsResult());
@@ -127,7 +123,7 @@ class SearchHolderView extends BasicView {
 		if (metadata.type === searchPlaceType.page) {
 			this.#cardView.rerenderCards();
 		}
-	}
+	};
 }
 
 export { SearchHolderView, SearchCardsHolderView };

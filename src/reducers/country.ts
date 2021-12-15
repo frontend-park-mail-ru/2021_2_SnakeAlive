@@ -14,6 +14,8 @@ import { CountryCardResponse, CountryResponse } from '@/models';
 import { minAdaptCountryCards } from '@/adapters/country_cards_min';
 import { GET_COUNTRY_NAME } from '@/components/trip/trip_form';
 import { adoptGotCountry } from '@/adapters/country';
+import { initEmptySearchPageResponse } from '@/actions/search';
+import { getTags } from '@/reducers/search_page';
 
 export default class CountryReducer {
 	#tokens: Token[];
@@ -42,9 +44,14 @@ export default class CountryReducer {
 		// получение инфы по стране
 		this.#getCountry(country.ID)
 			.then((info: CountryResponse) => {
-				storage.storeCountry(adoptGotCountry(info));
-				dispatcher.notify(newInitCountryResponse());
-				dispatcher.notify(newGetCountryCardsRequest(country.name, <string>country.ID));
+				getTags().then(tags => {
+					console.log(tags);
+					storage.storeGotSearchTags(tags);
+
+					storage.storeCountry(adoptGotCountry(info));
+					dispatcher.notify(newInitCountryResponse());
+					dispatcher.notify(newGetCountryCardsRequest(country.name, <string>country.ID));
+				});
 			})
 			.catch((error: Error) => {
 				dispatcher.notify(initErrorPageRequest(error));
@@ -57,7 +64,7 @@ export default class CountryReducer {
 		// собственно получение мест
 		this.#getCards(<string>data.ID)
 			.then((cards: CountryCardResponse[]) => {
-				storage.storeSightsCardsMin(minAdaptCountryCards(cards));
+				storage.storeSightsCardsMin(minAdaptCountryCards(cards, storage.getSearchTags()));
 				dispatcher.notify(newGetCountryCardsResult());
 			})
 			.catch((error: Error) => {

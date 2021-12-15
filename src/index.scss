@@ -1109,7 +1109,8 @@ textarea:active {
   color: green;
 
   position: relative;
-  bottom: $small-px * 4;
+  margin-bottom: 100%;
+  bottom: $small-px * 6;
   right: - $small-px * 2;
 }
 

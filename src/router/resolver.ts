@@ -11,7 +11,9 @@ import {
 	initTagPageRequest,
 	initTripPageRequest,
 	newInitPageRequest,
-	initTripEditPageRequest, initAlienProfileRequest, initSearchPageRequest,
+	initTripEditPageRequest,
+	initAlienProfileRequest,
+	initSearchPageRequest,
 } from '@/actions/page';
 import { newGetAlienProfileRequest, newGetProfileRequest } from '@/actions/profile';
 import { showLoginForm, showRegisterForm } from '@/actions/auth';

@@ -11,13 +11,27 @@ import { newGetTagCardsResult, newTagResponse } from '@/actions/tag';
 import {
 	gotSearchResults,
 	initEmptySearchPageRequest,
-	initEmptySearchPageResponse, newGetSearchCardsError,
+	initEmptySearchPageResponse,
+	newGetSearchCardsError,
 	sendPageSearch,
 } from '@/actions/search';
 import { adoptGotSearchCountries } from '@/adapters/search';
 import { TagResponse } from '@/models/tags';
 import { GET_COUNTRY_NAME } from '@/components/trip/trip_form';
 import { searchPlaceType } from '@/models/search';
+
+export const getTags = (): Promise<TagResponse[]> =>
+	sendGetJSONRequest(backendEndpoint + allTagsURI)
+		.then(response => {
+			if (response.status !== 200) {
+				return Promise.reject(new Error('проблемы при получении списка тегов'));
+			}
+			return Promise.resolve(response);
+		})
+		.then(response => {
+			console.log(response.clone());
+			return response.json();
+		});
 
 export default class SearchPageReducer {
 	#tokens: Token[];
@@ -43,49 +57,39 @@ export default class SearchPageReducer {
 	initSearchPage = (): void => {
 		dispatcher.notify(newSetMainHeaderRequest());
 		// запрос за странами
-		this.#getSearchCountries()
-			.then(countries => {
-				storage.storeGotSearchCountries(adoptGotSearchCountries(countries));
-				// запрос за категориями
-				this.#getSearchTags()
-					.then(tags => {
-						storage.storeGotSearchTags(tags);
-						dispatcher.notify(initEmptySearchPageResponse());
-					});
-			})
+		this.#getSearchCountries().then(countries => {
+			storage.storeGotSearchCountries(adoptGotSearchCountries(countries));
+			// запрос за категориями
+			getTags().then(tags => {
+				storage.storeGotSearchTags(tags);
+				dispatcher.notify(initEmptySearchPageResponse());
+			});
+		});
 	};
 
 	sendSearchRequest = (): void => {
 		this.#sendSearch()
 			.then((cards: CountryCardResponse[]) => {
-				storage.storeSightsCardsMin(minAdaptCountryCards(cards));
+				storage.storeSightsCardsMin(minAdaptCountryCards(cards, storage.getSearchTags()));
 				dispatcher.notify(gotSearchResults(searchPlaceType.page));
 			})
 			.catch((error: Error) => {
 				dispatcher.notify(newGetSearchCardsError(error));
 			});
-	}
-
-	#getTagCards = (name: string): void => {
-		this.#getCards(name).then((cards: CountryCardResponse[]) => {
-			dispatcher.notify(newTagResponse(name));
-			storage.storeSightsCardsMin(minAdaptCountryCards(cards));
-			dispatcher.notify(newGetTagCardsResult());
-		});
 	};
 
 	#sendSearch = (): Promise<CountryCardResponse[]> =>
 		sendPatchJSONRequest(backendEndpoint + sightsURI + searchURI, storage.getSearchRequest())
-		.then(response => {
-			if (response.status === 404) {
-				return Promise.reject(new Error('На сайте нет такой страницы'));
-			}
-			if (response.status === 401) {
-				return Promise.reject(new Error('Нужно войти в систему'));
-			}
-			return Promise.resolve(response);
-		})
-		.then(response => response.json());
+			.then(response => {
+				if (response.status === 404) {
+					return Promise.reject(new Error('На сайте нет такой страницы'));
+				}
+				if (response.status === 401) {
+					return Promise.reject(new Error('Нужно войти в систему'));
+				}
+				return Promise.resolve(response);
+			})
+			.then(response => response.json());
 
 	#getCards = (tagID: string): Promise<CountryCardResponse[]> => {
 		const uri = new URL(backendEndpoint + tagsURI);
@@ -103,7 +107,7 @@ export default class SearchPageReducer {
 			})
 			.then(response => response.json());
 	};
-	
+
 	#getSearchCountries = (): Promise<CountryResponse[]> =>
 		sendGetJSONRequest(backendEndpoint + listOfCountries)
 			.then(response => {
@@ -111,15 +115,6 @@ export default class SearchPageReducer {
 					return Promise.reject(new Error('проблемы при получении списка стран'));
 				}
 				return Promise.resolve(response);
-			}).then(response => response.json());
-
-	#getSearchTags = (): Promise<TagResponse[]> =>
-		sendGetJSONRequest(backendEndpoint + allTagsURI)
-			.then(response => {
-				if (response.status !== 200) {
-					return Promise.reject(new Error('проблемы при получении списка тегов'));
-				}
-				return Promise.resolve(response);
-			}).then(response => response.json());
-
+			})
+			.then(response => response.json());
 }

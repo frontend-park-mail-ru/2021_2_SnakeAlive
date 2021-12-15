@@ -54,10 +54,10 @@ const main = () => {
 			navigator.serviceWorker
 				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 				// @ts-ignore
-				.register(new URL('./service-worker.js', import.meta.url))
-				// .catch(registrationError => {
-					// console.log('SW registration failed: ', registrationError);
-				// });
+				.register(new URL('./service-worker.js', import.meta.url));
+			// .catch(registrationError => {
+			// console.log('SW registration failed: ', registrationError);
+			// });
 		});
 	}
 };

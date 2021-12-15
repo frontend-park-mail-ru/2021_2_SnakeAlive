@@ -183,27 +183,27 @@ class Storage {
 
 	storeGotSearchCountries = (countries: SearchCountry[]) => {
 		this.#countryList = countries;
-	}
+	};
 
 	getSearchCountries = (): SearchCountry[] => this.#countryList;
 
 	storeGotSearchTags = (tags: TagResponse[]) => {
 		this.#tagList = tags;
-	}
+	};
 
 	getSearchTags = (): TagResponse[] => this.#tagList;
 
 	storeSearchRequestCountries = (countries: string[]) => {
 		this.#searchRequest.countries = countries;
-	}
+	};
 
 	storeSearchRequestTags = (tags: number[]) => {
 		this.#searchRequest.tags = tags;
-	}
+	};
 
 	storeSearchRequestText = (search: string) => {
 		this.#searchRequest.search = search;
-	}
+	};
 
 	getSearchRequest = () => this.#searchRequest;
 }

@@ -24,13 +24,18 @@ import {
 import {
 	adaptGetProfileResponse,
 	adaptUpdateProfileMetadataRequest,
-	adaptUpdateProfileMetadataResponse, adoptAlienProfileTrips, // adoptAlienProfileAlbums, adoptAlienProfileTrips,
+	adaptUpdateProfileMetadataResponse,
+	adoptAlienProfileTrips, // adoptAlienProfileAlbums, adoptAlienProfileTrips,
 	adoptProfileAlbums,
 	adoptProfileTrips,
 } from '@/adapters/profile';
 import { storage } from '@/storage';
 import { dispatcher, EventType, File, NamedUUID, Token, UpdateProfile, UUID } from '@/dispatcher';
-import { newGetAlienProfileResponse, newGetProfileRequest, newGetProfileResponse } from '@/actions/profile';
+import {
+	newGetAlienProfileResponse,
+	newGetProfileRequest,
+	newGetProfileResponse,
+} from '@/actions/profile';
 import { initErrorPageRequest } from '@/actions/page';
 import { newSetEmptyHeaderRequest, newSetMainHeaderRequest } from '@/actions/header';
 import { router } from '@/router';
@@ -63,9 +68,8 @@ export default class AlienProfileReducer {
 
 				this.#getProfileTripsForAlian().then((trips: AlienProfileTrip[]) => {
 					storage.storeProfileTrips(adoptAlienProfileTrips(trips, metadata.ID));
-						dispatcher.notify(newGetAlienProfileResponse());
+					dispatcher.notify(newGetAlienProfileResponse());
 				});
-
 			})
 			.catch((error: Error) => {
 				dispatcher.notify(initErrorPageRequest(error));
@@ -89,5 +93,4 @@ export default class AlienProfileReducer {
 		sendGetJSONRequest(backendEndpoint + tripURI + user)
 			.then(response => Promise.resolve(response))
 			.then(response => response.json());
-
 }

@@ -15,5 +15,5 @@ export interface Partisipants {
 }
 
 export interface tripUser {
-	id: number,
+	id: number;
 }

@@ -10,7 +10,7 @@ export const enum pathsURLfrontend {
 	sights = '/sights',
 	tag = '/tag',
 	users = '/user',
-	search = '/search'
+	search = '/search',
 }
 
 export const enum paramsURLfrontend {

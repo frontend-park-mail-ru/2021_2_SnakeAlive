@@ -25,7 +25,6 @@ const searchSubmit = (): IEvent =>
 		metadata: <Empty>{},
 	};
 
-
 // search page
 
 const initEmptySearchPageResponse = (): IEvent =>
@@ -68,5 +67,5 @@ export {
 	initEmptySearchPageRequest,
 	sendPageSearch,
 	getSearchCardsResult,
-	newGetSearchCardsError
+	newGetSearchCardsError,
 };

@@ -8,6 +8,8 @@ import { CountryCardResponse } from '@/models';
 import { minAdaptCountryCards } from '@/adapters/country_cards_min';
 import { tagsURI } from '@/constants/uris';
 import { newGetTagCardsResult, newTagResponse } from '@/actions/tag';
+import { initEmptySearchPageResponse } from '@/actions/search';
+import { getTags } from '@/reducers/search_page';
 
 export default class TagReducer {
 	#tokens: Token[];
@@ -36,26 +38,31 @@ export default class TagReducer {
 
 	#getTagCards = (name: string): void => {
 		this.#getCards(name).then((cards: CountryCardResponse[]) => {
-			dispatcher.notify(newTagResponse(name));
-			storage.storeSightsCardsMin(minAdaptCountryCards(cards));
-			dispatcher.notify(newGetTagCardsResult());
+			getTags().then(tags => {
+				dispatcher.notify(newTagResponse(tags.filter(tag => tag.id.toString() === name)[0].name));
+				storage.storeSightsCardsMin(minAdaptCountryCards(cards, tags));
+				dispatcher.notify(newGetTagCardsResult());
+			});
 		});
 	};
 
 	#getCards = (tagID: string): Promise<CountryCardResponse[]> => {
 		const uri = new URL(backendEndpoint + tagsURI);
+		return getTags().then(tags => {
+			storage.storeGotSearchTags(tags);
 
-		uri.searchParams.append('tag', tagID);
-		return sendGetJSONRequest(uri.toString())
-			.then(response => {
-				if (response.status === 404) {
-					return Promise.reject(new Error('На сайте нет такой страницы'));
-				}
-				if (response.status === 401) {
-					return Promise.reject(new Error('Нужно войти в систему'));
-				}
-				return Promise.resolve(response);
-			})
-			.then(response => response.json());
+			uri.searchParams.append('tag', tagID);
+			return sendGetJSONRequest(uri.toString())
+				.then(response => {
+					if (response.status === 404) {
+						return Promise.reject(new Error('На сайте нет такой страницы'));
+					}
+					if (response.status === 401) {
+						return Promise.reject(new Error('Нужно войти в систему'));
+					}
+					return Promise.resolve(response);
+				})
+				.then(response => response.json());
+		});
 	};
 }

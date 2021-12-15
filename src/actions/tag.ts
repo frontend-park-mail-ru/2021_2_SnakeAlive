@@ -1,4 +1,4 @@
-import { Empty, EventType, IEvent, NamedUUID } from '@/dispatcher';
+import { Empty, EventType, IEvent, NamedUUID, UUID } from '@/dispatcher';
 
 const newTagResponse = (tagName: string): IEvent =>
 	<IEvent>{
@@ -11,7 +11,7 @@ const newTagResponse = (tagName: string): IEvent =>
 const newTagRequest = (tagName: string): IEvent =>
 	<IEvent>{
 		key: EventType.INIT_TAG_REQUEST,
-		metadata: <NamedUUID>{
+		metadata: <UUID>{
 			ID: tagName,
 		},
 	};

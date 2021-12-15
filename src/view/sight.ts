@@ -30,9 +30,11 @@ export default class SightView extends BasicView {
 
 		const adoptedTags: Array<TagAdoptedForRender> = [];
 		if (sight.tags) {
+			console.log(sight.tags);
 			sight.tags.forEach(tag => {
 				adoptedTags.push({
-					name: tag,
+					id: tag.id.toString(),
+					name: tag.name,
 					sightPP: 0,
 				});
 			});
