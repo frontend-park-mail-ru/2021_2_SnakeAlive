@@ -394,11 +394,43 @@ export class InitTripPage extends BasicView {
 		this.#tokens = [
 			dispatcher.register(EventType.GET_TRIP_RESPONSE, this.#TripInfo.createTripEdit),
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
+			dispatcher.register(EventType.UPDATE_CURRENT_TRIP_INFO, this.destroy),
 		];
 		this.setView(tripPageTemplate());
 		this.#TripMap.init();
 		this.#TripInfo.init();
 		init(true);
+
+		//ws
+		let socket = new WebSocket("ws://localhost:5050/connect");
+		socket.onopen = function(e) {
+			console.log("[open] Соединение установлено");
+		  };
+		  
+		  socket.onmessage = function(event) {
+			console.log(`[message] Данные получены с сервера: ${event.data}`);
+			router.go(
+				createFrontendQueryParams(pathsURLfrontend.trip, [
+					{
+						key: paramsURLfrontend.id,
+						value: storage.getCurrentTrip().id,
+					},
+				])
+			);
+		  };
+		  
+		  socket.onclose = function(event) {
+			if (event.wasClean) {
+				console.log(`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`);
+			} else {
+
+			  console.log('[close] Соединение прервано');
+			}
+		  };
+		  
+		  socket.onerror = function(error) {
+			console.log(`[error] ${error.type}`);
+		  };
 	};
 
 	initEdit = (metadata: NumID): void => {
