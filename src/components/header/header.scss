@@ -93,6 +93,10 @@ $logo_height: 48px;
     background: $my--button-header-hover;
     cursor: pointer;
   }
+  &__button_no_hover:hover {
+    background: $white;
+    cursor: default;
+  }
 }
 
 .header__search_place {

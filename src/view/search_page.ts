@@ -28,9 +28,6 @@ class SearchCardsHolderView extends BasicView {
 
 	rerenderCards = () => {
 		this.setEmpty();
-		// this.#cards = [];
-
-		console.log(storage.getSightsCardsMin());
 
 		const cardsArray = storage.getSightsCardsMin();
 		cardsArray.forEach(sight => {
@@ -126,7 +123,7 @@ const initCategories = (list: AdoptedTag[] | SearchCountry[], moreList: AdoptedT
 
 	const activeCSSClass = 'page_category_active';
 	list.forEach(tag => {
-		const tegElem = document.getElementById(`${info.type}_${tag.ID}`);
+		const tegElem = document.getElementById(`${info.type}_${tag.id}`);
 		if (tegElem !== null) {
 			tegElem.addEventListener('click', () => {
 				if (tegElem.classList.contains(activeCSSClass)) {
@@ -134,12 +131,12 @@ const initCategories = (list: AdoptedTag[] | SearchCountry[], moreList: AdoptedT
 				} else {
 					tegElem.classList.add(activeCSSClass);
 				}
-				info.callback(tag.ID);
+				info.callback(tag.id);
 			});
 		}
 	});
 	moreList.forEach(tag => {
-		const tegElem = document.getElementById(`dropdown_${info.type}_${tag.ID}`);
+		const tegElem = document.getElementById(`dropdown_${info.type}_${tag.id}`);
 		if (tegElem !== null) {
 			tegElem.addEventListener('click', () => {
 				if (tegElem.classList.contains(activeCSSClass)) {
@@ -147,7 +144,7 @@ const initCategories = (list: AdoptedTag[] | SearchCountry[], moreList: AdoptedT
 				} else {
 					tegElem.classList.add(activeCSSClass);
 				}
-				info.callback(tag.ID);
+				info.callback(tag.id);
 			});
 		}
 	});
@@ -187,10 +184,14 @@ class SearchHolderView extends BasicView {
 
 	renderEmptySearchPage = (): void => {
 		const renderObj = {
-			tags: storage.getSearchTags().slice(0, 6),
-			allTags: storage.getSearchTags().slice(6),
-			countries: storage.getSearchCountries().slice(0, 6),
-			allCountries: storage.getSearchCountries().slice(6, 0),
+			tags: storage.getSearchTags(),
+			allTags: [],
+			// tags: storage.getSearchTags().slice(0, 6),
+			// allTags: storage.getSearchTags().slice(6),
+			countries: storage.getSearchCountries(),
+			allCountries: []
+			// countries: storage.getSearchCountries().slice(0, 6),
+			// allCountries: storage.getSearchCountries().slice(6, 0),
 		};
 
 		this.setView(
@@ -236,7 +237,6 @@ class SearchHolderView extends BasicView {
 	};
 
 	checkIfPage = (metadata: Search): void => {
-		console.log(metadata);
 		if (metadata.type === searchPlaceType.page) {
 			this.#cardView.rerenderCards();
 		}

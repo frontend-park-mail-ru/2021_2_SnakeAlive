@@ -3,7 +3,7 @@ import { AdoptedTag } from '@/models/tags';
 
 interface Country {
 	name: string;
-	ID: string;
+	id: string;
 	translation: string;
 }
 
@@ -61,7 +61,7 @@ export interface minCardInfo {
 
 export interface SearchCountry {
 	name: string;
-	ID: string;
+	id: string;
 	translation: string;
 }
 

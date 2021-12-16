@@ -27,3 +27,31 @@
 .page_category_active {
   background-color: $logo-color;
 }
+
+.cat_SP {
+  width: 100%;
+}
+
+.search_page {
+  &__holder {
+    display: grid;
+    @media all {
+      grid-template: "ml ch mr" 400px
+                      "ml cb mr" auto / 1fr 4fr 1fr;
+    }
+
+    &__header {
+      grid-area: ch;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: $large-px * 4;
+    }
+
+    &__cards {
+      grid-area: cb;
+    }
+  }
+}
