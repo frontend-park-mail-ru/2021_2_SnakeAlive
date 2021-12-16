@@ -1,5 +1,5 @@
 import BasicView from '@/view/view';
-import { sendGetJSONRequest } from '@/http';
+import { sendGetJSONRequest, sendPatchJSONRequest } from '@/http';
 import { backendEndpoint, searchURI, sightsURI, sightURI } from '@/constants';
 import { CardOrderAndDay, NumID } from '@/dispatcher/metadata_types';
 import { SightDay, SightsCoord } from '@/models';
@@ -78,11 +78,9 @@ export class Map extends BasicView {
 		storage.getCurrentTrip().sights.forEach(sight => {
 			if (i != 0) {
 				const url = new URL(backendEndpoint + sightsURI + searchURI);
-				url.searchParams.set('search', sight.name);
-				url.searchParams.set('skip', '0');
-				url.searchParams.set('limit', '0');
-				const countriesPromise = sendGetJSONRequest(url.toString())
+				const countriesPromise = sendPatchJSONRequest(url.toString(), {search: sight.name})
 					.then(response => {
+						console.log("response = ", response)
 						if (response.ok) {
 							return Promise.resolve(response);
 						}
@@ -106,6 +104,9 @@ export class Map extends BasicView {
 							map: this.#map,
 						});
 						this.#markers.push(marker);
+						this.#map.setCenter({lat: Number(storage.getSearchSightsResult(searchPlaceType.trip)[0].lat), lng: Number(storage.getSearchSightsResult(searchPlaceType.trip)[0].lng)});
+						console.log(storage.getCurrentTrip().sights)
+						console.log(this.#coord)
 						this.updateMap();
 					});
 			}
