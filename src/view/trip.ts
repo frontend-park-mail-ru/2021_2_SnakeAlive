@@ -18,7 +18,7 @@ import { Map } from '@/components/map/map';
 import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
 import { IsTrue, SightToTrip } from '@/dispatcher/metadata_types';
 import { storage } from '@/storage';
-import { addPlaceToTrip, delPlaceFromTrip, newGetTripRequest } from '@/actions/trip';
+import { addPlaceToTrip, delPlaceFromTrip, newGetTripRequest, updateCurrentTripInfo, wsUpdate } from '@/actions/trip';
 import { SightCardInTrip } from '@/view/sight_cards';
 import defaultPicture from '@/../image/moscow_city_1.jpeg';
 import { initSearchView, SearchView } from '@/components/search/search';
@@ -38,6 +38,7 @@ import { Partisipants } from '@/models';
 import { createFrontendQueryParams } from '@/router/router';
 import { searchPlaceType } from '@/models/search';
 import { searchRequest } from '@/actions/search';
+import { WSEndPoint } from '@/constants/endpoints';
 
 // const partisipants = [
 // 	{id: 1, profilePhoto: "/image/7b205eb741a49105fcd425910545cc79.jpeg"},
@@ -396,6 +397,7 @@ export class InitTripPage extends BasicView {
 			dispatcher.register(EventType.GET_TRIP_RESPONSE, this.#TripInfo.createTripEdit),
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
 			dispatcher.register(EventType.UPDATE_CURRENT_TRIP_INFO, this.destroy),
+			dispatcher.register(EventType.WS_UPDATE, this.wsUpdate),
 		];
 		this.setView(tripPageTemplate());
 		this.#TripMap.init();
@@ -403,13 +405,14 @@ export class InitTripPage extends BasicView {
 		init(true);
 
 		//ws
-		let socket = new WebSocket("ws://localhost:5050/connect");
+		let socket = new WebSocket(WSEndPoint);
 		socket.onopen = function(e) {
 			console.log("[open] Соединение установлено");
 		  };
 		  
 		  socket.onmessage = function(event) {
 			console.log(`[message] Данные получены с сервера: ${event.data}`);
+			//dispatcher.notify(wsUpdate())
 			router.go(
 				createFrontendQueryParams(pathsURLfrontend.trip, [
 					{
@@ -435,6 +438,13 @@ export class InitTripPage extends BasicView {
 	};
 
 	initEdit = (metadata: NumID): void => {
+		// need get and store trip with id in params
+		const { ID } = metadata;
+		dispatcher.notify(newGetTripRequest(ID));
+		initEdit();
+	};
+
+	wsUpdate = (metadata: NumID): void => {
 		// need get and store trip with id in params
 		const { ID } = metadata;
 		dispatcher.notify(newGetTripRequest(ID));
