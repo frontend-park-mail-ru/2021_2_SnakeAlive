@@ -21,7 +21,7 @@ export const minAdaptCountryCards = (
 			card.tags.forEach(tagName => {
 				resTags.push({
 					name: tagName,
-					ID: tags.filter(tag => tag.name === tagName)[0].ID,
+					id: tags.filter(tag => tag.name === tagName)[0].id,
 				});
 			});
 		}

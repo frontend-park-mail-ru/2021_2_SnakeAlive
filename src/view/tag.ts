@@ -42,14 +42,14 @@ export const initDropdown = (htmlId = 'myDropdown') => {
 
 export const initTagsBtns = (tags: AdoptedTag[]) => {
 	tags.forEach(tag => {
-		const tegElem = document.getElementById(`tag_${tag.ID}`);
+		const tegElem = document.getElementById(`tag_${tag.id}`);
 		if (tegElem !== null) {
 			tegElem.addEventListener('click', () => {
 				router.go(
 					createFrontendQueryParams(pathsURLfrontend.tag, [
 						{
 							key: paramsURLfrontend.tag,
-							value: tag.ID,
+							value: tag.id,
 						},
 					])
 				);
@@ -57,14 +57,14 @@ export const initTagsBtns = (tags: AdoptedTag[]) => {
 		}
 	});
 	tags.forEach(tag => {
-		const tegElem = document.getElementById(`dropdown_tag_${tag.ID}`);
+		const tegElem = document.getElementById(`dropdown_tag_${tag.id}`);
 		if (tegElem !== null) {
 			tegElem.addEventListener('click', () => {
 				router.go(
 					createFrontendQueryParams(pathsURLfrontend.tag, [
 						{
 							key: paramsURLfrontend.tag,
-							value: tag.ID,
+							value: tag.id,
 						},
 					])
 				);
@@ -110,7 +110,7 @@ class TagCardsHolderView extends BasicView {
 			const tagsAdopted: Array<TagAdoptedForRender> = [];
 			sight.sight.tags.forEach(tag => {
 				tagsAdopted.push({
-					id: tag.ID.toString(),
+					id: tag.id.toString(),
 					name: tag.name,
 					sightPP: sight.PP,
 				});

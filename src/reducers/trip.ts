@@ -115,17 +115,22 @@ export default class TripReducer {
 		const { ID } = metadata;
 		this.#getTrip(ID.toString()).then((trip: Trip) => {
 			storage.storeCurrentTrip(trip);
+			console.log("stored trip = ", storage.getCurrentTrip())
+			console.log("stored  = ", trip.sights[0].tags[0][0])
 			dispatcher.notify(newGetTripResult(ID));
 		});
 	};
 
 	addCurrentTripPlace = (metadata: SightDay) => {
+		console.log("UPDATE", metadata.sight)
 		const trip = storage.getCurrentTrip();
 		trip.sights.push(metadata.sight);
 		storage.storeCurrentTrip(trip);
 		const tripSend = adoptForSend(trip);
+		console.log("tripSend = ", tripSend)
 		this.#updateTrip(tripSend, trip.id).then((tripResponse) => {
-			storage.storeCurrentTrip(tripResponse);
+			//storage.storeCurrentTrip(tripResponse);
+			console.log("stored trip in update = ", storage.getCurrentTrip())
 			dispatcher.notify(rerenderTripCards(true));
 		});
 	};

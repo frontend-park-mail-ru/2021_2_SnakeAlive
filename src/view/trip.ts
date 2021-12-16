@@ -321,9 +321,11 @@ export class CardSightsHolder extends BasicView {
 			sights.forEach(sight => {
 				if (i !== 0) {
 					const adoptedTags: Array<TagAdoptedForRender> = [];
+					console.log(Number(sight.tags[0].id))
 					sight.tags.forEach(tag => {
+						console.log(tag ,"tag.ID = ",tag.id, "---","tag.name = ", tag.name)
 						adoptedTags.push({
-							id: tag.ID.toString(),
+							id: tag.id.toString(),
 							name: tag.name,
 							sightPP: i,
 						});
@@ -402,35 +404,35 @@ export class InitTripPage extends BasicView {
 		init(true);
 
 		//ws
-		let socket = new WebSocket("ws://localhost:5050/connect");
-		socket.onopen = function(e) {
-			console.log("[open] Соединение установлено");
-		  };
+		// let socket = new WebSocket("ws://localhost:5050/connect");
+		// socket.onopen = function(e) {
+		// 	console.log("[open] Соединение установлено");
+		//   };
 		  
-		  socket.onmessage = function(event) {
-			console.log(`[message] Данные получены с сервера: ${event.data}`);
-			router.go(
-				createFrontendQueryParams(pathsURLfrontend.trip, [
-					{
-						key: paramsURLfrontend.id,
-						value: storage.getCurrentTrip().id,
-					},
-				])
-			);
-		  };
+		//   socket.onmessage = function(event) {
+		// 	console.log(`[message] Данные получены с сервера: ${event.data}`);
+		// 	router.go(
+		// 		createFrontendQueryParams(pathsURLfrontend.trip, [
+		// 			{
+		// 				key: paramsURLfrontend.id,
+		// 				value: storage.getCurrentTrip().id,
+		// 			},
+		// 		])
+		// 	);
+		//   };
 		  
-		  socket.onclose = function(event) {
-			if (event.wasClean) {
-				console.log(`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`);
-			} else {
+		//   socket.onclose = function(event) {
+		// 	if (event.wasClean) {
+		// 		console.log(`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`);
+		// 	} else {
 
-			  console.log('[close] Соединение прервано');
-			}
-		  };
+		// 	  console.log('[close] Соединение прервано');
+		// 	}
+		//   };
 		  
-		  socket.onerror = function(error) {
-			console.log(`[error] ${error.type}`);
-		  };
+		//   socket.onerror = function(error) {
+		// 	console.log(`[error] ${error.type}`);
+		//   };
 	};
 
 	initEdit = (metadata: NumID): void => {

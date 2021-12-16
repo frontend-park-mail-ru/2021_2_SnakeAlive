@@ -10,7 +10,7 @@ export const adoptSight = (sight: GotSight, tags: TagResponse[]): Sight => {
 		sight.tags.forEach(tagName => {
 			resTags.push({
 				name: tagName,
-				ID: tags.filter(tag => tag.name === tagName)[0].id.toString(),
+				id: tags.filter(tag => tag.name === tagName)[0].id.toString(),
 			});
 		});
 	}

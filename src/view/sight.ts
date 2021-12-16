@@ -33,7 +33,7 @@ export default class SightView extends BasicView {
 			console.log(sight.tags);
 			sight.tags.forEach(tag => {
 				adoptedTags.push({
-					id: tag.ID.toString(),
+					id: tag.id.toString(),
 					name: tag.name,
 					sightPP: 0,
 				});
