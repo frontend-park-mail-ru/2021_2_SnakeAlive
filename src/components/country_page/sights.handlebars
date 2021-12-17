@@ -1,3 +1,6 @@
+{{#unless cards}}
+	<p class='search_page__empty_text'>Здесь будут найденные достопримечательности</p>
+{{/unless}}
 {{#each cards}}
 <div class="card frame" >
 	<div class="card__top" id="go_button_{{sight.id}}_{{PP}}">

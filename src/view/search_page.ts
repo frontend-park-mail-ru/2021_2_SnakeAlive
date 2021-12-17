@@ -201,6 +201,8 @@ class SearchHolderView extends BasicView {
 		initDropdown('dropdown_tags'); // ??
 		initDropdown('dropdown_countries'); // ??
 
+		this.#cardView.rerenderCards();
+
 		// поиск
 		const searchPlace = document.getElementById('page-search-place');
 		if (searchPlace !== null) {
