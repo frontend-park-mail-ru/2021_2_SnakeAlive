@@ -25,13 +25,16 @@
 
 .text_place {
   grid-area: t;
+  @media (min-width: 960px) {
+    padding: $large-px * 3 !important;
+  }
   h2 {
     @include text-local-header;
-    padding-bottom: $small-px;
+    padding-bottom: $large-px;
   }
   p, li {
     @include text-plain-no-wrap;
-    padding-bottom: $small-px;
+    padding-bottom: $large-px;
   }
 }
 

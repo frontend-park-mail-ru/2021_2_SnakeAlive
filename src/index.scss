@@ -30,6 +30,9 @@ $black: black; // вдруг захочется поизголяться тут
 $green: #68B058;
 $logo-color: #0077FF;
 
+$grey-light: #838383;
+$grey-dark: #3d3d3d;
+
 .input-error-red {
   border-radius: 2px;
   border-color: $my--error;
@@ -43,7 +46,7 @@ $logo-color: #0077FF;
 
 // шрифты
 @mixin text-header {
-  font-size: 24px;
+  font-size: 28px;
   font-weight: 400;
 }
 
@@ -53,7 +56,7 @@ h2 {
 }
 
 @mixin text-local-header {
-  font-size: 19px;
+  font-size: 23px;
   font-weight: 400;
 }
 
@@ -63,13 +66,13 @@ h4 {
 }
 
 @mixin text-local-name {
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 500;
 }
 
 ;
 @mixin text-plain {
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 300;
   line-height: 20px;
   letter-spacing: -0.5px;
@@ -81,7 +84,7 @@ p {
 }
 
 @mixin text-plain-no-wrap {
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 300;
   line-height: 20px;
   letter-spacing: -0.5px;
@@ -92,13 +95,13 @@ p {
 
 ;
 @mixin text-button {
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 400;
 }
 
 ;
 @mixin text-small {
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 400;
 }
 
@@ -125,6 +128,14 @@ html, body {
   //}
   margin: 0;
 
+  > * {
+    margin-bottom: $large-px;
+  }
+
+  @media (min-width: 960px) {
+    padding: $large-px * 2 !important;
+  }
+
 }
 
 input,
@@ -140,8 +151,9 @@ textarea:active {
   border-radius: 4px;
   width: 100%;
   @include text-plain-no-wrap;
-  padding: 6px 0;
+  padding: 6px;
   outline: none;
+  box-sizing: border-box;
 }
 
 .icon {
@@ -853,13 +865,15 @@ textarea:active {
 
 .card__tag {
 	margin-right: 0;
+  @include text-small;
+  line-height: 15px;
 }
 
 .card__tag__font {
-	color: var(--color-green);
-	font-size: 12px;
-	line-height: 15px;
-	font-weight: var(--font-tag-weight);
+	//color: var(--color-green);
+	//font-size: 12px;
+	//
+	//font-weight: var(--font-tag-weight);
 }
 
 .font__default {
@@ -984,6 +998,17 @@ textarea:active {
 
   max-width: 1000px;
 
+  &::-webkit-scrollbar {
+    height: $small-px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: $my--button-fill;
+    border-radius: 0 0 4px 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $my--button-fill-hover;
+    border-radius: 4px;
+  }
 }
 
 
@@ -1109,9 +1134,10 @@ textarea:active {
   color: green;
 
   position: relative;
-  margin-bottom: 100%;
-  bottom: $small-px * 6;
-  right: - $small-px * 2;
+
+  //margin-bottom: 100%;
+  bottom: $small-px * 2;
+  left: - 120% ;
 }
 
 .hidden{

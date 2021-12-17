@@ -6,6 +6,8 @@ import tripSights from '@/components/country_page/sights.handlebars';
 import { SightCardInTrip } from '@/view/sight_cards';
 import { TagAdoptedForRender } from '@/models/sight';
 import { initTagsBtns } from './tag';
+import { destroyCurrentPage } from '@/actions/page';
+import { newSetMainHeaderRequest, newSetMainHeaderStrongRequest } from '@/actions/header';
 
 class CountryCardsHolderView extends BasicView {
 	#tokens: Token[];
@@ -83,6 +85,7 @@ class CountryHolderView extends BasicView {
 			dispatcher.register(EventType.INIT_COUNTRY_RESPONSE, this.renderCountry),
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
 		];
+		dispatcher.notify(newSetMainHeaderStrongRequest(), "init country");
 	}
 
 	destroy = (): void => {
@@ -96,7 +99,6 @@ class CountryHolderView extends BasicView {
 	renderCountry = (): void => {
 		const { translation } = storage.getCountry();
 		this.setView(countryPageTemplate({ name: `по стране ${translation}` }));
-		console.log(storage.getSearchTags());
 		this.setView(
 			countryPageTemplate({
 				name: `по стране ${translation}`,

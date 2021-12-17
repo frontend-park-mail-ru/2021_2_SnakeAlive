@@ -35,6 +35,12 @@
 			<p style="text-align: center;">✦ Здесь будут отзывы ✦</p>
 		</div>
 
+		{{#each photosLeft}}
+			<div id="sight_page__photo_holder_place" class="sight_page__photo_holder_place">
+				<img src='{{this}}' alt='photo'>
+			</div>
+		{{/each}}
+
 	</div>
 
 	<div class='sight_page__right_col'>
@@ -44,7 +50,7 @@
 			<p>{{description}}</p>
 		</div>
 
-		{{#each photos}}
+		{{#each photosRight}}
 			<div id="sight_page__photo_holder_place" class="sight_page__photo_holder_place">
 				<img src='{{this}}' alt='photo'>
 			</div>

@@ -3,12 +3,13 @@ import { sendGetJSONRequest } from '@/http';
 import { backendEndpoint, sightURI } from '@/constants';
 import { storage } from '@/storage';
 import { initErrorPageRequest } from '@/actions/page';
-import { Sight } from '@/models';
+import { CountryResponse, Sight } from '@/models';
 import { newGetSightResult } from '@/actions/sight';
 import { getTags } from '@/reducers/search_page';
 import { GotSight } from '@/models/sight';
-import { adoptSight } from '@/adapters/sight';
+import { adoptSightForPage } from '@/adapters/sight';
 import { adoptGotTags } from '@/adapters/tags';
+import { getCountry } from '@/reducers/country';
 
 export default class SightReducer {
 	#tokens: Token[];
@@ -35,11 +36,13 @@ export default class SightReducer {
 		this.#getSight(ID)
 			.then((sight: GotSight) => {
 				getTags().then(tags => {
-					console.log(tags);
 					storage.storeGotSearchTags(adoptGotTags(tags));
 
-					storage.storeSight(adoptSight(sight, tags));
-					dispatcher.notify(newGetSightResult());
+					// getCountry(sight.country)
+					// 	.then((country: CountryResponse) => {
+							storage.storeSight(adoptSightForPage(sight, tags));
+							dispatcher.notify(newGetSightResult());
+						// });
 				});
 			})
 			.catch((error: Error) => {

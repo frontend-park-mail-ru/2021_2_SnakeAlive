@@ -15,13 +15,10 @@ export default class SearchReducer {
 	}
 
 	init = () => {
-		console.log('initedSearchReducer');
 		this.#tokens = [dispatcher.register(EventType.SEARCH_REQUEST, this.sendSearchRequest)];
 	};
 
 	sendSearchRequest = (search: Search) => {
-		console.log('sending', search.text);
-
 		if (! search.text) {
 			return;
 		}
@@ -38,7 +35,6 @@ export default class SearchReducer {
 			})
 			.then(response => response.json())
 			.then(response => {
-				console.log(response);
 				storage.storeSearchSightsResult(search.type, response);
 				dispatcher.notify(gotSearchResults(search.type));
 			});

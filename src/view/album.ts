@@ -24,8 +24,6 @@ export class PhotosView {
 
 	#leftPhotosHolder: HTMLElement | null = null;
 
-	#isInited = false;
-
 	constructor() {
 		this.#tokens = [];
 	}
@@ -38,7 +36,6 @@ export class PhotosView {
 	};
 
 	renderPhotos = (isEdit: IsTrue) => {
-		console.log('this foo')
 		this.#leftPhotosHolder = document.getElementById('album_page__photo_holder_left');
 		if (this.#leftPhotosHolder === null) {
 			throw Error('not found in html "album_page__photo_holder_left');
@@ -47,8 +44,6 @@ export class PhotosView {
 		if (this.#rightPhotosHolder === null) {
 			throw Error('not found in html "album_page__photo_holder_right');
 		}
-
-		this.#initAddBtn();
 
 		const { photos } = storage.getAlbum();
 		if (photos === null) {
@@ -86,65 +81,6 @@ export class PhotosView {
 		}
 	};
 
-	#checkLoadedFile = (file: File): Error | null => {
-		// провераяем тип файла
-		if (!['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml'].includes(file.type)) {
-			return Error('Разрешены только изображения.');
-		}
-		// проверим размер файла (<2 Мб)
-		if (file.size > 2 * 1024 * 1024) {
-			return Error('Файл должен быть менее 2 МБ.');
-		}
-		return null;
-	};
-
-	#initAddBtn = () => {
-		if (this.#isInited) {
-			return;
-		}
-		this.#isInited = true;
-
-		const addBtn = document.getElementById('add_photos_btn');
-
-		const addInput = <HTMLInputElement>document.getElementById('add_photos_input');
-		if (addBtn !== null && addInput !== null) {
-			addBtn.addEventListener(
-				'click',
-				() => {
-					console.log('btn add clicked');
-					addInput.click();
-				},
-				false
-			);
-
-			addInput.addEventListener('click', () => {console.log('input clicked')});
-
-			addInput.addEventListener('change', event => {
-				event.preventDefault();
-				if (addInput === null) {
-					return;
-				}
-				if (addInput.files === null) {
-					return;
-				}
-				const error = this.#checkLoadedFile(addInput.files[0]);
-				if (error !== null) {
-					// показать ошибку на странице
-					return;
-				}
-
-				// отправка файла
-				const uploadFile = new FormData();
-				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-				// @ts-ignore
-				uploadFile.append('file', addInput.files[0]);
-				dispatcher.notify(addAlbumPhoto(uploadFile));
-			});
-		} else {
-			throw Error('не найдена кнопка инпута или сам инпут для добавления фото');
-		}
-	};
-
 	#initDeleteButton = (photoName: string) => {
 		const deleteBtn = document.getElementById(`delete_photo_${photoName}`);
 		if (deleteBtn !== null) {
@@ -177,6 +113,8 @@ export class AlbumView extends BasicView {
 
 	#defaultPhoto = defaultPhoto;
 
+	#isInited = false;
+
 	constructor() {
 		super('#content');
 		this.#tokens = [];
@@ -197,8 +135,10 @@ export class AlbumView extends BasicView {
 	showAlbum = (state: IsTrue): void => {
 		dispatcher.notify(newSetMainHeaderRequest());
 		if (state.isTrue) {
+			this.#isInited = false;
 			this.#showEditAlbum();
 		} else {
+			this.#isInited = false;
 			this.#showNotEditAlbum();
 		}
 
@@ -254,6 +194,7 @@ export class AlbumView extends BasicView {
 			});
 		}
 		initAlbumForm(false);
+		this.#initAddBtn();
 	};
 
 	#showNotEditAlbum = (): void => {
@@ -267,6 +208,7 @@ export class AlbumView extends BasicView {
 				description,
 			});
 		}
+		this.#initAddBtn();
 
 		// go_edit кнопка
 		const editBtn = document.getElementById('go_edit');
@@ -310,6 +252,64 @@ export class AlbumView extends BasicView {
 				},
 				false
 			);
+		}
+	};
+
+	#checkLoadedFile = (file: File): Error | null => {
+		// провераяем тип файла
+		if (!['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml'].includes(file.type)) {
+			return Error('Разрешены только изображения.');
+		}
+		// проверим размер файла (<2 Мб)
+		if (file.size > 2 * 1024 * 1024) {
+			return Error('Файл должен быть менее 2 МБ.');
+		}
+		return null;
+	};
+
+	#initAddBtn = () => {
+
+		if (this.#isInited) {
+			return;
+		}
+		this.#isInited = true;
+
+		const addBtn = document.getElementById('add_photos_btn');
+
+		const addInput = <HTMLInputElement>document.getElementById('add_photos_input');
+
+		if (addBtn !== null && addInput !== null) {
+			addBtn.addEventListener(
+				'click',
+				() => {
+					addInput.click();
+				},
+				false
+			);
+
+			addInput.addEventListener('change', event => {
+				event.preventDefault();
+				if (addInput === null) {
+					return;
+				}
+				if (addInput.files === null) {
+					return;
+				}
+				const error = this.#checkLoadedFile(addInput.files[0]);
+				if (error !== null) {
+					// показать ошибку на странице
+					return;
+				}
+
+				// отправка файла
+				const uploadFile = new FormData();
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+				// @ts-ignore
+				uploadFile.append('file', addInput.files[0]);
+				dispatcher.notify(addAlbumPhoto(uploadFile));
+			});
+		} else {
+			throw Error('не найдена кнопка инпута или сам инпут для добавления фото');
 		}
 	};
 }

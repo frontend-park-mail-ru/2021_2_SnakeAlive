@@ -64,6 +64,16 @@ export const init = (isNew: boolean): void => {
 	if (submitBtn !== null) {
 		submitBtn.addEventListener('click', createTrip, false);
 	}
+
+	// красота по отображению
+	const textArea = document.querySelector('#comment_text');
+	if (textArea !== null) {
+		textArea.addEventListener(
+			'input',
+			setTextAreaResizeParams('comment_text', 'comment_text_hidden', 400),
+			false
+		);
+	}
 };
 
 const alert = () => {};
@@ -152,7 +162,6 @@ export const initAddPartisipantBtn = (): void => {
 				const addUserEmail = <HTMLInputElement>document.getElementById('search_trip_user');
 				if (addUserEmail !== null) {
 					if (addUserEmail) {
-						console.log('notify');
 						dispatcher.notify(addUserToTrip(addUserEmail.value));
 						if (document.getElementById('AddUserDropdown')?.classList.contains('show')) {
 							document.getElementById('AddUserDropdown')?.classList.remove('show');

@@ -50,3 +50,14 @@ export interface SightAdoptedForRender {
 	photos: Array<string>;
 	photo: string;
 }
+
+export interface SightAdoptedForPage {
+	id: string;
+	name: string;
+	description: string;
+	country: string;
+	rating: string;
+	tags: Array<AdoptedTag>;
+	photosLeft: Array<string>;
+	photosRight: Array<string>;
+}

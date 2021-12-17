@@ -121,7 +121,8 @@ const initCategories = (list: AdoptedTag[] | SearchCountry[], moreList: AdoptedT
 		}
 	}
 
-	const activeCSSClass = 'page_category_active';
+	const activeCSSClass = 'usual_button_dark';
+	// const passiveCSSClass = 'usual_button_dark';
 	list.forEach(tag => {
 		const tegElem = document.getElementById(`${info.type}_${tag.id}`);
 		if (tegElem !== null) {
@@ -203,7 +204,7 @@ class SearchHolderView extends BasicView {
 		// поиск
 		const searchPlace = document.getElementById('page-search-place');
 		if (searchPlace !== null) {
-			searchPlace.innerHTML = initSearchView(searchPlaceType.page, true);
+			searchPlace.innerHTML = initSearchView(searchPlaceType.page, false);
 			this.#search = new SearchView(
 				searchPlaceType.page,
 				() => null,

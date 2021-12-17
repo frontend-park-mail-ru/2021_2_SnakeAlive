@@ -5,6 +5,8 @@ import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
 import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
 import { storage } from '@/storage';
+import { initDescription } from '@/components/trip/trip_form';
+import { setTextAreaResizeParams } from '@/components/reviews/review_form';
 
 const hideConfirm = (): void => {
 	const answerPlace = document.getElementById('form__submit_holder__answer');
@@ -70,6 +72,15 @@ const setError = () => {
 };
 
 export const initAlbumForm = (isNew: boolean) => {
+	const textArea = document.querySelector('#description');
+	if (textArea !== null) {
+		textArea.addEventListener(
+			'input',
+			setTextAreaResizeParams('description', 'comment_text_hidden', 400),
+			false
+		);
+	}
+
 	// кнопка создания альбома = кнопка обновлениия инфы когда не новый
 	const createBtn = document.getElementById('btn_make_album');
 	if (createBtn !== null) {

@@ -5,6 +5,7 @@ import { minCardInfo, SearchCountry } from '@/models/country';
 import { Album } from '@/models/album';
 import { AdoptedTag, TagResponse } from '@/models/tags';
 import { searchPlaceType, SearchRequest } from '@/models/search';
+import { SightAdoptedForPage } from '@/models/sight';
 
 class Storage {
 	#countryCards: TemplateCards;
@@ -13,7 +14,7 @@ class Storage {
 
 	#userMetadata: UserMetadata;
 
-	#sight: Sight;
+	#sight: SightAdoptedForPage;
 
 	#trip: Trip;
 
@@ -52,7 +53,7 @@ class Storage {
 		this.#countryCards = <TemplateCards>{};
 		this.#country = <Country>{};
 		this.#userMetadata = <UserMetadata>{};
-		this.#sight = <Sight>{};
+		this.#sight = <SightAdoptedForPage>{};
 		this.#trip = <Trip>{};
 		this.#profile = <Profile>{};
 		this.#reviews = [];
@@ -87,11 +88,11 @@ class Storage {
 
 	getCountry = (): Country => this.#country;
 
-	storeSight = (sight: Sight): void => {
+	storeSight = (sight: SightAdoptedForPage): void => {
 		this.#sight = sight;
 	};
 
-	getSight = (): Sight => this.#sight;
+	getSight = (): SightAdoptedForPage => this.#sight;
 
 	storeCurrentTrip = (trip: Trip): void => {
 		this.#trip = trip;

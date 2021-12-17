@@ -44,8 +44,8 @@ class Dispatcher {
 		this.#subscribers.set(token.name, subs.splice(token.place, 1));
 	};
 
-	notify = (event: IEvent): void => {
-		console.log("dispatcher.notify ", event);
+	notify = (event: IEvent, place?: any): void => {
+		// console.log(event, place);
 
 		const subs = this.#subscribers.get(event.key);
 		if (subs === undefined) {

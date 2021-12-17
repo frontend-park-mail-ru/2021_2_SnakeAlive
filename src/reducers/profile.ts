@@ -31,7 +31,6 @@ import { storage } from '@/storage';
 import { dispatcher, EventType, File, Token, UpdateProfile } from '@/dispatcher';
 import { newGetProfileRequest, newGetProfileResponse } from '@/actions/profile';
 import { initErrorPageRequest } from '@/actions/page';
-import { newSetEmptyHeaderRequest } from '@/actions/header';
 import { router } from '@/router';
 import { user } from '@/constants/uris';
 
@@ -58,7 +57,6 @@ export default class ProfileReducer {
 	};
 
 	getProfile = (): void => {
-		dispatcher.notify(newSetEmptyHeaderRequest(true)); // ???
 		this.#sendGetProfile()
 			.then((response: GetProfileResponse) => {
 				storage.storeProfile(adaptGetProfileResponse(response));

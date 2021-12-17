@@ -30,7 +30,6 @@ export const getTags = (): Promise<TagResponse[]> =>
 			return Promise.resolve(response);
 		})
 		.then(response => {
-			console.log(response.clone());
 			return response.json();
 		});
 
@@ -69,8 +68,6 @@ export default class SearchPageReducer {
 	};
 
 	sendSearchRequest = (): void => {
-		console.log("send: ", storage.getSearchRequest());
-
 		if (isSearchRequestEmpty(storage.getSearchRequest())) {
 			return;
 			// вывод валидации?

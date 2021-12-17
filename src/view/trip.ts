@@ -39,6 +39,7 @@ import { createFrontendQueryParams } from '@/router/router';
 import { searchPlaceType } from '@/models/search';
 import { searchRequest } from '@/actions/search';
 import { WSEndPoint } from '@/constants/endpoints';
+import { setTextAreaResizeParams } from '@/components/reviews/review_form';
 
 // const partisipants = [
 // 	{id: 1, profilePhoto: "/image/7b205eb741a49105fcd425910545cc79.jpeg"},
@@ -205,6 +206,16 @@ export class TripInfoView extends BasicView {
 		initSubmitTripBtn();
 		initAddPartisipantBtn();
 		initShareBtn();
+
+		// красота по отображению
+		const textArea = document.querySelector('#comment_text');
+		if (textArea !== null) {
+			textArea.addEventListener(
+				'input',
+				setTextAreaResizeParams('comment_text', 'comment_text_hidden', 400),
+				false
+			);
+		}
 
 		initPartisipantsBtns(partisipants);
 

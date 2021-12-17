@@ -80,7 +80,6 @@ export class Map extends BasicView {
 				const url = new URL(backendEndpoint + sightsURI + searchURI);
 				const countriesPromise = sendPatchJSONRequest(url.toString(), {search: sight.name})
 					.then(response => {
-						console.log("response = ", response)
 						if (response.ok) {
 							return Promise.resolve(response);
 						}
@@ -105,8 +104,6 @@ export class Map extends BasicView {
 						});
 						this.#markers.push(marker);
 						this.#map.setCenter({lat: Number(storage.getSearchSightsResult(searchPlaceType.trip)[0].lat), lng: Number(storage.getSearchSightsResult(searchPlaceType.trip)[0].lng)});
-						console.log(storage.getCurrentTrip().sights)
-						console.log(this.#coord)
 						this.updateMap();
 					});
 			}

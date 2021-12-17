@@ -72,6 +72,7 @@ export default class ReviewReducer {
 			.then(response => {
 				if (response.ok) {
 					dispatcher.notify(newGetReviewsRequest(this.#placeId));
+					storage.storeReviews([]);
 				}
 			})
 			.catch((error: Error) => {

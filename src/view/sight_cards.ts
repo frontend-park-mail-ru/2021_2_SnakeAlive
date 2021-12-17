@@ -18,7 +18,6 @@ export class SightCardInTrip {
 
 		// id="delete_button_{{ this.id }}_{{this.PP}}"
 		// навешивание обработчиков на внутри сего места (надо бы протестить)
-		console.log(`go_button_${this.#id}_${this.#PP}`);
 		const deleteBtn = document.getElementById(`delete_button_${this.#id}_${this.#PP}`);
 		if (deleteBtn !== null) {
 			deleteBtn.addEventListener(
@@ -52,7 +51,6 @@ export class SightCardInTrip {
 		}
 
 		tags.forEach(tag => {
-			console.log(`card_tag_${tag.id}_${tag.sightPP}`);
 			const tegElem = document.getElementById(`card_tag_${tag.id}_${tag.sightPP}`);
 			if (tegElem !== null) {
 				tegElem.addEventListener('click', () => {

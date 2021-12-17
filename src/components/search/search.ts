@@ -12,8 +12,8 @@ import { pathsURLfrontend } from '@/constants';
 import { searchPlaceType } from '@/models/search';
 import { Sight } from '@/models';
 
-export const initSearchView = (type: searchPlaceType, needsPageGoBtn: boolean): string =>
-	searchTemplate({ icon: imgSearch, type, needsPageGoBtn, iconWhite: imgSearchWhite });
+export const initSearchView = (type: searchPlaceType, needsPageGoBtn: boolean, title = ''): string =>
+	searchTemplate({ icon: imgSearch, type, needsPageGoBtn, iconWhite: imgSearchWhite, title });
 
 export class SearchView {
 	#type: searchPlaceType;
@@ -66,7 +66,6 @@ export class SearchView {
 		const goPageBtn = document.getElementById(`go_search_page_${type}`);
 		if (goPageBtn !== null) {
 			goPageBtn.addEventListener('click', event => {
-				console.log(goPageBtn.id, "clicked");
 				event.preventDefault();
 				this.#goSearchCallback();
 			}, false);

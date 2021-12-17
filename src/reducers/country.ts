@@ -7,16 +7,27 @@ import {
 	newInitCountryResponse,
 } from '@/actions/country';
 import { initErrorPageRequest } from '@/actions/page';
-import { newSetMainHeaderRequest } from '@/actions/header';
 import { storage } from '@/storage';
 import { DataType, dispatcher, EventType, UUID, NamedUUID, Token } from '@/dispatcher';
 import { CountryCardResponse, CountryResponse } from '@/models';
 import { minAdaptCountryCards } from '@/adapters/country_cards_min';
 import { GET_COUNTRY_NAME } from '@/components/trip/trip_form';
 import { adoptGotCountry } from '@/adapters/country';
-import { initEmptySearchPageResponse } from '@/actions/search';
 import { getTags } from '@/reducers/search_page';
 import { adoptGotTags } from '@/adapters/tags';
+
+export const getCountry = (countryID: string): Promise<CountryResponse> =>
+	sendGetJSONRequest(`${backendEndpoint + countrySights}id/${countryID}`)
+		.then(response => {
+			if (response.status === 404) {
+				return Promise.reject(new Error('Информации по этой стране пока нет'));
+			}
+			if (response.status === 401) {
+				return Promise.reject(new Error('Нужно войти в систему'));
+			}
+			return Promise.resolve(response);
+		})
+		.then(response => response.json());
 
 export default class CountryReducer {
 	#tokens: Token[];
@@ -41,9 +52,8 @@ export default class CountryReducer {
 
 	initCountryPage = (metadata: DataType): void => {
 		const country = <NamedUUID>metadata;
-		dispatcher.notify(newSetMainHeaderRequest());
 		// получение инфы по стране
-		this.#getCountry(country.ID)
+		getCountry(country.ID)
 			.then((info: CountryResponse) => {
 				getTags().then(tags => {
 					storage.storeGotSearchTags(adoptGotTags(tags));
@@ -78,19 +88,6 @@ export default class CountryReducer {
 			.then(response => {
 				if (response.status === 404) {
 					return Promise.reject(new Error('На сайте нет такой страницы'));
-				}
-				if (response.status === 401) {
-					return Promise.reject(new Error('Нужно войти в систему'));
-				}
-				return Promise.resolve(response);
-			})
-			.then(response => response.json());
-
-	#getCountry = (countryID: string): Promise<CountryResponse> =>
-		sendGetJSONRequest(`${backendEndpoint + countrySights}id/${countryID}`)
-			.then(response => {
-				if (response.status === 404) {
-					return Promise.reject(new Error('Информации по этой стране пока нет'));
 				}
 				if (response.status === 401) {
 					return Promise.reject(new Error('Нужно войти в систему'));

@@ -4,10 +4,11 @@ import { createReviewForm } from '@/actions/review';
 import { newSetMainHeaderRequest } from '@/actions/header';
 import { storage } from '@/storage';
 import { createSightTemplate } from '@/components';
-import { TagAdoptedForRender } from '@/models/sight';
+import { SightAdoptedForPage, TagAdoptedForRender } from '@/models/sight';
 import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
 import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
+import albumPhotosTemplate from '@/components/album/album_photos.handlebars';
 
 export default class SightView extends BasicView {
 	#tokens: Token[];
@@ -30,7 +31,6 @@ export default class SightView extends BasicView {
 
 		const adoptedTags: Array<TagAdoptedForRender> = [];
 		if (sight.tags) {
-			console.log(sight.tags);
 			sight.tags.forEach(tag => {
 				adoptedTags.push({
 					id: tag.id.toString(),

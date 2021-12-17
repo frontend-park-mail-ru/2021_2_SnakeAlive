@@ -43,6 +43,7 @@ export default class HeaderReducer {
 	};
 
 	checkIfMain = () => {
+		// console.log(this.#state, "isMain?");
 		if (this.#state !== state.main) {
 			this.setHeader();
 			this.#state = state.main;
@@ -50,6 +51,7 @@ export default class HeaderReducer {
 	};
 
 	checkIfEmpty = (metadata: IsTrue) => {
+		// console.log(this.#state, "isEmpty?");
 		if (this.#state !== state.empty) {
 			dispatcher.notify(newSetEmptyHeaderResponse(metadata.isTrue));
 			this.#state = state.empty;
@@ -57,6 +59,7 @@ export default class HeaderReducer {
 	};
 
 	setHeader = (): void => {
+		// console.log(this.#state,  "-> main");
 		this.#state = state.main;
 		sendGetJSONRequest(backendEndpoint + profile)
 			.then(response => {
