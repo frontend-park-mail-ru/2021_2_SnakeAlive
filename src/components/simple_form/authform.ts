@@ -1,7 +1,5 @@
 import { Input, Button, FormConfig } from '@/components';
 
-import popup from '@/templates/popup.handlebars';
-
 /** Класс соответствует html-форме */
 class Form {
 	#elem: HTMLFormElement;

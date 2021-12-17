@@ -11,7 +11,7 @@ import { sendPageSearch } from '@/actions/search';
 import { Search } from '@/dispatcher/metadata_types';
 import { searchPlaceType } from '@/models/search';
 import { AdoptedTag } from '@/models/tags';
-import { SearchCountry } from '@/models/country';
+import { minCardInfo, SearchCountry } from '@/models/country';
 
 class SearchCardsHolderView extends BasicView {
 	// #cards: Array<SightCardInTrip>;
@@ -26,10 +26,9 @@ class SearchCardsHolderView extends BasicView {
 		this.setEmpty();
 	};
 
-	rerenderCards = () => {
+	rerenderCards = (cardsArray: minCardInfo[]) => {
 		this.setEmpty();
 
-		const cardsArray = storage.getSightsCardsMin();
 		cardsArray.forEach(sight => {
 			const tagsAdopted: Array<TagAdoptedForRender> = [];
 			if (sight.sight.tags) {
@@ -201,7 +200,7 @@ class SearchHolderView extends BasicView {
 		initDropdown('dropdown_tags'); // ??
 		initDropdown('dropdown_countries'); // ??
 
-		this.#cardView.rerenderCards();
+		this.#cardView.rerenderCards([]);
 
 		// поиск
 		const searchPlace = document.getElementById('page-search-place');
@@ -241,7 +240,7 @@ class SearchHolderView extends BasicView {
 
 	checkIfPage = (metadata: Search): void => {
 		if (metadata.type === searchPlaceType.page) {
-			this.#cardView.rerenderCards();
+			this.#cardView.rerenderCards(storage.getSightsCardsMin());
 		}
 	};
 }

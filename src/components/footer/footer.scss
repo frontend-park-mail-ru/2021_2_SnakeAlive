@@ -1,0 +1,41 @@
+//.footer {
+//  display: inline;
+//  flex-direction: row;
+//  background-color: var(--color-shadow);
+//  padding: 15px;
+//
+//  background-color: #68B058;
+//  //& p, a {
+//  //  w
+//  //}
+//  &_content {
+//    display: inline;
+//  }
+//  > * {
+//    //display: block;
+//    //font-size: var(--text-small);
+//    //text-align: center;
+//    //color: var(--color-white);
+//    //margin: 5px;
+//  }
+//}
+@import "../../index.scss";
+.footer {
+  > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: $small-px;
+    width: 100%;
+  }
+  width: 100%;
+  padding-top: $large-px;
+  padding-bottom: $large-px;
+  border-top: 1px solid $my--frame-border;
+  display: flex;
+  flex-direction: column;
+  gap: $small-px;
+
+  align-self: flex-end;
+  flex: 0 0 auto;
+}

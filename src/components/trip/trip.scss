@@ -1,5 +1,9 @@
 @import "src";
 
+#trip_cards_holder > div {
+  margin-bottom: 10px;
+}
+
 .delete_trip__submit_holder {
   display: flex;
   flex-direction: row;
@@ -50,13 +54,13 @@
 
   @media (min-width: 960px) {
     grid-template: "l map"  / 2fr 6fr;
-    grid-column-gap: $small-px;
     grid-row-gap: $small-px;
   }
 
   @media (max-width: 961px) {
     grid-template: "l" "map";
-    row-gap: $small-px;
+    margin-left: 10px;
+    margin-right: 10px;
   }
 
   &__left__info {
@@ -67,7 +71,7 @@
     }
     grid-area: l;
     width: 100%;
-    max-width: 500px;
+    //max-width: 500px;
 
   }
 

@@ -30,7 +30,6 @@
 }
 
 .album_page {
-  width: 100%;
   display: grid;
   padding: 10px 0;
   align-items: flex-start;
@@ -43,7 +42,8 @@
 
   @media (max-width: 961px) {
     grid-template: "l-t" "r-b";
-    gap: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
   }
 
   &__right_col {

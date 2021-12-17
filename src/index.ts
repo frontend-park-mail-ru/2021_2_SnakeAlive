@@ -11,6 +11,7 @@ import SearchReducer from '@/reducers/search';
 import { dispatcher } from '@/dispatcher';
 import { destroyCurrentPage } from '@/actions/page';
 import ErrorView from '@/view/error';
+import { footer } from '@/components/footer/footer';
 
 const initOfflinePage = () => {
 	dispatcher.notify(destroyCurrentPage());
@@ -42,6 +43,7 @@ const main = () => {
 	if (root !== null) {
 		root.appendChild(headerPlace);
 		root.appendChild(contentPlace);
+		root.appendChild(footer())
 	}
 
 	router.start();

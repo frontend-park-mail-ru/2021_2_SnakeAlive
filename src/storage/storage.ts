@@ -153,6 +153,8 @@ class Storage {
 		this.#searchSightsResult.forEach(obj => {
 			if (obj.type === type) {
 				result = obj.sights;
+				// eslint-disable-next-line no-param-reassign
+				obj.sights = [];
 			}
 		});
 		return result;
