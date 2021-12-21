@@ -123,7 +123,7 @@ export class TripInfoView extends BasicView {
 	addUserToTrip = (metada: IsTrue): void => {
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		const isOk = metada.isTrue;
-		createWSCon();
+		//createWSCon();
 	};
 
 	shareTrip = (): void => {
@@ -421,7 +421,7 @@ export class InitTripPage extends BasicView {
 		const { ID } = metadata;
 		dispatcher.notify(newGetTripRequest(ID));
 		initEdit();
-		createWSCon();
+		//createWSCon();
 	};
 
 	destroy = (): void => {
