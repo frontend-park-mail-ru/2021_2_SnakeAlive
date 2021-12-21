@@ -63,6 +63,7 @@ export interface SearchCountry {
 	name: string;
 	id: string;
 	translation: string;
+	numId?: number;
 }
 
 export {

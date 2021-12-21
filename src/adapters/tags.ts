@@ -5,8 +5,8 @@ export const adoptGotTags = (tags: TagResponse[]): AdoptedTag[] => {
 	tags.forEach(tag => {
 		tagRes.push({
 			name: tag.name,
-			id: tag.id.toString()
+			id: tag.id.toString(),
 		});
 	});
 	return tagRes;
-}
+};

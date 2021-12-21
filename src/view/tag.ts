@@ -27,8 +27,12 @@ import { AdoptedTag } from '@/models/tags';
 // 	{ name: 'Дворец', PP: 4 },
 // ];
 
-export const initDropdown = (htmlId = 'myDropdown') => {
-	const moreBtn = document.getElementById('more-tags-btn');
+export const initDropdown = (htmlId = 'myDropdown', category = '') => {
+	let htmlIdRes = 'more-tags-btn';
+	if (category) {
+		htmlIdRes = `more-tags-btn-${category}`;
+	}
+	const moreBtn = document.getElementById(htmlIdRes);
 	if (moreBtn !== null) {
 		moreBtn.addEventListener('click', () => {
 			if (document.getElementById(htmlId)?.classList.contains('show')) {

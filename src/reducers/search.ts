@@ -19,7 +19,7 @@ export default class SearchReducer {
 	};
 
 	sendSearchRequest = (search: Search) => {
-		if (! search.text) {
+		if (!search.text) {
 			return;
 		}
 

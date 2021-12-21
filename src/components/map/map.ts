@@ -78,7 +78,7 @@ export class Map extends BasicView {
 		storage.getCurrentTrip().sights.forEach(sight => {
 			if (i != 0) {
 				const url = new URL(backendEndpoint + sightsURI + searchURI);
-				const countriesPromise = sendPatchJSONRequest(url.toString(), {search: sight.name})
+				const countriesPromise = sendPatchJSONRequest(url.toString(), { search: sight.name })
 					.then(response => {
 						if (response.ok) {
 							return Promise.resolve(response);
@@ -103,7 +103,10 @@ export class Map extends BasicView {
 							map: this.#map,
 						});
 						this.#markers.push(marker);
-						this.#map.setCenter({lat: Number(storage.getSearchSightsResult(searchPlaceType.trip)[0].lat), lng: Number(storage.getSearchSightsResult(searchPlaceType.trip)[0].lng)});
+						this.#map.setCenter({
+							lat: Number(storage.getSearchSightsResult(searchPlaceType.trip)[0].lat),
+							lng: Number(storage.getSearchSightsResult(searchPlaceType.trip)[0].lng),
+						});
 						this.updateMap();
 					});
 			}

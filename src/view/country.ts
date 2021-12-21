@@ -5,9 +5,54 @@ import { storage } from '@/storage';
 import tripSights from '@/components/country_page/sights.handlebars';
 import { SightCardInTrip } from '@/view/sight_cards';
 import { TagAdoptedForRender } from '@/models/sight';
-import { initTagsBtns } from './tag';
+import { initDropdown, initTagsBtns } from './tag';
 import { destroyCurrentPage } from '@/actions/page';
 import { newSetMainHeaderRequest, newSetMainHeaderStrongRequest } from '@/actions/header';
+import { AdoptedTag } from '@/models/tags';
+import { router } from '@/router';
+import { createFrontendQueryParams } from '@/router/router';
+import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
+import { SearchCountry } from '@/models/country';
+
+export const initCountriesBtns = (tags: SearchCountry[]) => {
+	tags.forEach(tag => {
+		const tegElem = document.getElementById(`country_${tag.id}`);
+		if (tegElem !== null) {
+			tegElem.addEventListener('click', () => {
+				if (tag.numId) {
+					router.go(
+						createFrontendQueryParams(pathsURLfrontend.country, [
+							{
+								key: paramsURLfrontend.id,
+								value: tag.numId.toString(),
+							},
+						]),
+						tag.name
+					);
+				}
+			});
+		}
+	});
+	tags.forEach(tag => {
+		const tegElem = document.getElementById(`dropdown_country_${tag.id}`);
+		if (tegElem !== null) {
+			tegElem.addEventListener('click', () => {
+				if (tag.numId) {
+					router.go(
+						createFrontendQueryParams(pathsURLfrontend.country, [
+							{
+								key: paramsURLfrontend.id,
+								value: tag.numId.toString(),
+							},
+						]),
+						tag.name
+					);
+				}
+			});
+		}
+	});
+	initDropdown('', 'country');
+};
 
 class CountryCardsHolderView extends BasicView {
 	#tokens: Token[];
@@ -85,7 +130,7 @@ class CountryHolderView extends BasicView {
 			dispatcher.register(EventType.INIT_COUNTRY_RESPONSE, this.renderCountry),
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
 		];
-		dispatcher.notify(newSetMainHeaderStrongRequest(), "init country");
+		dispatcher.notify(newSetMainHeaderStrongRequest(), 'init country');
 	}
 
 	destroy = (): void => {

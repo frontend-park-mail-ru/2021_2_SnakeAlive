@@ -12,7 +12,27 @@ import { pathsURLfrontend } from '@/constants';
 import { searchPlaceType } from '@/models/search';
 import { Sight } from '@/models';
 
-export const initSearchView = (type: searchPlaceType, needsPageGoBtn: boolean, title = ''): string =>
+// https://learn.javascript.ru/task/debounce
+const debounce = (f, ms) => {
+	let isCooldown = false;
+
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	return (arg: string) => {
+		if (isCooldown) return;
+		// @ts-ignore
+		f(arg);
+		isCooldown = true;
+		setTimeout(() => {
+			isCooldown = false;
+		}, ms);
+	};
+};
+
+export const initSearchView = (
+	type: searchPlaceType,
+	needsPageGoBtn: boolean,
+	title = ''
+): string =>
 	searchTemplate({ icon: imgSearch, type, needsPageGoBtn, iconWhite: imgSearchWhite, title });
 
 export class SearchView {
@@ -35,11 +55,12 @@ export class SearchView {
 	constructor(
 		type: searchPlaceType,
 		callback: (id: string, sight?: Sight, day?: number) => void, // нажатие на элемент выпадающего списка
-		inputCallback: (text: string) => void = (text: string) => { // ввод текста
+		inputCallback: (text: string) => void = (text: string) => {
+			// ввод текста
 			dispatcher.notify(searchRequest(text, this.#type));
 		},
-		goSearchCallback: () => void // нажатие на кнопку на экране
-			= () => {
+		goSearchCallback: () => void = () => {
+			// нажатие на кнопку на экране
 			router.go(pathsURLfrontend.search, this.#value);
 		},
 		enterCallback?: (text?: string, sight?: Sight, day?: number) => void
@@ -48,7 +69,7 @@ export class SearchView {
 
 		this.#callback = callback;
 
-		this.#inputCallback = inputCallback;
+		this.#inputCallback = debounce(inputCallback, 250);
 
 		this.#goSearchCallback = goSearchCallback;
 
@@ -65,10 +86,14 @@ export class SearchView {
 
 		const goPageBtn = document.getElementById(`go_search_page_${type}`);
 		if (goPageBtn !== null) {
-			goPageBtn.addEventListener('click', event => {
-				event.preventDefault();
-				this.#goSearchCallback();
-			}, false);
+			goPageBtn.addEventListener(
+				'click',
+				event => {
+					event.preventDefault();
+					this.#goSearchCallback();
+				},
+				false
+			);
 		}
 
 		const input = <HTMLInputElement>document.getElementById(`search_${type}`);
@@ -81,7 +106,11 @@ export class SearchView {
 					const { value } = input;
 					this.#value = value;
 					if (storage.getSearchSightsResult(this.#type).length > 0) {
-						this.#enterCallback(storage.getSearchSightsResult(this.#type)[0].id, storage.getSearchSightsResult(this.#type)[0], 42);
+						this.#enterCallback(
+							storage.getSearchSightsResult(this.#type)[0].id,
+							storage.getSearchSightsResult(this.#type)[0],
+							42
+						);
 					} else {
 						this.#enterCallback(this.#value);
 					}
@@ -92,7 +121,7 @@ export class SearchView {
 
 			input.addEventListener(
 				'input',
-				(event) => {
+				event => {
 					event.preventDefault();
 
 					const { value } = input;
@@ -104,13 +133,17 @@ export class SearchView {
 						values.forEach(option => {
 							if (value === option.value) {
 								// eslint-disable-next-line eqeqeq
-								this.#callback(option.id, storage.getSearchSightsResult(this.#type).filter(sight => sight.id == option.id)[0], 42);
+								this.#callback(
+									option.id,
+									storage
+										.getSearchSightsResult(this.#type)
+										.filter(sight => sight.id == option.id)[0],
+									42
+								);
 								this.#clearSearch(input);
 							}
 						});
 					}
-
-
 				},
 				false
 			);
@@ -139,7 +172,7 @@ export class SearchView {
 
 	stopCleaning = () => {
 		this.#needCleaning = false;
-	}
+	};
 
 	#clearSearch = (input: HTMLInputElement) => {
 		if (this.#needCleaning) {
@@ -150,5 +183,5 @@ export class SearchView {
 				this.#searchList.innerHTML = '';
 			}
 		}
-	}
+	};
 }

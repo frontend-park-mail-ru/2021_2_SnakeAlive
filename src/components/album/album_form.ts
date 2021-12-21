@@ -115,41 +115,36 @@ export const initAlbumForm = (isNew: boolean) => {
 		);
 	}
 
-		// кнопка сохранить и завершить btn_make_and_finish
-		const createFinishBtn = document.getElementById('btn_make_and_finish');
-		if (createFinishBtn !== null) {
-			createFinishBtn.addEventListener(
-				'click',
-				event => {
-					event.preventDefault();
-					const isOk = validateForm();
-					if (isOk === false) {
-						setError();
-					} else {
-						const { title, description } = isOk;
-						dispatcher.notify(
-							updateAlbumInfoRequest(
-								title,
-								description,
-								storage.getAlbum().photos,
-								(id: string) => {
-									dispatcher.notify(newGetAlbumResult(false));
-									router.pushHistoryState(
-										createFrontendQueryParams(pathsURLfrontend.album, [
-											{
-												key: paramsURLfrontend.id,
-												value: id,
-											},
-										])
-									);
-								}
-							)
-						);
-					}
-				},
-				false
-			);
-		}
+	// кнопка сохранить и завершить btn_make_and_finish
+	const createFinishBtn = document.getElementById('btn_make_and_finish');
+	if (createFinishBtn !== null) {
+		createFinishBtn.addEventListener(
+			'click',
+			event => {
+				event.preventDefault();
+				const isOk = validateForm();
+				if (isOk === false) {
+					setError();
+				} else {
+					const { title, description } = isOk;
+					dispatcher.notify(
+						updateAlbumInfoRequest(title, description, storage.getAlbum().photos, (id: string) => {
+							dispatcher.notify(newGetAlbumResult(false));
+							router.pushHistoryState(
+								createFrontendQueryParams(pathsURLfrontend.album, [
+									{
+										key: paramsURLfrontend.id,
+										value: id,
+									},
+								])
+							);
+						})
+					);
+				}
+			},
+			false
+		);
+	}
 
 	if (!isNew) {
 		// блок удаления альбома

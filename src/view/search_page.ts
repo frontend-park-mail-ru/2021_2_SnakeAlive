@@ -61,63 +61,72 @@ const changeIncludeState = (single: string, list: string[]): string[] => {
 		return newList;
 	}
 
-	if (list.indexOf(single) !== -1) { // значит уже есть в списке
+	if (list.indexOf(single) !== -1) {
+		// значит уже есть в списке
 		newList = list.filter(elem => elem !== single);
 	} else {
 		newList = list;
 		newList.push(single);
 	}
 	return newList;
-}
+};
 
 const listToString = (list: number[]): string[] => {
 	const resList: string[] = [];
-	if (! list){
+	if (!list) {
 		return resList;
 	}
 	list.forEach(item => {
 		resList.push(item.toString());
 	});
 	return resList;
-}
+};
 
 const listToNumbers = (list: string[]): number[] => {
 	const resList: number[] = [];
-	if (! list){
+	if (!list) {
 		return resList;
 	}
 	list.forEach(item => {
 		resList.push(Number(item));
 	});
 	return resList;
-}
+};
 
-const initCategories = (list: AdoptedTag[] | SearchCountry[], moreList: AdoptedTag[] | SearchCountry[]) => {
-
-	if ( ! list ) {
+const initCategories = (
+	list: AdoptedTag[] | SearchCountry[],
+	moreList: AdoptedTag[] | SearchCountry[]
+) => {
+	if (!list) {
 		return;
 	}
 
 	interface Info {
-		type: "tag" | "country";
-		callback: (any) => void
+		type: 'tag' | 'country';
+		callback: (any) => void;
 	}
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 	// @ts-ignore
 	const info: Info = {};
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 	// @ts-ignore
 	if (list[0].translation) {
 		// это страны
-		info.type = "country";
+		info.type = 'country';
 		info.callback = (name: string) => {
-			storage.storeSearchRequestCountries(changeIncludeState(name, storage.getSearchRequest().countries));
+			storage.storeSearchRequestCountries(
+				changeIncludeState(name, storage.getSearchRequest().countries)
+			);
 			dispatcher.notify(sendPageSearch());
-		}
+		};
 	} else {
-		info.type = "tag";
+		info.type = 'tag';
 		info.callback = (name: string) => {
-			storage.storeSearchRequestTags(listToNumbers(changeIncludeState(name, listToString(storage.getSearchRequest().tags))));
+			storage.storeSearchRequestTags(
+				listToNumbers(changeIncludeState(name, listToString(storage.getSearchRequest().tags)))
+			);
 			dispatcher.notify(sendPageSearch());
-		}
+		};
 	}
 
 	const activeCSSClass = 'usual_button_dark';
@@ -189,14 +198,12 @@ class SearchHolderView extends BasicView {
 			// tags: storage.getSearchTags().slice(0, 6),
 			// allTags: storage.getSearchTags().slice(6),
 			countries: storage.getSearchCountries(),
-			allCountries: []
+			allCountries: [],
 			// countries: storage.getSearchCountries().slice(0, 6),
 			// allCountries: storage.getSearchCountries().slice(6, 0),
 		};
 
-		this.setView(
-			searchPageTemplate(renderObj)
-		);
+		this.setView(searchPageTemplate(renderObj));
 		initDropdown('dropdown_tags'); // ??
 		initDropdown('dropdown_countries'); // ??
 
@@ -213,18 +220,18 @@ class SearchHolderView extends BasicView {
 					if (text) {
 						storage.storeSearchRequestText(text);
 					} else {
-						storage.storeSearchRequestText("");
+						storage.storeSearchRequestText('');
 					}
 					dispatcher.notify(sendPageSearch());
 				},
 				() => {
 					dispatcher.notify(sendPageSearch());
 				},
-				(text) => {
+				text => {
 					if (text) {
 						storage.storeSearchRequestText(text);
 					} else {
-						storage.storeSearchRequestText("");
+						storage.storeSearchRequestText('');
 					}
 					dispatcher.notify(sendPageSearch());
 				}

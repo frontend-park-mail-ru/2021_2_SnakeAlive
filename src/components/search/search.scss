@@ -33,6 +33,7 @@ align-items: stretch;
 
   > img {
     padding-right: $small-px;
+    height: 20px;
   }
 
   &__go_btn {
@@ -46,6 +47,11 @@ align-items: stretch;
 
     &:hover {
       background-color:  $my--bright-btn-hover;
+    }
+
+    > img {
+      padding-right: $small-px;
+      height: 20px;
     }
   }
 }

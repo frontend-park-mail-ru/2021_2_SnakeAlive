@@ -268,7 +268,6 @@ export class AlbumView extends BasicView {
 	};
 
 	#initAddBtn = () => {
-
 		if (this.#isInited) {
 			return;
 		}

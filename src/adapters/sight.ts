@@ -3,7 +3,11 @@ import { AdoptedTag, TagResponse } from '@/models/tags';
 import { CountryResponse } from '@/models';
 import { storage } from '@/storage';
 
-export const adoptSightForPage = (sight: GotSight, tags: TagResponse[], country?: CountryResponse): SightAdoptedForPage => {
+export const adoptSightForPage = (
+	sight: GotSight,
+	tags: TagResponse[],
+	country?: CountryResponse
+): SightAdoptedForPage => {
 	const resSight: SightAdoptedForPage = <SightAdoptedForPage>{};
 
 	if (country) {

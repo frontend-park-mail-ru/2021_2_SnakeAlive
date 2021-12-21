@@ -160,7 +160,7 @@ class Storage {
 
 	clearSearchSightsResult = (): void => {
 		this.#searchSightsResult = [];
-	}
+	};
 
 	storeProfileTrips = (trips: ProfileTrip[]) => {
 		this.#profileTrips = trips;

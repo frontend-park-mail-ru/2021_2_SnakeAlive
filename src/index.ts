@@ -43,7 +43,7 @@ const main = () => {
 	if (root !== null) {
 		root.appendChild(headerPlace);
 		root.appendChild(contentPlace);
-		root.appendChild(footer())
+		root.appendChild(footer());
 	}
 
 	router.start();

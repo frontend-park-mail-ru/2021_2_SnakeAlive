@@ -1,5 +1,5 @@
 import { sendGetJSONRequest } from '@/http';
-import { backendEndpoint, countrySights, sightsURI } from '@/constants';
+import { backendEndpoint, countrySights, listOfCountries, sightsURI } from '@/constants';
 import {
 	newGetCountryCardsError,
 	newGetCountryCardsRequest,
@@ -24,6 +24,16 @@ export const getCountry = (countryID: string): Promise<CountryResponse> =>
 			}
 			if (response.status === 401) {
 				return Promise.reject(new Error('Нужно войти в систему'));
+			}
+			return Promise.resolve(response);
+		})
+		.then(response => response.json());
+
+export const getCountriesList = (): Promise<CountryResponse[]> =>
+	sendGetJSONRequest(backendEndpoint + listOfCountries)
+		.then(response => {
+			if (response.status !== 200) {
+				return Promise.reject(new Error('проблемы при получении списка стран'));
 			}
 			return Promise.resolve(response);
 		})

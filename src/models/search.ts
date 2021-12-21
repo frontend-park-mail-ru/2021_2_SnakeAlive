@@ -12,5 +12,5 @@ export interface SearchRequest {
 	countries: string[];
 }
 
-export  const isSearchRequestEmpty = (req: SearchRequest): boolean =>
-	(! req.search) && (! req.tags) && (! req.countries);
+export const isSearchRequestEmpty = (req: SearchRequest): boolean =>
+	!req.search && !req.tags && !req.countries;

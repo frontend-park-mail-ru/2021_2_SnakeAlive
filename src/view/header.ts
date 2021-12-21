@@ -18,7 +18,7 @@ const initHeaderSearch = (): SearchView | null => {
 	// поиск
 	const searchPlace = document.getElementById('header-search-place');
 	if (searchPlace !== null) {
-		searchPlace.innerHTML = initSearchView(searchPlaceType.header, true, "на страницу поиска");
+		searchPlace.innerHTML = initSearchView(searchPlaceType.header, true, 'на страницу поиска');
 		return new SearchView(searchPlaceType.header, (id: string) => {
 			router.go(
 				createFrontendQueryParams(pathsURLfrontend.sight, [
@@ -32,7 +32,7 @@ const initHeaderSearch = (): SearchView | null => {
 		});
 	}
 	return null;
-}
+};
 
 export default class HeaderView extends BasicView {
 	#tokens: Token[];

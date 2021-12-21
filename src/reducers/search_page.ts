@@ -29,9 +29,7 @@ export const getTags = (): Promise<TagResponse[]> =>
 			}
 			return Promise.resolve(response);
 		})
-		.then(response => {
-			return response.json();
-		});
+		.then(response => response.json());
 
 export default class SearchPageReducer {
 	#tokens: Token[];

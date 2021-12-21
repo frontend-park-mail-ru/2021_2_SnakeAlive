@@ -40,9 +40,9 @@ export default class SightReducer {
 
 					// getCountry(sight.country)
 					// 	.then((country: CountryResponse) => {
-							storage.storeSight(adoptSightForPage(sight, tags));
-							dispatcher.notify(newGetSightResult());
-						// });
+					storage.storeSight(adoptSightForPage(sight, tags));
+					dispatcher.notify(newGetSightResult());
+					// });
 				});
 			})
 			.catch((error: Error) => {

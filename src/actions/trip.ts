@@ -12,7 +12,7 @@ const newGetTripRequest = (tripID: number): IEvent =>
 
 const wsUpdate = (): IEvent =>
 	<IEvent>{
-		key: EventType.WS_UPDATE
+		key: EventType.WS_UPDATE,
 	};
 
 const newGetTripResult = (id: number): IEvent =>

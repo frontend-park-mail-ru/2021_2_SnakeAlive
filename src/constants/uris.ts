@@ -52,5 +52,5 @@ export {
 	userURI,
 	alienUser,
 	allTagsURI,
-	albumURIsingle
+	albumURIsingle,
 };

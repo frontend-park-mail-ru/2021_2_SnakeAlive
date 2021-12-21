@@ -18,7 +18,13 @@ import { Map } from '@/components/map/map';
 import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
 import { IsTrue, SightToTrip } from '@/dispatcher/metadata_types';
 import { storage } from '@/storage';
-import { addPlaceToTrip, delPlaceFromTrip, newGetTripRequest, updateCurrentTripInfo, wsUpdate } from '@/actions/trip';
+import {
+	addPlaceToTrip,
+	delPlaceFromTrip,
+	newGetTripRequest,
+	updateCurrentTripInfo,
+	wsUpdate,
+} from '@/actions/trip';
 import { SightCardInTrip } from '@/view/sight_cards';
 import { initSearchView, SearchView } from '@/components/search/search';
 import { router } from '@/router';
@@ -39,7 +45,7 @@ import { searchPlaceType } from '@/models/search';
 import { searchRequest } from '@/actions/search';
 import { WSEndPoint } from '@/constants/endpoints';
 import { setTextAreaResizeParams } from '@/components/reviews/review_form';
-import {createWSCon, initWS, NewWSConnect } from '@/tools/websoket';
+import { createWSCon, initWS, NewWSConnect } from '@/tools/websoket';
 
 // const partisipants = [
 // 	{id: 1, profilePhoto: "/image/7b205eb741a49105fcd425910545cc79.jpeg"},
@@ -56,8 +62,10 @@ const initPartisipantsBtns = (partisipants: Array<Partisipants>): void => {
 	// console.log('f');
 
 	partisipants.forEach(user => {
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore
 		const btn = document.getElementById(`partisipant_${user.id.id}`);
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore
 		// console.log(`partisipant_${user.id.id}`);
 		// console.log(btn);
@@ -67,6 +75,7 @@ const initPartisipantsBtns = (partisipants: Array<Partisipants>): void => {
 				event => {
 					event.preventDefault();
 					// console.log(storage.getProfile().meta.id);
+					// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 					// @ts-ignore
 					if (user.id.id === storage.getProfile().meta.id) {
 						router.go(pathsURLfrontend.profile);
@@ -75,6 +84,7 @@ const initPartisipantsBtns = (partisipants: Array<Partisipants>): void => {
 							createFrontendQueryParams(pathsURLfrontend.users, [
 								{
 									key: paramsURLfrontend.id,
+									// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 									// @ts-ignore
 									value: user.id.id.toString(),
 								},
@@ -122,7 +132,7 @@ export class TripInfoView extends BasicView {
 	addUserToTrip = (metada: IsTrue): void => {
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		const isOk = metada.isTrue;
-		//createWSCon();
+		// createWSCon();
 	};
 
 	shareTrip = (): void => {
@@ -164,28 +174,30 @@ export class TripInfoView extends BasicView {
 			// 		}
 			// 	)
 			// eslint-disable-next-line @typescript-eslint/no-empty-function
-			this.#search = new SearchView(searchPlaceType.trip,
+			this.#search = new SearchView(
+				searchPlaceType.trip,
 				(str, sight, day) => {
-				if (! sight) {
-					return;
-				}
-				if (day !== undefined) {
-					dispatcher.notify(addPlaceToTrip(sight, day));
-				}
-			},
-				(text: string) => { // ввод текста
+					if (!sight) {
+						return;
+					}
+					if (day !== undefined) {
+						dispatcher.notify(addPlaceToTrip(sight, day));
+					}
+				},
+				(text: string) => {
+					// ввод текста
 					dispatcher.notify(searchRequest(text, searchPlaceType.trip));
 				},
 				() => null,
 				(str, sight, day) => {
-					if (! sight) {
+					if (!sight) {
 						return;
 					}
 					if (day !== undefined) {
 						dispatcher.notify(addPlaceToTrip(sight, day));
 					}
 				}
-				);
+			);
 		}
 
 		const addAlbumBtn = document.getElementById('btn-add-album');
@@ -333,7 +345,7 @@ export class CardSightsHolder extends BasicView {
 			sights.forEach(sight => {
 				if (i !== 0) {
 					const adoptedTags: Array<TagAdoptedForRender> = [];
-					
+
 					sight.tags.forEach(tag => {
 						adoptedTags.push({
 							id: '0',
@@ -362,7 +374,7 @@ export class CardSightsHolder extends BasicView {
 		this.setView(
 			tripSights({
 				sights: sightsAdopted,
-				isEdit: metadata.isTrue
+				isEdit: metadata.isTrue,
 			})
 		);
 
@@ -419,7 +431,7 @@ export class InitTripPage extends BasicView {
 		const { ID } = metadata;
 		dispatcher.notify(newGetTripRequest(ID));
 		initEdit();
-		//createWSCon();
+		// createWSCon();
 	};
 
 	destroy = (): void => {
@@ -430,5 +442,3 @@ export class InitTripPage extends BasicView {
 		this.setEmpty();
 	};
 }
-
-

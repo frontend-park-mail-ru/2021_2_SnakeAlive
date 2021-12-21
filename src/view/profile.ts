@@ -77,9 +77,10 @@ export default class ProfileView extends BasicView {
 	};
 
 	render = (): void => {
-		dispatcher.notify(newSetEmptyHeaderRequest(true), "renderViewProfile");
+		dispatcher.notify(newSetEmptyHeaderRequest(true), 'renderViewProfile');
+		// eslint-disable-next-line no-unused-expressions
 		this.#isProfile ? this.#renderProfile() : this.#renderEdit();
-	}
+	};
 
 	#renderProfile = (): void => {
 		this.#isProfile = true;
