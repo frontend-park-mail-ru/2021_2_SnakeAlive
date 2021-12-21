@@ -39,6 +39,7 @@ import { searchPlaceType } from '@/models/search';
 import { searchRequest } from '@/actions/search';
 import { WSEndPoint } from '@/constants/endpoints';
 import { setTextAreaResizeParams } from '@/components/reviews/review_form';
+import {createWSCon, initWS, NewWSConnect } from '@/tools/websoket';
 
 // const partisipants = [
 // 	{id: 1, profilePhoto: "/image/7b205eb741a49105fcd425910545cc79.jpeg"},
@@ -121,6 +122,7 @@ export class TripInfoView extends BasicView {
 	addUserToTrip = (metada: IsTrue): void => {
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		const isOk = metada.isTrue;
+		//createWSCon();
 	};
 
 	shareTrip = (): void => {
@@ -318,7 +320,6 @@ export class CardSightsHolder extends BasicView {
 	rerenderCards = (metadata: IsTrue) => {
 		this.setEmpty();
 		this.#cards = [];
-
 		interface sightAdopted {
 			sight: SightAdoptedForRender;
 			preview: string;
@@ -406,44 +407,11 @@ export class InitTripPage extends BasicView {
 			dispatcher.register(EventType.GET_TRIP_RESPONSE, this.#TripInfo.createTripEdit),
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
 			dispatcher.register(EventType.UPDATE_CURRENT_TRIP_INFO, this.destroy),
-			dispatcher.register(EventType.WS_UPDATE, this.wsUpdate),
 		];
 		this.setView(tripPageTemplate());
 		this.#TripMap.init();
 		this.#TripInfo.init();
 		init(true);
-
-		//ws
-		let socket = new WebSocket(WSEndPoint);
-		socket.onopen = function(e) {
-			console.log("[open] Соединение установлено");
-		  };
-		  
-		  socket.onmessage = function(event) {
-			console.log(`[message] Данные получены с сервера: ${event.data}`);
-			//dispatcher.notify(wsUpdate())
-			router.go(
-				createFrontendQueryParams(pathsURLfrontend.trip, [
-					{
-						key: paramsURLfrontend.id,
-						value: storage.getCurrentTrip().id,
-					},
-				])
-			);
-		  };
-		  
-		  socket.onclose = function(event) {
-			if (event.wasClean) {
-				console.log(`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`);
-			} else {
-
-			  console.log('[close] Соединение прервано');
-			}
-		  };
-		  
-		  socket.onerror = function(error) {
-			console.log(`[error] ${error.type}`);
-		  };
 	};
 
 	initEdit = (metadata: NumID): void => {
@@ -451,13 +419,7 @@ export class InitTripPage extends BasicView {
 		const { ID } = metadata;
 		dispatcher.notify(newGetTripRequest(ID));
 		initEdit();
-	};
-
-	wsUpdate = (metadata: NumID): void => {
-		// need get and store trip with id in params
-		const { ID } = metadata;
-		dispatcher.notify(newGetTripRequest(ID));
-		initEdit();
+		//createWSCon();
 	};
 
 	destroy = (): void => {
@@ -468,3 +430,5 @@ export class InitTripPage extends BasicView {
 		this.setEmpty();
 	};
 }
+
+
