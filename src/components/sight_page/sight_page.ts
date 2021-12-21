@@ -1,4 +1,4 @@
-import placeIcon from '../../../image/icon/place.svg';
+import placeIcon from '../../../image/icon/place.webp';
 import sightTemplate from './sight_page.handlebars';
 import { Sight, SightAdoptedForPage } from '@/models/sight';
 

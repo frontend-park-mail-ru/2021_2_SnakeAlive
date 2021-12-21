@@ -11,13 +11,13 @@ import {
 import { UpdateProfile } from '@/dispatcher';
 import { storage } from '@/storage';
 
-import avatarPath from '../../image/test.jpeg';
+import avatarPath from '../../image/test.webp';
 
 export function adaptGetProfileResponse(response: GetProfileResponse): Profile {
 	if (
-		response.avatar === 'default.jpg' ||
-		response.avatar.slice(-9) === 'test.jpeg' ||
-		response.avatar.slice(-12) === 'default.jpeg'
+		response.avatar === 'default.webp' ||
+		response.avatar.slice(-9) === 'test.webp' ||
+		response.avatar.slice(-12) === 'default.webp'
 	) {
 		response.avatar = avatarPath;
 	}

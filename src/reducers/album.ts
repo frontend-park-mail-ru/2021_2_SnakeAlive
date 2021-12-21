@@ -50,6 +50,7 @@ export default class AlbumReducer {
 
 	initAlbumPage = (metadata: IDState) => {
 		dispatcher.notify(newSetMainHeaderRequest());
+		storage.storeAlbum(<Album>{});
 		const { ID, state } = metadata;
 		this.#getAlbum(ID)
 			.then((album: GotAlbumInterface) => {

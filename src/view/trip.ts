@@ -20,7 +20,6 @@ import { IsTrue, SightToTrip } from '@/dispatcher/metadata_types';
 import { storage } from '@/storage';
 import { addPlaceToTrip, delPlaceFromTrip, newGetTripRequest, updateCurrentTripInfo, wsUpdate } from '@/actions/trip';
 import { SightCardInTrip } from '@/view/sight_cards';
-import defaultPicture from '@/../image/moscow_city_1.jpeg';
 import { initSearchView, SearchView } from '@/components/search/search';
 import { router } from '@/router';
 import { SightAdoptedForRender, TagAdoptedForRender } from '@/models/sight';
@@ -30,9 +29,9 @@ import horisontalScroll from '@/components/horizontal_scroll/horisontal_scroll.h
 import { setListenersOnCards } from '@/view/profile';
 
 // eslint-disable-next-line camelcase
-import share_icon from '../../image/icon/share_56.svg';
+import share_icon from '../../image/icon/share_56.webp';
 // eslint-disable-next-line camelcase
-import addUser_icon from '../../image/icon/user_add_56.svg';
+import addUser_icon from '../../image/icon/user_add_56.webp';
 import { adoptPartisipants } from '@/adapters/trip';
 import { Partisipants } from '@/models';
 import { createFrontendQueryParams } from '@/router/router';
@@ -362,8 +361,7 @@ export class CardSightsHolder extends BasicView {
 		this.setView(
 			tripSights({
 				sights: sightsAdopted,
-				isEdit: metadata.isTrue,
-				defaultPicture,
+				isEdit: metadata.isTrue
 			})
 		);
 

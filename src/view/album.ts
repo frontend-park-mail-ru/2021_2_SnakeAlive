@@ -15,7 +15,7 @@ import '@/components/album/album.scss';
 import { initAlbumForm } from '@/components/album/album_form';
 import { addAlbumPhoto, deletePhoto, newGetAlbumResult, renderAlbumPhotos } from '@/actions/album';
 
-import defaultPhoto from '../../image/defaultAlbum.png';
+import defaultPhoto from '../../image/defaultAlbum.webp';
 
 export class PhotosView {
 	#tokens: Token[];

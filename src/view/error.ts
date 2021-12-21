@@ -1,7 +1,7 @@
 import BasicView from '@/view/view';
 import { dispatcher, EventType, Token } from '@/dispatcher';
 
-import picture from '@/../image/snake_error.svg';
+import picture from '@/../image/snake.webp';
 import errorPage from '@/components/errorPage.handlebars';
 import offlinePage from '@/components/offline.handlebars';
 import { newSetMainHeaderRequest } from '@/actions/header';

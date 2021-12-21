@@ -1,6 +1,6 @@
 import './header.scss';
 import headerTemplate from './headerContent.handlebars';
-import logo from '../../../image/logo.svg';
+import logo from '../../../image/logo.webp';
 
 interface dataLoggedTemplate {
 	isUser: boolean;
