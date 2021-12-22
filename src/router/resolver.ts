@@ -60,24 +60,6 @@ const getTripIdBackEnd = (str: string): string => {
 }
 
 export const notifier = (path: URL): void /* IEvent */ => {
-	if (/api\/trip\/[0-9]+/.test(path.pathname)) {
-		// перенаправление на поездку в случае успешного перенаправления беком
-		const tripId = getTripIdBackEnd(path.pathname);
-		window.location.href = createFrontendQueryParams(pathsURLfrontend.trip, [
-			{
-				key: paramsURLfrontend.id,
-				value: tripId,
-			},
-		]);
-		// eslint-disable-next-line no-param-reassign
-		path = new URL(window.location.href);
-	} else if (/\/api\/trip\/share\//.test(path.pathname)) {
-		// предполагаем, что если фронт пытается обработать такой путь, значит уже что-то не так
-		window.location.href = '/';
-		// eslint-disable-next-line no-param-reassign
-		path = new URL(window.location.href);
-	}
-
 	switch (path.pathname) {
 		case pathsURLfrontend.root: {
 			dispatcher.notify(newInitPageRequest());
