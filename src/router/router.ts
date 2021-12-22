@@ -40,6 +40,7 @@ class Router {
 	};
 
 	go = (_path: string, _data?: string) => {
+		console.log(_path);
 		const url = new URL(_path, window.location.href);
 		if (window.location.pathname === _path && url.searchParams.toString() === '') return;
 		if (_data) {

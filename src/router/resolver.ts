@@ -20,10 +20,11 @@ import { showLoginForm, showRegisterForm } from '@/actions/auth';
 import { newGetReviewsRequest } from '@/actions/review';
 import { newGetSightRequest } from '@/actions/sight';
 import { newInitCountryRequest } from '@/actions/country';
-import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
+import { frontEndEndPoint, paramsURLfrontend, pathsURLfrontend } from '@/constants';
 import { createAlbumFormRequest, newGetAlbumRequest } from '@/actions/album';
 import { newTagRequest } from '@/actions/tag';
 import { initEmptySearchPageRequest } from '@/actions/search';
+import { createFrontendQueryParams, router } from '@/router/router';
 
 const pathErrorEvent: IEvent = initErrorPageRequest(new Error('Неверная ссылка'));
 
@@ -53,7 +54,30 @@ const getIDParamDispatchError = (path: URL): number | null => {
 	return id;
 };
 
+const getTripIdBackEnd = (str: string): string => {
+	const array = str.split('/');
+	return array[array.length - 1];
+}
+
 export const notifier = (path: URL): void /* IEvent */ => {
+	if (/api\/trip\/[0-9]+/.test(path.pathname)) {
+		// перенаправление на поездку в случае успешного перенаправления беком
+		const tripId = getTripIdBackEnd(path.pathname);
+		window.location.href = createFrontendQueryParams(pathsURLfrontend.trip, [
+			{
+				key: paramsURLfrontend.id,
+				value: tripId,
+			},
+		]);
+		// eslint-disable-next-line no-param-reassign
+		path = new URL(window.location.href);
+	} else if (/\/api\/trip\/share\//.test(path.pathname)) {
+		// предполагаем, что если фронт пытается обработать такой путь, значит уже что-то не так
+		window.location.href = '/';
+		// eslint-disable-next-line no-param-reassign
+		path = new URL(window.location.href);
+	}
+
 	switch (path.pathname) {
 		case pathsURLfrontend.root: {
 			dispatcher.notify(newInitPageRequest());
