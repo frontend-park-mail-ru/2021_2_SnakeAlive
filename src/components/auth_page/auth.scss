@@ -6,16 +6,30 @@
   padding: 10px 0;
   align-items: flex-start;
 
-  @media (min-width: 960px) {
+  @media (min-width: 961px) {
     grid-template: "ml f f t t mr"  / 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-column-gap: $small-px;
     grid-row-gap: $small-px;
   }
 
-  @media (max-width: 961px) {
+  @media (min-width: 380px) and (max-width: 960px) {
+    grid-template: "f t"  / 1fr 1fr;
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+
+    padding-left: 10px;
+    padding-right: 10px;
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 381px) {
     grid-template: "f" "t";
     row-gap: $small-px;
     gap: 10px;
+
+    padding-left: 10px;
+    padding-right: 10px;
+    box-sizing: border-box;
   }
 }
 
@@ -25,13 +39,16 @@
 
 .text_place {
   grid-area: t;
+  @media (min-width: 960px) {
+    padding: $large-px * 3 !important;
+  }
   h2 {
     @include text-local-header;
-    padding-bottom: $small-px;
+    padding-bottom: $large-px;
   }
   p, li {
     @include text-plain-no-wrap;
-    padding-bottom: $small-px;
+    padding-bottom: $large-px;
   }
 }
 

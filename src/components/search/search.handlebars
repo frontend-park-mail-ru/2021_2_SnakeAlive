@@ -1,6 +1,15 @@
 <div id="search_area" class="search_area">
-	<img class="search_area__icon" src="{{icon}}" alt="🔍">
+	{{#unless needsPageGoBtn}}
+		<img class="search_area__icon" src="{{icon}}" alt="🔍">
+	{{/unless}}
 	<input id="search_{{type}}" list="search_list_{{type}}" class="search_area__input">
 	<datalist id="search_list_{{type}}"></datalist>
+	{{#if needsPageGoBtn}}
+		<div class='search_area__go_btn' id='go_search_page_{{type}}' title='{{title}}'>
+<!--		<button >-->
+			<img class="search_area__icon" src="{{iconWhite}}" alt="🔍">
+<!--		</button>-->
+		</div>
+	{{/if}}
 </div>
 

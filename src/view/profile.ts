@@ -21,6 +21,7 @@ import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
 import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
 import horisontalScroll from '../components/horizontal_scroll/horisontal_scroll.handlebars';
+import { newSetEmptyHeaderRequest, newSetMainHeaderStrongRequest } from '@/actions/header';
 
 export const setListenersOnCards = (
 	name: string,
@@ -75,7 +76,11 @@ export default class ProfileView extends BasicView {
 		this.setEmpty();
 	};
 
-	render = (): void => (this.#isProfile ? this.#renderProfile() : this.#renderEdit());
+	render = (): void => {
+		dispatcher.notify(newSetEmptyHeaderRequest(true), 'renderViewProfile');
+		// eslint-disable-next-line no-unused-expressions
+		this.#isProfile ? this.#renderProfile() : this.#renderEdit();
+	};
 
 	#renderProfile = (): void => {
 		this.#isProfile = true;

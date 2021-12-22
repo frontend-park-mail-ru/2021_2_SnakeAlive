@@ -64,6 +64,16 @@ export const init = (isNew: boolean): void => {
 	if (submitBtn !== null) {
 		submitBtn.addEventListener('click', createTrip, false);
 	}
+
+	// красота по отображению
+	const textArea = document.querySelector('#comment_text');
+	if (textArea !== null) {
+		textArea.addEventListener(
+			'input',
+			setTextAreaResizeParams('comment_text', 'comment_text_hidden', 400),
+			false
+		);
+	}
 };
 
 const alert = () => {};
@@ -112,7 +122,6 @@ export const initDelTripBtn = (): void => {
 			},
 			false
 		);
-	} else {
 	}
 };
 
@@ -129,8 +138,6 @@ export const initDescription = (): void => {
 			},
 			false
 		);
-	} else {
-		// console.log('NO DEL BTN ');
 	}
 };
 
@@ -145,8 +152,6 @@ export const initAddPartisipantBtn = (): void => {
 			},
 			false
 		);
-	} else {
-		//console.log('NO BTN ');
 	}
 	const addUserBtn = document.getElementById('add_user_btn');
 	if (addUserBtn !== null) {
@@ -154,11 +159,9 @@ export const initAddPartisipantBtn = (): void => {
 			'click',
 			event => {
 				event.preventDefault();
-				console.log('click');
 				const addUserEmail = <HTMLInputElement>document.getElementById('search_trip_user');
 				if (addUserEmail !== null) {
 					if (addUserEmail) {
-						console.log('notify');
 						dispatcher.notify(addUserToTrip(addUserEmail.value));
 						if (document.getElementById('AddUserDropdown')?.classList.contains('show')) {
 							document.getElementById('AddUserDropdown')?.classList.remove('show');
@@ -168,8 +171,6 @@ export const initAddPartisipantBtn = (): void => {
 			},
 			false
 		);
-	} else {
-		// console.log('No button = ', addAlbumBtn);
 	}
 	dropDownToggle('AddUserDropdown', 'partisipant_add_img');
 };
@@ -185,8 +186,6 @@ export const initShareBtn = (): void => {
 			},
 			false
 		);
-	} else {
-		//console.log('NO BTN ');
 	}
 	dropDownToggle('ShareLinkDropdown', 'share');
 };
@@ -202,8 +201,6 @@ export const initShareBtnCopy = (): void => {
 			},
 			false
 		);
-	} else {
-		//console.log('NO BTN ');
 	}
 };
 

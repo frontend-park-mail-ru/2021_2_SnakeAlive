@@ -1,0 +1,59 @@
+<div id='search_page__holder' class='search_page__holder'>
+	<div class='search_page__holder__header frame' id='header__holder'>
+		<h2 class='search_page__header__h'>
+			Поиск по достопримечательностям
+		</h2>
+		<div  class='search_page__holder__header__search_area cardlist__header__main'>
+
+			<div id="page-search-place" class="search_page__search_place"></div>
+
+			<div><p class='search_page__category_type'>Теги</p></div>
+
+			<div class='header__categories' id='search_page__categories'>
+				{{#if allTags}}
+				<div>
+					<div class='page_category' id='more-tags-btn'>Все</div>
+					<div id="dropdown_tags" class="dropdown-content">
+						{{#each allTags}}
+							<a id='dropdown_tag_{{this.id}}'>{{this.name}}</a>
+						{{/each}}
+					</div>
+				</div>
+				{{/if}}
+
+				{{#each tags}}
+					<button class='usual_button usual_button_light search_page__category {{#if @last}} search_page__category_last{{/if}}' id='tag_{{this.id}}'>{{this.name}}</button>
+				{{/each}}
+			</div>
+
+
+			<div><p class='search_page__category_type'>Страны</p></div>
+			<div class='header__categories cat_SP' id='search_page__categories'>
+
+				{{#if allCountries}}
+				<div>
+					<div class='page_category' id='more-countries-btn'>Все</div>
+					<div id="dropdown_countries" class="dropdown-content">
+						{{#each allCountries}}
+							<a id='dropdown_country_{{this.id}}'>{{this.translation}}</a>
+						{{/each}}
+					</div>
+				</div>
+				{{/if}}
+
+				{{#each countries}}
+					<button class='usual_button usual_button_light search_page__category {{#if @last}} search_page__category_last{{/if}}' id='country_{{this.id}}'>{{this.translation}}</button>
+				{{/each}}
+
+			</div>
+
+		</div>
+	</div>
+
+<!--	<div class='card_grid_wrapper'>-->
+	<div class='search_page__holder__cards'>
+		<div class='card__grid card__grid__3' id='card-grid-wrapper'>
+		</div>
+	</div>
+
+</div>

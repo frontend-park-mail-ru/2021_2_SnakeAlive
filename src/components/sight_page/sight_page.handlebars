@@ -15,7 +15,7 @@
 
 			<div class="tag__holder">
 				{{#each tags}}
-					<div class="tag card__tag card__tag__font" id="tag_{{this.name}}_{{this.sightPP}}">
+					<div class="tag card__tag card__tag__font" id="tag_{{this.id}}_{{this.sightPP}}">
 						{{this.name}}
 						{{#if @last}}
 						{{else}}
@@ -25,6 +25,12 @@
 				{{/each}}
 			</div>
 
+		</div>
+
+		<div class="frame sight_page__left_col__description">
+
+			<p class="sight_page__left_col__description__title">О месте</p>
+			<p>{{description}}</p>
 		</div>
 
 		<div id="sight_page__review_form_place" class="sight_page__left_col__review_form_place frame">
@@ -38,13 +44,14 @@
 	</div>
 
 	<div class='sight_page__right_col'>
-<!--		<div class="frame sight_page__left_col__description">-->
 
-<!--			<p class="sight_page__left_col__description__title">О месте</p>-->
-<!--			<p>{{description}}</p>-->
-<!--		</div>-->
+		{{#each photosLeft}}
+			<div id="sight_page__photo_holder_place" class="sight_page__photo_holder_place">
+				<img src='{{this}}' alt='photo'>
+			</div>
+		{{/each}}
 
-		{{#each photos}}
+		{{#each photosRight}}
 			<div id="sight_page__photo_holder_place" class="sight_page__photo_holder_place">
 				<img src='{{this}}' alt='photo'>
 			</div>

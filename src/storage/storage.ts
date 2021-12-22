@@ -1,8 +1,11 @@
 import { Country, Sight, TemplateCards, Trip, UserMetadata } from '@/models';
 import { Profile, ProfileAlbum, ProfileMetadata, ProfileTrip } from '@/models/profile';
 import { Review } from '@/models/review';
-import { minCardInfo } from '@/models/country';
+import { minCardInfo, SearchCountry } from '@/models/country';
 import { Album } from '@/models/album';
+import { AdoptedTag, TagResponse } from '@/models/tags';
+import { searchPlaceType, SearchRequest } from '@/models/search';
+import { SightAdoptedForPage } from '@/models/sight';
 
 class Storage {
 	#countryCards: TemplateCards;
@@ -11,7 +14,7 @@ class Storage {
 
 	#userMetadata: UserMetadata;
 
-	#sight: Sight;
+	#sight: SightAdoptedForPage;
 
 	#trip: Trip;
 
@@ -32,7 +35,7 @@ class Storage {
 	#addTripUserLink = '';
 
 	#searchSightsResult: {
-		type: string;
+		type: searchPlaceType;
 		sights: Sight[];
 	}[];
 
@@ -40,11 +43,17 @@ class Storage {
 
 	#profileAlbums: ProfileAlbum[];
 
+	#countryList: SearchCountry[];
+
+	#tagList: AdoptedTag[];
+
+	#searchRequest: SearchRequest;
+
 	constructor() {
 		this.#countryCards = <TemplateCards>{};
 		this.#country = <Country>{};
 		this.#userMetadata = <UserMetadata>{};
-		this.#sight = <Sight>{};
+		this.#sight = <SightAdoptedForPage>{};
 		this.#trip = <Trip>{};
 		this.#profile = <Profile>{};
 		this.#reviews = [];
@@ -54,6 +63,9 @@ class Storage {
 		this.#searchSightsResult = [];
 		this.#profileTrips = <ProfileTrip[]>{};
 		this.#profileAlbums = <ProfileAlbum[]>{};
+		this.#countryList = [];
+		this.#tagList = [];
+		this.#searchRequest = <SearchRequest>{};
 	}
 
 	addLastTripId = (id: number) => {
@@ -76,11 +88,11 @@ class Storage {
 
 	getCountry = (): Country => this.#country;
 
-	storeSight = (sight: Sight): void => {
+	storeSight = (sight: SightAdoptedForPage): void => {
 		this.#sight = sight;
 	};
 
-	getSight = (): Sight => this.#sight;
+	getSight = (): SightAdoptedForPage => this.#sight;
 
 	storeCurrentTrip = (trip: Trip): void => {
 		this.#trip = trip;
@@ -128,14 +140,14 @@ class Storage {
 
 	getAlbumTripId = (): string => this.#albumTripId;
 
-	storeSearchSightsResult = (type: string, sights: Sight[]): void => {
+	storeSearchSightsResult = (type: searchPlaceType, sights: Sight[]): void => {
 		this.#searchSightsResult.push({
 			type,
 			sights,
 		});
 	};
 
-	getSearchSightsResult = (type: string): Sight[] => {
+	getSearchSightsResult = (type: searchPlaceType): Sight[] => {
 		let result: Sight[] = [];
 		// eslint-disable-next-line consistent-return
 		this.#searchSightsResult.forEach(obj => {
@@ -144,6 +156,10 @@ class Storage {
 			}
 		});
 		return result;
+	};
+
+	clearSearchSightsResult = (): void => {
+		this.#searchSightsResult = [];
 	};
 
 	storeProfileTrips = (trips: ProfileTrip[]) => {
@@ -169,6 +185,32 @@ class Storage {
 	};
 
 	getAddTripUserLink = (): string => this.#addTripUserLink;
+
+	storeGotSearchCountries = (countries: SearchCountry[]) => {
+		this.#countryList = countries;
+	};
+
+	getSearchCountries = (): SearchCountry[] => this.#countryList;
+
+	storeGotSearchTags = (tags: AdoptedTag[]) => {
+		this.#tagList = tags;
+	};
+
+	getSearchTags = (): AdoptedTag[] => this.#tagList;
+
+	storeSearchRequestCountries = (countriesNames: string[]) => {
+		this.#searchRequest.countries = countriesNames;
+	};
+
+	storeSearchRequestTags = (tagsIds: number[]) => {
+		this.#searchRequest.tags = tagsIds;
+	};
+
+	storeSearchRequestText = (search: string) => {
+		this.#searchRequest.search = search;
+	};
+
+	getSearchRequest = () => this.#searchRequest;
 }
 
 export const storage = new Storage();

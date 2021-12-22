@@ -5,20 +5,19 @@
 			{{#if tripCreated}}
 			<div class='label-div trip_title_holder tripWrapper'>
 				<div class="col-8">
-					<label for="title">Название поездки: {{title}}</label>
+					<label for="title" class="h2">Название поездки: {{title}}</label>
 				</div>
 				<div class="col-4 btn dropdown_item" id="share">
 					<img class="share-btn dropdown_item" src="{{shareimg}}">
-					<div id="ShareLinkDropdown" class="dropdown-content dropdown_item">
-						<a id='dropdown_share_link' class='dropdown_item'>Скопировать ссылку</a>
-						
+					<div id="ShareLinkDropdown" class="dropdown-content dropdown-content_left dropdown_item">
+						<a id='dropdown_share_link' class='dropdown_item dropdown_user_add_header'>Скопировать ссылку</a>
   					</div>
 				</div>
 			</div>
 
 			{{else}}	
 			<div class='label-div'>
-				<label for="title">Название поездки</label>
+				<label for="title" class="h2">Название поездки</label>
 			</div>
 			<input type="text" id="title" name="title" class="form__input" value="{{title}}"/>
 			{{/if}}
@@ -26,7 +25,7 @@
 
 	<div class="trip_form__input_holder">
 		<div class='label-div'>
-			<label for="comment_text">Информация о поездке</label>
+			<label for="comment_text" class="h2">Информация о поездке</label>
 		</div>
 		<div class="trip_form__input_holder__text">
 			<div class="comment_text_hidden">
@@ -53,20 +52,20 @@
 
 {{#if tripCreated}}
 	<div class="trip_form__horizontal_holder">
-		<p >Участники:</p>
+		<p class="h2">Участники:</p>
 	</div>
 	<div class="trip_form__horizontal_holder partisipants_holder">
 		{{#each partisipants}}
-		<div class="partisipant" id="partisipant_{{this.id}}">
+		<div class="partisipant" id="partisipant_{{this.id.id}}" title="{{this.id.name}}">
 			<img class="trip-partisipant-circle-img" src="{{this.profilePhoto}}">
 		</div>
 		{{/each}}
 		<div class="partisipant btn" id="partisipant_add">
 			<img class="trip-partisipant-add-img dropdown_item" id="partisipant_add_img" src={{addUserImg}}>
-			<div id="AddUserDropdown" class="dropdown-content border dropdown_item">
-				<span id='dropdown_add_user' class="dropdown_user_add_header dropdown_item">Введите email пользователя</span>
+			<div id="AddUserDropdown" class="dropdown-content border dropdown_item add-user-frame">
+<!--				<span id='dropdown_add_user' class="dropdown_user_add_header dropdown_item">Введите email пользователя</span>-->
 				<div id="search_area" class="user_search_area dropdownWrapper dropdown_item">
-					<input id="search_trip_user" list="search_list_trip" class="search_area__input col-8 dropdown_item">
+					<input id="search_trip_user" list="search_list_trip" class="search_area__input col-8 dropdown_item" placeholder="Эл. почта пользователя">
 					<button class="btn usual_button usual_button_dark col-4 dropdown_item"id="add_user_btn">Добавить</button>
 				</div>
 				

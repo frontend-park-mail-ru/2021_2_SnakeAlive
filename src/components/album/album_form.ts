@@ -5,6 +5,8 @@ import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
 import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
 import { storage } from '@/storage';
+import { initDescription } from '@/components/trip/trip_form';
+import { setTextAreaResizeParams } from '@/components/reviews/review_form';
 
 const hideConfirm = (): void => {
 	const answerPlace = document.getElementById('form__submit_holder__answer');
@@ -70,6 +72,15 @@ const setError = () => {
 };
 
 export const initAlbumForm = (isNew: boolean) => {
+	const textArea = document.querySelector('#description');
+	if (textArea !== null) {
+		textArea.addEventListener(
+			'input',
+			setTextAreaResizeParams('description', 'comment_text_hidden', 400),
+			false
+		);
+	}
+
 	// кнопка создания альбома = кнопка обновлениия инфы когда не новый
 	const createBtn = document.getElementById('btn_make_album');
 	if (createBtn !== null) {
@@ -104,43 +115,38 @@ export const initAlbumForm = (isNew: boolean) => {
 		);
 	}
 
-	if (!isNew) {
-		// кнопка сохранить и завершить btn_make_and_finish
-		const createFinishBtn = document.getElementById('btn_make_and_finish');
-		if (createFinishBtn !== null) {
-			createFinishBtn.addEventListener(
-				'click',
-				event => {
-					event.preventDefault();
-					const isOk = validateForm();
-					if (isOk === false) {
-						setError();
-					} else {
-						const { title, description } = isOk;
-						dispatcher.notify(
-							updateAlbumInfoRequest(
-								title,
-								description,
-								storage.getAlbum().photos,
-								(id: string) => {
-									dispatcher.notify(newGetAlbumResult(false));
-									router.pushHistoryState(
-										createFrontendQueryParams(pathsURLfrontend.album, [
-											{
-												key: paramsURLfrontend.id,
-												value: id,
-											},
-										])
-									);
-								}
-							)
-						);
-					}
-				},
-				false
-			);
-		}
+	// кнопка сохранить и завершить btn_make_and_finish
+	const createFinishBtn = document.getElementById('btn_make_and_finish');
+	if (createFinishBtn !== null) {
+		createFinishBtn.addEventListener(
+			'click',
+			event => {
+				event.preventDefault();
+				const isOk = validateForm();
+				if (isOk === false) {
+					setError();
+				} else {
+					const { title, description } = isOk;
+					dispatcher.notify(
+						updateAlbumInfoRequest(title, description, storage.getAlbum().photos, (id: string) => {
+							dispatcher.notify(newGetAlbumResult(false));
+							router.pushHistoryState(
+								createFrontendQueryParams(pathsURLfrontend.album, [
+									{
+										key: paramsURLfrontend.id,
+										value: id,
+									},
+								])
+							);
+						})
+					);
+				}
+			},
+			false
+		);
+	}
 
+	if (!isNew) {
 		// блок удаления альбома
 		const askConfirmBtn = document.getElementById('ask_confirm_button');
 		if (askConfirmBtn !== null) {

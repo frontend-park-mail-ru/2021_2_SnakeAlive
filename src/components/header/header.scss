@@ -12,17 +12,28 @@ $logo_height: 48px;
   background: white;
   //padding: $small-px /2 0;
 
-  @media (max-width: 380px) {
-    padding: $small-px /2 $small-px;
+  //@media (max-width: 380px) {
+  //  padding: $small-px /2 $small-px;
+  //  grid-template: "c"  / 1fr;
+  //  * {
+  //    margin: 0 $small-px /5;
+  //  }
+  //}
+  //
+  //@media (min-width: 381px) {
+  //  grid-template: "ml c c c c mr"  / 1fr 1fr 1fr 1fr 1fr 1fr;
+  //}
+
+  @media (max-width: 960px) {
     grid-template: "c"  / 1fr;
-    * {
-      margin: 0 $small-px /5;
-    }
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
-  @media (min-width: 381px) {
-    grid-template: "ml c c c c mr"  / 1fr 1fr 1fr 1fr 1fr 1fr;
+  @media (min-width: 961px) {
+    grid-template: "ml c  mr"  / 1fr 4fr 1fr;
   }
+
 
   h2 {
     font-size: 30px;
@@ -50,7 +61,7 @@ $logo_height: 48px;
     padding: ($header_height - $logo_height)/2 0;
     &__text {
       @include text-header;
-      @media (max-width: 960px) {
+      @media (max-width: 450px) {
         display: none;
       }
     }
@@ -93,11 +104,17 @@ $logo_height: 48px;
     background: $my--button-header-hover;
     cursor: pointer;
   }
+  &__button_no_hover:hover {
+    background: $white;
+    cursor: default;
+  }
 }
 
 .header__search_place {
   height: min-content;
   align-self: center;
+  margin-left: $small-px;
+  margin-right: $small-px;
 }
 
 .circle-img {

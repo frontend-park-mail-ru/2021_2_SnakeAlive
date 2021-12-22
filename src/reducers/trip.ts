@@ -124,7 +124,8 @@ export default class TripReducer {
 		trip.sights.push(metadata.sight);
 		storage.storeCurrentTrip(trip);
 		const tripSend = adoptForSend(trip);
-		this.#updateTrip(tripSend, trip.id).then(() => {
+		this.#updateTrip(tripSend, trip.id).then(tripResponse => {
+			storage.storeCurrentTrip(tripResponse);
 			dispatcher.notify(rerenderTripCards(true));
 		});
 	};
@@ -134,7 +135,8 @@ export default class TripReducer {
 		trip.sights.splice(metadata.cardId + 1, 1); // +1 becuse of fake data
 		storage.storeCurrentTrip(trip);
 		const tripSend = adoptForSend(trip);
-		this.#updateTrip(tripSend, trip.id).then(() => {
+		this.#updateTrip(tripSend, trip.id).then(tripResponse => {
+			storage.storeCurrentTrip(tripResponse);
 			dispatcher.notify(rerenderTripCards(true));
 		});
 	};

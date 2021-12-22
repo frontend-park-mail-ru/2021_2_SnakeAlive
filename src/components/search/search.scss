@@ -1,23 +1,143 @@
 @import "../../index";
 
 .search_area {
-  background: $my--input-fill;
-  border: 0.5px solid $my--input-border;
+  background-color: #edeef0;
+  border: none;
   box-sizing: border-box;
   border-radius: 4px;
   width: 100%;
+  margin: 0 auto;
   @include text-plain-no-wrap;
-  padding: 6px 0;
   outline: none;
-  padding: 1px 5px;
+  padding-left: $small-px;
 
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+
   &__input,
   &__input:active,
   &__input:focus,
   &__input:hover {
+    &::-webkit-calendar-picker-indicator {
+      display: none !important;
+    }
     border: none;
-    padding: 0 5px;
+    padding-left: 0;
+    padding-right: 0;
+
+
+    background-color: #edeef0;
+
+    &_lp {
+      padding-left: $small-px;
+      background-color: yellow;
+    }
   }
+
+  > img {
+    padding-right: $small-px;
+    height: 20px;
+    align-self: center;
+  }
+
+  &__go_btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0 4px 4px 0;
+    padding: 0 $small-px;
+
+    background-color: $my--bright-btn;
+
+    &:hover {
+      background-color:  $my--bright-btn-hover;
+    }
+
+    > img {
+      height: 20px;
+    }
+  }
+}
+
+.page_category_active {
+  background-color: $logo-color;
+}
+
+
+.search_page {
+  &__search_place {
+    //margin-bottom: $large-px * 2;
+    //margin-top: $large-px * 4;
+  }
+  &__empty_text {
+    @include text-plain-no-wrap;
+    text-align: center;
+    grid-column-start: 1;
+    grid-column-end: 4;
+  }
+  &__header__h {
+    //margin-top: 12px;
+    //margin-bottom: 24px;
+  }
+  &__holder {
+    display: grid;
+    @media (min-width : 961px) {
+      grid-template: "ml ch mr" auto
+                      "ml c mr" auto / 1fr 4fr 1fr;
+    }
+    @media (max-width : 960px) {
+      grid-template: "ch" auto
+                      "c " auto;
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+    row-gap: 10px;
+    padding-top: 10px;
+
+    &__header {
+      grid-area: ch;
+      max-width: 100%;
+      min-width: 0;
+      //display: flex;
+      //flex-direction: column;
+      text-align: center;
+      .search_area {
+        width: 100%;
+      }
+    }
+
+    &__cards {
+      grid-area: c;
+    }
+  }
+  &__categories {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+  }
+  &__category {
+    //background-color: yellow;
+    margin-top: $small-px;
+    margin-bottom: $small-px;
+    margin-right: $small-px;
+    padding: 0 $small-px;
+    height: min-content;
+
+    &_last {
+      margin-right: 0;
+    }
+  }
+
+  &__category_type {
+    @include text-local-name;
+    margin-top: $large-px;
+    margin-bottom: $small-px
+  ;
+  }
+}
+
+#search_page__categories {
+  min-width: 100%;
 }

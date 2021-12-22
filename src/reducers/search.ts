@@ -1,10 +1,11 @@
 import { dispatcher, EventType, Token } from '@/dispatcher';
-import { sendGetJSONRequest } from '@/http';
+import { sendGetJSONRequest, sendPatchJSONRequest } from '@/http';
 import { backendEndpoint, searchURI, sightsURI } from '@/constants';
 import { Search } from '@/dispatcher/metadata_types';
 import { Sight } from '@/models';
 import { storage } from '@/storage';
-import { gotSearchResults } from '@/actions/search';
+import { gotSearchResults, searchRequest } from '@/actions/search';
+import { isSearchRequestEmpty, SearchRequest } from '@/models/search';
 
 export default class SearchReducer {
 	#tokens: Token[];
@@ -18,22 +19,25 @@ export default class SearchReducer {
 	};
 
 	sendSearchRequest = (search: Search) => {
+		if (!search.text) {
+			return;
+		}
+
 		const url = new URL(backendEndpoint + sightsURI + searchURI);
-		url.searchParams.set('search', search.text);
-		url.searchParams.set('skip', '0');
-		url.searchParams.set('limit', '0');
-		sendGetJSONRequest(url.toString())
+		sendPatchJSONRequest(url.toString(), <SearchRequest>{
+			search: search.text,
+		})
 			.then(response => {
 				if (response.ok) {
 					return Promise.resolve(response);
 				}
-				return Promise.reject(new Error('wrong answer on list of countries'));
+				return Promise.reject(new Error('not ok search answer'));
 			})
 			.then(response => response.json())
 			.then(response => {
 				storage.storeSearchSightsResult(search.type, response);
+				dispatcher.notify(gotSearchResults(search.type));
 			});
-		dispatcher.notify(gotSearchResults(search.type));
 	};
 
 	#sendRequest = (url: string): Promise<Sight[]> =>

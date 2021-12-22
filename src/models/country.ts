@@ -1,8 +1,9 @@
 import { TagAdoptedForRender } from '@/models/sight';
+import { AdoptedTag } from '@/models/tags';
 
 interface Country {
 	name: string;
-	ID: string;
+	id: string;
 	translation: string;
 }
 
@@ -11,9 +12,11 @@ interface CountryResponse {
 	id: number;
 	description: string;
 	photo: string;
+	translated: string;
 }
 
 interface CountryCardResponse {
+	descripton: string;
 	id: number;
 	name: string;
 	tags: string[];
@@ -37,6 +40,7 @@ interface CountryCard {
 	comment: string;
 	tags: CountryCardTag[];
 	imgs: CountryCardPhoto[];
+	description: string;
 }
 
 interface TemplateCards {
@@ -48,11 +52,18 @@ export interface minCardInfo {
 		id: string;
 		name: string;
 		rating: number;
-		tags: string[];
+		tags: AdoptedTag[];
 		adoptedTags: TagAdoptedForRender[];
 		photo: string;
 	};
 	PP: number;
+}
+
+export interface SearchCountry {
+	name: string;
+	id: string;
+	translation: string;
+	numId?: number;
 }
 
 export {

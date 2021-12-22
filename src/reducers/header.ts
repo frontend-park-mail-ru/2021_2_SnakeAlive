@@ -43,20 +43,22 @@ export default class HeaderReducer {
 	};
 
 	checkIfMain = () => {
-		if (this.#state !== state.main) {
-			this.setHeader();
-			this.#state = state.main;
-		}
+		// console.log(this.#state, "isMain?");
+		// if (this.#state !== state.main) {
+		this.setHeader();
+		// }
 	};
 
 	checkIfEmpty = (metadata: IsTrue) => {
-		if (this.#state !== state.empty) {
-			dispatcher.notify(newSetEmptyHeaderResponse(metadata.isTrue));
-			this.#state = state.empty;
-		}
+		// console.log(this.#state, "isEmpty?");
+		// if (this.#state !== state.empty) {
+		dispatcher.notify(newSetEmptyHeaderResponse(metadata.isTrue));
+		// 	this.#state = state.empty;
+		// }
 	};
 
 	setHeader = (): void => {
+		// console.log(this.#state,  "-> main");
 		this.#state = state.main;
 		sendGetJSONRequest(backendEndpoint + profile)
 			.then(response => {

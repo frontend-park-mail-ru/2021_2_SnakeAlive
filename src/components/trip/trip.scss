@@ -1,5 +1,9 @@
 @import "src";
 
+#trip_cards_holder > div {
+  margin-bottom: 10px;
+}
+
 .delete_trip__submit_holder {
   display: flex;
   flex-direction: row;
@@ -36,7 +40,7 @@
 }
 
 #trip-search-place{
-  margin-top: 15px;
+  margin-top: $large-px;
 }
 
 #button_select {
@@ -50,13 +54,13 @@
 
   @media (min-width: 960px) {
     grid-template: "l map"  / 2fr 6fr;
-    grid-column-gap: $small-px;
     grid-row-gap: $small-px;
   }
 
   @media (max-width: 961px) {
     grid-template: "l" "map";
-    row-gap: $small-px;
+    margin-left: 10px;
+    margin-right: 10px;
   }
 
   &__left__info {
@@ -67,7 +71,7 @@
     }
     grid-area: l;
     width: 100%;
-    max-width: 500px;
+    //max-width: 500px;
 
   }
 
@@ -108,6 +112,11 @@
   width: 25px;
 }
 
+.share-btn:hover{
+  background: lightgray;
+  border-radius: 25%;
+}
+
 .tripWrapper {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -132,7 +141,7 @@
 .dropdownWrapper {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-gap: 5px;
+  grid-gap: 10px;
   align-items: center;
 }
 
@@ -168,12 +177,33 @@
   overflow: hidden;
 }
 
+.trip-partisipant-add-img:hover{
+  background: lightgray;
+  border-radius: 25%;
+}
+
 .partisipant{
   margin-inline-end: -8px;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .dropdown_user_add_header{
   padding: 10px 10px 10px 10px;
+}
+
+#search_trip_user {
+  padding-left: $small-px;
+  padding-right: $small-px;
+}
+
+.add-user-frame {
+  padding: 10px;
+  > div {
+    margin-bottom: 0;
+  }
 }
 
 .select_string, .string {
@@ -221,6 +251,7 @@
   border: none;
   display: flex;
   flex-direction: column;
+  margin-top: $large-px;
   //height: 85px;
 
   .textarea_behavior{

@@ -1,4 +1,5 @@
 import {
+	AlienProfileTrip,
 	GetProfileResponse,
 	Profile,
 	ProfileAlbum,
@@ -10,11 +11,13 @@ import {
 import { UpdateProfile } from '@/dispatcher';
 import { storage } from '@/storage';
 
-import avatarPath from '../../image/test.jpeg';
+import avatarPath from '../../image/test.webp';
 
 export function adaptGetProfileResponse(response: GetProfileResponse): Profile {
 	if (
-		response.avatar === 'default.jpg' ||
+		response.avatar === 'default.webp' ||
+		response.avatar.slice(-9) === 'test.webp' ||
+		response.avatar.slice(-12) === 'default.webp' ||
 		response.avatar.slice(-9) === 'test.jpeg' ||
 		response.avatar.slice(-12) === 'default.jpeg'
 	) {
@@ -76,6 +79,29 @@ export const adoptProfileAlbums = (albums: ProfileAlbum[]): ProfileAlbum[] => {
 			album.htmlId = `go_album_${album.id}`;
 		});
 		return albums;
+	}
+	return [];
+};
+
+export const adoptAlienProfileTrips = (
+	trips: AlienProfileTrip[],
+	alienId: string
+): ProfileTrip[] => {
+	if (trips) {
+		const commonTrips: ProfileTrip[] = trips.filter(trip => {
+			let isCommon = false;
+			trip.users.forEach(user => {
+				if (user.id.toString() === alienId) {
+					isCommon = true;
+				}
+			});
+			return isCommon;
+		});
+		commonTrips.forEach(trip => {
+			// eslint-disable-next-line no-param-reassign
+			trip.htmlId = `go_trip_${trip.id}`;
+		});
+		return commonTrips;
 	}
 	return [];
 };

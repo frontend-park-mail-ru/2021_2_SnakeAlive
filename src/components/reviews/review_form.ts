@@ -1,6 +1,6 @@
 import { dispatcher } from '@/dispatcher';
 import { newCreateReviewFormResponse } from '@/actions/review';
-import imgRating from '../../../image/icon/rating.svg';
+import imgRating from '../../../image/icon/rating.webp';
 import reviewFormTemplate from './review_form.handlebars';
 
 export const setTextAreaResizeParams = (

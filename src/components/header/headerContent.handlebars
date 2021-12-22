@@ -10,20 +10,29 @@
 		{{/if}}
 
 		{{#if isUser}}
-			<button class='usual_button usual_button_light' id='trip-block'>
-				Создать поездку
-			</button>
+			<div class='header__button header__button_no_hover'>
+				<p class='usual_button usual_button_light' id='trip-block'>
+					Создать поездку
+				</p>
+			</div>
 		{{/if}}
 
 		{{#if isNotEmpty}}
-		<div class='header__button' id='user-block'>
+		<div
+			class='header__button
+			{{#unless isUser}}
+				header__button_no_hover
+			{{/unless}}
+			'
+			id='user-block'>
 			{{#if isUser}}
 				<div class="circle-img">
 					<img src="{{avatarPath}}"/>
 				</div>
 				<p class='header__button__username'>{{name}}</p>
 			{{else}}
-				<p class='header__button__login'>{{btnText}}</p>
+<!--				<p class='header__button__login'>{{btnText}}</p>-->
+				<p class='usual_button usual_button_light'>{{btnText}}</p>
 			{{/if}}
 		</div>
 		{{/if}}

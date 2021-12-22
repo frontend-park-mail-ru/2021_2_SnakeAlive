@@ -26,6 +26,7 @@ export const adaptGetCards = (cards: CountryCardResponse[]): TemplateCards =>
 								source: photo,
 							}
 					),
+					description: card.descripton,
 				}
 		),
 	};

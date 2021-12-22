@@ -1,8 +1,8 @@
 const CACHE_NAME = 'cash_v1';
 
-const OFFLINE_STATIC = ['/offline/aircraft_offline.svg'];
+const OFFLINE_STATIC = ['/offline/aircraft.webp'];
 
-const STATIC_URIS = [/.jpeg$/, /.jpg$/, /.png$/, /.svg$/];
+const STATIC_URIS = [/.jpeg$/, /.jpg$/, /.png$/, /.webp$/, /.svg$/];
 const CASH_URIS = [/.html$/, /.css$/, /.js$/, /\/$/];
 
 self.addEventListener('activate', event => {

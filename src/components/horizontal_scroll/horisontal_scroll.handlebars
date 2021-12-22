@@ -1,3 +1,4 @@
+{{#if pages}}
 <div class='scroll__wrapper'>
 	{{#each pages}}
 		<div class='scroll__card {{#if @last}} scroll__card_last{{/if}}' id='{{this.htmlId}}'>
@@ -7,3 +8,4 @@
 		</div>
 	{{/each}}
 </div>
+	{{/if}}

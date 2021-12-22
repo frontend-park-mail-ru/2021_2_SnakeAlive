@@ -51,14 +51,14 @@ export class SightCardInTrip {
 		}
 
 		tags.forEach(tag => {
-			const tegElem = document.getElementById(`card_tag_${tag.name}_${tag.sightPP}`);
+			const tegElem = document.getElementById(`card_tag_${tag.id}_${tag.sightPP}`);
 			if (tegElem !== null) {
 				tegElem.addEventListener('click', () => {
 					router.go(
 						createFrontendQueryParams(pathsURLfrontend.tag, [
 							{
 								key: paramsURLfrontend.tag,
-								value: tag.name,
+								value: tag.id,
 							},
 						])
 					);

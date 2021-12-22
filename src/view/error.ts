@@ -1,7 +1,7 @@
 import BasicView from '@/view/view';
 import { dispatcher, EventType, Token } from '@/dispatcher';
 
-import picture from '@/../image/snake_error.svg';
+import picture from '@/../image/snake.webp';
 import errorPage from '@/components/errorPage.handlebars';
 import offlinePage from '@/components/offline.handlebars';
 import { newSetMainHeaderRequest } from '@/actions/header';
@@ -19,7 +19,10 @@ export default class ErrorView extends BasicView {
 	init = (err: Error): void => {
 		dispatcher.notify(newSetMainHeaderRequest());
 
-		const { message } = err; // упростить нельзя, тк handlebars не хочет читать поля напрямую
+		let { message } = err; // упростить нельзя, тк handlebars не хочет читать поля напрямую
+		if (message === 'Unexpected token < in JSON at position 0') {
+			message = 'неожиданный ответ. Уже чиним';
+		}
 		this.setView(errorPage({ message, picture }));
 		this.#tokens = [dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.#destroy)];
 	};

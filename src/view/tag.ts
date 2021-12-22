@@ -8,65 +8,74 @@ import { newGetTagCardsResult } from '@/actions/tag';
 import { TagAdoptedForRender } from '@/models/sight';
 import { createFrontendQueryParams, router } from '@/router/router';
 import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
+import { AdoptedTag } from '@/models/tags';
 
-export const tags = [
-	{ name: 'Природа', PP: 0 },
-	{ name: 'Виды', PP: 1 },
-	{ name: 'Современные здания', PP: 2 },
-	{ name: 'Архитектура', PP: 3 },
-	{ name: 'Историческое место', PP: 4 },
-];
+// export const tags = [
+// 	{ name: 'Природа', PP: 0 },
+// 	{ name: 'Виды', PP: 1 },
+// 	{ name: 'Современные здания', PP: 2 },
+// 	{ name: 'Архитектура', PP: 3 },
+// 	{ name: 'Историческое место', PP: 4 },
+// ];
+//
+// export const allTags = [
+// 	{ name: 'Природа', PP: 0 },
+// 	{ name: 'Виды', PP: 1 },
+// 	{ name: 'Современные здания', PP: 2 },
+// 	{ name: 'Архитектура', PP: 3 },
+// 	{ name: 'Историческое место', PP: 4 },
+// 	{ name: 'Дворец', PP: 4 },
+// ];
 
-export const allTags = [
-	{ name: 'Природа', PP: 0 },
-	{ name: 'Виды', PP: 1 },
-	{ name: 'Современные здания', PP: 2 },
-	{ name: 'Архитектура', PP: 3 },
-	{ name: 'Историческое место', PP: 4 },
-	{ name: 'Дворец', PP: 4 },
-];
-
-export const initTagsBtns = () => {
-	tags.forEach(tag => {
-		const tegElem = document.getElementById(`tag_${tag.name}`);
-		if (tegElem !== null) {
-			tegElem.addEventListener('click', () => {
-				router.go(
-					createFrontendQueryParams(pathsURLfrontend.tag, [
-						{
-							key: paramsURLfrontend.tag,
-							value: tag.name,
-						},
-					])
-				);
-			});
-		}
-	});
-	tags.forEach(tag => {
-		const tegElem = document.getElementById(`dropdown_tag_${tag.name}`);
-		if (tegElem !== null) {
-			tegElem.addEventListener('click', () => {
-				router.go(
-					createFrontendQueryParams(pathsURLfrontend.tag, [
-						{
-							key: paramsURLfrontend.tag,
-							value: tag.name,
-						},
-					])
-				);
-			});
-		}
-	});
-	const moreBtn = document.getElementById('more-tags-btn');
+export const initDropdown = (htmlId = 'myDropdown', category = '') => {
+	let htmlIdRes = 'more-tags-btn';
+	if (category) {
+		htmlIdRes = `more-tags-btn-${category}`;
+	}
+	const moreBtn = document.getElementById(htmlIdRes);
 	if (moreBtn !== null) {
 		moreBtn.addEventListener('click', () => {
-			if (document.getElementById('myDropdown')?.classList.contains('show')) {
-				document.getElementById('myDropdown')?.classList.remove('show');
+			if (document.getElementById(htmlId)?.classList.contains('show')) {
+				document.getElementById(htmlId)?.classList.remove('show');
 			} else {
-				document.getElementById('myDropdown')?.classList.toggle('show');
+				document.getElementById(htmlId)?.classList.toggle('show');
 			}
 		});
 	}
+};
+
+export const initTagsBtns = (tags: AdoptedTag[]) => {
+	tags.forEach(tag => {
+		const tegElem = document.getElementById(`tag_${tag.id}`);
+		if (tegElem !== null) {
+			tegElem.addEventListener('click', () => {
+				router.go(
+					createFrontendQueryParams(pathsURLfrontend.tag, [
+						{
+							key: paramsURLfrontend.tag,
+							value: tag.id,
+						},
+					])
+				);
+			});
+		}
+	});
+	tags.forEach(tag => {
+		const tegElem = document.getElementById(`dropdown_tag_${tag.id}`);
+		if (tegElem !== null) {
+			tegElem.addEventListener('click', () => {
+				router.go(
+					createFrontendQueryParams(pathsURLfrontend.tag, [
+						{
+							key: paramsURLfrontend.tag,
+							value: tag.id,
+						},
+					])
+				);
+			});
+		}
+	});
+	initDropdown();
 };
 
 class TagCardsHolderView extends BasicView {
@@ -105,7 +114,8 @@ class TagCardsHolderView extends BasicView {
 			const tagsAdopted: Array<TagAdoptedForRender> = [];
 			sight.sight.tags.forEach(tag => {
 				tagsAdopted.push({
-					name: tag,
+					id: tag.id.toString(),
+					name: tag.name,
 					sightPP: sight.PP,
 				});
 			});
@@ -151,11 +161,11 @@ class TagHolderView extends BasicView {
 		this.setView(
 			countryPageTemplate({
 				name: `по тегу ${metadata.ID}`,
-				tags,
-				allTags,
+				tags: storage.getSearchTags().slice(0, 6),
+				allTags: storage.getSearchTags().slice(6),
 			})
 		);
-		initTagsBtns();
+		initTagsBtns(storage.getSearchTags());
 		dispatcher.notify(newGetTagCardsResult());
 	};
 }
