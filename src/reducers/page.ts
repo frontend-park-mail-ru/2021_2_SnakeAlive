@@ -47,7 +47,7 @@ export default class PageReducer {
 	};
 
 	createInitPage = (): void => {
-		dispatcher.notify(destroyCurrentPage());
+		// dispatcher.notify(destroyCurrentPage());
 		this.createCountryPage();
 	};
 

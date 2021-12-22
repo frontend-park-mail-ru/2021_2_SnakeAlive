@@ -17,7 +17,9 @@ export function adaptGetProfileResponse(response: GetProfileResponse): Profile {
 	if (
 		response.avatar === 'default.webp' ||
 		response.avatar.slice(-9) === 'test.webp' ||
-		response.avatar.slice(-12) === 'default.webp'
+		response.avatar.slice(-12) === 'default.webp' ||
+		response.avatar.slice(-9) === 'test.jpeg' ||
+		response.avatar.slice(-12) === 'default.jpeg'
 	) {
 		response.avatar = avatarPath;
 	}

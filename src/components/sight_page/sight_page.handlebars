@@ -27,6 +27,12 @@
 
 		</div>
 
+		<div class="frame sight_page__left_col__description">
+
+			<p class="sight_page__left_col__description__title">О месте</p>
+			<p>{{description}}</p>
+		</div>
+
 		<div id="sight_page__review_form_place" class="sight_page__left_col__review_form_place frame">
 			<p>Войдите, чтобы оставить отзыв</p>
 		</div>
@@ -35,20 +41,15 @@
 			<p style="text-align: center;">✦ Здесь будут отзывы ✦</p>
 		</div>
 
+	</div>
+
+	<div class='sight_page__right_col'>
+
 		{{#each photosLeft}}
 			<div id="sight_page__photo_holder_place" class="sight_page__photo_holder_place">
 				<img src='{{this}}' alt='photo'>
 			</div>
 		{{/each}}
-
-	</div>
-
-	<div class='sight_page__right_col'>
-		<div class="frame sight_page__left_col__description">
-
-			<p class="sight_page__left_col__description__title">О месте</p>
-			<p>{{description}}</p>
-		</div>
 
 		{{#each photosRight}}
 			<div id="sight_page__photo_holder_place" class="sight_page__photo_holder_place">

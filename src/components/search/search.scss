@@ -14,7 +14,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-align-items: stretch;
+  align-items: stretch;
 
   &__input,
   &__input:active,
@@ -29,11 +29,17 @@ align-items: stretch;
 
 
     background-color: #edeef0;
+
+    &_lp {
+      padding-left: $small-px;
+      background-color: yellow;
+    }
   }
 
   > img {
     padding-right: $small-px;
     height: 20px;
+    align-self: center;
   }
 
   &__go_btn {
@@ -41,7 +47,7 @@ align-items: stretch;
     justify-content: center;
     align-items: center;
     border-radius: 0 4px 4px 0;
-    padding: 0 $large-px;
+    padding: 0 $small-px;
 
     background-color: $my--bright-btn;
 
@@ -50,7 +56,6 @@ align-items: stretch;
     }
 
     > img {
-      padding-right: $small-px;
       height: 20px;
     }
   }
@@ -63,14 +68,18 @@ align-items: stretch;
 
 .search_page {
   &__search_place {
-    margin-bottom: $large-px * 2;
-    margin-top: $large-px * 4;
+    //margin-bottom: $large-px * 2;
+    //margin-top: $large-px * 4;
   }
   &__empty_text {
     @include text-plain-no-wrap;
     text-align: center;
     grid-column-start: 1;
     grid-column-end: 4;
+  }
+  &__header__h {
+    //margin-top: 12px;
+    //margin-bottom: 24px;
   }
   &__holder {
     display: grid;

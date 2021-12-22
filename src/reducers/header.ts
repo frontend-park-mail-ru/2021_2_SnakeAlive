@@ -44,18 +44,17 @@ export default class HeaderReducer {
 
 	checkIfMain = () => {
 		// console.log(this.#state, "isMain?");
-		if (this.#state !== state.main) {
-			this.setHeader();
-			this.#state = state.main;
-		}
+		// if (this.#state !== state.main) {
+		this.setHeader();
+		// }
 	};
 
 	checkIfEmpty = (metadata: IsTrue) => {
 		// console.log(this.#state, "isEmpty?");
-		if (this.#state !== state.empty) {
-			dispatcher.notify(newSetEmptyHeaderResponse(metadata.isTrue));
-			this.#state = state.empty;
-		}
+		// if (this.#state !== state.empty) {
+		dispatcher.notify(newSetEmptyHeaderResponse(metadata.isTrue));
+		// 	this.#state = state.empty;
+		// }
 	};
 
 	setHeader = (): void => {

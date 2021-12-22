@@ -10,4 +10,4 @@
 export const backendEndpoint = 'https://snakehastrip.ru/api';
 export const backendFileEndpoint = 'https://snakehastrip.ru/api';
 export const frontEndEndPoint = 'https://snakehastrip.ru';
-export const WSEndPoint = "wss://snakehastrip.ru/apiws/connect"
+export const WSEndPoint = 'wss://snakehastrip.ru/apiws/connect';

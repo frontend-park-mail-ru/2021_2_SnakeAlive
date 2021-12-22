@@ -9,9 +9,8 @@
 				</div>
 				<div class="col-4 btn dropdown_item" id="share">
 					<img class="share-btn dropdown_item" src="{{shareimg}}">
-					<div id="ShareLinkDropdown" class="dropdown-content dropdown_item">
-						<a id='dropdown_share_link' class='dropdown_item'>Скопировать ссылку</a>
-						
+					<div id="ShareLinkDropdown" class="dropdown-content dropdown-content_left dropdown_item">
+						<a id='dropdown_share_link' class='dropdown_item dropdown_user_add_header'>Скопировать ссылку</a>
   					</div>
 				</div>
 			</div>
@@ -63,10 +62,10 @@
 		{{/each}}
 		<div class="partisipant btn" id="partisipant_add">
 			<img class="trip-partisipant-add-img dropdown_item" id="partisipant_add_img" src={{addUserImg}}>
-			<div id="AddUserDropdown" class="dropdown-content border dropdown_item">
-				<span id='dropdown_add_user' class="dropdown_user_add_header dropdown_item">Введите email пользователя</span>
+			<div id="AddUserDropdown" class="dropdown-content border dropdown_item add-user-frame">
+<!--				<span id='dropdown_add_user' class="dropdown_user_add_header dropdown_item">Введите email пользователя</span>-->
 				<div id="search_area" class="user_search_area dropdownWrapper dropdown_item">
-					<input id="search_trip_user" list="search_list_trip" class="search_area__input col-8 dropdown_item">
+					<input id="search_trip_user" list="search_list_trip" class="search_area__input col-8 dropdown_item" placeholder="Эл. почта пользователя">
 					<button class="btn usual_button usual_button_dark col-4 dropdown_item"id="add_user_btn">Добавить</button>
 				</div>
 				

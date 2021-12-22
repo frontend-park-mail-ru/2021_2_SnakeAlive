@@ -186,6 +186,8 @@ textarea:active {
   display: grid;
   @media (max-width: 960px) {
     grid-template: 'content' / 1fr;
+    margin-left: 10px ;
+    margin-right: 10px ;
   }
   @media (min-width: 961px) {
     grid-template: 'ml content mr' / 1fr 4fr 1fr;
@@ -203,20 +205,14 @@ textarea:active {
     max-width: 100%;
   }
 
-  @media (max-width: 960px) {
-    //height: 110px;
+  @media (max-width: 380px) {
     padding: 1px 0 10px;
-
 
     grid-template-areas: "info"
                         "trips"
                         "albums";
 
-    //grid-template-rows: 200px max-content;
-    //grid-template-columns: 50px 1fr;
     row-gap: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
   }
 
   //@media (min-width: 321px) and (max-width: 960px) {
@@ -225,17 +221,14 @@ textarea:active {
   //  border-radius: 15px;
   //  background: green;
   //
-  //  grid-template-areas: "photo photo"
-  //                       "metadata_holder btn_block";
-  //  grid-template-rows: 1fr 1fr;
-  //  grid-template-columns: 1fr 1fr;
-  //  row-gap: 3px;
+  //  grid-template-areas: "info info info info"
+  //                       "trips trips albums albums";
+  //  grid-template-rows: 200px;
+  //  grid-template-columns: 200px 1fr 3fr 200px;
+  //  row-gap: 10px;
   //}
 
-  @media (min-width: 961px) {
-    //border-radius: 15px;
-    //height: 200px;
-    //margin: 20px 100px 10px;
+  @media (min-width: 381px) {
 
     row-gap: 10px;
     column-gap: 10px;
@@ -441,6 +434,7 @@ textarea:active {
 
 .profile_edit {
   grid-area: content;
+  padding: $large-px;
 
   background-color: $white;
   display: grid;
@@ -448,8 +442,8 @@ textarea:active {
 
   @media (min-width: 960px) {
     //height: 525px;
-    padding: 1px;
     margin-top: 4px;
+    padding: $large-px * 2;
 
     display: grid;
     grid-template-areas: "photo-edit-block content-edit-block buttons-edit-block";
@@ -471,7 +465,6 @@ textarea:active {
 
   @media (max-width: 961px) {
     //height: 300px;
-    padding: 10px;
     margin-top: 5px;
     display: grid;
 
@@ -538,8 +531,8 @@ textarea:active {
       //}
 
       @media (min-width: 961px) {
-        width: 70%;
-        height: 70%;
+        width: 140px;
+        height: 140px;
 
         margin-top: 20%;
       }
@@ -551,11 +544,11 @@ textarea:active {
     display: grid;
     justify-content: center;
     grid-area: buttons-edit-block;
+    gap: $large-px;
 
     @media (max-width: 960px) {
       grid-template-rows: 30px 30px;
       grid-template-columns: 250px;
-      row-gap: 3px;
     }
 
     //@media (min-width: 321px) and (max-width: 960px) {
@@ -569,7 +562,6 @@ textarea:active {
       margin-top: 27px;
       grid-template-rows: 30px 30px;
       grid-template-columns: 170px;
-      row-gap: 2px;
     }
   }
 
@@ -577,6 +569,8 @@ textarea:active {
     background-color: $my--button-fill;
     color: $my--button-text;
     padding: 6px;
+
+    margin-bottom: $large-px;
 
     @media (max-width: 960px) {
       @include text-small;
@@ -647,29 +641,34 @@ textarea:active {
   }
 
   &__meta_holder {
-    @media (max-width: 320px) {
-      height: 30px;
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      flex-wrap: wrap;
-
+    max-width: 400px;
+    width: 100%;
+    > input {
+      margin-top: $small-px;
     }
-    min-width: 80%;
-
-    &__input {
-      @media (max-width: 320px) {
-        margin-top: 2px;
-        background-color: $my--button-fill;
-        padding: 5px;
-      }
-    }
+    //@media (max-width: 381px) {
+    //  height: 30px;
+    //  display: flex;
+    //  justify-content: flex-start;
+    //  align-items: center;
+    //  flex-wrap: wrap;
+    //
+    //}
+    ////min-width: 80%;
+    //
+    //&__input {
+    //  @media (max-width: 381px) {
+    //    margin-top: 2px;
+    //    background-color: $my--button-fill;
+    //    padding: 5px;
+    //  }
+    //}
   }
 
   &__naming_holder {
     @include text-small;
 
-    @media (max-width: 320px) {
+    @media (max-width: 380px) {
       height: 10px;
       display: flex;
       justify-content: left;
@@ -690,7 +689,7 @@ textarea:active {
     grid-area: info;
     display: grid;
 
-    @media (max-width: 960px) {
+    @media (max-width: 380px) {
       grid-template-areas: "photo"
                         "metadata_holder"
                         "btn_block";
@@ -698,7 +697,7 @@ textarea:active {
       grid-template-columns: 1fr;
     }
 
-    @media (min-width: 961px) {
+    @media (min-width: 381px) {
       row-gap: $small-px;
       column-gap: $small-px;
 
@@ -734,7 +733,7 @@ textarea:active {
   overflow: hidden;
   border-radius: 50%;
 
-    padding-top: $large-px;
+    //padding-top: $large-px;
 
     height: 140px;
     width: 140px;
@@ -1020,11 +1019,18 @@ textarea:active {
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #f1f1f1;
+  background-color: $my--frame-collection;
   min-width: 160px;
   overflow: auto;
   box-shadow: 3px 12px 16px 3px rgba(0,0,0,0.2);
   z-index: 1;
+
+  &_left {
+    @media (max-width: 960px) {
+      right: 10px;
+    }
+  }
+
 }
 
 .dropdown-content a {

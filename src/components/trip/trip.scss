@@ -141,7 +141,7 @@
 .dropdownWrapper {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-gap: 5px;
+  grid-gap: 10px;
   align-items: center;
 }
 
@@ -192,6 +192,18 @@
 
 .dropdown_user_add_header{
   padding: 10px 10px 10px 10px;
+}
+
+#search_trip_user {
+  padding-left: $small-px;
+  padding-right: $small-px;
+}
+
+.add-user-frame {
+  padding: 10px;
+  > div {
+    margin-bottom: 0;
+  }
 }
 
 .select_string, .string {
