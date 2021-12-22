@@ -52,15 +52,17 @@
 
   grid-column-gap: 10px;
 
+  margin-left: 10px;
+  margin-right: 10px;
+
   @media (min-width: 960px) {
-    grid-template: "l map"  / 2fr 6fr;
+    grid-template: "l map"  / 25% 75%;
     grid-row-gap: $small-px;
   }
 
   @media (max-width: 961px) {
     grid-template: "l" "map";
-    margin-left: 10px;
-    margin-right: 10px;
+
   }
 
   &__left__info {
@@ -71,7 +73,6 @@
     }
     grid-area: l;
     width: 100%;
-    //max-width: 500px;
 
   }
 
