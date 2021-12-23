@@ -11,7 +11,7 @@ export interface UserEmail {
 
 export interface Partisipants {
 	id: number;
-	profilePhoto: string;
+	avatarPath: string;
 }
 
 export interface tripUser {

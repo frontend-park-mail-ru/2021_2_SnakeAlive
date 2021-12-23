@@ -13,14 +13,20 @@ import { storage } from '@/storage';
 
 import avatarPath from '../../image/test.webp';
 
+export const isStdAvatar = (str: string): boolean => {
+	const regex = /(default|test)\.(jpeg|jpg|png|webp)$/;
+	return regex.test(str);
+};
+// (
+// 	str === 'default.webp' ||
+// 	str.slice(-9) === 'test.webp' ||
+// 	str.slice(-12) === 'default.webp' ||
+// 	str.slice(-9) === 'test.jpeg' ||
+// 	str.slice(-12) === 'default.jpeg'
+// )
+
 export function adaptGetProfileResponse(response: GetProfileResponse): Profile {
-	if (
-		response.avatar === 'default.webp' ||
-		response.avatar.slice(-9) === 'test.webp' ||
-		response.avatar.slice(-12) === 'default.webp' ||
-		response.avatar.slice(-9) === 'test.jpeg' ||
-		response.avatar.slice(-12) === 'default.jpeg'
-	) {
+	if (isStdAvatar(response.avatar)) {
 		response.avatar = avatarPath;
 	}
 

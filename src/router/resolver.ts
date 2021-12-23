@@ -57,7 +57,7 @@ const getIDParamDispatchError = (path: URL): number | null => {
 const getTripIdBackEnd = (str: string): string => {
 	const array = str.split('/');
 	return array[array.length - 1];
-}
+};
 
 export const notifier = (path: URL): void /* IEvent */ => {
 	switch (path.pathname) {

@@ -206,6 +206,14 @@ class Storage {
 		this.#searchRequest.tags = tagsIds;
 	};
 
+	storeSearchRequestMinRating = rating => {
+		this.#searchRequest.min_amount_reviews = rating;
+	};
+
+	storeSearchRequestMinReviewAmount = reviewAmount => {
+		this.#searchRequest.min_amount_reviews = reviewAmount;
+	};
+
 	storeSearchRequestText = (search: string) => {
 		this.#searchRequest.search = search;
 	};

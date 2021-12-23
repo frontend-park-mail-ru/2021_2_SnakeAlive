@@ -44,6 +44,7 @@
     grid-template: "l-t" "r-b";
     margin-left: 10px;
     margin-right: 10px;
+    gap: 10px;
   }
 
   &__right_col {
@@ -60,8 +61,12 @@
       @include text-local-header;
     }
 
+    > div {
+      margin-bottom: 10px;
+    }
+
     &__info {
-      margin-bottom: $small-px;
+      margin-bottom: 10px;
     }
 
     &__description {
@@ -165,7 +170,7 @@
   padding-left: 0;
   padding-right: 0;
   width: 100%;
-  margin-bottom: $small-px;
+  margin-bottom: 10px;
   //background-color: $white;
 }
 

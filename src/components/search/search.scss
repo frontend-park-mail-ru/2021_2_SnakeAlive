@@ -141,3 +141,41 @@
 #search_page__categories {
   min-width: 100%;
 }
+
+.header {
+  &__categories {
+    &__string {
+      width: 100%;
+      display: flex;
+      padding-bottom: $large-px;
+      padding-top: $large-px;
+
+      @media (max-width: 380px) {
+        flex-direction: column;
+      }
+      @media (min-width: 381px) {
+        flex-direction: row;
+      }
+      justify-content: center;
+      align-items: center;
+      gap: $small-px;
+    }
+
+    &__small_category {
+      display: flex;
+      flex-direction: row;
+      gap: $small-px;
+      justify-content: center;
+      align-items: center;
+
+      &__input,
+      &__input:active,
+      &__input:focus,
+      &__input:hover  {
+        width: 60px;
+        text-align: center;
+      }
+    }
+  }
+
+}

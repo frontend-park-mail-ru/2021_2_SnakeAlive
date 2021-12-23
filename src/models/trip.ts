@@ -1,5 +1,6 @@
 import { Sight } from './sight';
 import { Album } from '@/models/album';
+import { UserMetadata } from '@/models/user';
 
 export interface TripSight {
 	day: number;
@@ -17,7 +18,7 @@ export interface Trip {
 	description: string;
 	sights: Array<Sight>;
 	albums: Array<Album>;
-	users: Array<number>;
+	users: Array<UserMetadata>;
 	days: Array<TripSight>;
 }
 

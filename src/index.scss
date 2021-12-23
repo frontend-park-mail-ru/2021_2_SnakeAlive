@@ -49,7 +49,7 @@ $snake-err-color: #a9b9c8;
 // шрифты
 @mixin text-header {
   font-size: 28px;
-  font-weight: 400;
+  //font-weight: 400;
 }
 
 ;
@@ -59,7 +59,7 @@ h2 {
 
 @mixin text-local-header {
   font-size: 23px;
-  font-weight: 400;
+  //font-weight: 400;
 }
 
 
@@ -75,8 +75,8 @@ h4 {
 ;
 @mixin text-plain {
   font-size: 18px;
-  font-weight: 300;
-  line-height: 20px;
+  //font-weight: 300;
+  line-height: 23px;
   letter-spacing: -0.5px;
 }
 
@@ -84,10 +84,14 @@ h4 {
 p, a {
   @include text-plain;
 }
+pre {
+  white-space: pre-wrap;       /* css-3 */
+  @include text-plain;
+}
 
 @mixin text-plain-no-wrap {
   font-size: 18px;
-  font-weight: 300;
+  //font-weight: 300;
   line-height: 20px;
   letter-spacing: -0.5px;
   // насчет этих строчек терзают смутные сомнения
@@ -98,13 +102,13 @@ p, a {
 ;
 @mixin text-button {
   font-size: 16px;
-  font-weight: 400;
+  //font-weight: 300;
 }
 
 ;
 @mixin text-small {
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 ;
@@ -113,6 +117,7 @@ html, body {
   margin: 0;
   font-family: 'Open Sans', sans-serif;
   background: $my--main-background;
+  font-weight: 350;
 }
 
 .content {
@@ -184,6 +189,7 @@ textarea:active {
 
 .profile_wrapper {
   display: grid;
+  box-sizing: border-box;
   @media (max-width: 960px) {
     grid-template: 'content' / 1fr;
     margin-left: 10px ;
@@ -197,16 +203,18 @@ textarea:active {
 
 .profile {
   max-width: 100%;
+  width: 100%;
 
   grid-area: content;
   display: grid;
+  box-sizing: border-box;
+  margin-bottom: 10px;
 
   > * {
     max-width: 100%;
   }
 
   @media (max-width: 380px) {
-    padding: 1px 0 10px;
 
     grid-template-areas: "info"
                         "trips"
@@ -443,7 +451,7 @@ textarea:active {
   @media (min-width: 960px) {
     //height: 525px;
     margin-top: 4px;
-    padding: $large-px * 2;
+    padding: 10px;
 
     display: grid;
     grid-template-areas: "photo-edit-block content-edit-block buttons-edit-block";
@@ -475,7 +483,8 @@ textarea:active {
     "albums";
 
     grid-template-rows: 200px 400px 170px;
-    row-gap: 3px;
+    row-gap: 10px;
+    margin-bottom: 10px;
   }
 
   &__photo_block {
@@ -520,7 +529,8 @@ textarea:active {
       border-radius: 50%;
 
       @media (max-width: 960px) {
-        width: 43%;
+        width: 200px;
+        height: 200px;
       }
 
       //@media (min-width: 321px) and (max-width: 960px) {
@@ -688,13 +698,15 @@ textarea:active {
   &__info {
     grid-area: info;
     display: grid;
+    width: 100%;
 
     @media (max-width: 380px) {
       grid-template-areas: "photo"
                         "metadata_holder"
                         "btn_block";
       row-gap: 4px;
-      grid-template-columns: 1fr;
+
+      //grid-template-columns: 1fr;
     }
 
     @media (min-width: 381px) {
@@ -714,6 +726,7 @@ textarea:active {
     width: 100%;
     max-width: 100%;
     background: $white;
+    margin-bottom: 10px;
   }
 
   &__albums {
@@ -722,6 +735,7 @@ textarea:active {
     max-width: 100%;
     background: $white;
     min-width: 0; min-height: 0;
+    margin-bottom: 10px;
   }
 
   &__photo {
@@ -1159,7 +1173,7 @@ textarea:active {
 
   background: $white;
   height: max-content;
-  padding: $large-px;
+  padding: 10px;
   margin: 0;
   box-sizing: border-box;
   width: 100%;
@@ -1184,7 +1198,7 @@ textarea:active {
     //border-top: 1px solid $my--frame-border;
     border-radius: 4px;
     //padding: $large-px;
-    margin-top: $small-px;
+    margin-top: 10px;
     margin-left: 0;
     margin-right: 0;
     background: $my--frame-collection;
@@ -1200,11 +1214,21 @@ textarea:active {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      gap: $large-px * 2;
+      gap: 0;
     }
 
     &__header {
       @include text-local-header();
+      @media (max-width: 380px) {
+        max-width: 50px;
+      }
+      //@media (min-width: 381px) {
+      //  max-width: 50px;
+      //}
+      white-space: nowrap; /* Текст не переносится */
+      overflow: hidden; /* Обрезаем всё за пределами блока */
+
+      text-overflow: ellipsis; /* Добавляем многоточие */
       //min-width: 35%;
     }
 
@@ -1217,9 +1241,9 @@ textarea:active {
       position: relative;
 
       &_right {
-        max-width: 200px;
+        max-width: min(60%, 30vw);
         text-align: right;
-        width: 100%;
+        //width: 100%;
       }
     }
   }

@@ -1,5 +1,9 @@
 {{#unless cards}}
-	<p class='search_page__empty_text'>Здесь будут найденные достопримечательности</p>
+	{{#if replaceText}}
+		<p class='search_page__empty_text'>{{replaceText}}</p>
+	{{else}}
+		<p class='search_page__empty_text'>Здесь будут найденные достопримечательности</p>
+	{{/if}}
 {{/unless}}
 {{#each cards}}
 <div class="card frame" >

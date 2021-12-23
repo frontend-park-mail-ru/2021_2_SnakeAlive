@@ -4,7 +4,7 @@ import BasicView from '@/view/view';
 import { storage } from '@/storage';
 import tripSights from '@/components/country_page/sights.handlebars';
 import { SightCardInTrip } from '@/view/sight_cards';
-import { newGetTagCardsResult } from '@/actions/tag';
+import { newGetTagCardsResult, newTagRequest, newUpdateTagRequest } from '@/actions/tag';
 import { TagAdoptedForRender } from '@/models/sight';
 import { createFrontendQueryParams, router } from '@/router/router';
 import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
@@ -49,7 +49,8 @@ export const initTagsBtns = (tags: AdoptedTag[]) => {
 		const tegElem = document.getElementById(`tag_${tag.id}`);
 		if (tegElem !== null) {
 			tegElem.addEventListener('click', () => {
-				router.go(
+				dispatcher.notify(newUpdateTagRequest(tag.id));
+				router.pushHistoryState(
 					createFrontendQueryParams(pathsURLfrontend.tag, [
 						{
 							key: paramsURLfrontend.tag,
@@ -64,7 +65,8 @@ export const initTagsBtns = (tags: AdoptedTag[]) => {
 		const tegElem = document.getElementById(`dropdown_tag_${tag.id}`);
 		if (tegElem !== null) {
 			tegElem.addEventListener('click', () => {
-				router.go(
+				dispatcher.notify(newUpdateTagRequest(tag.id));
+				router.pushHistoryState(
 					createFrontendQueryParams(pathsURLfrontend.tag, [
 						{
 							key: paramsURLfrontend.tag,

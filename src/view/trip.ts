@@ -47,12 +47,6 @@ import { WSEndPoint } from '@/constants/endpoints';
 import { setTextAreaResizeParams } from '@/components/reviews/review_form';
 import { createWSCon, initWS, NewWSConnect } from '@/tools/websoket';
 
-// const partisipants = [
-// 	{id: 1, profilePhoto: "/image/7b205eb741a49105fcd425910545cc79.jpeg"},
-// 	{id: 1, profilePhoto: "/image/7b205eb741a49105fcd425910545cc79.jpeg"},
-// 	{id: 1, profilePhoto: "/image/7b205eb741a49105fcd425910545cc79.jpeg"},
-// ]
-
 const initPartisipantsBtns = (partisipants: Array<Partisipants>): void => {
 	// id="partisipant_1"
 	if (!partisipants) {
@@ -62,13 +56,7 @@ const initPartisipantsBtns = (partisipants: Array<Partisipants>): void => {
 	// console.log('f');
 
 	partisipants.forEach(user => {
-		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-		// @ts-ignore
-		const btn = document.getElementById(`partisipant_${user.id.id}`);
-		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-		// @ts-ignore
-		// console.log(`partisipant_${user.id.id}`);
-		// console.log(btn);
+		const btn = document.getElementById(`partisipant_${user.id}`);
 		if (btn !== null) {
 			btn.addEventListener(
 				'click',
@@ -77,7 +65,7 @@ const initPartisipantsBtns = (partisipants: Array<Partisipants>): void => {
 					// console.log(storage.getProfile().meta.id);
 					// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 					// @ts-ignore
-					if (user.id.id === storage.getProfile().meta.id) {
+					if (user.id === storage.getProfile().meta.id) {
 						router.go(pathsURLfrontend.profile);
 					} else {
 						router.go(
@@ -86,7 +74,7 @@ const initPartisipantsBtns = (partisipants: Array<Partisipants>): void => {
 									key: paramsURLfrontend.id,
 									// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 									// @ts-ignore
-									value: user.id.id.toString(),
+									value: user.id.toString(),
 								},
 							])
 						);
@@ -149,7 +137,7 @@ export class TripInfoView extends BasicView {
 
 	createTripEdit = () => {
 		const trip = storage.getCurrentTrip();
-		const partisipants = adoptPartisipants(trip.users);
+		const partisipants = trip.users;
 		this.setView(
 			tripFormTemplate({
 				tripCreated: true,

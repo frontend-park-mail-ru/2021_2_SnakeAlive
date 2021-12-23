@@ -164,6 +164,7 @@
 
 .trip-partisipant-circle-img{
   width: 35px;
+  height: 35px;
   display: block;
   position: relative;
   overflow: hidden;
@@ -179,8 +180,8 @@
 }
 
 .trip-partisipant-add-img:hover{
-  background: lightgray;
-  border-radius: 25%;
+  background: $my--button-fill;
+  border-radius: 4px;
 }
 
 .partisipant{

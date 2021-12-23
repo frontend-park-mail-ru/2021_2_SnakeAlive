@@ -24,6 +24,8 @@
   @media (max-width: 450px) {
     grid-template: "l-t" "r-b";
     gap: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
   &__left_col {

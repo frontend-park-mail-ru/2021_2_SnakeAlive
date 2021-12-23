@@ -12,6 +12,8 @@ import { pathsURLfrontend } from '@/constants';
 import { searchPlaceType } from '@/models/search';
 import { Sight } from '@/models';
 
+import '../reviews/review.scss';
+
 // https://learn.javascript.ru/task/debounce
 const debounce = (f, ms) => {
 	let isCooldown = false;
@@ -99,25 +101,25 @@ export class SearchView {
 		const input = <HTMLInputElement>document.getElementById(`search_${type}`);
 
 		if (input !== null) {
-			input.addEventListener('keydown', e => {
-				if (e.key === 'Enter') {
-					e.preventDefault();
-
-					const { value } = input;
-					this.#value = value;
-					if (storage.getSearchSightsResult(this.#type).length > 0) {
-						this.#enterCallback(
-							storage.getSearchSightsResult(this.#type)[0].id,
-							storage.getSearchSightsResult(this.#type)[0],
-							42
-						);
-					} else {
-						this.#enterCallback(this.#value);
-					}
-
-					this.#clearSearch(input);
-				}
-			});
+			// input.addEventListener('keydown', e => {
+			// 	if (e.key === 'Enter') {
+			// 		e.preventDefault();
+			//
+			// 		const { value } = input;
+			// 		this.#value = value;
+			// 		if (storage.getSearchSightsResult(this.#type).length > 0) {
+			// 			this.#enterCallback(
+			// 				storage.getSearchSightsResult(this.#type)[0].id,
+			// 				storage.getSearchSightsResult(this.#type)[0],
+			// 				42
+			// 			);
+			// 		} else {
+			// 			this.#enterCallback(this.#value);
+			// 		}
+			//
+			// 		this.#clearSearch(input);
+			// 	}
+			// });
 
 			input.addEventListener(
 				'input',

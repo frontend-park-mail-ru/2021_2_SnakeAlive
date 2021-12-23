@@ -3,6 +3,15 @@ import { AdoptedTag, TagResponse } from '@/models/tags';
 import { CountryResponse } from '@/models';
 import { storage } from '@/storage';
 
+const makeBeautifulDescription = (str: string): string => {
+	let resStr = str.replace(/\s{2,}/g, ' ');
+	resStr = resStr.replace(/(а|я|м|и|е)\. /g, '$&\n\t');
+	if (!/^\s/.test(resStr)) {
+		resStr = `\t${resStr}`;
+	}
+	return resStr;
+};
+
 export const adoptSightForPage = (
 	sight: GotSight,
 	tags: TagResponse[],
@@ -17,7 +26,7 @@ export const adoptSightForPage = (
 	}
 
 	resSight.name = sight.name;
-	resSight.description = sight.description;
+	resSight.description = makeBeautifulDescription(sight.description);
 	resSight.rating = sight.rating;
 	resSight.id = sight.id;
 

@@ -15,6 +15,7 @@ import { minCardInfo, SearchCountry } from '@/models/country';
 
 class SearchCardsHolderView extends BasicView {
 	// #cards: Array<SightCardInTrip>;
+	#isFirstTime = true;
 
 	constructor() {
 		super('#card-grid-wrapper');
@@ -43,13 +44,18 @@ class SearchCardsHolderView extends BasicView {
 			// eslint-disable-next-line no-param-reassign
 			sight.sight.adoptedTags = tagsAdopted;
 		});
-
-		this.setView(tripSights({ cards: cardsArray }));
+		if (this.#isFirstTime) {
+			this.#isFirstTime = false;
+			this.setView(tripSights({ cards: cardsArray }));
+		} else {
+			this.setView(
+				tripSights({ cards: cardsArray, replaceText: 'По такому запросу ничего не найдено' })
+			);
+		}
 
 		cardsArray.forEach(sight => {
 			const card = new SightCardInTrip();
 			card.createCard(sight.sight.id, sight.PP, sight.sight.adoptedTags);
-			// this.#cards.push(card);
 		});
 	};
 }
@@ -91,6 +97,30 @@ const listToNumbers = (list: string[]): number[] => {
 		resList.push(Number(item));
 	});
 	return resList;
+};
+
+const initReviewSearchParams = (): void => {
+	// рейтинг
+	// star-4
+	for (let i = 1; i < 5; i += 1) {
+		const star = document.getElementById(`star-${i}`);
+		console.log(star);
+		if (star !== null) {
+			star.addEventListener('click', () => {
+				storage.storeSearchRequestMinRating(i);
+				dispatcher.notify(sendPageSearch());
+			});
+		}
+	}
+
+	// количество отзывов
+	const reviewAmount = <HTMLInputElement>document.getElementById('review-amount-input');
+	if (reviewAmount !== null) {
+		reviewAmount.addEventListener('change', () => {
+			storage.storeSearchRequestMinReviewAmount(reviewAmount.value);
+			dispatcher.notify(sendPageSearch());
+		});
+	}
 };
 
 const initCategories = (
@@ -241,6 +271,8 @@ class SearchHolderView extends BasicView {
 
 		initCategories(renderObj.tags, renderObj.allTags);
 		initCategories(renderObj.countries, renderObj.allCountries);
+
+		initReviewSearchParams();
 
 		// dispatcher.notify(newGetTagCardsResult());
 	};

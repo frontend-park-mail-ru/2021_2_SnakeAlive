@@ -29,6 +29,7 @@ import { adoptForSend, adoptForCreate } from '@/adapters';
 import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
 import { TripFormInfo } from '@/models/trip';
+import { adoptTrip } from '@/adapters/trip';
 
 export default class TripReducer {
 	#tokens: Token[];
@@ -113,8 +114,9 @@ export default class TripReducer {
 
 	initTripEditPage = (metadata: NumID) => {
 		const { ID } = metadata;
+		console.log('tripReducer.initEditPage', ID);
 		this.#getTrip(ID.toString()).then((trip: Trip) => {
-			storage.storeCurrentTrip(trip);
+			storage.storeCurrentTrip(adoptTrip(trip));
 			dispatcher.notify(newGetTripResult(ID));
 		});
 	};

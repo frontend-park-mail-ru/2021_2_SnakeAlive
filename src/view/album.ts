@@ -268,14 +268,17 @@ export class AlbumView extends BasicView {
 	};
 
 	#initAddBtn = () => {
+		console.log('#initAddBtn', this.#isInited);
 		if (this.#isInited) {
 			return;
 		}
 		this.#isInited = true;
 
-		const addBtn = document.getElementById('add_photos_btn');
+		const addBtn = document.querySelector('#add_photos_btn');
 
-		const addInput = <HTMLInputElement>document.getElementById('add_photos_input');
+		const addInput = <HTMLInputElement>document.querySelector('#add_photos_input');
+
+		console.log(addBtn, addInput);
 
 		if (addBtn !== null && addInput !== null) {
 			addBtn.addEventListener(

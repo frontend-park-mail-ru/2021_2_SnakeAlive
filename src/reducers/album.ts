@@ -135,6 +135,7 @@ export default class AlbumReducer {
 	#sendAlbumInfo = (data: AlbumInfo): Promise<GotAlbumInterface> => {
 		// значит только что созданная форма
 		if (window.location.href.split('?').length <= 1) {
+			console.log(data);
 			const sendData = <any>data;
 			sendData.trip_id = storage.getAlbumTripId();
 			if (!sendData.trip_id) {
@@ -148,7 +149,9 @@ export default class AlbumReducer {
 					}
 					return Promise.resolve(response);
 				})
-				.then(response => response.json());
+				.then(response => {
+					return response.json();
+				});
 		}
 		return sendPatchJSONRequest(backendEndpoint + albumURI + storage.getAlbum().id, data)
 			.then(response => {

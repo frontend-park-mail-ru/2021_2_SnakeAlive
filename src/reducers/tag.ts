@@ -1,6 +1,5 @@
 import { sendGetJSONRequest } from '@/http';
 import { backendEndpoint } from '@/constants';
-import {} from '@/actions/country';
 import { newSetMainHeaderRequest } from '@/actions/header';
 import { storage } from '@/storage';
 import { dispatcher, EventType, NamedUUID, Token } from '@/dispatcher';
@@ -8,7 +7,6 @@ import { CountryCardResponse } from '@/models';
 import { minAdaptCountryCards } from '@/adapters/country_cards_min';
 import { tagsURI } from '@/constants/uris';
 import { newGetTagCardsResult, newTagResponse } from '@/actions/tag';
-import { initEmptySearchPageResponse } from '@/actions/search';
 import { getTags } from '@/reducers/search_page';
 import { adoptGotTags } from '@/adapters/tags';
 
@@ -23,6 +21,7 @@ export default class TagReducer {
 		this.#tokens = [
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
 			dispatcher.register(EventType.INIT_TAG_REQUEST, this.initTagPage),
+			dispatcher.register(EventType.INIT_TAG_UPDATE_REQUEST, this.getTagCards),
 		];
 	};
 
@@ -35,6 +34,12 @@ export default class TagReducer {
 	initTagPage = (tag: NamedUUID): void => {
 		dispatcher.notify(newSetMainHeaderRequest());
 		this.#getTagCards(tag.ID);
+	};
+
+	getTagCards = (tag: NamedUUID): void => {
+		this.#getCards(tag.ID).then(() => {
+			dispatcher.notify(newGetTagCardsResult());
+		});
 	};
 
 	#getTagCards = (name: string): void => {

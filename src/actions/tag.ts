@@ -16,10 +16,18 @@ const newTagRequest = (tagName: string): IEvent =>
 		},
 	};
 
+const newUpdateTagRequest = (tagName): IEvent =>
+	<IEvent>{
+		key: EventType.INIT_TAG_UPDATE_REQUEST,
+		metadata: <UUID>{
+			ID: tagName,
+		},
+	};
+
 const newGetTagCardsResult = (): IEvent =>
 	<IEvent>{
 		key: EventType.GET_TAG_CARDS_RESULT,
 		metadata: <Empty>{},
 	};
 
-export { newGetTagCardsResult, newTagRequest, newTagResponse };
+export { newGetTagCardsResult, newTagRequest, newTagResponse, newUpdateTagRequest };
