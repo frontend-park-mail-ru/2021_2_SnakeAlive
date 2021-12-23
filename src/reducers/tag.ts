@@ -9,9 +9,12 @@ import { tagsURI } from '@/constants/uris';
 import { newGetTagCardsResult, newTagResponse } from '@/actions/tag';
 import { getTags } from '@/reducers/search_page';
 import { adoptGotTags } from '@/adapters/tags';
+import { TagResponse } from '@/models/tags';
 
 export default class TagReducer {
 	#tokens: Token[];
+
+	#tags: TagResponse[] = [];
 
 	constructor() {
 		this.#tokens = [];
@@ -37,7 +40,8 @@ export default class TagReducer {
 	};
 
 	getTagCards = (tag: NamedUUID): void => {
-		this.#getCards(tag.ID).then(() => {
+		this.#getTagCardsOnly(tag.ID).then((cards: CountryCardResponse[]) => {
+			storage.storeSightsCardsMin(minAdaptCountryCards(cards, adoptGotTags(this.#tags)));
 			dispatcher.notify(newGetTagCardsResult());
 		});
 	};
@@ -48,9 +52,26 @@ export default class TagReducer {
 				dispatcher.notify(newTagResponse(tags.filter(tag => tag.id.toString() === name)[0].name));
 				storage.storeSightsCardsMin(minAdaptCountryCards(cards, adoptGotTags(tags)));
 				dispatcher.notify(newGetTagCardsResult());
+				this.#tags = tags;
 			});
 		});
 	};
+
+	#getTagCardsOnly = (tagId: string): Promise<CountryCardResponse[]> => {
+		const uri = new URL(backendEndpoint + tagsURI);
+		uri.searchParams.append('tag', tagId);
+		return sendGetJSONRequest(uri.toString())
+			.then(response => {
+				if (response.status === 404) {
+					return Promise.reject(new Error('На сайте нет такой страницы'));
+				}
+				if (response.status === 401) {
+					return Promise.reject(new Error('Нужно войти в систему'));
+				}
+				return Promise.resolve(response);
+			})
+			.then(response => response.json());
+	}
 
 	#getCards = (tagID: string): Promise<CountryCardResponse[]> => {
 		const uri = new URL(backendEndpoint + tagsURI);

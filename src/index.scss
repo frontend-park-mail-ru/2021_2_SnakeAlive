@@ -924,6 +924,11 @@ textarea:active {
 	width: 100%;
 }
 
+#data__holder {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 .card__grid {
   grid-area: content;
   display: grid;
@@ -938,8 +943,6 @@ textarea:active {
   display: grid;
   @media (max-width: 960px) {
     grid-template: "content"  / 1fr;
-    margin-left: 10px;
-    margin-right: 10px;
   }
 
   @media (min-width: 961px) {
@@ -989,6 +992,7 @@ textarea:active {
 }
 
 .category{
+  box-sizing: content-box;
   padding: 11px 16px;
   border-radius: 20px;
   border: 1px solid;
@@ -1008,12 +1012,18 @@ textarea:active {
   margin-left: auto;
   margin-right: auto;
 
+  box-sizing: border-box;
+
   overflow-x: auto;
   
   width: auto;
   white-space: nowrap;
 
-  max-width: 1000px;
+  max-width: min(1000px, 100%);
+
+  > div {
+    box-sizing: border-box;
+  }
 
   &::-webkit-scrollbar {
     height: $small-px;
@@ -1072,6 +1082,7 @@ textarea:active {
 	font-size: 160%;
 	width: 100%;
 	margin: 0 auto;
+  padding-top: $large-px;
 }
 
 .header_holder {
@@ -1079,7 +1090,8 @@ textarea:active {
 	min-width: 300px;
 	word-break: break-word;
 	display: block;
-  margin: 10px 10px 15px;
+  margin: 10px 0 15px;
+  box-sizing: border-box;
 }
 
 .span__font__large {
@@ -1205,6 +1217,8 @@ textarea:active {
 
     padding: $large-px;
     box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
 
     > * {
       margin-bottom: $small-px;
@@ -1219,9 +1233,9 @@ textarea:active {
 
     &__header {
       @include text-local-header();
-      @media (max-width: 380px) {
-        max-width: 50px;
-      }
+      //@media (max-width: 380px) {
+      //  max-width: 50px;
+      //}
       //@media (min-width: 381px) {
       //  max-width: 50px;
       //}

@@ -13,6 +13,7 @@ import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
 import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
 import { SearchCountry } from '@/models/country';
+import { newUpdateTagRequest } from '@/actions/tag';
 
 export const initCountriesBtns = (tags: SearchCountry[]) => {
 	tags.forEach(tag => {
@@ -151,7 +152,16 @@ class CountryHolderView extends BasicView {
 				allTags: storage.getSearchTags().slice(6),
 			})
 		);
-		initTagsBtns(storage.getSearchTags());
+		initTagsBtns(storage.getSearchTags(), (id: string) => {
+			router.go(
+				createFrontendQueryParams(pathsURLfrontend.tag, [
+					{
+						key: paramsURLfrontend.tag,
+						value: id,
+					},
+				])
+			);
+		});
 	};
 }
 

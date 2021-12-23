@@ -44,20 +44,12 @@ export const initDropdown = (htmlId = 'myDropdown', category = '') => {
 	}
 };
 
-export const initTagsBtns = (tags: AdoptedTag[]) => {
+export const initTagsBtns = (tags: AdoptedTag[], callback: (id: string) => void) => {
 	tags.forEach(tag => {
 		const tegElem = document.getElementById(`tag_${tag.id}`);
 		if (tegElem !== null) {
 			tegElem.addEventListener('click', () => {
-				dispatcher.notify(newUpdateTagRequest(tag.id));
-				router.pushHistoryState(
-					createFrontendQueryParams(pathsURLfrontend.tag, [
-						{
-							key: paramsURLfrontend.tag,
-							value: tag.id,
-						},
-					])
-				);
+				callback(tag.id);
 			});
 		}
 	});
@@ -65,15 +57,7 @@ export const initTagsBtns = (tags: AdoptedTag[]) => {
 		const tegElem = document.getElementById(`dropdown_tag_${tag.id}`);
 		if (tegElem !== null) {
 			tegElem.addEventListener('click', () => {
-				dispatcher.notify(newUpdateTagRequest(tag.id));
-				router.pushHistoryState(
-					createFrontendQueryParams(pathsURLfrontend.tag, [
-						{
-							key: paramsURLfrontend.tag,
-							value: tag.id,
-						},
-					])
-				);
+				callback(tag.id);
 			});
 		}
 	});
@@ -108,6 +92,7 @@ class TagCardsHolderView extends BasicView {
 	};
 
 	rerenderCards = () => {
+		console.log('rerender');
 		this.setEmpty();
 		// this.#cards = [];
 
@@ -167,7 +152,17 @@ class TagHolderView extends BasicView {
 				allTags: storage.getSearchTags().slice(6),
 			})
 		);
-		initTagsBtns(storage.getSearchTags());
+		initTagsBtns(storage.getSearchTags(), (id: string) => {
+			dispatcher.notify(newUpdateTagRequest(id));
+			router.pushHistoryState(
+				createFrontendQueryParams(pathsURLfrontend.tag, [
+					{
+						key: paramsURLfrontend.tag,
+						value: id,
+					},
+				])
+			);
+		});
 		dispatcher.notify(newGetTagCardsResult());
 	};
 }
