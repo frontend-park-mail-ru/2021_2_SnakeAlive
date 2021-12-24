@@ -2,7 +2,7 @@
 	{{#unless needsPageGoBtn}}
 		<img class="search_area__icon" src="{{icon}}" alt="🔍">
 	{{/unless}}
-	<input id="search_{{type}}" list="search_list_{{type}}" class="search_area__input">
+	<input id="search_{{type}}" list="search_list_{{type}}" class="search_area__input" placeholder='{{placeholder}}'>
 	<datalist id="search_list_{{type}}"></datalist>
 	{{#if needsPageGoBtn}}
 		<div class='search_area__go_btn' id='go_search_page_{{type}}' title='{{title}}'>

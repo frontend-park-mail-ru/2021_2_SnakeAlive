@@ -70,6 +70,14 @@ const deleteAlbum = (): IEvent =>
 		metadata: <Empty>{},
 	};
 
+const uploadError = (msg: string): IEvent =>
+	<IEvent>{
+		key: EventType.UPLOAD_ERROR,
+		metadata: <UUID>{
+			ID: msg,
+		}
+};
+
 export {
 	newGetAlbumRequest,
 	newGetAlbumResult,
@@ -79,4 +87,5 @@ export {
 	createAlbumFormRequest,
 	updateAlbumInfoRequest,
 	deleteAlbum,
+	uploadError
 };

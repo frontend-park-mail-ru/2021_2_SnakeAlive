@@ -15,13 +15,12 @@ import { Sight } from '@/models';
 import '../reviews/review.scss';
 
 // https://learn.javascript.ru/task/debounce
-const debounce = (f, ms) => {
+export const debounce = (f: (arg: string) => void, ms: number): (arg: string) => void => {
 	let isCooldown = false;
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	return (arg: string) => {
 		if (isCooldown) return;
-		// @ts-ignore
 		f(arg);
 		isCooldown = true;
 		setTimeout(() => {
@@ -33,9 +32,10 @@ const debounce = (f, ms) => {
 export const initSearchView = (
 	type: searchPlaceType,
 	needsPageGoBtn: boolean,
-	title = ''
+	title = '',
+	placeholder= ''
 ): string =>
-	searchTemplate({ icon: imgSearch, type, needsPageGoBtn, iconWhite: imgSearchWhite, title });
+	searchTemplate({ icon: imgSearch, type, needsPageGoBtn, iconWhite: imgSearchWhite, title, placeholder });
 
 export class SearchView {
 	#type: searchPlaceType;

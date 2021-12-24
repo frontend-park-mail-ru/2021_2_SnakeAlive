@@ -3,6 +3,10 @@
 //$logo_height: 5vh;
 $logo_height: 48px;
 
+#trip-block {
+  margin: $small-px 0;
+}
+
 .header {
   border-bottom: 1px solid $my--frame-border;
 

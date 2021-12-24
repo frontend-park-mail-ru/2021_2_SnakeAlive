@@ -8,25 +8,10 @@ import {
 	shareTrip,
 	addUserToTrip,
 } from '@/actions/trip';
-import { newGetReviewsResponse } from '@/actions/review';
-import { sendGetJSONRequest } from '@/http';
-import {
-	backendEndpoint,
-	paramsURLfrontend,
-	pathsURLfrontend,
-	sightsURI,
-	tripAddUser,
-} from '@/constants';
-import tripSightsSelectTemplate from './sight_select.handlebars';
-import { Sight } from '@/models';
 import { storage } from '@/storage';
 import './trip.scss';
-import { router } from '@/router';
-import { createFrontendQueryParams } from '@/router/router';
 import { setTextAreaResizeParams } from '@/components/reviews/review_form';
-import { Loader } from '@googlemaps/js-api-loader';
-import { initSearchView, SearchView } from '@/components/search/search';
-import { dropDownHide, dropDownToggle } from '../dropdown/dropdown';
+import { dropDownToggle } from '../dropdown/dropdown';
 
 export const GET_COUNTRY_NAME = (id: string) => {
 	switch (id) {
@@ -148,7 +133,6 @@ export const initAddPartisipantBtn = (): void => {
 			'click',
 			event => {
 				event.preventDefault();
-				//show dropdown with linl and instructiom
 			},
 			false
 		);

@@ -64,22 +64,16 @@ export default class TripReducer {
 		// console.log('link :  ', backendEndpoint + tripAddUser + tripID);
 		sendPostJSONRequest(backendEndpoint + tripAddUser + tripID, userToAdd)
 			.then(response => {
-				if (response.status === 404) {
-					dispatcher.notify(getAddUserToTripResponse(false));
-					return Promise.reject(new Error('Такой поездки не существует'));
-				}
-				if (response.status === 401) {
-					dispatcher.notify(getAddUserToTripResponse(false));
-					return Promise.reject(new Error('Нужно войти в систему'));
-				}
-				if (response.status === 400) {
-					dispatcher.notify(getAddUserToTripResponse(false));
-					return Promise.reject(new Error('Ошибка запроса'));
+				if (response.status !== 200) {
+					return Promise.reject(new Error('невозможно добавить пользователя'));
 				}
 				return Promise.resolve(response);
 			})
 			.then(() => {
 				dispatcher.notify(getAddUserToTripResponse(true));
+			})
+			.catch((err: Error) => {
+				dispatcher.notify(getAddUserToTripResponse(false, err.message));
 			});
 	};
 

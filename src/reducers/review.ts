@@ -20,6 +20,8 @@ import {
 import { CreateReviewForm } from '@/dispatcher/metadata_types';
 import { GotProfileResponse } from '@/adapters/header';
 import { adaptGetProfileResponse } from '@/adapters/profile';
+import { sendGetProfile } from '@/reducers/alien_profile';
+import { GetProfileResponse } from '@/models/profile';
 
 export default class ReviewReducer {
 	#tokens: Token[];
@@ -54,14 +56,26 @@ export default class ReviewReducer {
 				storage.storeProfile(adaptGetProfileResponse(gotProfile));
 			}
 			this.#sendGetReviews(event.ID).then((reviews: ReviewGotInfo[]) => {
-				// const users = this.#getReviewsUsers(reviews);
-				const users: UserReview[] = [];
 				if (reviews) {
-					users.length = reviews.length;
+					// составляем массив уникальных встречающихся id пользователей
+						const usersIds : number[] = [];
+						reviews.forEach((review) => {
+							if (!usersIds.includes(review.user_id)) {
+								usersIds.push(review.user_id);
+							}
+						})
+					const users: GetProfileResponse[] = [];
+					usersIds.forEach((userId) => {
+						sendGetProfile(userId.toString())
+							.then((user: GetProfileResponse) => {
+								users.push(user);
+								if (users.length === usersIds.length) {
+									storage.storeReviews(adoptGotReview(reviews, users));
+									dispatcher.notify(newGetReviewsResponse());
+								}
+							});
+					})
 				}
-
-				storage.storeReviews(adoptGotReview(reviews, users));
-				dispatcher.notify(newGetReviewsResponse());
 			});
 		});
 	};

@@ -1,4 +1,4 @@
-import { Empty, EventType, IEvent, NumID } from '@/dispatcher';
+import { Empty, EventType, IEvent, NumID, UUID } from '@/dispatcher';
 import { IsTrue, TripInfo, IDState, CardOrderAndDay, Email } from '@/dispatcher/metadata_types';
 import { Sight, SightDay } from '@/models';
 
@@ -99,11 +99,20 @@ const addUserToTrip = (email: string) =>
 		},
 	};
 
-const getAddUserToTripResponse = (isOk: boolean) =>
+const getAddUserToTripResponse = (isOk: boolean, errorMessage?: string) =>
 	<IEvent>{
 		key: EventType.ADD_USER_TO_TRIP_RESPONSE,
 		metadata: <IsTrue>{
 			isTrue: isOk,
+			errorMessage
+		},
+	};
+
+const errorAddingUser = (msg: string) =>
+	<IEvent>{
+		key: EventType.ERROR_ADDING_USER,
+		metadata: <UUID>{
+			ID: msg
 		},
 	};
 
@@ -122,4 +131,5 @@ export {
 	addUserToTrip,
 	getAddUserToTripResponse,
 	wsUpdate,
+	errorAddingUser
 };

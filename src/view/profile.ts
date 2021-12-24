@@ -15,7 +15,7 @@ import {
 	validateElements,
 	validateEqual,
 	validateLength,
-	validateNotEmpty,
+	validateNotEmpty, ValidationElement,
 } from '@/validators/common';
 import { router } from '@/router';
 import { createFrontendQueryParams } from '@/router/router';
@@ -155,25 +155,28 @@ export default class ProfileView extends BasicView {
 		const repeatedPassInput: Input = new Input('#repeated_password_holder', 'input-error-red');
 		// const emailInput: Input = new Input('#email_holder', 'input-error-red');
 
-		if (
-			!validateElements([
-				{
-					validators: [
-						function (): boolean {
-							return validateNotEmpty(nameInput.getValue());
-						},
-					],
-					errorSetters: [nameInput],
-				},
-				{
-					validators: [
-						function (): boolean {
-							return validateNotEmpty(surnameInput.getValue());
-						},
-					],
-					errorSetters: [surnameInput],
-				},
-				{
+		const validationList: ValidationElement[] = [
+			{
+				validators: [
+					function (): boolean {
+						return validateNotEmpty(nameInput.getValue());
+					},
+				],
+				errorSetters: [nameInput],
+			},
+			{
+				validators: [
+					function (): boolean {
+						return validateNotEmpty(surnameInput.getValue());
+					},
+				],
+				errorSetters: [surnameInput],
+			}
+		]
+
+		// если пользователь не трогал поля ввода пароля, и мы их не трогаем
+		if ((passInput.getValue() !== '') || (repeatedPassInput.getValue() !== '')) {
+			validationList.push({
 					validators: [
 						function (): boolean {
 							return validateEqual(passInput.getValue(), repeatedPassInput.getValue());
@@ -184,17 +187,18 @@ export default class ProfileView extends BasicView {
 				{
 					validators: [
 						function (): boolean {
-							if (validateNotEmpty(passInput.getValue())) {
+							if ((validateNotEmpty(passInput.getValue())) && (validateLength(passInput.getValue(), 8))) {
 								return true;
 							}
 
-							return validateLength(passInput.getValue(), 8);
+							return false;
 						},
 					],
 					errorSetters: [passInput],
-				},
-			])
-		) {
+				});
+		}
+
+		if (!validateElements(validationList)) {
 			return;
 		}
 		dispatcher.notify(

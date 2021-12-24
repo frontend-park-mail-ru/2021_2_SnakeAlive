@@ -1,18 +1,28 @@
 {{#if reviews}}
 <div class='frame_collection'>
-	<div class='frame_collection__header'><h2>Отзывы других путешественников</h2></div>
+	<div class='frame_collection__header'><p>Отзывы других путешественников</p></div>
 	<div class='frame_collection__wrapper'>
 		{{#each reviews}}
-			<div class='frame_collection__card'>
+			<div class='frame_collection__card' id='review_card'>
 				<div class='frame_collection__card__header'>{{this.title}}</div>
-				<div><p>✦ {{this.rating}}</p></div>
-				<div class='frame_collection__card__text review_text' id='review_text'>{{this.text}}</div>
+				<div class="rating">
+					<div id="author_{{this.user.userId}}_{{this.PP}}" class='author-string author-string__author'>
+						<div>
+							<img class="trip-partisipant-circle-img" src="{{this.user.profileImage}}">
+						</div>
+						<div><p>{{this.user.name}}</p></div>
+					</div>
+					<div class='author-string'>
+						<p class="span__font__large span__font__large-green" style='font-size: 24px;' id='rating'>✦</p><p class='rating__text'>{{rating}}</p>
+					</div>
+				</div>
+				<div class='frame_collection__card__text review_text' id='review_text'>Подробности: {{this.text}}</div>
 				{{#if this.owner}}
+					<div>
 					<button id="delete_button_{{this.id}}" class='usual_button_light usual_button'>
-						🗑️
+						удалить отзыв
 					</button>
-				{{else}}
-					<p>{{this.user_id}}</p>
+					</div>
 				{{/if}}
 			</div>
 		{{/each}}

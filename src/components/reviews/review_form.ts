@@ -2,6 +2,7 @@ import { dispatcher } from '@/dispatcher';
 import { newCreateReviewFormResponse } from '@/actions/review';
 import imgRating from '../../../image/icon/rating.webp';
 import reviewFormTemplate from './review_form.handlebars';
+import '../trip/trip.scss';
 
 export const setTextAreaResizeParams = (
 	textId: string,

@@ -58,6 +58,10 @@ export const initTagsBtns = (tags: AdoptedTag[], callback: (id: string) => void)
 		if (tegElem !== null) {
 			tegElem.addEventListener('click', () => {
 				callback(tag.id);
+				const moreBtn = document.getElementById('myDropdown');
+				if (moreBtn) {
+					moreBtn.classList.remove('show');
+				}
 			});
 		}
 	});
@@ -91,10 +95,16 @@ class TagCardsHolderView extends BasicView {
 		this.setEmpty();
 	};
 
-	rerenderCards = () => {
-		console.log('rerender');
+	rerenderCards = (tagName: UUID) => {
 		this.setEmpty();
 		// this.#cards = [];
+
+		if (tagName.ID) {
+			const pageHeader = document.getElementById('country-header');
+			if (pageHeader !== null) {
+				pageHeader.innerText =  `Лучшее по тегу ${tagName.ID}`;
+			}
+		}
 
 		const cardsArray = storage.getSightsCardsMin();
 		cardsArray.forEach(sight => {

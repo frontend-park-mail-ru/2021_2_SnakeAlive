@@ -85,7 +85,7 @@ export default class HeaderView extends BasicView {
 		};
 		this.setView(makeHeader(dataTemplate));
 
-		makeSimpleButton('logo-h', pathsURLfrontend.root);
+		makeSimpleButton('logo-h', pathsURLfrontend.root, 'strong');
 		makeSimpleButton('user-block', pathsURLfrontend.login);
 
 		this.#search = initHeaderSearch();
@@ -98,7 +98,7 @@ export default class HeaderView extends BasicView {
 		};
 		this.setView(makeHeader(dataTemplate));
 
-		makeSimpleButton('logo-h', pathsURLfrontend.root);
+		makeSimpleButton('logo-h', pathsURLfrontend.root, 'strong');
 		makeSimpleButton('trip-block', pathsURLfrontend.trip);
 	};
 }

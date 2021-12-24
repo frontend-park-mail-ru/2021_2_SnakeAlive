@@ -6,6 +6,27 @@ import { Review } from '@/models/review';
 import { initReviewForm } from '@/components';
 import { createReviewForm } from '@/components/reviews/review_form';
 import reviewsListTemplate from '@/components/reviews/reviews.handlebars';
+import { createFrontendQueryParams, router } from '@/router/router';
+import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
+
+const initGoAuthorBtn = (review: Review) => {
+	console.log(review);
+	const btn = document.getElementById(`author_${review.user.userId}_${review.PP}`);
+	console.log(btn);console.log(`author_${review.user.userId}}_${review.PP}`);
+	if (btn !== null) {
+		console.log(btn);
+		btn.addEventListener('click', () => {
+			if (review.owner) {
+				router.go(pathsURLfrontend.profile);
+			} else {
+				router.go(createFrontendQueryParams(pathsURLfrontend.users, [{
+					key: paramsURLfrontend.id,
+					value: review.user.userId.toString()
+				}]))
+			}
+		});
+	}
+}
 
 export class ReviewsView extends BasicView {
 	#tokens: Token[];
@@ -34,7 +55,7 @@ export class ReviewsView extends BasicView {
 
 	renderReviews = (): void => {
 		const reviews = storage.getReviews();
-		// console.log(reviews);
+		console.log(reviews);
 
 		this.setView(reviewsListTemplate({ reviews }));
 
@@ -59,6 +80,8 @@ export class ReviewsView extends BasicView {
 					);
 				}
 			}
+
+			initGoAuthorBtn(reviewInfo);
 		});
 	};
 

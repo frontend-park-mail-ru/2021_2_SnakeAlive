@@ -2,6 +2,9 @@ import { CreateReview } from '@/dispatcher';
 import { CreateReviewRequest, CreateReviewResponse, Review, UserReview } from '@/models/review';
 import { UserMetadata } from '@/models';
 import { storage } from '@/storage';
+import { GetProfileResponse } from '@/models/profile';
+import { isStdAvatar } from '@/adapters/profile';
+import avatarPath from '../../image/test.webp';
 
 export function adaptCreateReviewRequest(event: CreateReview): CreateReviewRequest {
 	return <CreateReviewRequest>{
@@ -49,16 +52,27 @@ export const adoptReviewBeforePost = (request: CreateReviewRequest): backReviewP
 
 export interface ReviewGotInfo {
 	id: number;
-	// eslint-disable-next-line camelcase
 	place_id: number;
 	rating: number;
 	text: string;
 	title: string;
-	// eslint-disable-next-line camelcase
 	user_id: number;
 }
 
-export const adoptGotReview = (gotReviews: ReviewGotInfo[], users: UserReview[]): Review[] => {
+const adoptUserForReview = (user: GetProfileResponse): UserReview => {
+	let profileImage = user.avatar;
+	if (isStdAvatar(profileImage)) {
+		profileImage = avatarPath;
+	}
+	return {
+		userId: user.id,
+		name: user.name,
+		surname: user.surname,
+		profileImage
+	}
+}
+
+export const adoptGotReview = (gotReviews: ReviewGotInfo[], users: GetProfileResponse[]): Review[] => {
 	const storeReviews: Review[] = [];
 	const currentUser = storage.getProfile();
 	let userId: number | null = null;
@@ -70,21 +84,29 @@ export const adoptGotReview = (gotReviews: ReviewGotInfo[], users: UserReview[])
 		return storeReviews;
 	}
 
-	let i = 0;
+	let PP = 0;
 	gotReviews.forEach(review => {
 		let owner = false;
 		if (review.user_id === userId) {
 			owner = true;
 		}
+
+		const author = users.find((user) => user.id ===review.user_id );
+		let user = <UserReview>{};
+		if (author !== undefined) {
+			user = adoptUserForReview(author);
+		}
+
 		storeReviews.push({
 			id: review.id,
 			title: review.title,
 			text: review.text,
 			rating: review.rating,
 			owner,
-			user: users[i],
+			user,
+			PP
 		});
-		i += 1;
+		PP += 1;
 	});
 	return storeReviews;
 };

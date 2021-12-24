@@ -16,7 +16,7 @@ import {
 import { storage } from '@/storage';
 import { initErrorPageRequest } from '@/actions/page';
 import { newSetMainHeaderRequest } from '@/actions/header';
-import { newGetAlbumResult, renderAlbumPhotos } from '@/actions/album';
+import { newGetAlbumResult, renderAlbumPhotos, uploadError } from '@/actions/album';
 import { Album, GotAlbumInterface } from '@/models/album';
 import { AlbumInfo, AlbumUpdateInfo, File, IDState } from '@/dispatcher/metadata_types';
 import { router } from '@/router';
@@ -70,6 +70,8 @@ export default class AlbumReducer {
 					dispatcher.notify(renderAlbumPhotos(true));
 				}
 			);
+		}).catch((err: Error) => {
+			dispatcher.notify(uploadError(err.message))
 		});
 	};
 
@@ -179,8 +181,14 @@ export default class AlbumReducer {
 	#sendPhotos = (photos: FormData): Promise<{ filename: string }> =>
 		sendPostFileRequest(backendEndpoint + upload, photos)
 			.then(response => {
+				if (response.status === 418) {
+					return Promise.reject(new Error('проблемы с интернет-соединением'));
+				}
+				if (response.status === 413) {
+					return Promise.reject(new Error('слишком большое изображение'));
+				}
 				if (response.status !== 200) {
-					return Promise.reject(new Error('не загружены фотографии'));
+					return Promise.reject(new Error('что-то пошло не так'));
 				}
 				return Promise.resolve(response);
 			})

@@ -24,10 +24,12 @@ const newUpdateTagRequest = (tagName): IEvent =>
 		},
 	};
 
-const newGetTagCardsResult = (): IEvent =>
+const newGetTagCardsResult = (tagName?: string): IEvent =>
 	<IEvent>{
 		key: EventType.GET_TAG_CARDS_RESULT,
-		metadata: <Empty>{},
+		metadata: <UUID>{
+			ID: tagName
+		},
 	};
 
 export { newGetTagCardsResult, newTagRequest, newTagResponse, newUpdateTagRequest };

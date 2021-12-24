@@ -76,7 +76,7 @@ h4 {
 @mixin text-plain {
   font-size: 18px;
   //font-weight: 300;
-  line-height: 23px;
+  line-height: 27px;
   letter-spacing: -0.5px;
 }
 
@@ -92,7 +92,7 @@ pre {
 @mixin text-plain-no-wrap {
   font-size: 18px;
   //font-weight: 300;
-  line-height: 20px;
+  line-height: 27px;
   letter-spacing: -0.5px;
   // насчет этих строчек терзают смутные сомнения
   //display: flex;
@@ -117,7 +117,7 @@ html, body {
   margin: 0;
   font-family: 'Open Sans', sans-serif;
   background: $my--main-background;
-  font-weight: 350;
+  font-weight: 400;
 }
 
 .content {
@@ -243,7 +243,6 @@ textarea:active {
 
     grid-template-areas: "info info info info"
                          "trips trips albums albums";
-    grid-template-rows: 200px;
     grid-template-columns: 200px 1fr 3fr 200px;
 
     padding: 0;
@@ -254,6 +253,7 @@ textarea:active {
     justify-content: center;
     align-items: center;
     height: 200px;
+    margin: $large-px;
 
     @media (max-width: 960px) {
       max-height: 50px;
@@ -330,7 +330,8 @@ textarea:active {
     @media (min-width: 961px) {
       padding-left: 15px;
       &__email {
-        @include text-local-name();
+        @include text-small;
+        color: $my--small-text;
       }
 
       display: flex;
@@ -449,31 +450,17 @@ textarea:active {
   //justify-content: center;
 
   @media (min-width: 960px) {
-    //height: 525px;
-    margin-top: 4px;
-    padding: 10px;
+    padding: 10px 0;
 
     display: grid;
     grid-template-areas: "photo-edit-block content-edit-block buttons-edit-block";
 
-    grid-template-columns: 2fr 3fr 2fr;
+    grid-template-columns: 224px 3fr 2fr;
     //grid-template-rows: 900px;
     row-gap: 3px;
   }
 
-  //@media (min-width: 321px) and (max-width: 960px) {
-  //  height: 300px;
-  //  padding: 10px;
-  //  margin-top: 5px;
-  //
-  //  grid-template-rows: 500px;
-  //  grid-template-columns: 200px 400px 170px;
-  //  row-gap: 3px;
-  //}
-
   @media (max-width: 961px) {
-    //height: 300px;
-    margin-top: 5px;
     display: grid;
 
     grid-template-areas: "photo-edit-block"
@@ -482,7 +469,6 @@ textarea:active {
     "trips"
     "albums";
 
-    grid-template-rows: 200px 400px 170px;
     row-gap: 10px;
     margin-bottom: 10px;
   }
@@ -498,54 +484,42 @@ textarea:active {
     justify-items: center;
     gap: 10px;
 
-    @media (max-width: 960px) {
-      //grid-template-rows: 3fr 1fr 0;
-      //grid-template-columns: 250px;
-      //row-gap: 3px;
-    }
-
-    //@media (min-width: 321px) and (max-width: 960px) {
-    //  grid-template-rows: 200px 0 50px;
-    //  grid-template-columns: 170px;
-    //  row-gap: 5px;
-    //}
-
-    @media (min-width: 961px) {
-      //grid-template-rows: 4fr 0 1fr;
-      //grid-template-columns: 170px;
-      //row-gap: 5px;
-    }
-
     > * {
       text-align: center;
+    }
+
+    > button {
+      @media (max-width: 960px) {
+        width: 200px;
+      }
+
+      @media (min-width: 961px) {
+        width: 140px;
+      }
     }
   }
 
   &__photo {
     display: flex;
     justify-content: center;
+    margin: $large-px;
 
-    img {
-      border-radius: 50%;
+      width: 200px;
+      height: 200px;
 
-      @media (max-width: 960px) {
-        width: 200px;
-        height: 200px;
-      }
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
 
-      //@media (min-width: 321px) and (max-width: 960px) {
-      //  width: 70%;
-      //  height: 70%;
-      //
-      //  margin-top: 20%;
-      //}
+    > img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        overflow: hidden;
 
-      @media (min-width: 961px) {
-        width: 140px;
-        height: 140px;
-
-        margin-top: 20%;
-      }
+        position: absolute;
+        top: 0;
+        left: 0;
     }
   }
 
@@ -715,7 +689,7 @@ textarea:active {
 
       grid-template-areas: "photo metadata_holder btn_block";
       //grid-template-rows: 200px;
-      grid-template-columns: 200px 1fr 200px;
+      grid-template-columns: 224px 1fr 200px;
 
       padding: 0;
     }
@@ -746,11 +720,17 @@ textarea:active {
   position: relative;
   overflow: hidden;
   border-radius: 50%;
+    box-sizing: border-box;
 
     //padding-top: $large-px;
 
-    height: 140px;
-    width: 140px;
+    height: 200px;
+    width: 200px;
+
+    @media (min-width: 381px) and (max-width: 960px) {
+      height: 140px;
+      width: 140px;
+    }
 
     margin: $large-px;
 
@@ -775,7 +755,8 @@ textarea:active {
       @include text-local-header();
     }
     &__email {
-      @include text-small();
+        @include text-small;
+        color: $my--small-text;
     }
   }
 
@@ -969,6 +950,10 @@ textarea:active {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+
+  @media (min-width: 380px) {
+    padding: 18px !important;
+  }
 
 
   &__top {
@@ -1200,7 +1185,8 @@ textarea:active {
     padding: $large-px;
 
     > p {
-      @include text-local-header;
+      @include text-small;
+      color: $my--small-text;
     }
   }
 
@@ -1233,17 +1219,10 @@ textarea:active {
 
     &__header {
       @include text-local-header();
-      //@media (max-width: 380px) {
-      //  max-width: 50px;
-      //}
-      //@media (min-width: 381px) {
-      //  max-width: 50px;
-      //}
       white-space: nowrap; /* Текст не переносится */
       overflow: hidden; /* Обрезаем всё за пределами блока */
 
       text-overflow: ellipsis; /* Добавляем многоточие */
-      //min-width: 35%;
     }
 
     &__text {

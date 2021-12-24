@@ -1,45 +1,39 @@
 import {
 	AlienProfileTrip,
 	GetProfileResponse,
-	ProfileAlbum,
-	ProfileTrip,
-	UpdateProfileMetadataRequest,
-	UpdateProfileMetadataResponse,
 } from '@/models/profile';
 import {
-	sendDeleteJSONRequest,
 	sendGetJSONRequest,
-	sendPatchJSONRequest,
-	sendPostFileRequest,
 } from '@/http';
 import {
-	albumURI,
 	backendEndpoint,
-	logout,
-	pathsURLfrontend,
-	profile,
 	tripURI,
-	upload,
 } from '@/constants';
 import {
 	adaptGetProfileResponse,
-	adaptUpdateProfileMetadataRequest,
-	adaptUpdateProfileMetadataResponse,
 	adoptAlienProfileTrips, // adoptAlienProfileAlbums, adoptAlienProfileTrips,
-	adoptProfileAlbums,
-	adoptProfileTrips,
 } from '@/adapters/profile';
 import { storage } from '@/storage';
-import { dispatcher, EventType, File, NamedUUID, Token, UpdateProfile, UUID } from '@/dispatcher';
+import { dispatcher, EventType, Token, UUID } from '@/dispatcher';
 import {
 	newGetAlienProfileResponse,
-	newGetProfileRequest,
-	newGetProfileResponse,
 } from '@/actions/profile';
 import { initErrorPageRequest } from '@/actions/page';
-import { newSetEmptyHeaderRequest, newSetMainHeaderRequest } from '@/actions/header';
-import { router } from '@/router';
+import { newSetMainHeaderRequest } from '@/actions/header';
 import { alienUser, user } from '@/constants/uris';
+
+export const sendGetProfile = (id: string): Promise<GetProfileResponse> =>
+	sendGetJSONRequest(backendEndpoint + alienUser + id)
+		.then(response => {
+			if (response.status === 404) {
+				return Promise.reject(new Error('На сайте нет такой страницы'));
+			}
+			if (response.status === 401) {
+				return Promise.reject(new Error('Нужно войти в систему'));
+			}
+			return Promise.resolve(response);
+		})
+		.then(response => response.json());
 
 export default class AlienProfileReducer {
 	#tokens: Token[];
@@ -62,7 +56,7 @@ export default class AlienProfileReducer {
 
 	getProfile = (metadata: UUID): void => {
 		dispatcher.notify(newSetMainHeaderRequest()); // ???
-		this.#sendGetProfile(metadata.ID)
+		sendGetProfile(metadata.ID)
 			.then((response: GetProfileResponse) => {
 				storage.storeProfile(adaptGetProfileResponse(response));
 
@@ -75,19 +69,6 @@ export default class AlienProfileReducer {
 				dispatcher.notify(initErrorPageRequest(error));
 			});
 	};
-
-	#sendGetProfile = (id: string): Promise<GetProfileResponse> =>
-		sendGetJSONRequest(backendEndpoint + alienUser + id)
-			.then(response => {
-				if (response.status === 404) {
-					return Promise.reject(new Error('На сайте нет такой страницы'));
-				}
-				if (response.status === 401) {
-					return Promise.reject(new Error('Нужно войти в систему'));
-				}
-				return Promise.resolve(response);
-			})
-			.then(response => response.json());
 
 	#getProfileTripsForAlian = (): Promise<AlienProfileTrip[]> =>
 		sendGetJSONRequest(backendEndpoint + tripURI + user)

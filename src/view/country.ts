@@ -144,10 +144,10 @@ class CountryHolderView extends BasicView {
 
 	renderCountry = (): void => {
 		const { translation } = storage.getCountry();
-		this.setView(countryPageTemplate({ name: `по стране ${translation}` }));
 		this.setView(
 			countryPageTemplate({
-				name: `по стране ${translation}`,
+				// name: `по стране ${translation}`,
+				name: `для вас`,
 				tags: storage.getSearchTags().slice(0, 6),
 				allTags: storage.getSearchTags().slice(6),
 			})

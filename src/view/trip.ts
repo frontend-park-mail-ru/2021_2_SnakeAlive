@@ -1,5 +1,5 @@
 import BasicView from '@/view/view';
-import { dispatcher, EventType, NumID, Token } from '@/dispatcher';
+import { dispatcher, EventType, NumID, Token, UUID } from '@/dispatcher';
 import tripPageTemplate from '@/components/trip/trip.handlebars';
 import tripFormTemplate from '@/components/trip/trip_form.handlebars';
 import tripSights from '@/components/trip/trip_sights.handlebars';
@@ -20,7 +20,7 @@ import { IsTrue, SightToTrip } from '@/dispatcher/metadata_types';
 import { storage } from '@/storage';
 import {
 	addPlaceToTrip,
-	delPlaceFromTrip,
+	delPlaceFromTrip, errorAddingUser,
 	newGetTripRequest,
 	updateCurrentTripInfo,
 	wsUpdate,
@@ -46,6 +46,14 @@ import { searchRequest } from '@/actions/search';
 import { WSEndPoint } from '@/constants/endpoints';
 import { setTextAreaResizeParams } from '@/components/reviews/review_form';
 import { createWSCon, initWS, NewWSConnect } from '@/tools/websoket';
+
+export const globalClickListener = () => {
+	const errorPlace = document.getElementById('adding-user-error');
+	if (errorPlace !== null) {
+		errorPlace.style.visibility = 'hidden';
+	}
+	window.removeEventListener('click', globalClickListener);
+}
 
 const initPartisipantsBtns = (partisipants: Array<Partisipants>): void => {
 	// id="partisipant_1"
@@ -109,6 +117,7 @@ export class TripInfoView extends BasicView {
 			dispatcher.register(EventType.DELETE_CURRENT_TRIP_PLACE, this.delPlace),
 			dispatcher.register(EventType.SHARE_TRIP_RESPONSE, this.shareTrip),
 			dispatcher.register(EventType.ADD_USER_TO_TRIP_RESPONSE, this.addUserToTrip),
+			dispatcher.register(EventType.ERROR_ADDING_USER, this.setAddingUserError)
 		];
 
 		// eslint-disable-next-line no-use-before-define
@@ -117,10 +126,25 @@ export class TripInfoView extends BasicView {
 		this.setView(tripFormTemplate());
 	};
 
-	addUserToTrip = (metada: IsTrue): void => {
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		const isOk = metada.isTrue;
-		// createWSCon();
+	setAddingUserError = (msg: UUID) => {
+		const errorPlace = document.getElementById('adding-user-error');
+		if (errorPlace !== null) {
+			errorPlace.style.visibility = 'visible';
+			errorPlace.innerHTML = `<p>${msg.ID}</p>`;
+			window.addEventListener('click', globalClickListener);
+		}
+	}
+
+	addUserToTrip = (metadata: IsTrue): void => {
+		const isOk = metadata.isTrue;
+		if (isOk) {
+			window.location.reload();
+		} else {
+			this.setAddingUserError(<UUID>{
+				// @ts-ignore
+				ID: metadata.errorMessage
+			});
+		}
 	};
 
 	shareTrip = (): void => {
@@ -150,7 +174,7 @@ export class TripInfoView extends BasicView {
 		);
 		const searchPlace = document.getElementById('trip-search-place');
 		if (searchPlace !== null) {
-			searchPlace.innerHTML = initSearchView(searchPlaceType.trip, false);
+			searchPlace.innerHTML = initSearchView(searchPlaceType.trip, false, '', 'Что вы хотите увидеть?');
 			// constructor(
 			// 		type: searchPlaceType,
 			// 		callback: (id: string) => void,

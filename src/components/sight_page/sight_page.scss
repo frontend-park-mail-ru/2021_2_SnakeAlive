@@ -42,8 +42,8 @@
     &__info {
       &__country {
         //margin-top: $small-px;
-        //@include text-small;
-        //color: $my--small-text;
+        @include text-small;
+        color: $my--small-text;
       }
     }
     &__description {
@@ -60,6 +60,12 @@
       }
     }
   }
+}
+
+#rating {
+  display: flex;
+  flex-direction: row;
+  align-content: start;
 }
 
 .sight_page__right_col {

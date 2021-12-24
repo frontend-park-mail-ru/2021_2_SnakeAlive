@@ -1,4 +1,4 @@
-import { dispatcher, EventType, Token } from '@/dispatcher';
+import { dispatcher, EventType, Token, UUID } from '@/dispatcher';
 import { router } from '@/router';
 import { paramsURLfrontend, pathsURLfrontend } from '@/constants';
 import { createFrontendQueryParams } from '@/router/router';
@@ -16,6 +16,7 @@ import { initAlbumForm } from '@/components/album/album_form';
 import { addAlbumPhoto, deletePhoto, newGetAlbumResult, renderAlbumPhotos } from '@/actions/album';
 
 import defaultPhoto from '../../image/defaultAlbum.webp';
+import { globalClickListener } from '@/view/trip';
 
 export class PhotosView {
 	#tokens: Token[];
@@ -127,6 +128,7 @@ export class AlbumView extends BasicView {
 			dispatcher.register(EventType.GET_ALBUM_RESPONSE, this.showAlbum),
 			dispatcher.register(EventType.CREATE_ALBUM_FORM_REQUEST, this.showEmptyForm),
 			dispatcher.register(EventType.DESTROY_CURRENT_PAGE_REQUEST, this.destroy),
+			dispatcher.register(EventType.UPLOAD_ERROR, this.setError)
 		];
 
 		dispatcher.notify(newSetMainHeaderRequest());
@@ -180,6 +182,15 @@ export class AlbumView extends BasicView {
 
 		this.setEmpty();
 	};
+
+	setError = (msg: UUID): void => {
+		const errorPlace = document.getElementById('adding-user-error');
+		if (errorPlace !== null) {
+			errorPlace.style.visibility = 'visible';
+			errorPlace.innerHTML = `<p>${msg.ID}</p>`;
+			window.addEventListener('click', globalClickListener);
+		}
+	}
 
 	#showEditAlbum = (): void => {
 		const album = storage.getAlbum();
@@ -257,12 +268,12 @@ export class AlbumView extends BasicView {
 
 	#checkLoadedFile = (file: File): Error | null => {
 		// провераяем тип файла
-		if (!['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml'].includes(file.type)) {
-			return Error('Разрешены только изображения.');
+		if (!['image/jpeg', 'image/jpg','image/png', 'image/gif', 'image/svg+xml', 'image/PNG'].includes(file.type)) {
+			return Error('не поддерживается такой формат');
 		}
 		// проверим размер файла (<2 Мб)
 		if (file.size > 2 * 1024 * 1024) {
-			return Error('Файл должен быть менее 2 МБ.');
+			return Error('слишком большое изображение');
 		}
 		return null;
 	};
@@ -299,7 +310,9 @@ export class AlbumView extends BasicView {
 				}
 				const error = this.#checkLoadedFile(addInput.files[0]);
 				if (error !== null) {
-					// показать ошибку на странице
+					this.setError(<UUID>{
+						ID: error.message
+					});
 					return;
 				}
 

@@ -73,6 +73,7 @@
     }
     grid-area: l;
     width: 100%;
+    margin-bottom: 10px;
 
   }
 
@@ -215,6 +216,16 @@
   margin-right: $small-px;
 }
 
+#adding-user-error {
+  align-self: end;
+  padding-left: 20px;
+  visibility: hidden;
+  > p {
+    @include text-small;
+    color: $my--error;
+  }
+}
+
 .trip_form {
   padding: 0;
   &__horizontal_holder {
@@ -223,6 +234,8 @@
     height: min-content;
     margin-right: $small-px;
     flex-wrap: wrap;
+
+    align-content: center;
   }
   &__some_info {
     @include text-small;

@@ -12,6 +12,7 @@ export interface Review {
 	rating: number;
 	owner: boolean;
 	user: UserReview;
+	PP: number;
 }
 
 export interface CreateReviewRequest {

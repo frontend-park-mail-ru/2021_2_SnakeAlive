@@ -42,7 +42,8 @@ export default class TagReducer {
 	getTagCards = (tag: NamedUUID): void => {
 		this.#getTagCardsOnly(tag.ID).then((cards: CountryCardResponse[]) => {
 			storage.storeSightsCardsMin(minAdaptCountryCards(cards, adoptGotTags(this.#tags)));
-			dispatcher.notify(newGetTagCardsResult());
+			const tagName = this.#tags.filter((tg) => tag.ID === tg.id.toString())[0];
+			dispatcher.notify(newGetTagCardsResult(tagName.name));
 		});
 	};
 
