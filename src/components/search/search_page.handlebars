@@ -7,33 +7,6 @@
 
 			<div id="page-search-place" class="search_page__search_place"></div>
 
-			<div><p class='search_page__category_type'>Оценки других пользователей</p></div>
-				<div class='header__categories__string' id='search_page__categories'>
-
-					<div class='header__categories__small_category'>
-						<p>рейтинг от</p>
-						<div class="rating-area form_review__string__rating_area">
-							<input type="radio" id="star-5" name="rating" value="5">
-							<label for="star-5" title="Оценка «5»">✦</label>
-							<input type="radio" id="star-4" name="rating" value="4">
-							<label for="star-4" title="Оценка «4»">✦</label>
-							<input type="radio" id="star-3" name="rating" value="3">
-							<label for="star-3" title="Оценка «3»">✦</label>
-							<input type="radio" id="star-2" name="rating" value="2">
-							<label for="star-2" title="Оценка «2»">✦</label>
-							<input type="radio" id="star-1" name="rating" value="1">
-							<label for="star-1" title="Оценка «1»">✦</label>
-						</div>
-					</div>
-
-					<div class='header__categories__small_category'>
-						<p>от</p>
-						<input id='review-amount-input' class='header__categories__small_category__input' maxlength='2' type='number' min='0' max='99' value='0'>
-						<p>отзывов</p>
-					</div>
-
-				</div>
-
 			<div><p class='search_page__category_type'>Теги</p></div>
 
 			<div class='header__categories' id='search_page__categories'>
@@ -71,6 +44,32 @@
 				{{#each countries}}
 					<button class='usual_button usual_button_light search_page__category {{#if @last}} search_page__category_last{{/if}}' id='country_{{this.id}}'>{{this.translation}}</button>
 				{{/each}}
+
+			</div>
+
+			<div class='header__categories__string' id='search_page__categories'>
+
+				<div class='header__categories__small_category'>
+					<p>Рейтинг от</p>
+					<div class="rating-area form_review__string__rating_area">
+						<input type="radio" id="star-5" name="rating" value="5">
+						<label for="star-5" title="Оценка «5»">✦</label>
+						<input type="radio" id="star-4" name="rating" value="4">
+						<label for="star-4" title="Оценка «4»">✦</label>
+						<input type="radio" id="star-3" name="rating" value="3">
+						<label for="star-3" title="Оценка «3»">✦</label>
+						<input type="radio" id="star-2" name="rating" value="2">
+						<label for="star-2" title="Оценка «2»">✦</label>
+						<input type="radio" id="star-1" name="rating" value="1">
+						<label for="star-1" title="Оценка «1»">✦</label>
+					</div>
+				</div>
+
+				<div class='header__categories__small_category'>
+					<p>от</p>
+					<input id='review-amount-input' class='header__categories__small_category__input' maxlength='1' type='number' min='0' max='9' value='0'>
+					<p>отзывов</p>
+				</div>
 
 			</div>
 
