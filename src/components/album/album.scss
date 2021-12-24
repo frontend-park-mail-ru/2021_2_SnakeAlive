@@ -27,6 +27,8 @@
     @include text-small;
     color: $my--error;
   }
+  margin: 0;
+  padding: 0;
 }
 
 .album_page {
@@ -85,8 +87,9 @@
     margin-bottom: $small-px;
     //display: block;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: baseline;
+
 
     img {
       width: 100%;
@@ -178,4 +181,5 @@
   > div {
     padding-bottom: $small-px;
   }
+  max-width: 100%;
 }

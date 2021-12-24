@@ -1140,6 +1140,9 @@ textarea:active {
   > * {
     margin-right: $small-px;
   }
+  max-width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .string-space {
@@ -1155,8 +1158,8 @@ textarea:active {
   position: relative;
 
   //margin-bottom: 100%;
-  bottom: $small-px * 2;
-  left: - 120% ;
+  bottom: 30px;
+  left: 6px;
 }
 
 .hidden{
@@ -1246,4 +1249,9 @@ textarea:active {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+
+div, button {
+  box-sizing: border-box;
+  max-width: 100%;
 }

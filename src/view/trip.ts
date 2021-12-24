@@ -51,6 +51,7 @@ export const globalClickListener = () => {
 	const errorPlace = document.getElementById('adding-user-error');
 	if (errorPlace !== null) {
 		errorPlace.style.visibility = 'hidden';
+		errorPlace.style.display = 'none';
 	}
 	window.removeEventListener('click', globalClickListener);
 }
@@ -130,6 +131,7 @@ export class TripInfoView extends BasicView {
 		const errorPlace = document.getElementById('adding-user-error');
 		if (errorPlace !== null) {
 			errorPlace.style.visibility = 'visible';
+			errorPlace.style.display = 'inline';
 			errorPlace.innerHTML = `<p>${msg.ID}</p>`;
 			window.addEventListener('click', globalClickListener);
 		}

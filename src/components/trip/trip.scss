@@ -219,7 +219,10 @@
 #adding-user-error {
   align-self: end;
   padding-left: 20px;
-  visibility: hidden;
+  display: none;
+  box-sizing: border-box;
+  max-width: 100%;
+  word-wrap: break-word;
   > p {
     @include text-small;
     color: $my--error;
