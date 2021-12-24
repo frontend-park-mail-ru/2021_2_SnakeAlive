@@ -14,5 +14,18 @@ export interface SearchRequest {
 	min_amount_reviews: number;
 }
 
-export const isSearchRequestEmpty = (req: SearchRequest): boolean =>
-	!req.search && !req.tags && !req.countries && !req.min_amount_reviews && !req.min_rating;
+export const isSearchRequestEmpty = (req: SearchRequest): boolean => {
+	if ((!req.min_amount_reviews) && (!req.min_rating)) {
+		if (!req.search && !req.tags && !req.countries) {
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		if (req.search || req.tags || req.countries) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+}

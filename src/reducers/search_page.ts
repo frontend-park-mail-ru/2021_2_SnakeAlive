@@ -1,24 +1,15 @@
 import { sendGetJSONRequest, sendPatchJSONRequest } from '@/http';
-import { backendEndpoint, listOfCountries, profile, searchURI, sightsURI } from '@/constants';
-import { newGetCountryCardsError, newGetCountryCardsResult } from '@/actions/country';
+import { backendEndpoint, listOfCountries, searchURI, sightsURI } from '@/constants';
 import { newSetMainHeaderRequest } from '@/actions/header';
 import { storage } from '@/storage';
-import { dispatcher, EventType, NamedUUID, Token } from '@/dispatcher';
+import { dispatcher, EventType, Token } from '@/dispatcher';
 import { CountryCardResponse, CountryResponse } from '@/models';
 import { minAdaptCountryCards } from '@/adapters/country_cards_min';
 import { allTagsURI, tagsURI } from '@/constants/uris';
-import { newGetTagCardsResult, newTagResponse } from '@/actions/tag';
-import {
-	gotSearchResults,
-	initEmptySearchPageRequest,
-	initEmptySearchPageResponse,
-	newGetSearchCardsError,
-	sendPageSearch,
-} from '@/actions/search';
+import { gotSearchResults, initEmptySearchPageResponse, newGetSearchCardsError } from '@/actions/search';
 import { adoptGotSearchCountries } from '@/adapters/search';
 import { TagResponse } from '@/models/tags';
-import { GET_COUNTRY_NAME } from '@/components/trip/trip_form';
-import { isSearchRequestEmpty, searchPlaceType, SearchRequest } from '@/models/search';
+import { isSearchRequestEmpty, searchPlaceType } from '@/models/search';
 import { adoptGotTags } from '@/adapters/tags';
 
 export const getTags = (): Promise<TagResponse[]> =>
@@ -67,6 +58,8 @@ export default class SearchPageReducer {
 
 	sendSearchRequest = (): void => {
 		if (isSearchRequestEmpty(storage.getSearchRequest())) {
+				storage.storeSearchSightsResult(searchPlaceType.page, []);
+				dispatcher.notify(gotSearchResults(searchPlaceType.page));
 			return;
 			// вывод валидации?
 		}

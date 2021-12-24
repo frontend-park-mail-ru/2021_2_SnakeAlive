@@ -206,11 +206,12 @@ class Storage {
 		this.#searchRequest.tags = tagsIds;
 	};
 
-	storeSearchRequestMinRating = rating => {
-		this.#searchRequest.min_amount_reviews = rating;
+	storeSearchRequestMinRating = (rating: number) => {
+		this.#searchRequest.min_rating = rating;
+		console.log(this.#searchRequest);
 	};
 
-	storeSearchRequestMinReviewAmount = reviewAmount => {
+	storeSearchRequestMinReviewAmount = (reviewAmount: number) => {
 		this.#searchRequest.min_amount_reviews = reviewAmount;
 	};
 

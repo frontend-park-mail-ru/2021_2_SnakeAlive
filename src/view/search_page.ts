@@ -101,8 +101,7 @@ const listToNumbers = (list: string[]): number[] => {
 
 const initReviewSearchParams = (): void => {
 	// рейтинг
-	// star-4
-	for (let i = 1; i < 5; i += 1) {
+	for (let i = 1; i <= 5; i += 1) {
 		const star = document.getElementById(`star-${i}`);
 		console.log(star);
 		if (star !== null) {
@@ -117,7 +116,7 @@ const initReviewSearchParams = (): void => {
 	const reviewAmount = <HTMLInputElement>document.getElementById('review-amount-input');
 	if (reviewAmount !== null) {
 		reviewAmount.addEventListener('change', () => {
-			storage.storeSearchRequestMinReviewAmount(reviewAmount.value);
+			storage.storeSearchRequestMinReviewAmount(Number(reviewAmount.value));
 			dispatcher.notify(sendPageSearch());
 		});
 	}
