@@ -121,6 +121,7 @@ export default class ProfileView extends BasicView {
 		this.setView(profileEditTemplate(profile));
 
 		const updatePhoto: Button = new Button('#update_photo');
+		console.log(updatePhoto)
 		updatePhoto.setOnClick(this.#uploadFile);
 
 		const updateProfile: Button = new Button('#update_profile');

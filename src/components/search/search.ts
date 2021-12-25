@@ -101,9 +101,9 @@ export class SearchView {
 		const input = <HTMLInputElement>document.getElementById(`search_${type}`);
 
 		if (input !== null) {
-			// input.addEventListener('keydown', e => {
-			// 	if (e.key === 'Enter') {
-			// 		e.preventDefault();
+			input.addEventListener('keydown', e => {
+				if (e.key === 'Enter') {
+					e.preventDefault();
 			//
 			// 		const { value } = input;
 			// 		this.#value = value;
@@ -119,7 +119,7 @@ export class SearchView {
 			//
 			// 		this.#clearSearch(input);
 			// 	}
-			// });
+			}});
 
 			input.addEventListener(
 				'input',

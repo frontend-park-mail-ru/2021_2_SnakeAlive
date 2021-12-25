@@ -60,6 +60,12 @@ const getTripIdBackEnd = (str: string): string => {
 };
 
 export const notifier = (path: URL): void /* IEvent */ => {
+
+// solve problems
+	if (/\?$/.test(path.href)) {
+		return;
+	}
+
 	switch (path.pathname) {
 		case pathsURLfrontend.root: {
 			dispatcher.notify(newInitPageRequest());

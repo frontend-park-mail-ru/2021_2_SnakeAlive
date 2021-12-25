@@ -57,8 +57,8 @@ export class Map extends BasicView {
 				this.#map.setCenter({ lat: lat, lng: lng });
 				const marker = new google.maps.Marker({
 					position: {
-						lat: Number(storage.getSearchSightsResult(searchPlaceType.trip)[0].lat),
-						lng: Number(storage.getSearchSightsResult(searchPlaceType.trip)[0].lng),
+						lat: Number(lat),
+						lng: Number(lng),
 					},
 					map: this.#map,
 				});
